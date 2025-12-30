@@ -73,7 +73,7 @@ The INCOSE Systems Engineering Handbook elaborates verification and validation w
 
 Algebraic topology studies shapes through algebraic invariants, enabling rigorous analysis of structural properties.⁹ A simplicial complex is a combinatorial structure built from simplices: vertices (0-simplices), edges (1-simplices), triangles (2-simplices), and higher-dimensional analogs.¹⁰ The power of simplicial complexes lies in their ability to capture relationships at multiple levels—not just pairwise connections (edges) but higher-order relationships (faces).
 
-Carlsson's 2009 survey established topology as a tool for data analysis, demonstrating that topological invariants reveal structural features invisible to traditional statistics.¹¹ Computational approaches developed by Edelsbrunner and Harer enable practical application of these concepts to real data.¹⁰ Ghrist's accessible introduction to persistent homology shows how topological features can be tracked across scales using barcodes.¹²
+Carlsson's 2009 survey established topology as a tool for data analysis, demonstrating that topological invariants reveal structural features invisible to traditional statistics.¹¹ Computational approaches developed by Edelsbrunner and Harer enable practical application of these concepts to real data.¹⁰ Ghrist's work spans both theoretical foundations and accessible exposition—from the barcodes paper introducing persistent homology¹² to the comprehensive textbook *Elementary Applied Topology*¹⁹ that makes these methods accessible to engineers.
 
 The Euler characteristic χ = V - E + F provides a simple but powerful invariant: for a well-formed complex, this quantity reveals topological properties independent of specific representation. Reimann et al. applied directed clique complexes to brain networks, showing that Euler characteristic serves as a meaningful network invariant.¹³ We adopt this principle for document assurance: topological invariants audit structural integrity.
 
@@ -543,6 +543,8 @@ As AI capabilities advance, human accountability becomes more rather than less i
 
 **AI Assistance Disclosure:** Claude (Opus 4.5) assisted with content generation for drafting sections, literature organization, and framework documentation development. The idea for applying typed simplicial complexes to constrain directed and evaluate arose from a pain point around requirements (non)tracibility to AI generated specifications. All research design, framework architecture, validation methodology, and conclusions are original author work. The paper's central contributions—explicit coupling of specification and guidance to form valid simplicial complexes and to leverage algebraic topology for efficient auditing as well as sandwhiching human accountability for validation between machine verification and assurance steps—were conceived and directed by the author. Claude also provided editorial support for grammar and clarity. The author maintained oversight of all AI-assisted work and made final editorial decisions.
 
+This disclosure follows the methodological precedent established in Ghrist's "The Forge" (Appendix C of *The Geometry of Heaven and Hell*),²⁰ which documents a comparable process of AI-assisted authorship where the human provides intellectual substance, direction, oversight, and approval while AI contributes drafting capability.
+
 ---
 
 ## References
@@ -582,3 +584,7 @@ As AI capabilities advance, human accountability becomes more rather than less i
 17. Ahmad Z, et al. Large language models (LLMs) in systems engineering and design. 2024. doi:10.13140/RG.2.2.28013.97766
 
 18. Badshah T, et al. Large language models (LLMs) for requirements engineering (RE): A systematic literature review. *arXiv preprint*. 2024. arXiv:2509.11446
+
+19. Ghrist R. *Elementary Applied Topology*. Seattle, WA: CreateSpace; 2014.
+
+20. Ghrist R. The Forge (Appendix C). In: *The Geometry of Heaven and Hell*. 2024. [Methodological account of AI-assisted authorship with human oversight]
