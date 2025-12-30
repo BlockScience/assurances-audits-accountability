@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-12-30T06:39:18.673867+00:00",
+  "generated": "2025-12-30T06:46:14.026834+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -88,6 +88,23 @@
         "version": "1.0.0",
         "created": "2025-12-27T16:00:00+00:00",
         "modified": "2025-12-27T16:00:00+00:00",
+        "dependencies": []
+      },
+      "v:guidance:incose-paper": {
+        "file": "00_vertices/guidance-for-incose-paper.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:incose-paper",
+        "name": "Guidance for INCOSE IS 2026 Research Paper",
+        "description": "Quality criteria and best practices for creating an excellent INCOSE symposium paper",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T10:30:00+00:00",
+        "modified": "2025-12-30T10:30:00+00:00",
         "dependencies": []
       },
       "v:guidance:learning-module": {
@@ -357,6 +374,23 @@
         "version": "1.0.0",
         "created": "2025-12-27T16:00:00+00:00",
         "modified": "2025-12-27T16:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:incose-paper": {
+        "file": "00_vertices/spec-for-incose-paper.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:incose-paper",
+        "name": "Specification for INCOSE IS 2026 Research Paper",
+        "description": "Defines structural requirements for an INCOSE International Symposium 2026 research paper submission",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T10:00:00+00:00",
+        "modified": "2025-12-30T10:00:00+00:00",
         "dependencies": []
       },
       "v:spec:inherits": {
@@ -747,6 +781,25 @@
         "created": "2025-12-27T16:30:00+00:00",
         "modified": "2025-12-27T16:30:00+00:00"
       },
+      "e:coupling:incose-paper": {
+        "file": "01_edges/coupling-incose-paper.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:incose-paper",
+        "name": "Coupling - INCOSE Paper Spec and Guidance",
+        "source": "v:spec:incose-paper",
+        "target": "v:guidance:incose-paper",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T11:00:00+00:00",
+        "modified": "2025-12-30T11:00:00+00:00"
+      },
       "e:coupling:persona": {
         "file": "01_edges/coupling-persona.md",
         "type": "edge/coupling",
@@ -1027,6 +1080,52 @@
         "version": "1.0.0",
         "created": "2025-12-27T21:30:00+00:00",
         "modified": "2025-12-27T21:30:00+00:00"
+      },
+      "e:validation:incose-paper-guidance:guidance-guidance": {
+        "file": "01_edges/validation-incose-paper-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:incose-paper-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-incose-paper against guidance-for-guidance",
+        "source": "v:guidance:incose-paper",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T11:35:00+00:00",
+        "modified": "2025-12-30T11:35:00+00:00"
+      },
+      "e:validation:incose-paper-spec:guidance-spec": {
+        "file": "01_edges/validation-incose-paper-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:incose-paper-spec:guidance-spec",
+        "name": "Validation - spec-for-incose-paper against guidance-for-spec",
+        "source": "v:spec:incose-paper",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T11:30:00+00:00",
+        "modified": "2025-12-30T11:30:00+00:00"
       },
       "e:validation:persona-claude:guidance": {
         "file": "01_edges/validation-persona-claude:guidance.md",
@@ -1541,6 +1640,44 @@
         "version": "1.0.0",
         "created": "2025-12-27T20:51:00+00:00",
         "modified": "2025-12-27T20:51:00+00:00"
+      },
+      "e:verification:incose-paper-guidance:spec-guidance": {
+        "file": "01_edges/verification-incose-paper-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:incose-paper-guidance:spec-guidance",
+        "name": "Verification - guidance-for-incose-paper against spec-for-guidance",
+        "source": "v:guidance:incose-paper",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T11:20:00+00:00",
+        "modified": "2025-12-30T11:20:00+00:00"
+      },
+      "e:verification:incose-paper-spec:spec-spec": {
+        "file": "01_edges/verification-incose-paper-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:incose-paper-spec:spec-spec",
+        "name": "Verification - spec-for-incose-paper against spec-for-spec",
+        "source": "v:spec:incose-paper",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T11:15:00+00:00",
+        "modified": "2025-12-30T11:15:00+00:00"
       },
       "e:verification:persona-claude:spec": {
         "file": "01_edges/verification-persona-claude:spec.md",
@@ -2792,10 +2929,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 32,
-    "edge_count": 58,
+    "vertex_count": 34,
+    "edge_count": 63,
     "face_count": 24,
     "chart_count": 2,
-    "euler_characteristic": -2
+    "euler_characteristic": -5
   }
 }
