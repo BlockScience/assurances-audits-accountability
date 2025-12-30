@@ -1,0 +1,332 @@
+{
+  "chart_id": "c:incose-paper-assurance",
+  "name": "INCOSE Paper Assurance Audit Chart",
+  "description": "Complete assurance network for the INCOSE IS 2026 paper demonstrating the framework",
+  "type": "chart/assurance_audit",
+  "constructed_by": "claude-opus-4-5-20251101",
+  "construction_method": "llm-assisted",
+  "purpose": "Demonstrate the assurance framework by showing how the INCOSE paper and its supporting documents are assured through nested triangles",
+  "scope": "11 vertices including boundary complex foundation plus 3 INCOSE-specific vertices",
+  "element_counts": {
+    "vertices": 8,
+    "edges": 20,
+    "faces": 7
+  },
+  "topology": {
+    "euler_characteristic": -5,
+    "dimension": 2
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "b0:root",
+        "name": "Root - Boundary Anchor",
+        "type": "vertex/b0",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:spec",
+        "name": "Specification for Specifications",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:guidance",
+        "name": "Specification for Guidance Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:spec",
+        "name": "Guidance for Specifications",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:guidance",
+        "name": "Guidance for Guidance Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:incose-paper",
+        "name": "Specification for INCOSE IS 2026 Research Paper",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:incose-paper",
+        "name": "Guidance for INCOSE IS 2026 Research Paper",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:incose-paper-2026",
+        "name": "INCOSE IS 2026 Paper - Test-Driven Document Development",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:coupling:spec",
+        "name": "Coupling - Spec-for-Spec and Guidance-for-Spec",
+        "type": "edge/coupling",
+        "source": "v:spec:spec",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:guidance",
+        "name": "Coupling - Spec-for-Guidance and Guidance-for-Guidance",
+        "type": "edge/coupling",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:spec-guidance:guidance-spec",
+        "name": "Coupling - Spec-for-Guidance and Guidance-for-Spec Cross-Domain Alignment",
+        "type": "edge/coupling",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:spec-guidance:spec-spec",
+        "name": "Verification - Spec-for-Guidance verifies against Spec-for-Spec",
+        "type": "edge/verification",
+        "source": "v:spec:guidance",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-spec:spec-guidance",
+        "name": "Verification - Guidance-for-Spec verifies against Spec-for-Guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:spec",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-guidance:spec-guidance",
+        "name": "Verification - Guidance-for-Guidance verifies against Spec-for-Guidance (Self-Verification)",
+        "type": "edge/verification",
+        "source": "v:guidance:guidance",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-spec:guidance-spec",
+        "name": "Validation - Spec-for-Spec validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:spec",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-guidance:guidance-spec",
+        "name": "Validation - Spec-for-Guidance validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:guidance-spec:guidance-guidance",
+        "name": "Validation - Guidance-for-Spec validates against Guidance-for-Guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:spec",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:self-verification",
+        "name": "Boundary Edge - Self-Verification of Spec-for-Spec",
+        "type": "edge/b1",
+        "source": "v:spec:spec",
+        "target": "b0:root",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:self-validation",
+        "name": "Boundary Edge - Self-Validation of Guidance-for-Guidance",
+        "type": "edge/b1",
+        "source": "v:guidance:guidance",
+        "target": "b0:root",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:couples-GS-root",
+        "name": "Boundary Edge - Couples Guidance-for-Spec to Root",
+        "type": "edge/b1",
+        "source": "b0:root",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:couples-SG-root",
+        "name": "Boundary Edge - Couples Spec-for-Guidance to Root",
+        "type": "edge/b1",
+        "source": "b0:root",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:incose-paper",
+        "name": "Coupling - INCOSE Paper Spec and Guidance",
+        "type": "edge/coupling",
+        "source": "v:spec:incose-paper",
+        "target": "v:guidance:incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:incose-paper-spec:spec-spec",
+        "name": "Verification - spec-for-incose-paper against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:incose-paper",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:incose-paper-spec:guidance-spec",
+        "name": "Validation - spec-for-incose-paper against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:incose-paper",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:incose-paper-guidance:spec-guidance",
+        "name": "Verification - guidance-for-incose-paper against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:incose-paper",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:incose-paper-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-incose-paper against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:incose-paper",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:incose-paper-content:spec-incose-paper",
+        "name": "Verification - INCOSE paper content against spec-for-incose-paper",
+        "type": "edge/verification",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:spec:incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:incose-paper-content:guidance-incose-paper",
+        "name": "Validation - INCOSE paper content against guidance-for-incose-paper",
+        "type": "edge/validation",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:guidance:incose-paper",
+        "element_type": "edge"
+      }
+    ],
+    "faces": [
+      {
+        "id": "f:assurance:spec-guidance",
+        "name": "Assurance Face - Spec-for-Guidance Assurance",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:guidance",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:guidance-spec",
+        "name": "Assurance Face - Guidance-for-Spec Assurance",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:spec",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "b2:spec-spec",
+        "name": "Boundary Face - Spec-for-Spec Self-Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "b0:root",
+          "v:guidance:spec",
+          "v:spec:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "b2:guidance-guidance",
+        "name": "Boundary Face - Guidance-for-Guidance Self-Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "b0:root",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:incose-paper-spec",
+        "name": "Assurance Face - spec-for-incose-paper",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:incose-paper",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:incose-paper-guidance",
+        "name": "Assurance Face - guidance-for-incose-paper",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:incose-paper",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:incose-paper-content",
+        "name": "Assurance Face - INCOSE Paper Content",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:incose-paper-2026",
+          "v:spec:incose-paper",
+          "v:guidance:incose-paper"
+        ],
+        "element_type": "face"
+      }
+    ]
+  },
+  "metadata": {
+    "exported": "2025-12-30T01:59:39.880936",
+    "source_file": "charts/incose-paper-assurance/incose-paper-assurance.md"
+  },
+  "assurance_requirements": {
+    "all_vertices_assured": true,
+    "assurance_method": "mixed",
+    "minimum_assurance_level": "ASSURED"
+  },
+  "audit_targets": [],
+  "audit_date": "2025-12-30T13:00:00+00:00",
+  "auditor": "claude-opus-4-5-20251101",
+  "audit_status": "PENDING"
+}

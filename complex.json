@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-12-30T06:46:14.026834+00:00",
+  "generated": "2025-12-30T06:59:35.228372+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -20,6 +20,26 @@
         "version": "1.0.0",
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00"
+      },
+      "v:doc:incose-paper-2026": {
+        "file": "00_vertices/doc-incose-paper-2026.md",
+        "type": "vertex/doc",
+        "extends": "vertex",
+        "id": "v:doc:incose-paper-2026",
+        "name": "INCOSE IS 2026 Paper - Test-Driven Document Development",
+        "description": "Draft research paper demonstrating simplicial complex framework for verification, validation, and assurance",
+        "tags": [
+          "vertex",
+          "doc",
+          "paper",
+          "incose"
+        ],
+        "version": "0.1.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00",
+        "word_count": 0,
+        "target_spec": "v:spec:incose-paper",
+        "target_guidance": "v:guidance:incose-paper"
       },
       "v:guidance:actor": {
         "file": "00_vertices/guidance-for-actor.md",
@@ -382,15 +402,15 @@
         "extends": "doc",
         "id": "v:spec:incose-paper",
         "name": "Specification for INCOSE IS 2026 Research Paper",
-        "description": "Defines structural requirements for an INCOSE International Symposium 2026 research paper submission",
+        "description": "Comprehensive structural requirements for an INCOSE International Symposium 2026 research paper submission, derived from official Call for Submissions and INCOSE publication standards",
         "tags": [
           "vertex",
           "doc",
           "spec"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T10:00:00+00:00",
-        "modified": "2025-12-30T10:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00",
         "dependencies": []
       },
       "v:spec:inherits": {
@@ -1081,6 +1101,29 @@
         "created": "2025-12-27T21:30:00+00:00",
         "modified": "2025-12-27T21:30:00+00:00"
       },
+      "e:validation:incose-paper-content:guidance-incose-paper": {
+        "file": "01_edges/validation-incose-paper-content:guidance-incose-paper.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:incose-paper-content:guidance-incose-paper",
+        "name": "Validation - INCOSE paper content against guidance-for-incose-paper",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:guidance:incose-paper",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:20:00+00:00",
+        "modified": "2025-12-30T12:20:00+00:00"
+      },
       "e:validation:incose-paper-guidance:guidance-guidance": {
         "file": "01_edges/validation-incose-paper-guidance:guidance-guidance.md",
         "type": "edge/validation",
@@ -1640,6 +1683,25 @@
         "version": "1.0.0",
         "created": "2025-12-27T20:51:00+00:00",
         "modified": "2025-12-27T20:51:00+00:00"
+      },
+      "e:verification:incose-paper-content:spec-incose-paper": {
+        "file": "01_edges/verification-incose-paper-content:spec-incose-paper.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:incose-paper-content:spec-incose-paper",
+        "name": "Verification - INCOSE paper content against spec-for-incose-paper",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:spec:incose-paper",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:15:00+00:00",
+        "modified": "2025-12-30T12:15:00+00:00"
       },
       "e:verification:incose-paper-guidance:spec-guidance": {
         "file": "01_edges/verification-incose-paper-guidance:spec-guidance.md",
@@ -2219,6 +2281,114 @@
         "version": "1.0.0",
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00"
+      },
+      "f:assurance:incose-paper-content": {
+        "file": "02_faces/assurance-incose-paper-content.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:incose-paper-content",
+        "name": "Assurance Face - INCOSE Paper Content",
+        "description": "Complete assurance pattern for the INCOSE IS 2026 paper content",
+        "edges": [
+          "e:coupling:incose-paper",
+          "e:verification:incose-paper-content:spec-incose-paper",
+          "e:validation:incose-paper-content:guidance-incose-paper"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:doc:incose-paper-2026",
+          "v:spec:incose-paper",
+          "v:guidance:incose-paper"
+        ],
+        "target": "v:doc:incose-paper-2026",
+        "spec": "v:spec:incose-paper",
+        "guidance": "v:guidance:incose-paper",
+        "coupling_edge": "e:coupling:incose-paper",
+        "verification_edge": "e:verification:incose-paper-content:spec-incose-paper",
+        "validation_edge": "e:validation:incose-paper-content:guidance-incose-paper",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:25:00+00:00",
+        "modified": "2025-12-30T12:25:00+00:00"
+      },
+      "f:assurance:incose-paper-guidance": {
+        "file": "02_faces/assurance-incose-paper-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:incose-paper-guidance",
+        "name": "Assurance Face - guidance-for-incose-paper",
+        "description": "Complete assurance pattern for the INCOSE paper guidance document",
+        "edges": [
+          "e:coupling:guidance",
+          "e:verification:incose-paper-guidance:spec-guidance",
+          "e:validation:incose-paper-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:incose-paper",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:incose-paper",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:guidance",
+        "verification_edge": "e:verification:incose-paper-guidance:spec-guidance",
+        "validation_edge": "e:validation:incose-paper-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T11:50:00+00:00",
+        "modified": "2025-12-30T11:50:00+00:00"
+      },
+      "f:assurance:incose-paper-spec": {
+        "file": "02_faces/assurance-incose-paper-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:incose-paper-spec",
+        "name": "Assurance Face - spec-for-incose-paper",
+        "description": "Complete assurance pattern for the INCOSE paper specification",
+        "edges": [
+          "e:coupling:spec",
+          "e:verification:incose-paper-spec:spec-spec",
+          "e:validation:incose-paper-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:incose-paper",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:incose-paper",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:spec",
+        "verification_edge": "e:verification:incose-paper-spec:spec-spec",
+        "validation_edge": "e:validation:incose-paper-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T11:45:00+00:00",
+        "modified": "2025-12-30T11:45:00+00:00"
       },
       "f:assurance:persona-claude": {
         "file": "02_faces/assurance-persona-claude.md",
@@ -2886,6 +3056,81 @@
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:30:00+00:00"
       },
+      "c:incose-paper-assurance": {
+        "file": "charts/incose-paper-assurance/incose-paper-assurance.md",
+        "type": "chart/assurance_audit",
+        "extends": "chart",
+        "id": "c:incose-paper-assurance",
+        "name": "INCOSE Paper Assurance Audit Chart",
+        "description": "Complete assurance network for the INCOSE IS 2026 paper demonstrating the framework",
+        "constructed_by": "claude-opus-4-5-20251101",
+        "construction_method": "llm-assisted",
+        "construction_date": "2025-12-30T13:00:00+00:00",
+        "purpose": "Demonstrate the assurance framework by showing how the INCOSE paper and its supporting documents are assured through nested triangles",
+        "scope": "11 vertices including boundary complex foundation plus 3 INCOSE-specific vertices",
+        "audit_date": "2025-12-30T13:00:00+00:00",
+        "auditor": "claude-opus-4-5-20251101",
+        "audit_status": "PENDING",
+        "audit_coverage": "0% (pending audit execution)",
+        "assurance_requirements": {
+          "all_vertices_assured": true,
+          "assurance_method": "mixed",
+          "minimum_assurance_level": "ASSURED"
+        },
+        "elements": {
+          "vertices": [
+            "b0:root",
+            "v:spec:spec",
+            "v:spec:guidance",
+            "v:guidance:spec",
+            "v:guidance:guidance",
+            "v:spec:incose-paper",
+            "v:guidance:incose-paper",
+            "v:doc:incose-paper-2026"
+          ],
+          "edges": [
+            "e:coupling:spec",
+            "e:coupling:guidance",
+            "e:coupling:spec-guidance:guidance-spec",
+            "e:verification:spec-guidance:spec-spec",
+            "e:verification:guidance-spec:spec-guidance",
+            "e:verification:guidance-guidance:spec-guidance",
+            "e:validation:spec-spec:guidance-spec",
+            "e:validation:spec-guidance:guidance-spec",
+            "e:validation:guidance-spec:guidance-guidance",
+            "b1:self-verification",
+            "b1:self-validation",
+            "b1:couples-GS-root",
+            "b1:couples-SG-root",
+            "e:coupling:incose-paper",
+            "e:verification:incose-paper-spec:spec-spec",
+            "e:validation:incose-paper-spec:guidance-spec",
+            "e:verification:incose-paper-guidance:spec-guidance",
+            "e:validation:incose-paper-guidance:guidance-guidance",
+            "e:verification:incose-paper-content:spec-incose-paper",
+            "e:validation:incose-paper-content:guidance-incose-paper"
+          ],
+          "faces": [
+            "f:assurance:spec-guidance",
+            "f:assurance:guidance-spec",
+            "b2:spec-spec",
+            "b2:guidance-guidance",
+            "f:assurance:incose-paper-spec",
+            "f:assurance:incose-paper-guidance",
+            "f:assurance:incose-paper-content"
+          ]
+        },
+        "tags": [
+          "chart",
+          "assurance_audit",
+          "incose",
+          "paper",
+          "demonstration"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T13:00:00+00:00",
+        "modified": "2025-12-30T13:00:00+00:00"
+      },
       "c:test-tetrahedron": {
         "file": "charts/test-tetrahedron/test-tetrahedron.md",
         "type": "chart/chart",
@@ -2929,10 +3174,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 34,
-    "edge_count": 63,
-    "face_count": 24,
-    "chart_count": 2,
-    "euler_characteristic": -5
+    "vertex_count": 35,
+    "edge_count": 65,
+    "face_count": 27,
+    "chart_count": 3,
+    "euler_characteristic": -3
   }
 }
