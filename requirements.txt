@@ -1,10 +1,18 @@
-# Knowledge Complex CLI Tools - Dependencies
+# Assurances, Audits & Accountability Framework
+# Supporting material for INCOSE IS 2026 paper submission
 
-# YAML parsing for frontmatter
-PyYAML>=6.0.1
+# Core dependencies
+PyYAML>=6.0.1          # YAML parsing for frontmatter
+
+# Visualization dependencies (for chart visualization scripts)
+matplotlib>=3.8.0      # 2D visualization
+networkx>=3.2          # Graph analysis
+numpy>=1.26.0          # Numerical operations
+plotly>=5.18.0         # Interactive 3D visualization
+scipy>=1.12.0          # Scientific computing (sparse matrices for Hodge)
 
 # Testing framework
-pytest>=7.4.0
+pytest>=8.0.0
 
-# Type hints support
+# Type hints support (for Python < 3.11)
 typing-extensions>=4.7.0; python_version < '3.11'

@@ -1,19 +1,32 @@
 [project]
-name = "knowledge-complex"
-version = "0.1.0"
-description = "Knowledge complex seed template with simplicial complex tools"
+name = "assurances-audits-accountability"
+version = "1.0.0"
+description = "Typed simplicial complex framework for document verification, validation, and assurance - supporting material for INCOSE IS 2026"
 readme = "README.md"
 requires-python = ">=3.12"
 license = { file = "LICENSE" }
+authors = [
+    { name = "Michael Zargham" }
+]
+keywords = ["systems-engineering", "verification", "validation", "assurance", "simplicial-complex", "documentation"]
 
 dependencies = [
     "pyyaml>=6.0.1",
+    "matplotlib>=3.8.0",
+    "networkx>=3.2",
+    "numpy>=1.26.0",
+    "plotly>=5.18.0",
+    "scipy>=1.12.0",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=9.0.0",
+    "pytest>=8.0.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/BlockScience/assurances-audits-accountability"
+Documentation = "https://github.com/BlockScience/assurances-audits-accountability#readme"
 
 [build-system]
 requires = ["hatchling"]
@@ -23,9 +36,8 @@ build-backend = "hatchling.build"
 testpaths = ["tests"]
 python_files = "test_*.py"
 python_functions = "test_*"
-addopts = "-p no:ethereum"
 
 [tool.uv]
 dev-dependencies = [
-    "pytest>=9.0.0",
+    "pytest>=8.0.0",
 ]

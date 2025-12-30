@@ -1,241 +1,142 @@
-# Knowledge Complex
+# Assurances, Audits & Accountability
 
-A typed simplicial complex framework for rigorous documentation, quality assurance, and organizational modeling.
+Supporting material for INCOSE IS 2026 paper submission.
 
-![Learning Journey - Complete Curriculum](charts/learning-journey-full/learning-journey-full.png)
+This repository contains the implementation and demonstration of a typed simplicial complex framework for document verification, validation, and assurance with explicit human accountability.
 
+## The Paper
 
-*The [full learning journey](charts/learning-journey-full/learning-journey-full.md) as a typed simplicial complex (V=32, E=70, F=35, χ=-3)*
+The paper **"Test-Driven Document Development: Simplicial Complexes for Verification, Validation, and Assurance with Human Accountability"** demonstrates a framework where:
 
----
+- **Documents are vertices** (0-simplices) in a typed complex
+- **Verification, validation, and coupling are edges** (1-simplices) connecting documents
+- **Assurance triangles are faces** (2-simplices) representing complete quality attestation
+- **Human accountability** is structurally required for validation judgments
 
-## Two Ways to Use This Repository
+**The paper is its own proof.** The file [`doc-incose-paper-2026.md`](doc-incose-paper-2026.md) exists as a vertex in an assurance complex, verified against its specification, validated against its guidance, with all checks passing.
 
-| Path | You want to... | Start here |
-|------|----------------|------------|
-| **Start Building** | Create your own knowledge complex | [Quick Start](#quick-start) |
-| **Learn First** | Understand the methodology through structured modules | [Learning Journey](#learning-journey) |
+## Quick Verification
 
----
+```bash
+# Setup
+git clone https://github.com/BlockScience/assurances-audits-accountability
+cd assurances-audits-accountability
+uv venv && source .venv/bin/activate
+uv pip install -r requirements.txt
 
-## Quick Start
+# Verify the paper
+python scripts/verify_template_based.py doc-incose-paper-2026.md --templates templates
 
-Get running in under 2 minutes.
+# Run the assurance audit
+python scripts/audit_assurance_chart.py charts/incose-paper-assurance/incose-paper-assurance.md
 
-### Prerequisites
+# Run all tests
+python -m pytest tests/ -v
+```
+
+**Expected output:**
+
+```text
+Result: ✓ PASS
+Checks: 6/6 passed
+
+Status: PASS
+Invariant: F = V - 1: 7 = 8 - 1 ✓
+Coverage: 100.0% (7/7 targets assured)
+```
+
+## Repository Structure
+
+```text
+assurances-audits-accountability/
+├── doc-incose-paper-2026.md          # THE PAPER (also a vertex)
+├── 00_vertices/                       # Document vertices
+│   ├── spec-for-incose-paper.md      # Paper specification
+│   ├── guidance-for-incose-paper.md  # Paper quality criteria
+│   ├── spec-for-spec.md              # Foundational spec
+│   ├── guidance-for-guidance.md      # Foundational guidance
+│   └── ...
+├── 01_edges/                          # Relationship edges
+│   ├── verification-incose-paper-*   # Verification edges
+│   ├── validation-incose-paper-*     # Validation edges (with approvers)
+│   ├── coupling-incose-paper.md      # Spec-guidance coupling
+│   └── ...
+├── 02_faces/                          # Assurance faces
+│   ├── assurance-incose-paper-*.md   # Paper assurance triangles
+│   ├── b2-spec-spec.md               # Boundary face
+│   └── ...
+├── charts/
+│   ├── incose-paper-assurance/       # THE AUDIT CHART
+│   └── boundary-complex/             # Foundational structure
+├── figures/                           # Paper figures
+├── scripts/                           # CLI tools
+├── templates/                         # Type definitions
+└── tests/                             # Test suite
+```
+
+## Key Concepts Demonstrated
+
+### The Assurance Triangle
+
+Every assured document requires three edges forming a closed triangle:
+
+1. **Verification edge** → document passes structural checks against spec
+2. **Coupling edge** → spec is linked to corresponding guidance
+3. **Validation edge** → document assessed against guidance (requires human approver)
+
+### The V - F = 1 Invariant
+
+In any valid assurance audit chart:
+
+- Every vertex (except root) must have exactly one assurance face
+- Every face assures exactly one vertex
+- **V - F = 1** where root provides assurance but doesn't need it
+
+### The Boundary Complex
+
+Self-referential foundations (spec-for-spec, guidance-for-guidance) are resolved through a root vertex that anchors boundary faces, enabling computational topology methods without paradox.
+
+## Figures
+
+The paper references three figures generated from this repository:
+
+| Figure | Description | Source |
+|--------|-------------|--------|
+| Figure 1 | Assurance Triangle | [figures/figure1-final.png](figures/figure1-final.png) |
+| Figure 2 | Boundary Complex | [figures/figure3-final.png](figures/figure3-final.png) |
+| Figure 3 | Audit Chart | [figures/figure2-final.png](figures/figure2-final.png) |
+
+## Scripts Reference
+
+| Script | Purpose |
+|--------|---------|
+| `verify_template_based.py` | Verify document against its type template |
+| `audit_assurance_chart.py` | Check assurance coverage and V-F=1 invariant |
+| `topology.py` | Compute Euler characteristic |
+| `visualize_chart.py` | Generate interactive visualization |
+| `build_cache.py` | Build element cache and validate all documents |
+
+## The Self-Demonstration
+
+This repository IS the evidence for the paper's claims:
+
+1. **The paper exists** as [`doc-incose-paper-2026.md`](doc-incose-paper-2026.md)
+2. **Verification passes** against [`spec-for-incose-paper.md`](00_vertices/spec-for-incose-paper.md)
+3. **Validation recorded** in [`validation-incose-paper-content:guidance-incose-paper.md`](01_edges/validation-incose-paper-content:guidance-incose-paper.md)
+4. **Assurance face closed** in [`assurance-incose-paper-content.md`](02_faces/assurance-incose-paper-content.md)
+5. **Audit passes** with 100% coverage and V-F=1 verified
+
+The existence of this repository with passing audits proves the framework works.
+
+## Requirements
 
 - Python 3.12+
 - [uv](https://github.com/astral-sh/uv) (recommended) or pip
 
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/BlockScience/knowledge-complex-demo
-cd knowledge-complex-demo
-
-# Create and activate virtual environment
-uv venv && source .venv/bin/activate
-
-# Install dependencies
-uv pip install -r requirements.txt
-
-# Verify installation
-python scripts/build_cache.py
-```
-
-### Obsidian Users
-
-Open this folder as an Obsidian vault for enhanced navigation:
-
-- **Wikilinks**: `[[vertex-name]]` for quick navigation
-- **Embeds**: `![[section]]` for document composition
-- **Graph view**: Visual exploration of relationships
-- **Backlinks**: Automatic reference tracking
-
-**Tip**: Enable "Use [[Wikilinks]]" in Obsidian settings.
-
-### Run Tests
-
-```bash
-python -m pytest tests/ -v
-```
-
----
-
-## Learning Journey
-
-Master knowledge complex methodology through 10 progressive modules.
-
-### Module Overview
-
-**Foundations (Modules 01-03)**
-
-| Module | Topic | Skill Developed |
-|--------|-------|-----------------|
-| 01 | Simplicial Complex Fundamentals | Basic graph and complex knowledge |
-| 02 | Typed Simplicial Complexes | Adding semantic types to structure |
-| 03 | Composing Typed Simplicial Complexes | Chart composition via pasting |
-
-**Quality Assurance (Modules 04-05)**
-
-| Module | Topic | Skill Developed |
-|--------|-------|-----------------|
-| 04 | Verification & Validation | Edge-based quality checking |
-| 05 | Assurance & Audits | Complete quality triangles |
-
-**Document Architecture (Modules 06-07)**
-
-| Module | Topic | Skill Developed |
-|--------|-------|-----------------|
-| 06 | Document Composition | Modular document architecture (optional) |
-| 07 | Reference & Reuse via Doc-Kits | Template-driven documentation |
-
-**Organizational Modeling (Modules 08-10)**
-
-| Module | Topic | Skill Developed |
-|--------|-------|-----------------|
-| 08 | Team Coordination | RACI patterns, role assignments |
-| 09 | Resource Management | Cross-team resource flows |
-| 10 | Organizational Topology (Capstone) | Hodge analysis, chart composition |
-
-**Terminal State**: Chief Engineer with 9-10 accumulated skills
-
-See [charts/learning-journey-full/](charts/learning-journey-full/) for the complete syllabus chart.
-
----
-
-## What's Included
-
-### Pre-Built Content
-
-| Category | Count | Location |
-|----------|-------|----------|
-| Vertex templates | 19 | `templates/00_vertices/` |
-| Edge templates | 12 | `templates/01_edges/` |
-| Face templates | 6 | `templates/02_faces/` |
-| Example charts | 16 | `charts/` |
-| Working simplices | 285+ | `00_vertices/`, `01_edges/`, `02_faces/` |
-
-### CLI Tools
-
-**Verification & Validation**
-
-| Script | Purpose |
-|--------|---------|
-| `verify_template_based.py` | Primary verification (document vs template) |
-| `verify_chart.py` | Chart structure validation |
-| `verify_structure.py` | YAML frontmatter validation |
-| `check_accountability.py` | Accountability statement validation |
-
-**Analysis & Visualization**
-
-| Script | Purpose |
-|--------|---------|
-| `topology.py` | Euler characteristic, hole detection |
-| `visualize_chart.py` | Interactive 3D visualization (HTML) |
-| `visualize_syllabus.py` | Learning path visualization |
-| `hodge_analysis.py` | Algebraic topology (advanced) |
-
-**Build & Export**
-
-| Script | Purpose |
-|--------|---------|
-| `build_cache.py` | Generate complex.json cache |
-| `export_chart_direct.py` | Chart to JSON export |
-| `compile_document.py` | Expand Obsidian embeds to standalone |
-
-**Composition**
-
-| Script | Purpose |
-|--------|---------|
-| `compose_charts.py` | Pairwise chart composition |
-| `compose_charts_multi.py` | Multi-chart iterative composition |
-
-**Audit**
-
-| Script | Purpose |
-|--------|---------|
-| `audit_assurance_chart.py` | Verify complete assurance coverage |
-
----
-
-## Repository Structure
-
-```
-knowledge-complex-demo/
-├── 00_vertices/           # Vertex documents (0-simplices)
-├── 01_edges/              # Edge documents (1-simplices)
-├── 02_faces/              # Face documents (2-simplices)
-├── charts/                # Named chart collections
-│   ├── test-tetrahedron/  # Minimal example (4V, 6E, 3F)
-│   ├── boundary-complex/  # Self-referential foundation
-│   ├── learning-journey-*/  # Module syllabi (01-10 + full)
-│   └── ...
-├── templates/             # Type definitions for validation
-│   ├── 00_vertices/       # 19 vertex types
-│   ├── 01_edges/          # 12 edge types
-│   ├── 02_faces/          # 6 face types
-│   └── charts/            # 2 chart types
-├── scripts/               # CLI tools (28 scripts)
-├── tests/                 # Test suite
-└── docs/                  # Documentation
-    ├── learning/          # Learning path guide
-    ├── concepts/          # Reference documentation
-    ├── use-cases/         # Practical examples
-    └── images/            # Visualizations
-```
-
----
-
-## Key Concepts
-
-| Term | Definition |
-|------|------------|
-| **Vertex** | Atomic entity (0-simplex) - documents, actors, skills |
-| **Edge** | Binary relationship (1-simplex) - has-skill, requires, validates |
-| **Face** | Ternary constraint (2-simplex) - assurance triangles, prerequisites |
-| **Chart** | Named collection of simplices with topological properties |
-| **Template** | Type definition specifying required fields and structure |
-| **Assurance** | Complete quality triangle (verification + validation + coupling) |
-| **Euler Characteristic** | χ = V - E + F, topological invariant detecting holes |
-
-See [docs/concepts/](docs/concepts/) for deeper explanations.
-
----
-
-## Common Commands
-
-```bash
-# Build the element cache
-python scripts/build_cache.py
-
-# Verify a chart
-python scripts/verify_chart.py charts/test-tetrahedron/test-tetrahedron.md
-
-# Analyze topology
-python scripts/topology.py charts/learning-journey-full/learning-journey-full.md --root .
-
-# Export chart to JSON
-python scripts/export_chart_direct.py charts/learning-journey-full/learning-journey-full.md output.json --root .
-
-# Visualize a chart
-python scripts/visualize_chart.py output.json
-
-# Verify document against template
-python scripts/verify_template_based.py 00_vertices/alpha.md --templates templates
-```
-
----
-
-## Getting Help
-
-- **Documentation**: See the `docs/` directory
-- **GitHub Issues**: Report bugs or request features
-- **Examples**: Explore `charts/` for working examples
-
----
-
 ## License
 
 See [LICENSE](LICENSE) file.
+
+## AI Disclosure
+
+This repository was developed with assistance from Claude (Opus 4.5). All framework architecture, validation methodology, and approval decisions are original author work. The author maintains full responsibility for all content and attestations.
