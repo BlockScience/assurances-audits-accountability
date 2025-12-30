@@ -45,7 +45,7 @@ The missing element is formal coupling. Structural requirements (specifications)
 
 A second gap concerns accountability for validation. Verification can be automated: checking word counts, section presence, and format compliance requires no judgment. Validation is inherently subjective—assessing whether content is clear, rigorous, or practically useful requires human evaluation. When AI assists in generating content, who is responsible for judging its fitness? The answer cannot be "the AI" because language models cannot bear accountability. It must be a named human who reviewed, evaluated, and approved.
 
-This paper presents a framework addressing both gaps. We model document assurance using typed simplicial complexes from algebraic topology.⁷ Documents, specifications, and guidance become vertices. Verification, validation, and coupling become edges connecting them. When a document is verified against a specification, validated against coupled guidance, and the coupling relationship is explicit, the three edges form a triangular face—a 2-simplex in topological terms. This face represents complete assurance: structural compliance plus fitness-for-purpose plus explicit coupling, with human accountability attributed for validation.
+This paper both operationalizes and provides documentation for a framework addressing both gaps. We model document assurance using typed simplicial complexes from algebraic topology.⁷ Documents, specifications, and guidance become vertices. Verification, validation, and coupling become edges connecting them. When a document is verified against a specification, validated against coupled guidance, and the coupling relationship is explicit, the three edges form a triangular face—a 2-simplex in topological terms. This face represents complete assurance: structural compliance plus fitness-for-purpose plus explicit coupling, with human accountability attributed for validation.
 
 The framework makes three specific contributions:
 
@@ -352,13 +352,14 @@ The root vertex resolves this by providing the third point. Instead of:
 
 ```text
 spec-for-spec ←→ guidance-for-spec (coupling)
+spec-for-spec ←→ guidance-for-spec (validation)
 spec-for-spec → spec-for-spec (self-verification)
 ```
 
 We construct:
 
 ```text
-spec-for-spec ←→ guidance-for-spec (coupling)
+spec-for-spec ←→ guidance-for-spec (coupling, rewired through root)
 spec-for-spec → spec-for-spec (self-verification, rewired through root)
 guidance-for-spec → spec-for-spec (validation)
 root anchors the boundary face
@@ -378,6 +379,8 @@ The root vertex is special: it provides assurance to others (anchoring boundary 
 **V - F = 1**
 
 In any valid audit chart, the number of vertices minus the number of faces equals one. The "one" is the root. Every other vertex has exactly one corresponding face; every face has exactly one target vertex. The invariant provides a computationally efficient integrity check: if V - F ≠ 1, either some vertex lacks assurance or the structure is malformed.
+
+Assurance audits are performed by enumerating all non-root vertices v and matching then to a valid assurce face comprised of verifying v against a spec, validating v against a guidance, and coupling that spec to that guidance. The audit for this document is provided below.
 
 ### Complete Assurance Audit
 
@@ -410,15 +413,17 @@ With the boundary complex and invariant established, we can present the full aud
 
 *Table 2. Summary audit metrics. The invariant V - F = 1 confirms structural integrity: every vertex except root has exactly one assurance face. Coverage confirms no unassured vertices exist.*
 
+There are limits to what we can accomplish through self-reference: this experiment required the content to be built twice; the first pass was essentially a simulated output allowing us to check that the audits would pass and write this content into the document as examples. We then run our verification and validation scripts again with payloads from the simulated verification and validation loaded into the document.
+
 ### Reference vs. Referent: The Audit Chart's Self-Reference
 
 A subtle but important distinction: the audit chart is both a *document* (a vertex in the complex) and a *reference* to a topological object (the complex itself). This dual nature requires careful handling.
 
 The audit chart `c:incose-paper-assurance` exists as a markdown file with YAML frontmatter—it is a document that can be verified against `spec-for-chart` and validated against `guidance-for-chart`. As a document, it is a vertex.
 
-But the audit chart also *references* a topological structure: 8 vertices, 21 edges, 7 faces with Euler characteristic χ = -6. This referent—the mathematical object—is not the same as the reference (the document describing it).
+But the audit chart also *references* a topological structure: 8 vertices, 21 edges, 7 faces with Euler characteristic χ = -6. This referent—the mathematical object—is not the same as the reference (the document describing it). The audit chart document describing the topological is a vertex, and is auditable using the spec for audit charts and the guidance for audit charts, which are themselves auditable against the boundary complex. 
 
-The framework handles this through typed metadata:
+The spec for audit charts calls for the data about what elements are in the chart to be presented in the yaml frontmatter, and it encodes the rules about every vertex requiring an assurance face. This means that running verification on an audit chart document also systematically checks that all vertices therein are assured.
 
 ```yaml
 type: chart/assurance_audit
@@ -427,15 +432,40 @@ elements:
     - b0:root
     - v:spec:spec
     - v:spec:guidance
-    # ... (list of vertex IDs)
+    - v:guidance:spec
+    - v:guidance:guidance
+    - v:spec:incose-paper
+    - v:guidance:incose-paper
+    - v:doc:incose-paper-2026
   edges:
     - e:coupling:spec
+    - e:coupling:guidance
+    - e:coupling:spec-guidance:guidance-spec
     - e:verification:spec-guidance:spec-spec
-    # ... (list of edge IDs)
+    - e:verification:guidance-spec:spec-guidance
+    - e:verification:guidance-guidance:spec-guidance
+    - e:validation:spec-spec:guidance-spec
+    - e:validation:spec-guidance:guidance-spec
+    - e:validation:guidance-spec:guidance-guidance
+    - b1:self-verification
+    - b1:self-validation
+    - b1:couples-GS-root
+    - b1:couples-SG-root
+    - e:coupling:incose-paper
+    - e:verification:incose-paper-spec:spec-spec
+    - e:validation:incose-paper-spec:guidance-spec
+    - e:verification:incose-paper-guidance:spec-guidance
+    - e:validation:incose-paper-guidance:guidance-guidance
+    - e:verification:incose-paper-content:spec-incose-paper
+    - e:validation:incose-paper-content:guidance-incose-paper
   faces:
     - b2:spec-spec
+    - b2:guidance-guidance
     - f:assurance:spec-guidance
-    # ... (list of face IDs)
+    - f:assurance:guidance-spec
+    - f:assurance:incose-paper-spec
+    - f:assurance:incose-paper-guidance
+    - f:assurance:incose-paper-content
 ```
 
 The `elements` field contains *references* (IDs) to other documents. The audit script resolves these references, loads the referenced documents, and constructs the *referent* (the topological object) in memory for analysis.
