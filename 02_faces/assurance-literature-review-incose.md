@@ -12,6 +12,7 @@ vertices:
   - v:doc:literature-review-incose-paper
   - v:spec:incose-literature-review
   - v:guidance:incose-literature-review
+orientation: oriented
 tags:
   - face
   - assurance

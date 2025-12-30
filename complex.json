@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-12-30T18:27:33.269255+00:00",
+  "generated": "2025-12-30T20:52:33.546998+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -50,22 +50,52 @@
       "v:doc:incose-paper-2026": {
         "file": "00_vertices/doc-incose-paper-2026.md",
         "type": "vertex/doc",
-        "extends": "vertex",
+        "extends": "doc",
         "id": "v:doc:incose-paper-2026",
-        "name": "INCOSE IS 2026 Paper - Test-Driven Document Development",
-        "description": "Draft research paper demonstrating simplicial complex framework for verification, validation, and assurance",
+        "name": "Test-Driven Document Development - INCOSE IS 2026 Paper",
+        "description": "Research paper demonstrating typed simplicial complex framework for verification, validation, and assurance with human accountability",
         "tags": [
           "vertex",
           "doc",
           "paper",
-          "incose"
+          "incose",
+          "self-demonstrating"
         ],
-        "version": "0.1.0",
-        "created": "2025-12-30T12:00:00+00:00",
-        "modified": "2025-12-30T12:00:00+00:00",
-        "word_count": 0,
+        "version": "1.0.0",
+        "created": "2025-12-30T22:00:00+00:00",
+        "modified": "2025-12-30T22:00:00+00:00",
+        "category": "research",
         "target_spec": "v:spec:incose-paper",
-        "target_guidance": "v:guidance:incose-paper"
+        "target_guidance": "v:guidance:incose-paper",
+        "extended_spec": "v:spec:incose-self-demonstration",
+        "extended_guidance": "v:guidance:incose-self-demonstration",
+        "self_demonstrating": true,
+        "supporting_documents": {
+          "architecture": {
+            "id": "v:doc:architecture-incose-paper",
+            "assured": true
+          },
+          "lifecycle": {
+            "id": "v:doc:lifecycle-incose-paper",
+            "assured": true
+          },
+          "literature_review": {
+            "id": "v:doc:literature-review-incose-paper",
+            "assured": true
+          },
+          "novel_contributions": {
+            "id": "v:doc:novel-contributions-incose-paper",
+            "assured": true
+          }
+        },
+        "keywords": [
+          "verification",
+          "validation",
+          "assurance",
+          "simplicial complex",
+          "human accountability",
+          "AI-assisted documentation"
+        ]
       },
       "v:doc:lifecycle-incose-paper": {
         "file": "00_vertices/doc-lifecycle-incose-paper.md",
@@ -119,8 +149,8 @@
         "modified": "2025-12-30T20:00:00+00:00",
         "topic": "Document Verification, Validation, Assurance, and Accountability",
         "target_paper": "v:doc:incose-paper-2026",
-        "citation_count": 17,
-        "theme_count": 4,
+        "citation_count": 18,
+        "theme_count": 5,
         "search_strategy": "Targeted search of IEEE standards, INCOSE publications, topology textbooks, and AI ethics frameworks",
         "date_range": "1979-2025",
         "databases_searched": [
@@ -147,7 +177,7 @@
         "created": "2025-12-30T20:00:00+00:00",
         "modified": "2025-12-30T20:00:00+00:00",
         "context": "incose-is-2026",
-        "contribution_count": 9,
+        "contribution_count": 8,
         "novelty_levels": [
           "Highly Novel",
           "Novel",
@@ -571,6 +601,27 @@
           "v:guidance:persona",
           "v:guidance:purpose",
           "v:guidance:protocol"
+        ]
+      },
+      "v:signer:mzargham": {
+        "file": "00_vertices/signer-mzargham.md",
+        "type": "vertex/signer",
+        "extends": "vertex/actor",
+        "id": "v:signer:mzargham",
+        "name": "Signer - mzargham",
+        "description": "Human signer with verified GitHub identity for accountability attestations",
+        "github_username": "mzargham",
+        "organization": "BlockScience",
+        "tags": [
+          "vertex",
+          "actor",
+          "signer"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:00:00+00:00",
+        "modified": "2025-12-30T23:00:00+00:00",
+        "dependencies": [
+          "v:spec:actor"
         ]
       },
       "v:spec:actor": {
@@ -1739,6 +1790,98 @@
         "version": "1.0.0",
         "created": "2025-12-30T22:30:00+00:00",
         "modified": "2025-12-30T22:30:00+00:00"
+      },
+      "e:qualifies:mzargham:guidance-incose-paper": {
+        "file": "01_edges/qualifies-mzargham:guidance-incose-paper.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:mzargham:guidance-incose-paper",
+        "name": "Qualifies - mzargham for INCOSE Paper Guidance",
+        "description": "Establishes mzargham's qualification to validate against guidance-for-incose-paper",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-paper",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "expertise",
+        "granted_by": "self-declared (framework author)",
+        "granted_date": "2025-12-30T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:00:00+00:00",
+        "modified": "2025-12-30T23:00:00+00:00"
+      },
+      "e:qualifies:mzargham:guidance-incose-self-demonstration": {
+        "file": "01_edges/qualifies-mzargham:guidance-incose-self-demonstration.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:mzargham:guidance-incose-self-demonstration",
+        "name": "Qualifies - mzargham for Self-Demonstration Guidance",
+        "description": "Establishes mzargham's qualification to validate against guidance-for-incose-self-demonstration",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-self-demonstration",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "expertise",
+        "granted_by": "self-declared (framework author)",
+        "granted_date": "2025-12-30T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:00:00+00:00",
+        "modified": "2025-12-30T23:00:00+00:00"
+      },
+      "e:signs:mzargham:incose-paper-2026-self-demo": {
+        "file": "01_edges/signs-mzargham:incose-paper-2026-self-demo.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:incose-paper-2026-self-demo",
+        "name": "Signs - mzargham attests to INCOSE Paper Self-Demonstration",
+        "description": "Attestation event where mzargham signs the self-demonstration aspect of the INCOSE paper",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:incose-paper-2026",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:00:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-incose-self-demonstration",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:00:00+00:00",
+        "modified": "2025-12-30T23:00:00+00:00"
+      },
+      "e:signs:mzargham:incose-paper-2026": {
+        "file": "01_edges/signs-mzargham:incose-paper-2026.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:incose-paper-2026",
+        "name": "Signs - mzargham attests to INCOSE Paper 2026",
+        "description": "Attestation event where mzargham signs the INCOSE paper",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:incose-paper-2026",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:00:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-incose-paper",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:00:00+00:00",
+        "modified": "2025-12-30T23:00:00+00:00"
       },
       "e:validation:architecture-guidance:guidance-guidance": {
         "file": "01_edges/validation-architecture-guidance:guidance-guidance.md",
@@ -3834,6 +3977,78 @@
         "created": "2025-12-30T11:45:00+00:00",
         "modified": "2025-12-30T11:45:00+00:00"
       },
+      "f:assurance:incose-self-demonstration-guidance": {
+        "file": "02_faces/assurance-incose-self-demonstration-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:incose-self-demonstration-guidance",
+        "name": "Assurance Face - guidance-for-incose-self-demonstration",
+        "description": "Assurance pattern for the INCOSE self-demonstration guidance",
+        "edges": [
+          "e:coupling:guidance",
+          "e:verification:incose-self-demonstration-guidance:spec-guidance",
+          "e:validation:incose-self-demonstration-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:incose-self-demonstration",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:incose-self-demonstration",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:guidance",
+        "verification_edge": "e:verification:incose-self-demonstration-guidance:spec-guidance",
+        "validation_edge": "e:validation:incose-self-demonstration-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "f:assurance:incose-self-demonstration-spec": {
+        "file": "02_faces/assurance-incose-self-demonstration-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:incose-self-demonstration-spec",
+        "name": "Assurance Face - spec-for-incose-self-demonstration",
+        "description": "Assurance pattern for the INCOSE self-demonstration specification",
+        "edges": [
+          "e:coupling:spec",
+          "e:verification:incose-self-demonstration-spec:spec-spec",
+          "e:validation:incose-self-demonstration-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:incose-self-demonstration",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:incose-self-demonstration",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:spec",
+        "verification_edge": "e:verification:incose-self-demonstration-spec:spec-spec",
+        "validation_edge": "e:validation:incose-self-demonstration-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
       "f:assurance:lifecycle-guidance": {
         "file": "02_faces/assurance-lifecycle-guidance.md",
         "type": "face/assurance",
@@ -3869,6 +4084,33 @@
         "version": "1.0.0",
         "created": "2025-12-30T19:00:00+00:00",
         "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "f:assurance:lifecycle-incose": {
+        "file": "02_faces/assurance-lifecycle-incose.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:lifecycle-incose",
+        "name": "Assurance - doc-lifecycle-incose-paper",
+        "target": "v:doc:lifecycle-incose-paper",
+        "edges": [
+          "e:verification:lifecycle-incose:spec-lifecycle",
+          "e:coupling:lifecycle",
+          "e:validation:lifecycle-incose:guidance-lifecycle"
+        ],
+        "vertices": [
+          "v:doc:lifecycle-incose-paper",
+          "v:spec:lifecycle",
+          "v:guidance:lifecycle"
+        ],
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T20:45:00+00:00",
+        "modified": "2025-12-30T20:45:00+00:00",
+        "human_approver": "mzargham"
       },
       "f:assurance:lifecycle-spec": {
         "file": "02_faces/assurance-lifecycle-spec.md",
@@ -3942,6 +4184,34 @@
         "created": "2025-12-30T19:00:00+00:00",
         "modified": "2025-12-30T19:00:00+00:00"
       },
+      "f:assurance:literature-review-incose": {
+        "file": "02_faces/assurance-literature-review-incose.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:literature-review-incose",
+        "name": "Assurance - doc-literature-review-incose-paper",
+        "target": "v:doc:literature-review-incose-paper",
+        "edges": [
+          "e:verification:literature-review-incose:spec-incose-literature-review",
+          "e:coupling:incose-literature-review",
+          "e:validation:literature-review-incose:guidance-incose-literature-review"
+        ],
+        "vertices": [
+          "v:doc:literature-review-incose-paper",
+          "v:spec:incose-literature-review",
+          "v:guidance:incose-literature-review"
+        ],
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T21:00:00+00:00",
+        "modified": "2025-12-30T21:00:00+00:00",
+        "human_approver": "mzargham",
+        "assurance_method": "llm-assisted"
+      },
       "f:assurance:literature-review-spec": {
         "file": "02_faces/assurance-literature-review-spec.md",
         "type": "face/assurance",
@@ -4013,6 +4283,34 @@
         "version": "1.0.0",
         "created": "2025-12-30T18:00:00+00:00",
         "modified": "2025-12-30T18:00:00+00:00"
+      },
+      "f:assurance:novel-contributions-incose": {
+        "file": "02_faces/assurance-novel-contributions-incose.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:novel-contributions-incose",
+        "name": "Assurance - doc-novel-contributions-incose-paper",
+        "target": "v:doc:novel-contributions-incose-paper",
+        "edges": [
+          "e:verification:novel-contributions-incose:spec-novel-contributions",
+          "e:coupling:novel-contributions",
+          "e:validation:novel-contributions-incose:guidance-novel-contributions"
+        ],
+        "vertices": [
+          "v:doc:novel-contributions-incose-paper",
+          "v:spec:novel-contributions",
+          "v:guidance:novel-contributions"
+        ],
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T20:30:00+00:00",
+        "modified": "2025-12-30T20:30:00+00:00",
+        "human_approver": "mzargham",
+        "assurance_method": "llm-assisted"
       },
       "f:assurance:novel-contributions-spec": {
         "file": "02_faces/assurance-novel-contributions-spec.md",
@@ -4649,6 +4947,76 @@
         "version": "1.0.0",
         "created": "2025-12-27T22:20:00+00:00",
         "modified": "2025-12-27T22:20:00+00:00"
+      },
+      "f:signature:incose-paper-2026-base": {
+        "file": "02_faces/signature-incose-paper-2026-base.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:incose-paper-2026-base",
+        "name": "Signature Face - INCOSE Paper 2026 (Base)",
+        "description": "Accountability triangle for the INCOSE paper base assurance",
+        "vertices": [
+          "v:doc:incose-paper-2026",
+          "v:guidance:incose-paper",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:doc:incose-paper-2026",
+        "guidance": "v:guidance:incose-paper",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:incose-paper-2026:guidance-incose-paper",
+          "e:signs:mzargham:incose-paper-2026",
+          "e:qualifies:mzargham:guidance-incose-paper"
+        ],
+        "validation_edge": "e:validation:incose-paper-2026:guidance-incose-paper",
+        "signs_edge": "e:signs:mzargham:incose-paper-2026",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-incose-paper",
+        "signing_date": "2025-12-30T23:00:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:incose-paper-2026-base",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:00:00+00:00",
+        "modified": "2025-12-30T23:00:00+00:00"
+      },
+      "f:signature:incose-paper-2026-self-demo": {
+        "file": "02_faces/signature-incose-paper-2026-self-demo.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:incose-paper-2026-self-demo",
+        "name": "Signature Face - INCOSE Paper 2026 (Self-Demo)",
+        "description": "Accountability triangle for the INCOSE paper self-demonstration assurance",
+        "vertices": [
+          "v:doc:incose-paper-2026",
+          "v:guidance:incose-self-demonstration",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:doc:incose-paper-2026",
+        "guidance": "v:guidance:incose-self-demonstration",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:incose-paper-2026:guidance-incose-self-demonstration",
+          "e:signs:mzargham:incose-paper-2026-self-demo",
+          "e:qualifies:mzargham:guidance-incose-self-demonstration"
+        ],
+        "validation_edge": "e:validation:incose-paper-2026:guidance-incose-self-demonstration",
+        "signs_edge": "e:signs:mzargham:incose-paper-2026-self-demo",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-incose-self-demonstration",
+        "signing_date": "2025-12-30T23:00:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:incose-paper-2026-self-demo",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:00:00+00:00",
+        "modified": "2025-12-30T23:00:00+00:00"
       }
     },
     "charts": {
@@ -4722,16 +5090,16 @@
         "extends": "chart",
         "id": "c:incose-paper-assurance",
         "name": "INCOSE Paper Assurance Audit Chart",
-        "description": "Complete assurance network for the INCOSE IS 2026 paper demonstrating the framework",
+        "description": "Complete assurance network for the INCOSE IS 2026 paper with dual assurance (base + self-demonstration)",
         "constructed_by": "claude-opus-4-5-20251101",
         "construction_method": "llm-assisted",
         "construction_date": "2025-12-30T13:00:00+00:00",
-        "purpose": "Demonstrate the assurance framework by showing how the INCOSE paper and its supporting documents are assured through nested triangles",
-        "scope": "11 vertices including boundary complex foundation plus 3 INCOSE-specific vertices",
-        "audit_date": "2025-12-30T13:00:00+00:00",
+        "purpose": "Demonstrate the assurance framework by showing how the INCOSE paper achieves dual assurance through two independent triangles",
+        "scope": "24 vertices including boundary complex, supporting document types, supporting document instances, and paper content",
+        "audit_date": "2025-12-30T23:55:00+00:00",
         "auditor": "claude-opus-4-5-20251101",
-        "audit_status": "PENDING",
-        "audit_coverage": "0% (pending audit execution)",
+        "audit_status": "PASS",
+        "audit_coverage": "100%",
         "assurance_requirements": {
           "all_vertices_assured": true,
           "assurance_method": "mixed",
@@ -4746,7 +5114,22 @@
             "v:guidance:guidance",
             "v:spec:incose-paper",
             "v:guidance:incose-paper",
-            "v:doc:incose-paper-2026"
+            "v:spec:incose-self-demonstration",
+            "v:guidance:incose-self-demonstration",
+            "v:spec:architecture",
+            "v:guidance:architecture",
+            "v:spec:lifecycle",
+            "v:guidance:lifecycle",
+            "v:spec:incose-literature-review",
+            "v:guidance:incose-literature-review",
+            "v:spec:novel-contributions",
+            "v:guidance:novel-contributions",
+            "v:doc:architecture-incose-paper",
+            "v:doc:lifecycle-incose-paper",
+            "v:doc:literature-review-incose-paper",
+            "v:doc:novel-contributions-incose-paper",
+            "v:doc:incose-paper-2026",
+            "v:signer:mzargham"
           ],
           "edges": [
             "e:coupling:spec",
@@ -4767,8 +5150,47 @@
             "e:validation:incose-paper-spec:guidance-spec",
             "e:verification:incose-paper-guidance:spec-guidance",
             "e:validation:incose-paper-guidance:guidance-guidance",
-            "e:verification:incose-paper-content:spec-incose-paper",
-            "e:validation:incose-paper-content:guidance-incose-paper"
+            "e:coupling:incose-self-demonstration",
+            "e:verification:incose-self-demonstration-spec:spec-spec",
+            "e:validation:incose-self-demonstration-spec:guidance-spec",
+            "e:verification:incose-self-demonstration-guidance:spec-guidance",
+            "e:validation:incose-self-demonstration-guidance:guidance-guidance",
+            "e:coupling:architecture",
+            "e:verification:architecture-spec:spec-spec",
+            "e:validation:architecture-spec:guidance-spec",
+            "e:verification:architecture-guidance:spec-guidance",
+            "e:validation:architecture-guidance:guidance-guidance",
+            "e:coupling:lifecycle",
+            "e:verification:lifecycle-spec:spec-spec",
+            "e:validation:lifecycle-spec:guidance-spec",
+            "e:verification:lifecycle-guidance:spec-guidance",
+            "e:validation:lifecycle-guidance:guidance-guidance",
+            "e:coupling:incose-literature-review",
+            "e:verification:literature-review-spec:spec-spec",
+            "e:validation:literature-review-spec:guidance-spec",
+            "e:verification:literature-review-guidance:spec-guidance",
+            "e:validation:literature-review-guidance:guidance-guidance",
+            "e:coupling:novel-contributions",
+            "e:verification:novel-contributions-spec:spec-spec",
+            "e:validation:novel-contributions-spec:guidance-spec",
+            "e:verification:novel-contributions-guidance:spec-guidance",
+            "e:validation:novel-contributions-guidance:guidance-guidance",
+            "e:verification:architecture-incose:spec-architecture",
+            "e:validation:architecture-incose:guidance-architecture",
+            "e:verification:lifecycle-incose:spec-lifecycle",
+            "e:validation:lifecycle-incose:guidance-lifecycle",
+            "e:verification:literature-review-incose:spec-incose-literature-review",
+            "e:validation:literature-review-incose:guidance-incose-literature-review",
+            "e:verification:novel-contributions-incose:spec-novel-contributions",
+            "e:validation:novel-contributions-incose:guidance-novel-contributions",
+            "e:verification:incose-paper-2026:spec-incose-paper",
+            "e:validation:incose-paper-2026:guidance-incose-paper",
+            "e:verification:incose-paper-2026:spec-incose-self-demonstration",
+            "e:validation:incose-paper-2026:guidance-incose-self-demonstration",
+            "e:qualifies:mzargham:guidance-incose-paper",
+            "e:qualifies:mzargham:guidance-incose-self-demonstration",
+            "e:signs:mzargham:incose-paper-2026",
+            "e:signs:mzargham:incose-paper-2026-self-demo"
           ],
           "faces": [
             "f:assurance:spec-guidance",
@@ -4777,7 +5199,24 @@
             "b2:guidance-guidance",
             "f:assurance:incose-paper-spec",
             "f:assurance:incose-paper-guidance",
-            "f:assurance:incose-paper-content"
+            "f:assurance:incose-self-demonstration-spec",
+            "f:assurance:incose-self-demonstration-guidance",
+            "f:assurance:architecture-spec",
+            "f:assurance:architecture-guidance",
+            "f:assurance:lifecycle-spec",
+            "f:assurance:lifecycle-guidance",
+            "f:assurance:literature-review-spec",
+            "f:assurance:literature-review-guidance",
+            "f:assurance:novel-contributions-spec",
+            "f:assurance:novel-contributions-guidance",
+            "f:assurance:architecture-incose",
+            "f:assurance:lifecycle-incose",
+            "f:assurance:literature-review-incose",
+            "f:assurance:novel-contributions-incose",
+            "f:assurance:incose-paper-2026-base",
+            "f:assurance:incose-paper-2026-self-demo",
+            "f:signature:incose-paper-2026-base",
+            "f:signature:incose-paper-2026-self-demo"
           ]
         },
         "tags": [
@@ -4785,11 +5224,12 @@
           "assurance_audit",
           "incose",
           "paper",
-          "demonstration"
+          "demonstration",
+          "dual-assurance"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T13:00:00+00:00",
-        "modified": "2025-12-30T13:00:00+00:00"
+        "modified": "2025-12-30T23:55:00+00:00"
       },
       "c:test-tetrahedron": {
         "file": "charts/test-tetrahedron/test-tetrahedron.md",
@@ -4834,10 +5274,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 55,
-    "edge_count": 104,
-    "face_count": 36,
+    "vertex_count": 56,
+    "edge_count": 108,
+    "face_count": 43,
     "chart_count": 3,
-    "euler_characteristic": -13
+    "euler_characteristic": -9
   }
 }

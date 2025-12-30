@@ -12,6 +12,7 @@ vertices:
   - v:doc:lifecycle-incose-paper
   - v:spec:lifecycle
   - v:guidance:lifecycle
+orientation: oriented
 tags:
   - face
   - assurance

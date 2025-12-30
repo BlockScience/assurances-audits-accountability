@@ -1,19 +1,19 @@
 {
   "chart_id": "c:incose-paper-assurance",
   "name": "INCOSE Paper Assurance Audit Chart",
-  "description": "Complete assurance network for the INCOSE IS 2026 paper demonstrating the framework",
+  "description": "Complete assurance network for the INCOSE IS 2026 paper with dual assurance (base + self-demonstration)",
   "type": "chart/assurance_audit",
   "constructed_by": "claude-opus-4-5-20251101",
   "construction_method": "llm-assisted",
-  "purpose": "Demonstrate the assurance framework by showing how the INCOSE paper and its supporting documents are assured through nested triangles",
-  "scope": "11 vertices including boundary complex foundation plus 3 INCOSE-specific vertices",
+  "purpose": "Demonstrate the assurance framework by showing how the INCOSE paper achieves dual assurance through two independent triangles",
+  "scope": "24 vertices including boundary complex, supporting document types, supporting document instances, and paper content",
   "element_counts": {
-    "vertices": 8,
-    "edges": 20,
-    "faces": 7
+    "vertices": 23,
+    "edges": 55,
+    "faces": 24
   },
   "topology": {
-    "euler_characteristic": -5,
+    "euler_characteristic": -8,
     "dimension": 2
   },
   "elements": {
@@ -61,9 +61,99 @@
         "element_type": "vertex"
       },
       {
-        "id": "v:doc:incose-paper-2026",
-        "name": "INCOSE IS 2026 Paper - Test-Driven Document Development",
+        "id": "v:spec:incose-self-demonstration",
+        "name": "Specification for INCOSE Self-Demonstrating Paper",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:incose-self-demonstration",
+        "name": "Guidance for INCOSE Self-Demonstrating Paper",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:architecture",
+        "name": "Specification for Architecture Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:architecture",
+        "name": "Guidance for Architecture Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:lifecycle",
+        "name": "Specification for Lifecycle Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:lifecycle",
+        "name": "Guidance for Lifecycle Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:incose-literature-review",
+        "name": "Specification for INCOSE Literature Review Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:incose-literature-review",
+        "name": "Guidance for INCOSE Literature Review Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:novel-contributions",
+        "name": "Specification for Novel Contributions Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:novel-contributions",
+        "name": "Guidance for Novel Contributions Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:architecture-incose-paper",
+        "name": "Architecture Document - INCOSE Paper Assurance Framework",
         "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:lifecycle-incose-paper",
+        "name": "Engineering Lifecycle for INCOSE Paper Development",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:literature-review-incose-paper",
+        "name": "Literature Review - INCOSE IS 2026 Paper on Document Assurance Framework",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:novel-contributions-incose-paper",
+        "name": "Novel Research Contributions - INCOSE IS 2026 Paper",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:incose-paper-2026",
+        "name": "Test-Driven Document Development - INCOSE IS 2026 Paper",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:signer:mzargham",
+        "name": "Signer - mzargham",
+        "type": "vertex/signer",
         "element_type": "vertex"
       }
     ],
@@ -213,19 +303,299 @@
         "element_type": "edge"
       },
       {
-        "id": "e:verification:incose-paper-content:spec-incose-paper",
-        "name": "Verification - INCOSE paper content against spec-for-incose-paper",
+        "id": "e:coupling:incose-self-demonstration",
+        "name": "Coupling - Spec and Guidance for INCOSE Self-Demonstrating Paper",
+        "type": "edge/coupling",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:guidance:incose-self-demonstration",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:architecture",
+        "name": "Coupling - Spec-for-Architecture and Guidance-for-Architecture",
+        "type": "edge/coupling",
+        "source": "v:spec:architecture",
+        "target": "v:guidance:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:architecture-spec:spec-spec",
+        "name": "Verification - spec-for-architecture against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:architecture",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:architecture-spec:guidance-spec",
+        "name": "Validation - spec-for-architecture against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:architecture",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:architecture-guidance:spec-guidance",
+        "name": "Verification - guidance-for-architecture against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:architecture",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:architecture-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-architecture against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:architecture",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:lifecycle",
+        "name": "Coupling - Spec-for-Lifecycle and Guidance-for-Lifecycle",
+        "type": "edge/coupling",
+        "source": "v:spec:lifecycle",
+        "target": "v:guidance:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:lifecycle-spec:spec-spec",
+        "name": "Verification - spec-for-lifecycle against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:lifecycle",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:lifecycle-spec:guidance-spec",
+        "name": "Validation - spec-for-lifecycle against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:lifecycle",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:lifecycle-guidance:spec-guidance",
+        "name": "Verification - guidance-for-lifecycle against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:lifecycle",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:lifecycle-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-lifecycle against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:lifecycle",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:incose-literature-review",
+        "name": "Coupling - Spec and Guidance for INCOSE Literature Reviews",
+        "type": "edge/coupling",
+        "source": "v:spec:incose-literature-review",
+        "target": "v:guidance:incose-literature-review",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:literature-review-spec:spec-spec",
+        "name": "Verification - spec-for-incose-literature-review against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:incose-literature-review",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:literature-review-spec:guidance-spec",
+        "name": "Validation - spec-for-incose-literature-review against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:incose-literature-review",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:literature-review-guidance:spec-guidance",
+        "name": "Verification - guidance-for-incose-literature-review against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:incose-literature-review",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:literature-review-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-incose-literature-review against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:incose-literature-review",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:novel-contributions",
+        "name": "Coupling - spec-for-novel-contributions and guidance-for-novel-contributions",
+        "type": "edge/coupling",
+        "source": "v:spec:novel-contributions",
+        "target": "v:guidance:novel-contributions",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:novel-contributions-spec:spec-spec",
+        "name": "Verification - spec-for-novel-contributions against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:novel-contributions",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:novel-contributions-spec:guidance-spec",
+        "name": "Validation - spec-for-novel-contributions against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:novel-contributions",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:novel-contributions-guidance:spec-guidance",
+        "name": "Verification - guidance-for-novel-contributions against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:novel-contributions",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:novel-contributions-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-novel-contributions against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:novel-contributions",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:architecture-incose:spec-architecture",
+        "name": "Verification - doc-architecture-incose-paper against spec-for-architecture",
+        "type": "edge/verification",
+        "source": "v:doc:architecture-incose-paper",
+        "target": "v:spec:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:architecture-incose:guidance-architecture",
+        "name": "Validation - doc-architecture-incose-paper against guidance-for-architecture",
+        "type": "edge/validation",
+        "source": "v:doc:architecture-incose-paper",
+        "target": "v:guidance:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:lifecycle-incose:spec-lifecycle",
+        "name": "Verification - doc-lifecycle-incose-paper against spec-for-lifecycle",
+        "type": "edge/verification",
+        "source": "v:doc:lifecycle-incose-paper",
+        "target": "v:spec:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:lifecycle-incose:guidance-lifecycle",
+        "name": "Validation - doc-lifecycle-incose-paper against guidance-for-lifecycle",
+        "type": "edge/validation",
+        "source": "v:doc:lifecycle-incose-paper",
+        "target": "v:guidance:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:literature-review-incose:spec-incose-literature-review",
+        "name": "Verification - doc-literature-review-incose-paper against spec-for-incose-literature-review",
+        "type": "edge/verification",
+        "source": "v:doc:literature-review-incose-paper",
+        "target": "v:spec:incose-literature-review",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:literature-review-incose:guidance-incose-literature-review",
+        "name": "Validation - doc-literature-review-incose-paper against guidance-for-incose-literature-review",
+        "type": "edge/validation",
+        "source": "v:doc:literature-review-incose-paper",
+        "target": "v:guidance:incose-literature-review",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:novel-contributions-incose:spec-novel-contributions",
+        "name": "Verification - doc-novel-contributions-incose-paper against spec-for-novel-contributions",
+        "type": "edge/verification",
+        "source": "v:doc:novel-contributions-incose-paper",
+        "target": "v:spec:novel-contributions",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:novel-contributions-incose:guidance-novel-contributions",
+        "name": "Validation - doc-novel-contributions-incose-paper against guidance-for-novel-contributions",
+        "type": "edge/validation",
+        "source": "v:doc:novel-contributions-incose-paper",
+        "target": "v:guidance:novel-contributions",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:incose-paper-2026:spec-incose-paper",
+        "name": "Verification - INCOSE Paper 2026 against Base Spec",
         "type": "edge/verification",
         "source": "v:doc:incose-paper-2026",
         "target": "v:spec:incose-paper",
         "element_type": "edge"
       },
       {
-        "id": "e:validation:incose-paper-content:guidance-incose-paper",
-        "name": "Validation - INCOSE paper content against guidance-for-incose-paper",
+        "id": "e:validation:incose-paper-2026:guidance-incose-paper",
+        "name": "Validation - INCOSE Paper 2026 against Base Guidance",
         "type": "edge/validation",
         "source": "v:doc:incose-paper-2026",
         "target": "v:guidance:incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:incose-paper-2026:spec-incose-self-demonstration",
+        "name": "Verification - INCOSE Paper 2026 against Self-Demonstration Spec",
+        "type": "edge/verification",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:spec:incose-self-demonstration",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:incose-paper-2026:guidance-incose-self-demonstration",
+        "name": "Validation - INCOSE Paper 2026 against Self-Demonstration Guidance",
+        "type": "edge/validation",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:guidance:incose-self-demonstration",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:mzargham:guidance-incose-paper",
+        "name": "Qualifies - mzargham for INCOSE Paper Guidance",
+        "type": "edge/qualifies",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:mzargham:guidance-incose-self-demonstration",
+        "name": "Qualifies - mzargham for Self-Demonstration Guidance",
+        "type": "edge/qualifies",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-self-demonstration",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:incose-paper-2026",
+        "name": "Signs - mzargham attests to INCOSE Paper 2026",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:incose-paper-2026",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:incose-paper-2026-self-demo",
+        "name": "Signs - mzargham attests to INCOSE Paper Self-Demonstration",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:incose-paper-2026",
         "element_type": "edge"
       }
     ],
@@ -303,8 +673,176 @@
         "element_type": "face"
       },
       {
-        "id": "f:assurance:incose-paper-content",
-        "name": "Assurance Face - INCOSE Paper Content",
+        "id": "f:assurance:incose-self-demonstration-spec",
+        "name": "Assurance Face - spec-for-incose-self-demonstration",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:incose-self-demonstration",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:incose-self-demonstration-guidance",
+        "name": "Assurance Face - guidance-for-incose-self-demonstration",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:incose-self-demonstration",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:architecture-spec",
+        "name": "Assurance Face - spec-for-architecture",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:architecture",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:architecture-guidance",
+        "name": "Assurance Face - guidance-for-architecture",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:architecture",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:lifecycle-spec",
+        "name": "Assurance Face - spec-for-lifecycle",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:lifecycle",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:lifecycle-guidance",
+        "name": "Assurance Face - guidance-for-lifecycle",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:lifecycle",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:literature-review-spec",
+        "name": "Assurance Face - spec-for-incose-literature-review",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:incose-literature-review",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:literature-review-guidance",
+        "name": "Assurance Face - guidance-for-incose-literature-review",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:incose-literature-review",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:novel-contributions-spec",
+        "name": "Assurance Face - spec-for-novel-contributions",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:novel-contributions",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:novel-contributions-guidance",
+        "name": "Assurance Face - guidance-for-novel-contributions",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:novel-contributions",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:architecture-incose",
+        "name": "Assurance Face - doc-architecture-incose-paper",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:architecture-incose-paper",
+          "v:spec:architecture",
+          "v:guidance:architecture"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:lifecycle-incose",
+        "name": "Assurance - doc-lifecycle-incose-paper",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:lifecycle-incose-paper",
+          "v:spec:lifecycle",
+          "v:guidance:lifecycle"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:literature-review-incose",
+        "name": "Assurance - doc-literature-review-incose-paper",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:literature-review-incose-paper",
+          "v:spec:incose-literature-review",
+          "v:guidance:incose-literature-review"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:novel-contributions-incose",
+        "name": "Assurance - doc-novel-contributions-incose-paper",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:novel-contributions-incose-paper",
+          "v:spec:novel-contributions",
+          "v:guidance:novel-contributions"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:incose-paper-2026-base",
+        "name": "Assurance Face - INCOSE Paper 2026 (Base)",
         "type": "face/assurance",
         "boundary": [],
         "vertices": [
@@ -313,11 +851,47 @@
           "v:guidance:incose-paper"
         ],
         "element_type": "face"
+      },
+      {
+        "id": "f:assurance:incose-paper-2026-self-demo",
+        "name": "Assurance Face - INCOSE Paper 2026 (Self-Demonstration)",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:incose-paper-2026",
+          "v:spec:incose-self-demonstration",
+          "v:guidance:incose-self-demonstration"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:incose-paper-2026-base",
+        "name": "Signature Face - INCOSE Paper 2026 (Base)",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:doc:incose-paper-2026",
+          "v:guidance:incose-paper",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:incose-paper-2026-self-demo",
+        "name": "Signature Face - INCOSE Paper 2026 (Self-Demo)",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:doc:incose-paper-2026",
+          "v:guidance:incose-self-demonstration",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
       }
     ]
   },
   "metadata": {
-    "exported": "2025-12-30T01:59:39.880936",
+    "exported": "2025-12-30T15:52:38.865973",
     "source_file": "charts/incose-paper-assurance/incose-paper-assurance.md"
   },
   "assurance_requirements": {
@@ -326,7 +900,7 @@
     "minimum_assurance_level": "ASSURED"
   },
   "audit_targets": [],
-  "audit_date": "2025-12-30T13:00:00+00:00",
+  "audit_date": "2025-12-30T23:55:00+00:00",
   "auditor": "claude-opus-4-5-20251101",
-  "audit_status": "PENDING"
+  "audit_status": "PASS"
 }
