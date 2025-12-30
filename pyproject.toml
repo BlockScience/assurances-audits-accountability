@@ -1,0 +1,31 @@
+[project]
+name = "knowledge-complex"
+version = "0.1.0"
+description = "Knowledge complex seed template with simplicial complex tools"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+
+dependencies = [
+    "pyyaml>=6.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
+addopts = "-p no:ethereum"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=9.0.0",
+]

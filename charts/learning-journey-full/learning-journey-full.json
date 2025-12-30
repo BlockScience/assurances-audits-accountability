@@ -1,0 +1,1203 @@
+{
+  "chart_id": "c:learning-journey-full",
+  "name": "Learning Journey - Complete Curriculum (Modules 01-10)",
+  "description": "Full learning journey from knowledge complex fundamentals through organizational topology and chief engineer mastery",
+  "type": "chart/syllabus",
+  "constructed_by": "Claude Opus 4.5",
+  "construction_method": "composition",
+  "purpose": "Complete curriculum for knowledge complex education from beginner to chief engineer through 10 modules",
+  "scope": "10 modules covering fundamentals, types, composition, verification, assurance, document architecture, coordination, resource management, and organizational topology",
+  "element_counts": {
+    "vertices": 32,
+    "edges": 70,
+    "faces": 35
+  },
+  "topology": {
+    "euler_characteristic": -3,
+    "dimension": 2
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "v:student:knowledge-complex-learner",
+        "name": "Knowledge Complex Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:foundational-learner",
+        "name": "Foundational Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:intermediate-learner",
+        "name": "Intermediate Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:compositional-learner",
+        "name": "Compositional Learner",
+        "type": "vertex/actor",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:verification-learner",
+        "name": "Verification Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:assurance-learner",
+        "name": "Assurance Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:document-architect",
+        "name": "Document Architect",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:coordination-architect",
+        "name": "Coordination Architect",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:management-architect",
+        "name": "Management Architect",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:chief-engineer",
+        "name": "Chief Engineer",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:sets-and-graphs",
+        "name": "Sets and Graphs",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:simplicial-complex-fundamentals",
+        "name": "Simplicial Complex Fundamentals",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:typed-simplicial-complexes",
+        "name": "Typed Simplicial Complexes",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:composing-typed-simplicial-complexes",
+        "name": "Composing Typed Simplicial Complexes",
+        "type": "vertex/property",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:verification-validation",
+        "name": "Verification & Validation",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:assurance-audits",
+        "name": "Assurance & Audits",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:document-composition",
+        "name": "Document Composition",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:reference-reuse",
+        "name": "Reference & Reuse via Doc-Kits",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:team-coordination",
+        "name": "Team Coordination",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:resource-management",
+        "name": "Resource Management",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:topological-data-analysis",
+        "name": "Topological Data Analysis",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:organizational-design-analysis",
+        "name": "Organizational Design & Analysis",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:simplicial-complex-fundamentals",
+        "name": "Simplicial Complex Fundamentals",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:typed-simplicial-complexes",
+        "name": "Typed Simplicial Complexes - From Structure to Semantics",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:composing-typed-simplicial-complexes",
+        "name": "Composing Typed Simplicial Complexes",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:verification-validation",
+        "name": "Verification & Validation - Quality Assurance Fundamentals",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:assurance-audits",
+        "name": "Assurance & Audits - Complete Quality Networks",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:document-composition",
+        "name": "Document Composition - Modular Architecture",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:reference-reuse",
+        "name": "Reference & Reuse via Doc-Kits",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:team-coordination",
+        "name": "Team Coordination",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:resource-management",
+        "name": "Resource Management",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:organizational-topology",
+        "name": "Organizational Topology",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:has-skill:knowledge-complex-learner:sets-and-graphs",
+        "name": "knowledge-complex-learner has skill sets-and-graphs",
+        "type": "edge/has-skill",
+        "source": "v:student:knowledge-complex-learner",
+        "target": "v:skill:sets-and-graphs",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:foundational-learner:simplicial-complex-fundamentals",
+        "name": "foundational-learner has skill simplicial-complex-fundamentals",
+        "type": "edge/has-skill",
+        "source": "v:student:foundational-learner",
+        "target": "v:skill:simplicial-complex-fundamentals",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:intermediate-learner:simplicial-complex-fundamentals",
+        "name": "intermediate-learner has skill simplicial-complex-fundamentals",
+        "type": "edge/has-skill",
+        "source": "v:student:intermediate-learner",
+        "target": "v:skill:simplicial-complex-fundamentals",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:intermediate-learner:typed-simplicial-complexes",
+        "name": "intermediate-learner has skill typed-simplicial-complexes",
+        "type": "edge/has-skill",
+        "source": "v:student:intermediate-learner",
+        "target": "v:skill:typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:compositional-learner:composing-typed-simplicial-complexes",
+        "name": "compositional-learner has-skill composing-typed-simplicial-complexes",
+        "type": "edge/has-skill",
+        "source": "v:student:compositional-learner",
+        "target": "v:skill:composing-typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:verification-learner:verification-validation",
+        "name": "verification-learner has skill verification-validation",
+        "type": "edge/has-skill",
+        "source": "v:student:verification-learner",
+        "target": "v:skill:verification-validation",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:assurance-learner:assurance-audits",
+        "name": "assurance-learner has skill assurance-audits",
+        "type": "edge/has-skill",
+        "source": "v:student:assurance-learner",
+        "target": "v:skill:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:assurance-learner:composing-typed-simplicial-complexes",
+        "name": "assurance-learner has skill composing-typed-simplicial-complexes",
+        "type": "edge/has-skill",
+        "source": "v:student:assurance-learner",
+        "target": "v:skill:composing-typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:document-architect:document-composition",
+        "name": "document-architect has skill document-composition",
+        "type": "edge/has-skill",
+        "source": "v:student:document-architect",
+        "target": "v:skill:document-composition",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:document-architect:reference-reuse",
+        "name": "document-architect has skill reference-reuse",
+        "type": "edge/has-skill",
+        "source": "v:student:document-architect",
+        "target": "v:skill:reference-reuse",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:coordination-architect:team-coordination",
+        "name": "coordination-architect has skill team-coordination",
+        "type": "edge/has-skill",
+        "source": "v:student:coordination-architect",
+        "target": "v:skill:team-coordination",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:management-architect:team-coordination",
+        "name": "management-architect has skill team-coordination",
+        "type": "edge/has-skill",
+        "source": "v:student:management-architect",
+        "target": "v:skill:team-coordination",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:management-architect:resource-management",
+        "name": "management-architect has skill resource-management",
+        "type": "edge/has-skill",
+        "source": "v:student:management-architect",
+        "target": "v:skill:resource-management",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:management-architect:composing-typed-simplicial-complexes",
+        "name": "management-architect has skill composing-typed-simplicial-complexes",
+        "type": "edge/has-skill",
+        "source": "v:student:management-architect",
+        "target": "v:skill:composing-typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:chief-engineer:topological-data-analysis",
+        "name": "chief-engineer has skill topological-data-analysis",
+        "type": "edge/has-skill",
+        "source": "v:student:chief-engineer",
+        "target": "v:skill:topological-data-analysis",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:chief-engineer:organizational-design-analysis",
+        "name": "chief-engineer has skill organizational-design-analysis",
+        "type": "edge/has-skill",
+        "source": "v:student:chief-engineer",
+        "target": "v:skill:organizational-design-analysis",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:simplicial-complex-fundamentals:sets-and-graphs",
+        "name": "simplicial-complex-fundamentals requires skill sets-and-graphs",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:simplicial-complex-fundamentals",
+        "target": "v:skill:sets-and-graphs",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:typed-simplicial-complexes:simplicial-complex-fundamentals",
+        "name": "typed-simplicial-complexes requires skill simplicial-complex-fundamentals",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:typed-simplicial-complexes",
+        "target": "v:skill:simplicial-complex-fundamentals",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:composing-typed-simplicial-complexes:simplicial-complex-fundamentals",
+        "name": "composing-typed-simplicial-complexes requires-skill simplicial-complex-fundamentals",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:composing-typed-simplicial-complexes",
+        "target": "v:skill:simplicial-complex-fundamentals",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:composing-typed-simplicial-complexes:typed-simplicial-complexes",
+        "name": "composing-typed-simplicial-complexes requires-skill typed-simplicial-complexes",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:composing-typed-simplicial-complexes",
+        "target": "v:skill:typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:verification-validation:typed-simplicial-complexes",
+        "name": "verification-validation requires skill typed-simplicial-complexes",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:verification-validation",
+        "target": "v:skill:typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:assurance-audits:verification-validation",
+        "name": "assurance-audits requires skill verification-validation",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:assurance-audits",
+        "target": "v:skill:verification-validation",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:document-composition:assurance-audits",
+        "name": "document-composition requires skill assurance-audits",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:document-composition",
+        "target": "v:skill:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:document-composition:composing-typed-simplicial-complexes",
+        "name": "document-composition requires skill composing-typed-simplicial-complexes",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:document-composition",
+        "target": "v:skill:composing-typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:reference-reuse:assurance-audits",
+        "name": "reference-reuse requires skill assurance-audits",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:reference-reuse",
+        "target": "v:skill:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:team-coordination:reference-reuse",
+        "name": "team-coordination requires skill reference-reuse",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:team-coordination",
+        "target": "v:skill:reference-reuse",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:resource-management:team-coordination",
+        "name": "resource-management requires skill team-coordination",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:resource-management",
+        "target": "v:skill:team-coordination",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:organizational-topology:team-coordination",
+        "name": "organizational-topology requires skill team-coordination",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:organizational-topology",
+        "target": "v:skill:team-coordination",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:organizational-topology:resource-management",
+        "name": "organizational-topology requires skill resource-management",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:organizational-topology",
+        "target": "v:skill:resource-management",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:organizational-topology:composing-typed-simplicial-complexes",
+        "name": "organizational-topology requires skill composing-typed-simplicial-complexes",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:organizational-topology",
+        "target": "v:skill:composing-typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:simplicial-complex-fundamentals:simplicial-complex-fundamentals",
+        "name": "simplicial-complex-fundamentals develops skill simplicial-complex-fundamentals",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:simplicial-complex-fundamentals",
+        "target": "v:skill:simplicial-complex-fundamentals",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:typed-simplicial-complexes:typed-simplicial-complexes",
+        "name": "typed-simplicial-complexes develops skill typed-simplicial-complexes",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:typed-simplicial-complexes",
+        "target": "v:skill:typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:composing-typed-simplicial-complexes:composing-typed-simplicial-complexes",
+        "name": "composing-typed-simplicial-complexes develops-skill composing-typed-simplicial-complexes",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:composing-typed-simplicial-complexes",
+        "target": "v:skill:composing-typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:verification-validation:verification-validation",
+        "name": "verification-validation develops skill verification-validation",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:verification-validation",
+        "target": "v:skill:verification-validation",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:assurance-audits:assurance-audits",
+        "name": "assurance-audits develops skill assurance-audits",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:assurance-audits",
+        "target": "v:skill:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:document-composition:document-composition",
+        "name": "document-composition develops skill document-composition",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:document-composition",
+        "target": "v:skill:document-composition",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:reference-reuse:reference-reuse",
+        "name": "reference-reuse develops skill reference-reuse",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:reference-reuse",
+        "target": "v:skill:reference-reuse",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:team-coordination:team-coordination",
+        "name": "team-coordination develops skill team-coordination",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:team-coordination",
+        "target": "v:skill:team-coordination",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:resource-management:resource-management",
+        "name": "resource-management develops skill resource-management",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:resource-management",
+        "target": "v:skill:resource-management",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:organizational-topology:topological-data-analysis",
+        "name": "organizational-topology develops skill topological-data-analysis",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:organizational-topology",
+        "target": "v:skill:topological-data-analysis",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:organizational-topology:organizational-design-analysis",
+        "name": "organizational-topology develops skill organizational-design-analysis",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:organizational-topology",
+        "target": "v:skill:organizational-design-analysis",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:knowledge-complex-learner:simplicial-complex-fundamentals",
+        "name": "knowledge-complex-learner studies simplicial-complex-fundamentals",
+        "type": "edge/studies",
+        "source": "v:student:knowledge-complex-learner",
+        "target": "v:learning-module:simplicial-complex-fundamentals",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:foundational-learner:typed-simplicial-complexes",
+        "name": "foundational-learner studies typed-simplicial-complexes",
+        "type": "edge/studies",
+        "source": "v:student:foundational-learner",
+        "target": "v:learning-module:typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:intermediate-learner:composing-typed-simplicial-complexes",
+        "name": "intermediate-learner studies composing-typed-simplicial-complexes",
+        "type": "edge/studies",
+        "source": "v:student:intermediate-learner",
+        "target": "v:learning-module:composing-typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:intermediate-learner:verification-validation",
+        "name": "intermediate-learner studies verification-validation",
+        "type": "edge/studies",
+        "source": "v:student:intermediate-learner",
+        "target": "v:learning-module:verification-validation",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:verification-learner:assurance-audits",
+        "name": "verification-learner studies assurance-audits",
+        "type": "edge/studies",
+        "source": "v:student:verification-learner",
+        "target": "v:learning-module:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:assurance-learner:document-composition",
+        "name": "assurance-learner studies document-composition",
+        "type": "edge/studies",
+        "source": "v:student:assurance-learner",
+        "target": "v:learning-module:document-composition",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:assurance-learner:reference-reuse",
+        "name": "assurance-learner studies reference-reuse",
+        "type": "edge/studies",
+        "source": "v:student:assurance-learner",
+        "target": "v:learning-module:reference-reuse",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:document-architect:team-coordination",
+        "name": "document-architect studies team-coordination",
+        "type": "edge/studies",
+        "source": "v:student:document-architect",
+        "target": "v:learning-module:team-coordination",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:coordination-architect:resource-management",
+        "name": "coordination-architect studies resource-management",
+        "type": "edge/studies",
+        "source": "v:student:coordination-architect",
+        "target": "v:learning-module:resource-management",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:management-architect:organizational-topology",
+        "name": "management-architect studies organizational-topology",
+        "type": "edge/studies",
+        "source": "v:student:management-architect",
+        "target": "v:learning-module:organizational-topology",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:knowledge-complex-learner:foundational-learner",
+        "name": "knowledge-complex-learner transitions to foundational-learner",
+        "type": "edge/transitions-to",
+        "source": "v:student:knowledge-complex-learner",
+        "target": "v:student:foundational-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:foundational-learner:intermediate-learner",
+        "name": "foundational-learner transitions to intermediate-learner",
+        "type": "edge/transitions-to",
+        "source": "v:student:foundational-learner",
+        "target": "v:student:intermediate-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:intermediate-learner:compositional-learner",
+        "name": "intermediate-learner transitions-to compositional-learner",
+        "type": "edge/transitions-to",
+        "source": "v:student:intermediate-learner",
+        "target": "v:student:compositional-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:intermediate-learner:verification-learner",
+        "name": "intermediate-learner transitions-to verification-learner",
+        "type": "edge/transitions-to",
+        "source": "v:student:intermediate-learner",
+        "target": "v:student:verification-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:verification-learner:assurance-learner",
+        "name": "verification-learner transitions-to assurance-learner",
+        "type": "edge/transitions-to",
+        "source": "v:student:verification-learner",
+        "target": "v:student:assurance-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:assurance-learner:document-architect",
+        "name": "assurance-learner transitions-to document-architect",
+        "type": "edge/transitions-to",
+        "source": "v:student:assurance-learner",
+        "target": "v:student:document-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:document-architect:coordination-architect",
+        "name": "document-architect transitions-to coordination-architect",
+        "type": "edge/transitions-to",
+        "source": "v:student:document-architect",
+        "target": "v:student:coordination-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:coordination-architect:management-architect",
+        "name": "coordination-architect transitions-to management-architect",
+        "type": "edge/transitions-to",
+        "source": "v:student:coordination-architect",
+        "target": "v:student:management-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:management-architect:chief-engineer",
+        "name": "management-architect transitions-to chief-engineer",
+        "type": "edge/transitions-to",
+        "source": "v:student:management-architect",
+        "target": "v:student:chief-engineer",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:simplicial-complex-fundamentals:foundational-learner",
+        "name": "simplicial-complex-fundamentals advances foundational-learner",
+        "type": "edge/advances",
+        "source": "v:learning-module:simplicial-complex-fundamentals",
+        "target": "v:student:foundational-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:typed-simplicial-complexes:intermediate-learner",
+        "name": "typed-simplicial-complexes advances intermediate-learner",
+        "type": "edge/advances",
+        "source": "v:learning-module:typed-simplicial-complexes",
+        "target": "v:student:intermediate-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:composing-typed-simplicial-complexes:compositional-learner",
+        "name": "composing-typed-simplicial-complexes advances compositional-learner",
+        "type": "edge/advances",
+        "source": "v:learning-module:composing-typed-simplicial-complexes",
+        "target": "v:student:compositional-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:verification-validation:verification-learner",
+        "name": "verification-validation advances verification-learner",
+        "type": "edge/advances",
+        "source": "v:learning-module:verification-validation",
+        "target": "v:student:verification-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:assurance-audits:assurance-learner",
+        "name": "assurance-audits advances assurance-learner",
+        "type": "edge/advances",
+        "source": "v:learning-module:assurance-audits",
+        "target": "v:student:assurance-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:document-composition:document-architect",
+        "name": "document-composition advances document-architect",
+        "type": "edge/advances",
+        "source": "v:learning-module:document-composition",
+        "target": "v:student:document-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:reference-reuse:document-architect",
+        "name": "reference-reuse advances document-architect",
+        "type": "edge/advances",
+        "source": "v:learning-module:reference-reuse",
+        "target": "v:student:document-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:team-coordination:coordination-architect",
+        "name": "team-coordination advances to coordination-architect",
+        "type": "edge/advances",
+        "source": "v:learning-module:team-coordination",
+        "target": "v:student:coordination-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:resource-management:management-architect",
+        "name": "resource-management advances to management-architect",
+        "type": "edge/advances",
+        "source": "v:learning-module:resource-management",
+        "target": "v:student:management-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:organizational-topology:chief-engineer",
+        "name": "organizational-topology advances to chief-engineer",
+        "type": "edge/advances",
+        "source": "v:learning-module:organizational-topology",
+        "target": "v:student:chief-engineer",
+        "element_type": "edge"
+      }
+    ],
+    "faces": [
+      {
+        "id": "f:prerequisite:knowledge-complex-learner:sets-and-graphs:simplicial-complex-fundamentals",
+        "name": "Prerequisite triangle - knowledge-complex-learner with sets-and-graphs for simplicial-complex-fundamentals",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:knowledge-complex-learner",
+          "v:skill:sets-and-graphs",
+          "v:learning-module:simplicial-complex-fundamentals"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:foundational-learner:simplicial-complex-fundamentals:typed-simplicial-complexes",
+        "name": "Prerequisite triangle - foundational-learner with simplicial-complex-fundamentals for typed-simplicial-complexes",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:foundational-learner",
+          "v:skill:simplicial-complex-fundamentals",
+          "v:learning-module:typed-simplicial-complexes"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:intermediate-learner:simplicial-complex-fundamentals:composing-typed-simplicial-complexes",
+        "name": "prerequisite intermediate-learner simplicial-complex-fundamentals composing-typed-simplicial-complexes",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:intermediate-learner",
+          "v:skill:simplicial-complex-fundamentals",
+          "v:learning-module:composing-typed-simplicial-complexes"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:intermediate-learner:typed-simplicial-complexes:composing-typed-simplicial-complexes",
+        "name": "prerequisite intermediate-learner typed-simplicial-complexes composing-typed-simplicial-complexes",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:intermediate-learner",
+          "v:skill:typed-simplicial-complexes",
+          "v:learning-module:composing-typed-simplicial-complexes"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:intermediate-learner:typed-simplicial-complexes:verification-validation",
+        "name": "Prerequisite triangle - intermediate-learner with typed-simplicial-complexes for verification-validation",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:intermediate-learner",
+          "v:skill:typed-simplicial-complexes",
+          "v:learning-module:verification-validation"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:verification-learner:verification-validation:assurance-audits",
+        "name": "Prerequisite triangle - verification-learner with verification-validation for assurance-audits",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:verification-learner",
+          "v:skill:verification-validation",
+          "v:learning-module:assurance-audits"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:assurance-learner:assurance-audits:document-composition",
+        "name": "Prerequisite triangle - assurance-learner with assurance-audits for document-composition",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:skill:assurance-audits",
+          "v:learning-module:document-composition"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:assurance-learner:composing-typed-simplicial-complexes:document-composition",
+        "name": "Prerequisite triangle - assurance-learner with composing-typed-simplicial-complexes for document-composition",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:skill:composing-typed-simplicial-complexes",
+          "v:learning-module:document-composition"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:assurance-learner:assurance-audits:reference-reuse",
+        "name": "Prerequisite triangle - assurance-learner with assurance-audits for reference-reuse",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:skill:assurance-audits",
+          "v:learning-module:reference-reuse"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:document-architect:reference-reuse:team-coordination",
+        "name": "Prerequisite triangle - document-architect with reference-reuse for team-coordination",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:document-architect",
+          "v:skill:reference-reuse",
+          "v:learning-module:team-coordination"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:coordination-architect:team-coordination:resource-management",
+        "name": "Prerequisite triangle - coordination-architect with team-coordination for resource-management",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:coordination-architect",
+          "v:skill:team-coordination",
+          "v:learning-module:resource-management"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:management-architect:team-coordination:organizational-topology",
+        "name": "Prerequisite triangle - management-architect with team-coordination for organizational-topology",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:management-architect",
+          "v:skill:team-coordination",
+          "v:learning-module:organizational-topology"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:management-architect:resource-management:organizational-topology",
+        "name": "Prerequisite triangle - management-architect with resource-management for organizational-topology",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:management-architect",
+          "v:skill:resource-management",
+          "v:learning-module:organizational-topology"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:management-architect:composing-typed-simplicial-complexes:organizational-topology",
+        "name": "Prerequisite triangle - management-architect with composing-typed-simplicial-complexes for organizational-topology",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:management-architect",
+          "v:skill:composing-typed-simplicial-complexes",
+          "v:learning-module:organizational-topology"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:knowledge-complex-learner:simplicial-complex-fundamentals:foundational-learner",
+        "name": "Completion triangle - knowledge-complex-learner completes simplicial-complex-fundamentals becoming foundational-learner",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:knowledge-complex-learner",
+          "v:learning-module:simplicial-complex-fundamentals",
+          "v:student:foundational-learner"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:foundational-learner:typed-simplicial-complexes:intermediate-learner",
+        "name": "Completion triangle - foundational-learner completes typed-simplicial-complexes becoming intermediate-learner",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:foundational-learner",
+          "v:learning-module:typed-simplicial-complexes",
+          "v:student:intermediate-learner"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:intermediate-learner:composing-typed-simplicial-complexes:compositional-learner",
+        "name": "completion intermediate-learner composing-typed-simplicial-complexes compositional-learner",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:intermediate-learner",
+          "v:learning-module:composing-typed-simplicial-complexes",
+          "v:student:compositional-learner"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:intermediate-learner:verification-validation:verification-learner",
+        "name": "completion intermediate-learner verification-validation verification-learner",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:intermediate-learner",
+          "v:learning-module:verification-validation",
+          "v:student:verification-learner"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:verification-learner:assurance-audits:assurance-learner",
+        "name": "completion verification-learner assurance-audits assurance-learner",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:verification-learner",
+          "v:learning-module:assurance-audits",
+          "v:student:assurance-learner"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:assurance-learner:document-composition:document-architect",
+        "name": "completion assurance-learner document-composition document-architect",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:learning-module:document-composition",
+          "v:student:document-architect"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:assurance-learner:reference-reuse:document-architect",
+        "name": "completion assurance-learner reference-reuse document-architect",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:learning-module:reference-reuse",
+          "v:student:document-architect"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:document-architect:team-coordination:coordination-architect",
+        "name": "Completion triangle - document-architect completes team-coordination becomes coordination-architect",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:document-architect",
+          "v:learning-module:team-coordination",
+          "v:student:coordination-architect"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:coordination-architect:resource-management:management-architect",
+        "name": "Completion triangle - coordination-architect completes resource-management becomes management-architect",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:coordination-architect",
+          "v:learning-module:resource-management",
+          "v:student:management-architect"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:management-architect:organizational-topology:chief-engineer",
+        "name": "Completion triangle - management-architect completes organizational-topology becomes chief-engineer",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:management-architect",
+          "v:learning-module:organizational-topology",
+          "v:student:chief-engineer"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:foundational-learner:simplicial-complex-fundamentals:simplicial-complex-fundamentals",
+        "name": "Skill-gain triangle - foundational-learner gains simplicial-complex-fundamentals from simplicial-complex-fundamentals",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:foundational-learner",
+          "v:learning-module:simplicial-complex-fundamentals",
+          "v:skill:simplicial-complex-fundamentals"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:intermediate-learner:typed-simplicial-complexes:typed-simplicial-complexes",
+        "name": "Skill-gain triangle - intermediate-learner gains typed-simplicial-complexes from typed-simplicial-complexes",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:intermediate-learner",
+          "v:learning-module:typed-simplicial-complexes",
+          "v:skill:typed-simplicial-complexes"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:compositional-learner:composing-typed-simplicial-complexes:composing-typed-simplicial-complexes",
+        "name": "skill-gain compositional-learner composing-typed-simplicial-complexes composing-typed-simplicial-complexes",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:compositional-learner",
+          "v:learning-module:composing-typed-simplicial-complexes",
+          "v:skill:composing-typed-simplicial-complexes"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:verification-learner:verification-validation:verification-validation",
+        "name": "skill-gain verification-learner verification-validation verification-validation",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:verification-learner",
+          "v:learning-module:verification-validation",
+          "v:skill:verification-validation"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:assurance-learner:assurance-audits:assurance-audits",
+        "name": "skill-gain assurance-learner assurance-audits assurance-audits",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:learning-module:assurance-audits",
+          "v:skill:assurance-audits"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:document-architect:document-composition:document-composition",
+        "name": "skill-gain document-architect document-composition document-composition",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:document-architect",
+          "v:learning-module:document-composition",
+          "v:skill:document-composition"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:document-architect:reference-reuse:reference-reuse",
+        "name": "skill-gain document-architect reference-reuse reference-reuse",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:document-architect",
+          "v:learning-module:reference-reuse",
+          "v:skill:reference-reuse"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:coordination-architect:team-coordination:team-coordination",
+        "name": "Skill-gain triangle - coordination-architect gains team-coordination from team-coordination module",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:coordination-architect",
+          "v:learning-module:team-coordination",
+          "v:skill:team-coordination"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:management-architect:resource-management:resource-management",
+        "name": "Skill-gain triangle - management-architect gains resource-management from resource-management module",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:management-architect",
+          "v:learning-module:resource-management",
+          "v:skill:resource-management"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:chief-engineer:organizational-topology:topological-data-analysis",
+        "name": "Skill-gain triangle - chief-engineer gains topological-data-analysis from organizational-topology module",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:chief-engineer",
+          "v:learning-module:organizational-topology",
+          "v:skill:topological-data-analysis"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:chief-engineer:organizational-topology:organizational-design-analysis",
+        "name": "Skill-gain triangle - chief-engineer gains organizational-design-analysis from organizational-topology module",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:chief-engineer",
+          "v:learning-module:organizational-topology",
+          "v:skill:organizational-design-analysis"
+        ],
+        "element_type": "face"
+      }
+    ]
+  },
+  "metadata": {
+    "exported": "2025-12-28T22:55:55.300020",
+    "source_file": "charts/learning-journey-full/learning-journey-full.md"
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "chart_id": "c:learning-journey-module-01",
+  "name": "Learning Journey - Module 01",
+  "description": "Single-module learning journey demonstrating skill accumulation through completion face pattern",
+  "type": "chart/syllabus",
+  "constructed_by": "Claude Sonnet 4.5",
+  "construction_method": "assisted",
+  "purpose": "Validate learning journey topology with prerequisite faces and completion face for single module",
+  "scope": "One module (simplicial-complex-fundamentals) with 2 prerequisite skills and 1 developed skill, showing student state transition",
+  "element_counts": {
+    "vertices": 5,
+    "edges": 7,
+    "faces": 3
+  },
+  "topology": {
+    "euler_characteristic": 1,
+    "dimension": 2
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "v:student:knowledge-complex-learner",
+        "name": "Knowledge Complex Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:sets-and-graphs",
+        "name": "Sets and Graphs",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:simplicial-complex-fundamentals",
+        "name": "Simplicial Complex Fundamentals",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:simplicial-complex-fundamentals",
+        "name": "Simplicial Complex Fundamentals",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:foundational-learner",
+        "name": "Foundational Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:has-skill:knowledge-complex-learner:sets-and-graphs",
+        "name": "knowledge-complex-learner has skill sets-and-graphs",
+        "type": "edge/has-skill",
+        "source": "v:student:knowledge-complex-learner",
+        "target": "v:skill:sets-and-graphs",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:simplicial-complex-fundamentals:sets-and-graphs",
+        "name": "simplicial-complex-fundamentals requires skill sets-and-graphs",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:simplicial-complex-fundamentals",
+        "target": "v:skill:sets-and-graphs",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:simplicial-complex-fundamentals:simplicial-complex-fundamentals",
+        "name": "simplicial-complex-fundamentals develops skill simplicial-complex-fundamentals",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:simplicial-complex-fundamentals",
+        "target": "v:skill:simplicial-complex-fundamentals",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:knowledge-complex-learner:simplicial-complex-fundamentals",
+        "name": "knowledge-complex-learner studies simplicial-complex-fundamentals",
+        "type": "edge/studies",
+        "source": "v:student:knowledge-complex-learner",
+        "target": "v:learning-module:simplicial-complex-fundamentals",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:knowledge-complex-learner:foundational-learner",
+        "name": "knowledge-complex-learner transitions to foundational-learner",
+        "type": "edge/transitions-to",
+        "source": "v:student:knowledge-complex-learner",
+        "target": "v:student:foundational-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:simplicial-complex-fundamentals:foundational-learner",
+        "name": "simplicial-complex-fundamentals advances foundational-learner",
+        "type": "edge/advances",
+        "source": "v:learning-module:simplicial-complex-fundamentals",
+        "target": "v:student:foundational-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:foundational-learner:simplicial-complex-fundamentals",
+        "name": "foundational-learner has skill simplicial-complex-fundamentals",
+        "type": "edge/has-skill",
+        "source": "v:student:foundational-learner",
+        "target": "v:skill:simplicial-complex-fundamentals",
+        "element_type": "edge"
+      }
+    ],
+    "faces": [
+      {
+        "id": "f:prerequisite:knowledge-complex-learner:sets-and-graphs:simplicial-complex-fundamentals",
+        "name": "Prerequisite triangle - knowledge-complex-learner with sets-and-graphs for simplicial-complex-fundamentals",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:knowledge-complex-learner",
+          "v:skill:sets-and-graphs",
+          "v:learning-module:simplicial-complex-fundamentals"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:knowledge-complex-learner:simplicial-complex-fundamentals:foundational-learner",
+        "name": "Completion triangle - knowledge-complex-learner completes simplicial-complex-fundamentals becoming foundational-learner",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:knowledge-complex-learner",
+          "v:learning-module:simplicial-complex-fundamentals",
+          "v:student:foundational-learner"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:foundational-learner:simplicial-complex-fundamentals:simplicial-complex-fundamentals",
+        "name": "Skill-gain triangle - foundational-learner gains simplicial-complex-fundamentals from simplicial-complex-fundamentals",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:foundational-learner",
+          "v:learning-module:simplicial-complex-fundamentals",
+          "v:skill:simplicial-complex-fundamentals"
+        ],
+        "element_type": "face"
+      }
+    ]
+  },
+  "metadata": {
+    "exported": "2025-12-28T22:55:25.348755",
+    "source_file": "charts/learning-journey-module-01/learning-journey-module-01.md"
+  }
+}

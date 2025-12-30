@@ -1,0 +1,567 @@
+{
+  "chart_id": "c:doc-kit-registry",
+  "name": "Doc-Kit Registry",
+  "description": "Registry of all doc-kit faces providing complete documentation packages for document types in the knowledge complex",
+  "type": "chart/standard",
+  "constructed_by": "claude-assistant",
+  "construction_method": "assisted",
+  "purpose": "Catalog all doc-kit faces that provide complete documentation packages (spec, guidance, example) for creating typed documents",
+  "scope": "6 doc-kit faces with complete assurance network connecting all specs to SS/GS and all guidances to SG/GG",
+  "element_counts": {
+    "vertices": 16,
+    "edges": 40,
+    "faces": 10
+  },
+  "topology": {
+    "euler_characteristic": -14,
+    "dimension": 2
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "v:spec:persona",
+        "name": "Specification for Persona Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:purpose",
+        "name": "Specification for Purpose Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:protocol",
+        "name": "Specification for Protocol Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:spec",
+        "name": "Specification for Specifications",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:guidance",
+        "name": "Specification for Guidance Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:system_prompt",
+        "name": "Specification for System Prompt Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:persona",
+        "name": "Guidance for Persona Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:purpose",
+        "name": "Guidance for Purpose Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:protocol",
+        "name": "Guidance for Protocol Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:spec",
+        "name": "Guidance for Specifications",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:guidance",
+        "name": "Guidance for Guidance Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:system_prompt",
+        "name": "Guidance for System Prompt Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:persona:claude-assistant",
+        "name": "Claude - Assistant to Chief Engineer",
+        "type": "vertex/persona",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:purpose:claude-assistant",
+        "name": "Purpose - Claude Knowledge Complex Assistant",
+        "type": "vertex/purpose",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:protocol:claude-assistant",
+        "name": "Protocol - Claude Knowledge Complex Assistant",
+        "type": "vertex/protocol",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:system_prompt:claude-assistant-compiled",
+        "name": "System Prompt - Claude Knowledge Complex Assistant (Compiled)",
+        "type": "vertex/system_prompt",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:coupling:persona",
+        "name": "Coupling - Spec-for-Persona and Guidance-for-Persona",
+        "type": "edge/coupling",
+        "source": "v:spec:persona",
+        "target": "v:guidance:persona",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:purpose",
+        "name": "Coupling - Spec-for-Purpose and Guidance-for-Purpose",
+        "type": "edge/coupling",
+        "source": "v:spec:purpose",
+        "target": "v:guidance:purpose",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:protocol",
+        "name": "Coupling - Spec-for-Protocol and Guidance-for-Protocol",
+        "type": "edge/coupling",
+        "source": "v:spec:protocol",
+        "target": "v:guidance:protocol",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:spec",
+        "name": "Coupling - Spec-for-Spec and Guidance-for-Spec",
+        "type": "edge/coupling",
+        "source": "v:spec:spec",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:guidance",
+        "name": "Coupling - Spec-for-Guidance and Guidance-for-Guidance",
+        "type": "edge/coupling",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:system_prompt",
+        "name": "Coupling - Spec-for-System-Prompt and Guidance-for-System-Prompt",
+        "type": "edge/coupling",
+        "source": "v:spec:system_prompt",
+        "target": "v:guidance:system_prompt",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:spec-guidance:guidance-spec",
+        "name": "Coupling - Spec-for-Guidance and Guidance-for-Spec Cross-Domain Alignment",
+        "type": "edge/coupling",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:persona-claude:spec",
+        "name": "Verification - persona-claude-assistant against spec-for-persona",
+        "type": "edge/verification",
+        "source": "v:persona:claude-assistant",
+        "target": "v:spec:persona",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:purpose-claude:spec",
+        "name": "Verification - purpose-claude-assistant against spec-for-purpose",
+        "type": "edge/verification",
+        "source": "v:purpose:claude-assistant",
+        "target": "v:spec:purpose",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:protocol-claude:spec",
+        "name": "Verification - protocol-claude-assistant against spec-for-protocol",
+        "type": "edge/verification",
+        "source": "v:protocol:claude-assistant",
+        "target": "v:spec:protocol",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:purpose:spec",
+        "name": "Verification - Spec-for-Purpose against Spec-for-Spec",
+        "type": "edge/verification",
+        "source": "v:spec:purpose",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:purpose-guidance:guidance",
+        "name": "Verification - Guidance-for-Purpose against Spec-for-Guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:purpose",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:system_prompt-compiled:spec",
+        "name": "Verification - system_prompt-claude-assistant-compiled against spec-for-system_prompt",
+        "type": "edge/verification",
+        "source": "v:system_prompt:claude-assistant-compiled",
+        "target": "v:spec:system_prompt",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:persona-claude:guidance",
+        "name": "Validation - persona-claude-assistant against guidance-for-persona",
+        "type": "edge/validation",
+        "source": "v:persona:claude-assistant",
+        "target": "v:guidance:persona",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:purpose-claude:guidance",
+        "name": "Validation - purpose-claude-assistant against guidance-for-purpose",
+        "type": "edge/validation",
+        "source": "v:purpose:claude-assistant",
+        "target": "v:guidance:purpose",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:protocol-claude:guidance",
+        "name": "Validation - protocol-claude-assistant against guidance-for-protocol",
+        "type": "edge/validation",
+        "source": "v:protocol:claude-assistant",
+        "target": "v:guidance:protocol",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:purpose:guidance-spec",
+        "name": "Validation - Spec-for-Purpose validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:purpose",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:purpose-guidance:guidance-guidance",
+        "name": "Validation - Guidance-for-Purpose validates against Guidance-for-Guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:purpose",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:system_prompt-compiled:guidance",
+        "name": "Validation - system_prompt-claude-assistant-compiled against guidance-for-system_prompt",
+        "type": "edge/validation",
+        "source": "v:system_prompt:claude-assistant-compiled",
+        "target": "v:guidance:system_prompt",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:spec-spec:spec-spec",
+        "name": "Verification - Spec-for-Spec against Spec-for-Spec (Self-Verification)",
+        "type": "edge/verification",
+        "source": "v:spec:spec",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:spec-guidance:spec-spec",
+        "name": "Verification - Spec-for-Guidance verifies against Spec-for-Spec",
+        "type": "edge/verification",
+        "source": "v:spec:guidance",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:persona:spec",
+        "name": "Verification - Spec-for-Persona against Spec-for-Spec",
+        "type": "edge/verification",
+        "source": "v:spec:persona",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:purpose:spec",
+        "name": "Verification - Spec-for-Purpose against Spec-for-Spec",
+        "type": "edge/verification",
+        "source": "v:spec:purpose",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:protocol:spec",
+        "name": "Verification - Spec-for-Protocol against Spec-for-Spec",
+        "type": "edge/verification",
+        "source": "v:spec:protocol",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:system_prompt:spec",
+        "name": "Verification - Spec-for-System-Prompt against Spec-for-Spec",
+        "type": "edge/verification",
+        "source": "v:spec:system_prompt",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-spec:guidance-spec",
+        "name": "Validation - Spec-for-Spec validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:spec",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-guidance:guidance-spec",
+        "name": "Validation - Spec-for-Guidance validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:persona:guidance-spec",
+        "name": "Validation - Spec-for-Persona validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:persona",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:protocol:guidance-spec",
+        "name": "Validation - Spec-for-Protocol validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:protocol",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:system_prompt:guidance-spec",
+        "name": "Validation - Spec-for-System-Prompt validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:system_prompt",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-guidance:spec-guidance",
+        "name": "Verification - Guidance-for-Guidance verifies against Spec-for-Guidance (Self-Verification)",
+        "type": "edge/verification",
+        "source": "v:guidance:guidance",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-spec:spec-guidance",
+        "name": "Verification - Guidance-for-Spec verifies against Spec-for-Guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:spec",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:persona-guidance:guidance",
+        "name": "Verification - Guidance-for-Persona against Spec-for-Guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:persona",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:protocol-guidance:guidance",
+        "name": "Verification - Guidance-for-Protocol against Spec-for-Guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:protocol",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:system_prompt-guidance:guidance",
+        "name": "Verification - Guidance-for-System-Prompt against Spec-for-Guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:system_prompt",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:guidance-guidance:guidance-guidance",
+        "name": "Validation - Guidance-for-Guidance validates against itself",
+        "type": "edge/validation",
+        "source": "v:guidance:guidance",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:guidance-spec:guidance-guidance",
+        "name": "Validation - Guidance-for-Spec validates against Guidance-for-Guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:spec",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:persona-guidance:guidance-guidance",
+        "name": "Validation - Guidance-for-Persona validates against Guidance-for-Guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:persona",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:protocol-guidance:guidance-guidance",
+        "name": "Validation - Guidance-for-Protocol validates against Guidance-for-Guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:protocol",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:system_prompt-guidance:guidance-guidance",
+        "name": "Validation - Guidance-for-System-Prompt validates against Guidance-for-Guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:system_prompt",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      }
+    ],
+    "faces": [
+      {
+        "id": "f:doc_kit:persona",
+        "name": "Doc-Kit - Persona Documents",
+        "type": "face/doc_kit",
+        "boundary": [],
+        "vertices": [
+          "v:spec:persona",
+          "v:guidance:persona",
+          "v:persona:claude-assistant"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:doc_kit:purpose",
+        "name": "Doc-Kit - Purpose Documents",
+        "type": "face/doc_kit",
+        "boundary": [],
+        "vertices": [
+          "v:spec:purpose",
+          "v:guidance:purpose",
+          "v:purpose:claude-assistant"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:doc_kit:protocol",
+        "name": "Doc-Kit - Protocol Documents",
+        "type": "face/doc_kit",
+        "boundary": [],
+        "vertices": [
+          "v:spec:protocol",
+          "v:guidance:protocol",
+          "v:protocol:claude-assistant"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:doc_kit:spec",
+        "name": "Doc-Kit - Specification Documents",
+        "type": "face/doc_kit",
+        "boundary": [],
+        "vertices": [
+          "v:spec:spec",
+          "v:guidance:spec",
+          "v:spec:purpose"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:doc_kit:guidance",
+        "name": "Doc-Kit - Guidance Documents",
+        "type": "face/doc_kit",
+        "boundary": [],
+        "vertices": [
+          "v:spec:guidance",
+          "v:guidance:guidance",
+          "v:guidance:purpose"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:doc_kit:system_prompt",
+        "name": "Doc-Kit - System Prompt Documents",
+        "type": "face/doc_kit",
+        "boundary": [],
+        "vertices": [
+          "v:spec:system_prompt",
+          "v:guidance:system_prompt",
+          "v:system_prompt:claude-assistant-compiled"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:spec-spec",
+        "name": "Assurance Face - Spec-for-Spec Self-Assurance",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:spec",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:spec-guidance",
+        "name": "Assurance Face - Spec-for-Guidance Assurance",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:guidance",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:guidance-spec",
+        "name": "Assurance Face - Guidance-for-Spec Assurance",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:spec",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:guidance-guidance",
+        "name": "Assurance Face - Guidance-for-Guidance Self-Assurance",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:guidance",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      }
+    ]
+  },
+  "metadata": {
+    "exported": "2025-12-29T00:48:58.003393",
+    "source_file": "charts/doc-kit-registry/doc-kit-registry.md"
+  }
+}

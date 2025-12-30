@@ -1,0 +1,388 @@
+{
+  "chart_id": "c:org:composed-org-chart",
+  "name": "Composed Organization Chart",
+  "description": "Complete organizational chart composing coordination and management views to show staff, roles, responsibilities, functions, and resources",
+  "type": "chart/organization",
+  "constructed_by": "Claude (LLM-assisted)",
+  "construction_method": "assisted",
+  "purpose": "Provide complete organizational view by composing coordination (who does what) and management (what flows where) charts",
+  "scope": "Full organizational model - teams, staff, roles, responsibilities, functions, resources",
+  "element_counts": {
+    "vertices": 21,
+    "edges": 29,
+    "faces": 0
+  },
+  "topology": {
+    "euler_characteristic": -8,
+    "dimension": 1
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "v:actor:team:platform",
+        "name": "Platform Team",
+        "type": "vertex/actor/team",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:team:product",
+        "name": "Product Team",
+        "type": "vertex/actor/team",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:staff:alice",
+        "name": "Alice",
+        "type": "vertex/actor/staff",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:staff:bob",
+        "name": "Bob",
+        "type": "vertex/actor/staff",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:staff:charlie",
+        "name": "Charlie",
+        "type": "vertex/actor/staff",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:staff:dana",
+        "name": "Dana",
+        "type": "vertex/actor/staff",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:staff:evan",
+        "name": "Evan",
+        "type": "vertex/actor/staff",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:role:tech-lead",
+        "name": "Tech Lead",
+        "type": "vertex/actor/role",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:role:sre",
+        "name": "Site Reliability Engineer",
+        "type": "vertex/actor/role",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:role:senior-developer",
+        "name": "Senior Developer",
+        "type": "vertex/actor/role",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:role:developer",
+        "name": "Developer",
+        "type": "vertex/actor/role",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:property:responsibility:deploy",
+        "name": "Deploy to Production",
+        "type": "vertex/property/responsibility",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:property:responsibility:monitor",
+        "name": "Monitor Services",
+        "type": "vertex/property/responsibility",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:property:responsibility:build",
+        "name": "Build Application",
+        "type": "vertex/property/responsibility",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:function:build",
+        "name": "Build Service",
+        "type": "vertex/function",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:function:test",
+        "name": "Test Service",
+        "type": "vertex/function",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:function:deploy",
+        "name": "Deploy Service",
+        "type": "vertex/function",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:resource:source-code",
+        "name": "Source Code",
+        "type": "vertex/resource",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:resource:built-artifact",
+        "name": "Built Artifact",
+        "type": "vertex/resource",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:resource:tested-code",
+        "name": "Tested Code",
+        "type": "vertex/resource",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:resource:running-service",
+        "name": "Running Service",
+        "type": "vertex/resource",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:member:platform:alice",
+        "name": "Alice is member of Platform Team",
+        "type": "edge/member",
+        "source": "v:actor:staff:alice",
+        "target": "v:actor:team:platform",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:member:platform:bob",
+        "name": "Bob is member of Platform Team",
+        "type": "edge/member",
+        "source": "v:actor:staff:bob",
+        "target": "v:actor:team:platform",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:member:platform:charlie",
+        "name": "Charlie is member of Platform Team",
+        "type": "edge/member",
+        "source": "v:actor:staff:charlie",
+        "target": "v:actor:team:platform",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:member:product:dana",
+        "name": "Dana is member of Product Team",
+        "type": "edge/member",
+        "source": "v:actor:staff:dana",
+        "target": "v:actor:team:product",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:member:product:evan",
+        "name": "Evan is member of Product Team",
+        "type": "edge/member",
+        "source": "v:actor:staff:evan",
+        "target": "v:actor:team:product",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:holds-role:alice:tech-lead",
+        "name": "Alice holds Tech Lead role",
+        "type": "edge/holds-role",
+        "source": "v:actor:staff:alice",
+        "target": "v:actor:role:tech-lead",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:holds-role:bob:sre",
+        "name": "Bob holds SRE role",
+        "type": "edge/holds-role",
+        "source": "v:actor:staff:bob",
+        "target": "v:actor:role:sre",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:holds-role:charlie:sre",
+        "name": "Charlie holds SRE role",
+        "type": "edge/holds-role",
+        "source": "v:actor:staff:charlie",
+        "target": "v:actor:role:sre",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:holds-role:dana:senior-developer",
+        "name": "Dana holds Senior Developer role",
+        "type": "edge/holds-role",
+        "source": "v:actor:staff:dana",
+        "target": "v:actor:role:senior-developer",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:holds-role:evan:developer",
+        "name": "Evan holds Developer role",
+        "type": "edge/holds-role",
+        "source": "v:actor:staff:evan",
+        "target": "v:actor:role:developer",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:includes:platform:tech-lead",
+        "name": "Platform Team includes Tech Lead role",
+        "type": "edge/includes",
+        "source": "v:actor:team:platform",
+        "target": "v:actor:role:tech-lead",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:includes:platform:sre",
+        "name": "Platform Team includes SRE role",
+        "type": "edge/includes",
+        "source": "v:actor:team:platform",
+        "target": "v:actor:role:sre",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:includes:product:senior-developer",
+        "name": "Product Team includes Senior Developer role",
+        "type": "edge/includes",
+        "source": "v:actor:team:product",
+        "target": "v:actor:role:senior-developer",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:includes:product:developer",
+        "name": "Product Team includes Developer role",
+        "type": "edge/includes",
+        "source": "v:actor:team:product",
+        "target": "v:actor:role:developer",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:assigned:tech-lead:deploy:a",
+        "name": "Tech Lead is Accountable for Deploy",
+        "type": "edge/assigned",
+        "source": "v:actor:role:tech-lead",
+        "target": "v:property:responsibility:deploy",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:assigned:sre:deploy:r",
+        "name": "SRE is Responsible for Deploy",
+        "type": "edge/assigned",
+        "source": "v:actor:role:sre",
+        "target": "v:property:responsibility:deploy",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:assigned:tech-lead:monitor:a",
+        "name": "Tech Lead is Accountable for Monitor",
+        "type": "edge/assigned",
+        "source": "v:actor:role:tech-lead",
+        "target": "v:property:responsibility:monitor",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:assigned:sre:monitor:r",
+        "name": "SRE is Responsible for Monitor",
+        "type": "edge/assigned",
+        "source": "v:actor:role:sre",
+        "target": "v:property:responsibility:monitor",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:assigned:senior-developer:build:a",
+        "name": "Senior Developer is Accountable for Build",
+        "type": "edge/assigned",
+        "source": "v:actor:role:senior-developer",
+        "target": "v:property:responsibility:build",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:assigned:developer:build:r",
+        "name": "Developer is Responsible for Build",
+        "type": "edge/assigned",
+        "source": "v:actor:role:developer",
+        "target": "v:property:responsibility:build",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:operates:product:build",
+        "name": "Product Team operates Build",
+        "type": "edge/operates",
+        "source": "v:actor:team:product",
+        "target": "v:function:build",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:operates:product:test",
+        "name": "Product Team operates Test",
+        "type": "edge/operates",
+        "source": "v:actor:team:product",
+        "target": "v:function:test",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:operates:platform:deploy",
+        "name": "Platform Team operates Deploy",
+        "type": "edge/operates",
+        "source": "v:actor:team:platform",
+        "target": "v:function:deploy",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:consumes:build:source-code",
+        "name": "Build consumes Source Code",
+        "type": "edge/consumes",
+        "source": "v:function:build",
+        "target": "v:resource:source-code",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:consumes:test:built-artifact",
+        "name": "Test consumes Built Artifact",
+        "type": "edge/consumes",
+        "source": "v:function:test",
+        "target": "v:resource:built-artifact",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:consumes:deploy:tested-code",
+        "name": "Deploy consumes Tested Code",
+        "type": "edge/consumes",
+        "source": "v:function:deploy",
+        "target": "v:resource:tested-code",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:produces:build:built-artifact",
+        "name": "Build produces Built Artifact",
+        "type": "edge/produces",
+        "source": "v:function:build",
+        "target": "v:resource:built-artifact",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:produces:test:tested-code",
+        "name": "Test produces Tested Code",
+        "type": "edge/produces",
+        "source": "v:function:test",
+        "target": "v:resource:tested-code",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:produces:deploy:running-service",
+        "name": "Deploy produces Running Service",
+        "type": "edge/produces",
+        "source": "v:function:deploy",
+        "target": "v:resource:running-service",
+        "element_type": "edge"
+      }
+    ],
+    "faces": []
+  },
+  "metadata": {
+    "exported": "2025-12-29T00:49:28.020447",
+    "source_file": "charts/composed-org-chart/composed-org-chart.md"
+  }
+}

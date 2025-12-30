@@ -1,0 +1,156 @@
+name: Assurance Audit Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  audit-validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml>=6.0.1
+
+      - name: Run audit tool regression tests
+        run: |
+          echo "Running audit tool regression test suite..."
+          python scripts/test_audit_assurance_chart.py
+
+      - name: Find all assurance_audit charts
+        id: find-charts
+        run: |
+          echo "Finding all assurance_audit type charts..."
+          charts=$(find charts -name "*.md" -type f)
+          audit_charts=""
+          for chart in $charts; do
+            if grep -q "^type: chart/assurance_audit" "$chart" 2>/dev/null; then
+              audit_charts="$audit_charts $chart"
+            fi
+          done
+          echo "Found assurance_audit charts: $audit_charts"
+          echo "charts=$audit_charts" >> $GITHUB_OUTPUT
+
+      - name: Audit all assurance_audit charts
+        run: |
+          echo "Auditing all assurance_audit type charts..."
+          charts="${{ steps.find-charts.outputs.charts }}"
+
+          if [ -z "$charts" ]; then
+            echo "No assurance_audit charts found"
+            exit 0
+          fi
+
+          failed_charts=""
+          passed_charts=""
+
+          for chart in $charts; do
+            echo ""
+            echo "========================================"
+            echo "Auditing: $chart"
+            echo "========================================"
+
+            if python scripts/audit_assurance_chart.py "$chart"; then
+              passed_charts="$passed_charts\n- ✓ $chart"
+            else
+              failed_charts="$failed_charts\n- ✗ $chart"
+            fi
+          done
+
+          echo ""
+          echo "========================================"
+          echo "AUDIT SUMMARY"
+          echo "========================================"
+
+          if [ -n "$passed_charts" ]; then
+            echo "Passed charts:"
+            echo -e "$passed_charts"
+          fi
+
+          if [ -n "$failed_charts" ]; then
+            echo ""
+            echo "Failed charts:"
+            echo -e "$failed_charts"
+            echo ""
+            echo "ERROR: One or more assurance_audit charts failed validation"
+            exit 1
+          fi
+
+          echo ""
+          echo "✓ All assurance_audit charts passed validation"
+
+      - name: Comment on PR (if audit failed)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ✗ Assurance Audit Validation Failed
+
+            One or more assurance_audit charts failed validation.
+
+            **What was checked:**
+            - Audit tool regression tests (12 tests)
+            - All \`chart/assurance_audit\` type charts in the repository
+
+            **Common failure reasons:**
+            - Missing assurance faces for audit targets
+            - Assurance not rooted in boundary complex
+            - Malformed chart frontmatter
+            - Invalid audit target references
+
+            **To debug:**
+            \`\`\`bash
+            # Run regression tests
+            python scripts/test_audit_assurance_chart.py --verbose
+
+            # Audit specific chart
+            python scripts/audit_assurance_chart.py charts/your-chart/your-chart.md
+            \`\`\`
+
+            Please review the workflow logs for details and ensure all audits pass before merging.`
+            })
+
+      - name: Comment on PR (if audit passed)
+        if: success() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ✓ Assurance Audit Validation Passed
+
+            All assurance validation checks passed successfully!
+
+            **Checks completed:**
+            - ✓ Audit tool regression tests (12 tests)
+            - ✓ All \`chart/assurance_audit\` type charts validated
+
+            **What was verified:**
+            - Assurance coverage: All audit targets have assurance faces
+            - Root anchoring: All assurance traces to boundary complex
+            - Chart structure: Valid frontmatter and elements
+
+            The assurance infrastructure is sound and ready to merge.`
+            })

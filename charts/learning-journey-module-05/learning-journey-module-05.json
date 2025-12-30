@@ -1,0 +1,153 @@
+{
+  "chart_id": "c:learning-journey-module-05",
+  "name": "Learning Journey - Module 05",
+  "description": "Fifth module in learning journey teaching assurance triangles, assurance network auditing, and boundary complex self-referential foundations",
+  "type": "chart/syllabus",
+  "constructed_by": "Claude Sonnet 4.5",
+  "construction_method": "assisted",
+  "purpose": "Demonstrate skill accumulation for Module 5 (assurance & audits) building on Module 4, teaching complete assurance networks and boundary complex understanding",
+  "scope": "One module (assurance-audits) with 1 prerequisite skill and 1 developed skill, showing student state transition from verification-learner to assurance-learner (fork point)",
+  "element_counts": {
+    "vertices": 5,
+    "edges": 7,
+    "faces": 3
+  },
+  "topology": {
+    "euler_characteristic": 1,
+    "dimension": 2
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "v:student:verification-learner",
+        "name": "Verification Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:verification-validation",
+        "name": "Verification & Validation",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:assurance-audits",
+        "name": "Assurance & Audits",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:assurance-audits",
+        "name": "Assurance & Audits - Complete Quality Networks",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:assurance-learner",
+        "name": "Assurance Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:has-skill:verification-learner:verification-validation",
+        "name": "verification-learner has skill verification-validation",
+        "type": "edge/has-skill",
+        "source": "v:student:verification-learner",
+        "target": "v:skill:verification-validation",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:assurance-audits:verification-validation",
+        "name": "assurance-audits requires skill verification-validation",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:assurance-audits",
+        "target": "v:skill:verification-validation",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:assurance-audits:assurance-audits",
+        "name": "assurance-audits develops skill assurance-audits",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:assurance-audits",
+        "target": "v:skill:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:verification-learner:assurance-audits",
+        "name": "verification-learner studies assurance-audits",
+        "type": "edge/studies",
+        "source": "v:student:verification-learner",
+        "target": "v:learning-module:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:verification-learner:assurance-learner",
+        "name": "verification-learner transitions-to assurance-learner",
+        "type": "edge/transitions-to",
+        "source": "v:student:verification-learner",
+        "target": "v:student:assurance-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:assurance-audits:assurance-learner",
+        "name": "assurance-audits advances assurance-learner",
+        "type": "edge/advances",
+        "source": "v:learning-module:assurance-audits",
+        "target": "v:student:assurance-learner",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:assurance-learner:assurance-audits",
+        "name": "assurance-learner has skill assurance-audits",
+        "type": "edge/has-skill",
+        "source": "v:student:assurance-learner",
+        "target": "v:skill:assurance-audits",
+        "element_type": "edge"
+      }
+    ],
+    "faces": [
+      {
+        "id": "f:prerequisite:verification-learner:verification-validation:assurance-audits",
+        "name": "Prerequisite triangle - verification-learner with verification-validation for assurance-audits",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:verification-learner",
+          "v:skill:verification-validation",
+          "v:learning-module:assurance-audits"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:verification-learner:assurance-audits:assurance-learner",
+        "name": "completion verification-learner assurance-audits assurance-learner",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:verification-learner",
+          "v:learning-module:assurance-audits",
+          "v:student:assurance-learner"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:assurance-learner:assurance-audits:assurance-audits",
+        "name": "skill-gain assurance-learner assurance-audits assurance-audits",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:learning-module:assurance-audits",
+          "v:skill:assurance-audits"
+        ],
+        "element_type": "face"
+      }
+    ]
+  },
+  "metadata": {
+    "exported": "2025-12-28T19:17:40.308746",
+    "source_file": "charts/learning-journey-module-05/learning-journey-module-05.md"
+  }
+}

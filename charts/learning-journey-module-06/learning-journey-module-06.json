@@ -1,0 +1,187 @@
+{
+  "chart_id": "c:learning-journey-module-06",
+  "name": "Learning Journey - Module 06",
+  "description": "Sixth module in learning journey teaching compositional document architecture using Obsidian embeds, typed subsections, and PPP framework",
+  "type": "chart/syllabus",
+  "constructed_by": "Claude Sonnet 4.5",
+  "construction_method": "assisted",
+  "purpose": "Demonstrate skill accumulation for Module 6 (document composition) building on Modules 3 and 5, teaching compositional architectures with systematic assurance workflows",
+  "scope": "One module (document-composition) with 2 prerequisite skills (dual) and 1 developed skill, showing student state transition from assurance-learner to document-architect (convergence point)",
+  "element_counts": {
+    "vertices": 6,
+    "edges": 9,
+    "faces": 4
+  },
+  "topology": {
+    "euler_characteristic": 1,
+    "dimension": 2
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "v:student:assurance-learner",
+        "name": "Assurance Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:assurance-audits",
+        "name": "Assurance & Audits",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:composing-typed-simplicial-complexes",
+        "name": "Composing Typed Simplicial Complexes",
+        "type": "vertex/property",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:document-composition",
+        "name": "Document Composition",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:document-composition",
+        "name": "Document Composition - Modular Architecture",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:document-architect",
+        "name": "Document Architect",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:has-skill:assurance-learner:assurance-audits",
+        "name": "assurance-learner has skill assurance-audits",
+        "type": "edge/has-skill",
+        "source": "v:student:assurance-learner",
+        "target": "v:skill:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:assurance-learner:composing-typed-simplicial-complexes",
+        "name": "assurance-learner has skill composing-typed-simplicial-complexes",
+        "type": "edge/has-skill",
+        "source": "v:student:assurance-learner",
+        "target": "v:skill:composing-typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:document-composition:assurance-audits",
+        "name": "document-composition requires skill assurance-audits",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:document-composition",
+        "target": "v:skill:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:document-composition:composing-typed-simplicial-complexes",
+        "name": "document-composition requires skill composing-typed-simplicial-complexes",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:document-composition",
+        "target": "v:skill:composing-typed-simplicial-complexes",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:document-composition:document-composition",
+        "name": "document-composition develops skill document-composition",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:document-composition",
+        "target": "v:skill:document-composition",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:assurance-learner:document-composition",
+        "name": "assurance-learner studies document-composition",
+        "type": "edge/studies",
+        "source": "v:student:assurance-learner",
+        "target": "v:learning-module:document-composition",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:assurance-learner:document-architect",
+        "name": "assurance-learner transitions-to document-architect",
+        "type": "edge/transitions-to",
+        "source": "v:student:assurance-learner",
+        "target": "v:student:document-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:document-composition:document-architect",
+        "name": "document-composition advances document-architect",
+        "type": "edge/advances",
+        "source": "v:learning-module:document-composition",
+        "target": "v:student:document-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:document-architect:document-composition",
+        "name": "document-architect has skill document-composition",
+        "type": "edge/has-skill",
+        "source": "v:student:document-architect",
+        "target": "v:skill:document-composition",
+        "element_type": "edge"
+      }
+    ],
+    "faces": [
+      {
+        "id": "f:prerequisite:assurance-learner:assurance-audits:document-composition",
+        "name": "Prerequisite triangle - assurance-learner with assurance-audits for document-composition",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:skill:assurance-audits",
+          "v:learning-module:document-composition"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:prerequisite:assurance-learner:composing-typed-simplicial-complexes:document-composition",
+        "name": "Prerequisite triangle - assurance-learner with composing-typed-simplicial-complexes for document-composition",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:skill:composing-typed-simplicial-complexes",
+          "v:learning-module:document-composition"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:assurance-learner:document-composition:document-architect",
+        "name": "completion assurance-learner document-composition document-architect",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:learning-module:document-composition",
+          "v:student:document-architect"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:document-architect:document-composition:document-composition",
+        "name": "skill-gain document-architect document-composition document-composition",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:document-architect",
+          "v:learning-module:document-composition",
+          "v:skill:document-composition"
+        ],
+        "element_type": "face"
+      }
+    ]
+  },
+  "metadata": {
+    "exported": "2025-12-28T19:17:42.715643",
+    "source_file": "charts/learning-journey-module-06/learning-journey-module-06.md"
+  }
+}
