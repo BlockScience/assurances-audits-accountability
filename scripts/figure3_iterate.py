@@ -8,7 +8,7 @@ Shows the 5-vertex self-referential foundation with root anchor.
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from matplotlib.patches import FancyBboxPatch, Circle, RegularPolygon, Polygon
+from matplotlib.patches import FancyBboxPatch, Circle, RegularPolygon, Polygon, FancyArrowPatch
 from matplotlib.lines import Line2D
 from pathlib import Path
 
@@ -36,34 +36,41 @@ COLORS = {
 
 def generate_figure3_v1(output_path: Path):
     """
-    Version 1: 2D layout with root at center
-
-    Layout (diamond/bowtie shape):
-              [SS]          [SG]
-                 \    R    /
-                  \   |   /
-                   \  |  /
-                    [GS]----[GG]
-
-    Actually let's try a cleaner layout:
-
-           [SS] ---------- [SG]
-             \      |      /
-              \     |     /
-               \   [R]   /
-                \   |   /
-                 \  |  /
-           [GS] ---------- [GG]
+    Version 1: Original 2D layout with root at center (kept for reference)
     """
-    fig, ax = plt.subplots(figsize=(8, 7))
+    pass
 
-    # Positions - square with root at center
+
+def generate_figure3_v2(output_path: Path):
+    """
+    Version 2: Hierarchical layer style matching Figure 2
+
+    Layout:
+        Layer 1 (Spec Type):       [SS]  --------  [SG]
+                                     \              /
+                                      \            /
+        Layer 0 (Guidance Type):   [GS]  --------  [GG]
+                                      \            /
+                                       \          /
+        Anchor:                         [ROOT]
+
+    This is the self-referential boundary complex showing how specs and
+    guidance documents verify/validate each other with root anchor.
+    """
+    fig, ax = plt.subplots(figsize=(10, 8))
+
+    # Y positions for hierarchical layers
+    y1 = 0.78  # Layer 1: Spec type vertices
+    y0 = 0.48  # Layer 0: Guidance type vertices
+    yr = 0.18  # Root anchor
+
+    # Positions
     positions = {
-        'ss': (0.25, 0.75),    # Top left (Spec-for-Spec)
-        'sg': (0.75, 0.75),    # Top right (Spec-for-Guidance)
-        'gs': (0.25, 0.25),    # Bottom left (Guidance-for-Spec)
-        'gg': (0.75, 0.25),    # Bottom right (Guidance-for-Guidance)
-        'root': (0.5, 0.5),    # Center
+        'ss': (0.25, y1),    # Spec-for-Spec
+        'sg': (0.75, y1),    # Spec-for-Guidance
+        'gs': (0.25, y0),    # Guidance-for-Spec
+        'gg': (0.75, y0),    # Guidance-for-Guidance
+        'root': (0.5, yr),   # Root anchor
     }
 
     labels = {
@@ -74,37 +81,19 @@ def generate_figure3_v1(output_path: Path):
         'root': 'ROOT',
     }
 
-    full_labels = {
-        'ss': 'spec-for-spec',
-        'sg': 'spec-for-guidance',
-        'gs': 'guidance-for-spec',
-        'gg': 'guidance-for-guidance',
-    }
+    # Draw layer backgrounds (matching Figure 2 style)
+    layer_boxes = [
+        (0.03, y1-0.10, 0.94, 0.20, 'Layer 1: Spec Type', COLORS['face_standard']),
+        (0.03, y0-0.10, 0.94, 0.20, 'Layer 0: Guidance Type', COLORS['face_boundary']),
+        (0.03, yr-0.08, 0.94, 0.16, 'Anchor', '#F5F5F5'),
+    ]
 
-    # Draw faces first (background)
-    # Boundary face b2:spec-spec (root-GS-SS) - left triangle
-    b2_ss_verts = [positions['root'], positions['gs'], positions['ss']]
-    b2_ss = Polygon(b2_ss_verts, facecolor=COLORS['face_boundary'],
-                    edgecolor='none', alpha=0.5, zorder=1)
-    ax.add_patch(b2_ss)
-
-    # Boundary face b2:guidance-guidance (root-SG-GG) - right triangle
-    b2_gg_verts = [positions['root'], positions['sg'], positions['gg']]
-    b2_gg = Polygon(b2_gg_verts, facecolor=COLORS['face_boundary'],
-                    edgecolor='none', alpha=0.5, zorder=1)
-    ax.add_patch(b2_gg)
-
-    # Standard face f:assurance:spec-guidance (SG-SS-GS) - top-left triangle
-    f_sg_verts = [positions['sg'], positions['ss'], positions['gs']]
-    f_sg = Polygon(f_sg_verts, facecolor=COLORS['face_standard'],
-                   edgecolor='none', alpha=0.4, zorder=1)
-    ax.add_patch(f_sg)
-
-    # Standard face f:assurance:guidance-spec (GS-SG-GG) - bottom-right triangle
-    f_gs_verts = [positions['gs'], positions['sg'], positions['gg']]
-    f_gs = Polygon(f_gs_verts, facecolor=COLORS['face_standard'],
-                   edgecolor='none', alpha=0.4, zorder=1)
-    ax.add_patch(f_gs)
+    for x, y, w, h, label, color in layer_boxes:
+        rect = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.01,rounding_size=0.02",
+                               facecolor=color, edgecolor='#CCCCCC', linewidth=1, alpha=0.6)
+        ax.add_patch(rect)
+        ax.text(0.04, y + h - 0.02, label, fontsize=9, fontweight='bold',
+                color='#666666', va='top')
 
     # Helper functions
     def draw_arrow(start, end, color, style='-', width=2):
@@ -113,117 +102,122 @@ def generate_figure3_v1(output_path: Path):
         ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
                    arrowprops=dict(arrowstyle='-|>', color=color,
                                   linewidth=width, linestyle=style,
-                                  shrinkA=18, shrinkB=18))
+                                  shrinkA=15, shrinkB=15))
 
     def draw_line(start, end, color, style='-', width=2):
         x1, y1 = positions[start]
         x2, y2 = positions[end]
         ax.plot([x1, x2], [y1, y2], color=color, linewidth=width,
-                linestyle=style, zorder=2)
+                linestyle=style, zorder=1)
 
-    # Coupling edges (purple - undirected)
-    draw_line('ss', 'gs', COLORS['coupling'], '-', 2.5)
-    draw_line('sg', 'gg', COLORS['coupling'], '-', 2.5)
-    draw_line('sg', 'gs', COLORS['coupling'], '-', 2.5)
+    # EDGES - draw from bottom to top for proper layering
+
+    # Boundary edges to root (dotted gray)
+    draw_arrow('ss', 'root', COLORS['boundary'], ':', 1.5)
+    draw_arrow('gg', 'root', COLORS['boundary'], ':', 1.5)
+    draw_line('root', 'gs', COLORS['boundary'], ':', 1.5)
+    draw_line('root', 'sg', COLORS['boundary'], ':', 1.5)
+
+    # Coupling edges (purple solid) - between paired types
+    draw_line('ss', 'gs', COLORS['coupling'], '-', 2)  # spec-for-spec ↔ guidance-for-spec
+    draw_line('sg', 'gg', COLORS['coupling'], '-', 2)  # spec-for-guidance ↔ guidance-for-guidance
+    draw_line('sg', 'gs', COLORS['coupling'], '-', 2)  # Cross-coupling
 
     # Verification edges (green - directed)
+    # SG verifies SS (spec-for-guidance verifies spec-for-spec)
     draw_arrow('sg', 'ss', COLORS['verification'], '-', 2)
+    # GS verifies SG (guidance-for-spec verifies spec-for-guidance)
     draw_arrow('gs', 'sg', COLORS['verification'], '-', 2)
+    # GG verifies SG (guidance-for-guidance verifies spec-for-guidance)
     draw_arrow('gg', 'sg', COLORS['verification'], '-', 2)
 
     # Validation edges (red - directed, dashed)
+    # SS validates GS (spec-for-spec validates guidance-for-spec)
     draw_arrow('ss', 'gs', COLORS['validation'], '--', 2)
+    # SG validates GS (spec-for-guidance validates guidance-for-spec)
     draw_arrow('sg', 'gs', COLORS['validation'], '--', 2)
+    # GS validates GG (guidance-for-spec validates guidance-for-guidance)
     draw_arrow('gs', 'gg', COLORS['validation'], '--', 2)
 
-    # Boundary edges to root (gray - dotted)
-    draw_arrow('ss', 'root', COLORS['boundary'], ':', 1.8)
-    draw_arrow('gg', 'root', COLORS['boundary'], ':', 1.8)
-    draw_line('root', 'gs', COLORS['boundary'], ':', 1.8)
-    draw_line('root', 'sg', COLORS['boundary'], ':', 1.8)
+    # VERTICES - draw on top
+    vertex_size = 0.05
 
-    # Draw vertices
-    vertex_size = 0.055
-
-    # Spec vertices (green squares)
+    # Spec vertices (green squares) - Layer 1
     for v in ['ss', 'sg']:
         x, y = positions[v]
         rect = FancyBboxPatch((x - vertex_size/2, y - vertex_size/2),
                                vertex_size, vertex_size,
                                boxstyle="round,pad=0.005,rounding_size=0.005",
                                facecolor=COLORS['spec'], edgecolor='white',
-                               linewidth=2.5, zorder=10)
+                               linewidth=2, zorder=10)
         ax.add_patch(rect)
         ax.text(x, y, labels[v], ha='center', va='center',
-                fontsize=12, fontweight='bold', color='white', zorder=11)
+                fontsize=10, fontweight='bold', color='white', zorder=11)
 
-    # Guidance vertices (orange rounded)
+    # Guidance vertices (orange rounded) - Layer 0
     for v in ['gs', 'gg']:
         x, y = positions[v]
         rect = FancyBboxPatch((x - vertex_size/2, y - vertex_size/2),
                                vertex_size, vertex_size,
-                               boxstyle="round,pad=0.005,rounding_size=0.02",
+                               boxstyle="round,pad=0.005,rounding_size=0.015",
                                facecolor=COLORS['guidance'], edgecolor='white',
-                               linewidth=2.5, zorder=10)
+                               linewidth=2, zorder=10)
         ax.add_patch(rect)
         ax.text(x, y, labels[v], ha='center', va='center',
-                fontsize=12, fontweight='bold', color='white', zorder=11)
+                fontsize=10, fontweight='bold', color='white', zorder=11)
 
-    # Root (gold hexagon at center)
+    # Root (gold hexagon)
     root_x, root_y = positions['root']
-    star = RegularPolygon((root_x, root_y), numVertices=6, radius=0.05,
+    star = RegularPolygon((root_x, root_y), numVertices=6, radius=0.045,
                           facecolor=COLORS['root'], edgecolor='#B7950B',
-                          linewidth=2.5, zorder=10)
+                          linewidth=2, zorder=10)
     ax.add_patch(star)
     ax.text(root_x, root_y, 'R', ha='center', va='center',
-            fontsize=14, fontweight='bold', color='#7D6608', zorder=11)
+            fontsize=12, fontweight='bold', color='#7D6608', zorder=11)
 
-    # Full labels outside vertices (positioned to avoid legend)
-    ax.text(positions['ss'][0] + 0.12, positions['ss'][1] + 0.06, full_labels['ss'],
-            ha='left', va='bottom', fontsize=9, color='#555', fontstyle='italic')
-    ax.text(positions['sg'][0], positions['sg'][1] + 0.08, full_labels['sg'],
-            ha='center', va='bottom', fontsize=9, color='#555', fontstyle='italic')
-    ax.text(positions['gs'][0], positions['gs'][1] - 0.08, full_labels['gs'],
-            ha='center', va='top', fontsize=9, color='#555', fontstyle='italic')
-    ax.text(positions['gg'][0], positions['gg'][1] - 0.08, full_labels['gg'],
-            ha='center', va='top', fontsize=9, color='#555', fontstyle='italic')
+    # Checkmarks - matching Figure 2 style (green circles with white check)
+    for v, pos in positions.items():
+        x, y = pos
+        # Green circle background
+        check_circle = Circle((x + 0.055, y + 0.03), 0.018, facecolor=COLORS['verification'],
+                              edgecolor='white', linewidth=1, zorder=12)
+        ax.add_patch(check_circle)
+        # White "v" as checkmark
+        ax.plot([x + 0.048, x + 0.055, x + 0.065], [y + 0.03, y + 0.022, y + 0.042],
+                color='white', linewidth=2, solid_capstyle='round', zorder=13)
 
-    # Face labels
-    ax.text(0.33, 0.52, 'b2', fontsize=11, fontweight='bold', color='#3498DB',
-            ha='center', va='center')
-    ax.text(0.67, 0.52, 'b2', fontsize=11, fontweight='bold', color='#3498DB',
-            ha='center', va='center')
-    ax.text(0.42, 0.62, 'f', fontsize=11, fontweight='bold', color='#27AE60',
-            ha='center', va='center')
-    ax.text(0.58, 0.38, 'f', fontsize=11, fontweight='bold', color='#27AE60',
-            ha='center', va='center')
+    # Full labels below vertices
+    full_labels_text = [
+        (positions['ss'][0], positions['ss'][1] - 0.055, 'spec-for-spec', 7),
+        (positions['sg'][0], positions['sg'][1] - 0.055, 'spec-for-guidance', 7),
+        (positions['gs'][0], positions['gs'][1] - 0.055, 'guidance-for-spec', 7),
+        (positions['gg'][0], positions['gg'][1] - 0.055, 'guidance-for-guidance', 7),
+    ]
+    for x, y, text, size in full_labels_text:
+        ax.text(x, y, text, ha='center', va='top', fontsize=size,
+                color='#666666', fontstyle='italic')
 
     # Legend
     legend_elements = [
         Line2D([0], [0], color=COLORS['verification'], linewidth=2.5, marker='>',
-               markersize=7, label='Verification'),
+               markersize=7, label='Verification (structural)'),
         Line2D([0], [0], color=COLORS['validation'], linewidth=2.5, linestyle='--',
-               marker='>', markersize=7, label='Validation'),
+               marker='>', markersize=7, label='Validation (qualitative)'),
         Line2D([0], [0], color=COLORS['coupling'], linewidth=2.5,
-               label='Coupling'),
+               label='Coupling (type coherence)'),
         Line2D([0], [0], color=COLORS['boundary'], linewidth=2, linestyle=':',
-               label='Boundary'),
-        mpatches.Patch(facecolor=COLORS['face_boundary'], alpha=0.5,
-                       edgecolor='#3498DB', label='b2: Boundary face'),
-        mpatches.Patch(facecolor=COLORS['face_standard'], alpha=0.4,
-                       edgecolor='#27AE60', label='f: Standard face'),
+               label='Boundary (to root)'),
     ]
-    leg = ax.legend(handles=legend_elements, loc='upper left',
-                    bbox_to_anchor=(0.02, 0.98), framealpha=0.95,
+    leg = ax.legend(handles=legend_elements, loc='upper right', framealpha=0.95,
                     fontsize=9, frameon=True, fancybox=True)
     leg.get_frame().set_edgecolor('#CCCCCC')
 
-    # Statistics
+    # Statistics box
     stats_text = "V = 5   E = 12   F = 4\nEuler char. = -3"
-    ax.text(0.98, 0.02, stats_text, transform=ax.transAxes, fontsize=9,
+    ax.text(0.97, 0.02, stats_text, transform=ax.transAxes, fontsize=9,
             ha='right', va='bottom', fontfamily='monospace',
             bbox=dict(boxstyle='round', facecolor='white', alpha=0.95,
-                      edgecolor='#CCCCCC'))
+                      edgecolor='#CCCCCC', pad=0.5))
 
     # Title
     ax.set_title('Boundary Complex Structure', fontsize=15, fontweight='bold',
@@ -243,4 +237,6 @@ def generate_figure3_v1(output_path: Path):
 if __name__ == '__main__':
     output_dir = Path('figures')
     output_dir.mkdir(exist_ok=True)
-    generate_figure3_v1(output_dir / 'figure3-v1.png')
+    generate_figure3_v2(output_dir / 'figure3-v2.png')
+    generate_figure3_v2(output_dir / 'figure3-final.png')
+    generate_figure3_v2(output_dir / 'figure3-final.pdf')

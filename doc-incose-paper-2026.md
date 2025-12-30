@@ -281,7 +281,7 @@ A critical property emerges from the framework's structure. In a valid audit cha
 
 This yields the **audit chart invariant**: **V - F = 1**
 
-This invariant is not arbitrary but follows from the framework's semantics. The root vertex anchors the boundary complex, enabling self-referential foundations without paradox. Every other vertex requires exactly one assurance face. The invariant provides a simple, powerful integrity check: if V - F ≠ 1, either some vertex lacks assurance or the structure is malformed.
+This invariant is not arbitrary but follows from the framework's semantics. The root vertex anchors the boundary complex, enabling self-referential foundations without paradox. Every other vertex requires exactly one assurance face. A full audit lists every vertex and details the assurance face that attests to it by enumerating the coupling, verification, validation edges which bound it. The audit chart invariant provides a simple, computationally efficient integrity check: if V - F ≠ 1, either some vertex lacks assurance or the structure is malformed.
 
 The audit tooling explicitly tests this invariant:
 
@@ -300,7 +300,7 @@ The `human_approver` field is structurally required—validation edges without i
 
 LLM assistance is tracked through `llm_assisted` and `llm_tool` fields documenting what AI contributed. But the named human bears responsibility for the judgment that content meets quality criteria. The AI cannot approve; only humans approve.
 
-This design acknowledges AI's role without diffusing accountability. LLMs contribute capability; humans contribute responsibility. The framework makes this division explicit and auditable.
+This design acknowledges AI's role without diffusing accountability. LLMs contribute capability; humans contribute responsibility. The framework makes this division explicit and auditable. Our implementation is gitbased, and uses github actions to enforce a programmatic check that the signer matches the identity matching the github handle making the commit. Mismatches between signer and committer result in blocking pull requests.
 
 ---
 
@@ -312,22 +312,7 @@ This paper demonstrates the framework through self-application. The paper exists
 
 **[Figure 1: Assurance Triangle for This Paper]**
 
-```
-                guidance-for-incose-paper
-                     (v:guidance:incose-paper)
-                            /\
-                           /  \
-            validation    /    \    coupling
-     (human_approver:    /      \   (e:coupling:
-         redacted)      /        \   incose-paper)
-                       /          \
-                      /            \
-    doc-incose-  ────────────────── spec-for-
-    paper-2026       verification   incose-paper
- (v:doc:incose-   (e:verification:  (v:spec:
-  paper-2026)      incose-paper-     incose-paper)
-                   content)
-```
+![Assurance Triangle](figures/figure1-final.png)
 
 *Figure 1. The assurance triangle for this paper. The document vertex (bottom left) connects to its specification (bottom right) via a verification edge and to its guidance (top) via a validation edge. The coupling edge (right side) links the specification to its corresponding guidance. The validation edge requires a named human approver (redacted). When all three edges are present, the triangle closes as a 2-simplex (face), representing complete assurance.*
 
@@ -339,18 +324,18 @@ The assurance audit used `audit_assurance_chart.py`, which analyzes chart docume
 
 **Table 1: Complete Vertex Assurance Status**
 
-| Vertex ID | Vertex Name | Layer | Assurance Face | Human Approver |
-|-----------|-------------|-------|----------------|----------------|
-| `b0:root` | Root Boundary Anchor | Foundation | (provides assurance) | — |
-| `v:spec:spec` | Specification for Specifications | Foundation | `b2:spec-spec` | redacted |
-| `v:spec:guidance` | Specification for Guidance | Foundation | `f:assurance:spec-guidance` | redacted |
-| `v:guidance:spec` | Guidance for Specifications | Foundation | `f:assurance:guidance-spec` | redacted |
-| `v:guidance:guidance` | Guidance for Guidance | Foundation | `b2:guidance-guidance` | redacted |
-| `v:spec:incose-paper` | Spec for INCOSE Papers | Type | `f:assurance:incose-paper-spec` | redacted |
-| `v:guidance:incose-paper` | Guidance for INCOSE Papers | Type | `f:assurance:incose-paper-guidance` | redacted |
-| `v:doc:incose-paper-2026` | This Paper | Instance | `f:assurance:incose-paper-content` | redacted |
+| Vertex ID | Layer | Bounding Edges (verification, coupling, validation) | Approver |
+|-----------|-------|-----------------------------------------------------|----------|
+| `b0:root` | Foundation | *(anchor vertex—provides assurance, not assured)* | — |
+| `v:spec:spec` | Foundation | b1:self-verification, b1:couples-GS-root, e:validation:spec-spec:guidance-spec | redacted |
+| `v:spec:guidance` | Foundation | e:verification:spec-guidance:spec-spec, e:coupling:spec, e:validation:spec-guidance:guidance-spec | redacted |
+| `v:guidance:spec` | Foundation | e:verification:guidance-spec:spec-guidance, e:coupling:guidance, e:validation:guidance-spec:guidance-guidance | redacted |
+| `v:guidance:guidance` | Foundation | e:verification:guidance-guidance:spec-guidance, b1:couples-SG-root, b1:self-validation | redacted |
+| `v:spec:incose-paper` | Type | e:verification:incose-paper-spec:spec-spec, e:coupling:spec, e:validation:incose-paper-spec:guidance-spec | redacted |
+| `v:guidance:incose-paper` | Type | e:verification:incose-paper-guidance:spec-guidance, e:coupling:guidance, e:validation:incose-paper-guidance:guidance-guidance | redacted |
+| `v:doc:incose-paper-2026` | Instance | e:verification:incose-paper-content:spec-incose-paper, e:coupling:incose-paper, e:validation:incose-paper-content:guidance-incose-paper | redacted |
 
-*Table 1. Complete assurance status for all vertices in the audit chart. Each vertex except root has exactly one assurance face. The root vertex anchors the boundary complex and provides assurance to others but does not itself require assurance—this is the source of the V - F = 1 invariant.*
+*Table 1. Complete assurance audit showing all vertices and their bounding edges. Each assurance face (2-simplex) is defined by exactly three edges: one verification, one coupling, one validation. The root vertex anchors the boundary complex but does not itself require assurance—this is the source of the V - F = 1 invariant.*
 
 **Table 2: Assurance Audit Summary**
 
@@ -368,36 +353,7 @@ The assurance audit used `audit_assurance_chart.py`, which analyzes chart docume
 
 **[Figure 2: Boundary Complex Structure]**
 
-```
-                    ┌─────────────────────────────────────┐
-                    │         BOUNDARY COMPLEX            │
-                    │                                     │
-                    │           b0:root                   │
-                    │          /       \                  │
-                    │    b1:self-      b1:self-           │
-                    │   verification   validation         │
-                    │        /             \              │
-                    │       v               v             │
-                    │  ┌─────────┐     ┌─────────┐       │
-                    │  │ spec:   │     │guidance:│       │
-                    │  │  spec   │     │guidance │       │
-                    │  │  (SS)   │     │  (GG)   │       │
-                    │  └────┬────┘     └────┬────┘       │
-                    │       │               │             │
-                    │       │   coupling    │             │
-                    │       v               v             │
-                    │  ┌─────────┐     ┌─────────┐       │
-                    │  │ spec:   │<───>│guidance:│       │
-                    │  │guidance │     │  spec   │       │
-                    │  │  (SG)   │     │  (GS)   │       │
-                    │  └─────────┘     └─────────┘       │
-                    │                                     │
-                    │  Faces: b2:spec-spec (blue)        │
-                    │         b2:guidance-guidance (blue) │
-                    │         f:spec-guidance (green)    │
-                    │         f:guidance-spec (green)    │
-                    └─────────────────────────────────────┘
-```
+![boundary complex](figures/figure3-final.png)
 
 *Figure 2. The boundary complex resolves self-referential foundations. The root vertex (b0:root) anchors boundary faces (b2, blue) that enable spec-for-spec and guidance-for-guidance to be self-referential without paradox. Standard assurance faces (green) cover the cross-domain documents. The boundary complex forms the axiomatic foundation from which all other document types derive assurance.*
 
@@ -436,6 +392,8 @@ The `elements` field contains *references* (IDs) to other documents. The audit s
 This referent/reference distinction enables the audit chart to be self-referential in a controlled way—similar to how the boundary complex enables self-referential specifications. The audit chart document can include itself in its vertex list if needed, with the framework's formal structure preventing paradox.
 
 **[Figure 3: Audit Chart Visualization]**
+
+![audit chart](figures/figure2-final.png)
 
 *Figure 3. Network visualization of the INCOSE paper assurance chart. Vertices are colored by type: specs (green), guidance (orange), content docs (blue), root (gray). Edges show verification (blue arrows), validation (red arrows), and coupling (purple lines). Faces appear as shaded triangles. The hierarchical structure shows instance layer (this paper) depending on type layer (INCOSE spec/guidance) depending on foundation layer (boundary complex).*
 
@@ -532,7 +490,7 @@ As AI capabilities advance, human accountability becomes more rather than less i
 
 ## Acknowledgments
 
-**AI Assistance Disclosure:** Claude (Opus 4.5) assisted with content generation for drafting sections, literature organization, and framework documentation development. All research design, framework architecture, validation methodology, and conclusions are original author work. The paper's central contribution—explicit coupling of specification and guidance with human accountability—was conceived and directed by the author. Claude also provided editorial support for grammar and clarity. The author maintained oversight of all AI-assisted work and made final editorial decisions.
+**AI Assistance Disclosure:** Claude (Opus 4.5) assisted with content generation for drafting sections, literature organization, and framework documentation development. The idea for applying typed simplicial complexes to constrain directed and evaluate arose from a pain point around requirements (non)tracibility to AI generated specifications. All research design, framework architecture, validation methodology, and conclusions are original author work. The paper's central contributions—explicit coupling of specification and guidance to form valid simplicial complexes and to leverage algebraic topology for efficient auditing as well as sandwhiching human accountability for validation between machine verification and assurance steps—were conceived and directed by the author. Claude also provided editorial support for grammar and clarity. The author maintained oversight of all AI-assisted work and made final editorial decisions.
 
 ---
 
@@ -573,7 +531,3 @@ As AI capabilities advance, human accountability becomes more rather than less i
 17. Ahmad Z, et al. Large language models (LLMs) in systems engineering and design. 2024. doi:10.13140/RG.2.2.28013.97766
 
 18. Badshah T, et al. Large language models (LLMs) for requirements engineering (RE): A systematic literature review. *arXiv preprint*. 2024. arXiv:2509.11446
-
----
-
-*Word count: approximately 5,200 words (excluding references and code blocks)*
