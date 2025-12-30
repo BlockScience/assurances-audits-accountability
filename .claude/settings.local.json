@@ -104,7 +104,10 @@
       "Bash(for type in persona purpose protocol spec guidance system_prompt)",
       "Bash(for f in 02_faces/doc-kit-*.md)",
       "Bash(do sed -i '' 's/^boundary:/edges:/' \"$f\")",
-      "Bash(__NEW_LINE__ echo \"\")"
+      "Bash(__NEW_LINE__ echo \"\")",
+      "Bash(ln:*)",
+      "Bash(for f in 02_faces/assurance-*.md)",
+      "Bash(do grep -E \"^\\(id:|target:|validation_edge:\\)\" \"$f\")"
     ]
   }
 }

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-12-30T06:59:35.228372+00:00",
+  "generated": "2025-12-30T18:27:33.269255+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -20,6 +20,32 @@
         "version": "1.0.0",
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00"
+      },
+      "v:doc:architecture-incose-paper": {
+        "file": "00_vertices/doc-architecture-incose-paper.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:architecture-incose-paper",
+        "name": "Architecture Document - INCOSE Paper Assurance Framework",
+        "description": "4-layer SE architecture for the document assurance framework demonstrated in the INCOSE IS 2026 paper",
+        "tags": [
+          "vertex",
+          "doc",
+          "architecture"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00",
+        "system_name": "Document Assurance Framework",
+        "scope": "A framework for verifying, validating, and assuring LLM-assisted documents using typed simplicial complexes with human accountability",
+        "stakeholders": [
+          "Cognizant Engineers",
+          "Technical Authorities",
+          "Document Authors",
+          "Quality Assurance Personnel",
+          "Systems Engineers"
+        ],
+        "dependencies": []
       },
       "v:doc:incose-paper-2026": {
         "file": "00_vertices/doc-incose-paper-2026.md",
@@ -41,6 +67,102 @@
         "target_spec": "v:spec:incose-paper",
         "target_guidance": "v:guidance:incose-paper"
       },
+      "v:doc:lifecycle-incose-paper": {
+        "file": "00_vertices/doc-lifecycle-incose-paper.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:lifecycle-incose-paper",
+        "name": "Engineering Lifecycle for INCOSE Paper Development",
+        "description": "Documents the systematic process for developing assured research papers within the typed simplicial complex framework",
+        "tags": [
+          "vertex",
+          "doc",
+          "lifecycle"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00",
+        "lifecycle_name": "Assured Document Development",
+        "target_artifact": "INCOSE IS 2026 Research Paper",
+        "phase_count": 4,
+        "foundation_requirements": [
+          "v:spec:spec",
+          "v:guidance:spec",
+          "v:spec:guidance",
+          "v:guidance:guidance",
+          "v:spec:architecture",
+          "v:guidance:architecture",
+          "v:spec:charts",
+          "v:guidance:charts"
+        ],
+        "parallel_phases": [
+          [
+            "Phase 1",
+            "Phase 2"
+          ]
+        ]
+      },
+      "v:doc:literature-review-incose-paper": {
+        "file": "00_vertices/doc-literature-review-incose-paper.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:literature-review-incose-paper",
+        "name": "Literature Review - INCOSE IS 2026 Paper on Document Assurance Framework",
+        "description": "Comprehensive literature review supporting the INCOSE paper on test-driven document development using typed simplicial complexes",
+        "tags": [
+          "vertex",
+          "doc",
+          "literature-review"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T20:00:00+00:00",
+        "modified": "2025-12-30T20:00:00+00:00",
+        "topic": "Document Verification, Validation, Assurance, and Accountability",
+        "target_paper": "v:doc:incose-paper-2026",
+        "citation_count": 17,
+        "theme_count": 4,
+        "search_strategy": "Targeted search of IEEE standards, INCOSE publications, topology textbooks, and AI ethics frameworks",
+        "date_range": "1979-2025",
+        "databases_searched": [
+          "IEEE Xplore",
+          "Google Scholar",
+          "SEBoK Wiki",
+          "INCOSE Publications",
+          "ISO Standards"
+        ]
+      },
+      "v:doc:novel-contributions-incose-paper": {
+        "file": "00_vertices/doc-novel-contributions-incose-paper.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:novel-contributions-incose-paper",
+        "name": "Novel Research Contributions - INCOSE IS 2026 Paper",
+        "description": "Enumeration and ranking of intellectual contributions from the assurance framework research for the INCOSE IS 2026 submission",
+        "tags": [
+          "vertex",
+          "doc",
+          "novel-contributions"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T20:00:00+00:00",
+        "modified": "2025-12-30T20:00:00+00:00",
+        "context": "incose-is-2026",
+        "contribution_count": 9,
+        "novelty_levels": [
+          "Highly Novel",
+          "Novel",
+          "Moderately Novel",
+          "Incremental",
+          "Discovered"
+        ],
+        "target_venue": "INCOSE International Symposium 2026",
+        "related_artifacts": [
+          "v:doc:architecture-incose-paper",
+          "v:doc:lifecycle-incose-paper",
+          "v:doc:literature-review-incose-paper"
+        ],
+        "dependencies": []
+      },
       "v:guidance:actor": {
         "file": "00_vertices/guidance-for-actor.md",
         "type": "vertex/guidance",
@@ -57,6 +179,31 @@
         "created": "2025-12-28T00:00:00+00:00",
         "modified": "2025-12-28T00:00:00+00:00",
         "dependencies": []
+      },
+      "v:guidance:architecture": {
+        "file": "00_vertices/guidance-for-architecture.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:architecture",
+        "name": "Guidance for Architecture Documents",
+        "description": "Quality criteria and best practices for creating effective architecture documents using the 4-layer SE framework",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "layer-completeness",
+          "v-model-alignment",
+          "traceability",
+          "testability",
+          "stakeholder-clarity",
+          "technology-independence"
+        ]
       },
       "v:guidance:assurance_audit": {
         "file": "00_vertices/guidance-for-assurance-audits.md",
@@ -75,6 +222,27 @@
         "created": "2025-12-27T23:00:00+00:00",
         "modified": "2025-12-27T23:00:00+00:00",
         "dependencies": []
+      },
+      "v:guidance:assured_signed_chart": {
+        "file": "00_vertices/guidance-for-assured-signed-chart.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:assured_signed_chart",
+        "name": "Guidance for Assured Signed Charts",
+        "description": "Quality criteria and best practices for creating excellent assured-signed chart documents",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance",
+          "assurance",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00",
+        "dependencies": [
+          "v:guidance:assurance_audit"
+        ]
       },
       "v:guidance:chart": {
         "file": "00_vertices/guidance-for-charts.md",
@@ -110,22 +278,58 @@
         "modified": "2025-12-27T16:00:00+00:00",
         "dependencies": []
       },
-      "v:guidance:incose-paper": {
-        "file": "00_vertices/guidance-for-incose-paper.md",
+      "v:guidance:incose-literature-review": {
+        "file": "00_vertices/guidance-for-incose-literature-review.md",
         "type": "vertex/guidance",
         "extends": "doc",
-        "id": "v:guidance:incose-paper",
-        "name": "Guidance for INCOSE IS 2026 Research Paper",
-        "description": "Quality criteria and best practices for creating an excellent INCOSE symposium paper",
+        "id": "v:guidance:incose-literature-review",
+        "name": "Guidance for INCOSE Literature Review Documents",
+        "description": "Quality criteria and best practices for creating excellent literature reviews supporting INCOSE papers",
         "tags": [
           "vertex",
           "doc",
           "guidance"
         ],
         "version": "1.0.0",
-        "created": "2025-12-30T10:30:00+00:00",
-        "modified": "2025-12-30T10:30:00+00:00",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00",
         "dependencies": []
+      },
+      "v:guidance:incose-paper": {
+        "file": "00_vertices/guidance-for-incose-paper.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:incose-paper",
+        "name": "Guidance for INCOSE IS 2026 Research Paper",
+        "description": "Comprehensive quality criteria, best practices, and evaluation guidance for creating an excellent INCOSE symposium paper that resonates with reviewers and practitioners",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "2.0.0",
+        "created": "2025-12-30T10:30:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00",
+        "dependencies": []
+      },
+      "v:guidance:incose-self-demonstration": {
+        "file": "00_vertices/guidance-for-incose-self-demonstration.md",
+        "type": "vertex/guidance",
+        "extends": "guidance-for-incose-paper",
+        "id": "v:guidance:incose-self-demonstration",
+        "name": "Guidance for INCOSE Self-Demonstrating Paper",
+        "description": "Quality criteria for INCOSE papers that demonstrate their framework by being instances of it, with emphasis on coherence across supporting documents",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T21:00:00+00:00",
+        "modified": "2025-12-30T21:00:00+00:00",
+        "dependencies": [
+          "v:guidance:incose-paper"
+        ]
       },
       "v:guidance:learning-module": {
         "file": "00_vertices/guidance-for-learning-module.md",
@@ -142,6 +346,48 @@
         "version": "1.0.0",
         "created": "2025-12-28T00:00:00+00:00",
         "modified": "2025-12-28T00:00:00+00:00",
+        "dependencies": []
+      },
+      "v:guidance:lifecycle": {
+        "file": "00_vertices/guidance-for-lifecycle.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:lifecycle",
+        "name": "Guidance for Lifecycle Documents",
+        "description": "Quality criteria and best practices for creating excellent engineering lifecycle documentation",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00",
+        "dependencies": []
+      },
+      "v:guidance:novel-contributions": {
+        "file": "00_vertices/guidance-for-novel-contributions.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:novel-contributions",
+        "name": "Guidance for Novel Contributions Documents",
+        "description": "Quality criteria and best practices for creating effective novel contributions documents",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00",
+        "criteria": [
+          "contribution-clarity",
+          "novelty-calibration",
+          "evidence-quality",
+          "ranking-coherence",
+          "actionability",
+          "intellectual-honesty"
+        ],
         "dependencies": []
       },
       "v:guidance:organization": {
@@ -344,6 +590,23 @@
         "modified": "2025-12-28T00:00:00+00:00",
         "dependencies": []
       },
+      "v:spec:architecture": {
+        "file": "00_vertices/spec-for-architecture.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:architecture",
+        "name": "Specification for Architecture Documents",
+        "description": "Defines what makes a valid architecture document using the 4-layer SE framework (Conceptual, Functional, Logical, Physical)",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00",
+        "dependencies": []
+      },
       "v:spec:assurance_audit": {
         "file": "00_vertices/spec-for-assurance-audits.md",
         "type": "vertex/spec",
@@ -361,6 +624,29 @@
         "created": "2025-12-27T23:00:00+00:00",
         "modified": "2025-12-27T23:00:00+00:00",
         "dependencies": []
+      },
+      "v:spec:assured_signed_chart": {
+        "file": "00_vertices/spec-for-assured-signed-chart.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:assured_signed_chart",
+        "name": "Specification for Assured Signed Chart Documents",
+        "description": "Defines what makes a valid assured-signed chart - complete assurance with explicit signature accountability",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec",
+          "assurance",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00",
+        "dependencies": [
+          "v:spec:assurance_audit",
+          "v:spec:signature",
+          "v:spec:signer"
+        ]
       },
       "v:spec:chart": {
         "file": "00_vertices/spec-for-charts.md",
@@ -396,6 +682,23 @@
         "modified": "2025-12-27T16:00:00+00:00",
         "dependencies": []
       },
+      "v:spec:incose-literature-review": {
+        "file": "00_vertices/spec-for-incose-literature-review.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:incose-literature-review",
+        "name": "Specification for INCOSE Literature Review Documents",
+        "description": "Defines structural requirements for literature review documents supporting INCOSE paper submissions",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00",
+        "dependencies": []
+      },
       "v:spec:incose-paper": {
         "file": "00_vertices/spec-for-incose-paper.md",
         "type": "vertex/spec",
@@ -412,6 +715,25 @@
         "created": "2025-12-30T10:00:00+00:00",
         "modified": "2025-12-30T18:00:00+00:00",
         "dependencies": []
+      },
+      "v:spec:incose-self-demonstration": {
+        "file": "00_vertices/spec-for-incose-self-demonstration.md",
+        "type": "vertex/spec",
+        "extends": "spec-for-incose-paper",
+        "id": "v:spec:incose-self-demonstration",
+        "name": "Specification for INCOSE Self-Demonstrating Paper",
+        "description": "Extended specification for INCOSE papers that demonstrate their framework by being instances of it, requiring consistency with architecture, lifecycle, literature review, and novel contributions documents",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T21:00:00+00:00",
+        "modified": "2025-12-30T21:00:00+00:00",
+        "dependencies": [
+          "v:spec:incose-paper"
+        ]
       },
       "v:spec:inherits": {
         "file": "00_vertices/spec-for-inherits-edges.md",
@@ -447,6 +769,40 @@
         "version": "1.0.0",
         "created": "2025-12-28T00:00:00+00:00",
         "modified": "2025-12-28T00:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:lifecycle": {
+        "file": "00_vertices/spec-for-lifecycle.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:lifecycle",
+        "name": "Specification for Lifecycle Documents",
+        "description": "Defines structural requirements for engineering lifecycle process documents describing assured document development workflows",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:novel-contributions": {
+        "file": "00_vertices/spec-for-novel-contributions.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:novel-contributions",
+        "name": "Specification for Novel Contributions Documents",
+        "description": "Defines what makes a valid novel contributions document that enumerates and ranks research contributions",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00",
         "dependencies": []
       },
       "v:spec:organization": {
@@ -535,6 +891,80 @@
         "version": "1.0.0",
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:qualifies": {
+        "file": "00_vertices/spec-for-qualifies.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:qualifies",
+        "name": "Specification for Qualifies Edge Documents",
+        "description": "Defines what makes a valid qualifies edge - credential linking signer to guidance they can validate against",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:signature": {
+        "file": "00_vertices/spec-for-signature.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:signature",
+        "name": "Specification for Signature Face Documents",
+        "description": "Defines what makes a valid signature face - accountability triangle coupling doc, guidance, and signer with shared validation edge",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00",
+        "dependencies": [
+          "v:spec:signer",
+          "v:spec:qualifies",
+          "v:spec:signs"
+        ]
+      },
+      "v:spec:signer": {
+        "file": "00_vertices/spec-for-signer.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:signer",
+        "name": "Specification for Signer Documents",
+        "description": "Defines what makes a valid signer document - actors with verified GitHub identity who can sign validation edges",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00",
+        "dependencies": [
+          "v:spec:actor"
+        ]
+      },
+      "v:spec:signs": {
+        "file": "00_vertices/spec-for-signs.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:signs",
+        "name": "Specification for Signs Edge Documents",
+        "description": "Defines what makes a valid signs edge - attestation event where signer attests to a document",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00",
         "dependencies": []
       },
       "v:spec:skill": {
@@ -723,6 +1153,25 @@
         "created": "2025-12-27T22:15:00+00:00",
         "modified": "2025-12-27T22:15:00+00:00"
       },
+      "e:coupling:architecture": {
+        "file": "01_edges/coupling-architecture.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:architecture",
+        "name": "Coupling - Spec-for-Architecture and Guidance-for-Architecture",
+        "source": "v:spec:architecture",
+        "target": "v:guidance:architecture",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00"
+      },
       "e:coupling:assurance_audit": {
         "file": "01_edges/coupling-assurance_audit.md",
         "type": "edge/coupling",
@@ -801,6 +1250,25 @@
         "created": "2025-12-27T16:30:00+00:00",
         "modified": "2025-12-27T16:30:00+00:00"
       },
+      "e:coupling:incose-literature-review": {
+        "file": "01_edges/coupling-incose-literature-review.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:incose-literature-review",
+        "name": "Coupling - Spec and Guidance for INCOSE Literature Reviews",
+        "source": "v:spec:incose-literature-review",
+        "target": "v:guidance:incose-literature-review",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
       "e:coupling:incose-paper": {
         "file": "01_edges/coupling-incose-paper.md",
         "type": "edge/coupling",
@@ -819,6 +1287,63 @@
         "version": "1.0.0",
         "created": "2025-12-30T11:00:00+00:00",
         "modified": "2025-12-30T11:00:00+00:00"
+      },
+      "e:coupling:incose-self-demonstration": {
+        "file": "01_edges/coupling-incose-self-demonstration.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:incose-self-demonstration",
+        "name": "Coupling - Spec and Guidance for INCOSE Self-Demonstrating Paper",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:guidance:incose-self-demonstration",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T21:00:00+00:00",
+        "modified": "2025-12-30T21:00:00+00:00"
+      },
+      "e:coupling:lifecycle": {
+        "file": "01_edges/coupling-lifecycle.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:lifecycle",
+        "name": "Coupling - Spec-for-Lifecycle and Guidance-for-Lifecycle",
+        "source": "v:spec:lifecycle",
+        "target": "v:guidance:lifecycle",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00"
+      },
+      "e:coupling:novel-contributions": {
+        "file": "01_edges/coupling-novel-contributions.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:novel-contributions",
+        "name": "Coupling - spec-for-novel-contributions and guidance-for-novel-contributions",
+        "source": "v:spec:novel-contributions",
+        "target": "v:guidance:novel-contributions",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00"
       },
       "e:coupling:persona": {
         "file": "01_edges/coupling-persona.md",
@@ -935,6 +1460,354 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:30:00+00:00",
         "modified": "2025-12-27T23:30:00+00:00"
+      },
+      "e:dependency:incose-self-demonstration-guidance:architecture-guidance": {
+        "file": "01_edges/dependency-incose-self-demonstration-guidance:architecture-guidance.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:incose-self-demonstration-guidance:architecture-guidance",
+        "name": "Dependency - Self-Demonstration Guidance requires Architecture Guidance",
+        "description": "Self-demonstrating paper quality criteria reference architecture document quality criteria",
+        "source": "v:guidance:incose-self-demonstration",
+        "target": "v:guidance:architecture",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "dependency_type": "quality_reference",
+        "subsection_field": "quality_criteria.architecture_alignment",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "self-demonstration",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T22:00:00+00:00",
+        "modified": "2025-12-30T22:00:00+00:00"
+      },
+      "e:dependency:incose-self-demonstration-guidance:lifecycle-guidance": {
+        "file": "01_edges/dependency-incose-self-demonstration-guidance:lifecycle-guidance.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:incose-self-demonstration-guidance:lifecycle-guidance",
+        "name": "Dependency - Self-Demonstration Guidance requires Lifecycle Guidance",
+        "description": "Self-demonstrating paper quality criteria reference lifecycle document quality criteria",
+        "source": "v:guidance:incose-self-demonstration",
+        "target": "v:guidance:lifecycle",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "dependency_type": "quality_reference",
+        "subsection_field": "quality_criteria.lifecycle_enactment",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "self-demonstration",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T22:00:00+00:00",
+        "modified": "2025-12-30T22:00:00+00:00"
+      },
+      "e:dependency:incose-self-demonstration-guidance:literature-review-guidance": {
+        "file": "01_edges/dependency-incose-self-demonstration-guidance:literature-review-guidance.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:incose-self-demonstration-guidance:literature-review-guidance",
+        "name": "Dependency - Self-Demonstration Guidance requires Literature Review Guidance",
+        "description": "Self-demonstrating paper quality criteria reference literature review document quality criteria",
+        "source": "v:guidance:incose-self-demonstration",
+        "target": "v:guidance:incose-literature-review",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "dependency_type": "quality_reference",
+        "subsection_field": "quality_criteria.literature_foundation",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "self-demonstration",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T22:00:00+00:00",
+        "modified": "2025-12-30T22:00:00+00:00"
+      },
+      "e:dependency:incose-self-demonstration-guidance:novel-contributions-guidance": {
+        "file": "01_edges/dependency-incose-self-demonstration-guidance:novel-contributions-guidance.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:incose-self-demonstration-guidance:novel-contributions-guidance",
+        "name": "Dependency - Self-Demonstration Guidance requires Novel Contributions Guidance",
+        "description": "Self-demonstrating paper quality criteria reference novel contributions document quality criteria",
+        "source": "v:guidance:incose-self-demonstration",
+        "target": "v:guidance:novel-contributions",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "dependency_type": "quality_reference",
+        "subsection_field": "quality_criteria.contribution_integrity",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "self-demonstration",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T22:00:00+00:00",
+        "modified": "2025-12-30T22:00:00+00:00"
+      },
+      "e:dependency:incose-self-demonstration-spec:architecture-spec": {
+        "file": "01_edges/dependency-incose-self-demonstration-spec:architecture-spec.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:incose-self-demonstration-spec:architecture-spec",
+        "name": "Dependency - Self-Demonstration Spec requires Architecture Spec",
+        "description": "Self-demonstrating papers must have an architecture document conforming to spec-for-architecture",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:spec:architecture",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "dependency_type": "supporting_document",
+        "subsection_field": "supporting_documents.architecture",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "self-demonstration"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T22:00:00+00:00",
+        "modified": "2025-12-30T22:00:00+00:00"
+      },
+      "e:dependency:incose-self-demonstration-spec:lifecycle-spec": {
+        "file": "01_edges/dependency-incose-self-demonstration-spec:lifecycle-spec.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:incose-self-demonstration-spec:lifecycle-spec",
+        "name": "Dependency - Self-Demonstration Spec requires Lifecycle Spec",
+        "description": "Self-demonstrating papers must have a lifecycle document conforming to spec-for-lifecycle",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:spec:lifecycle",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "dependency_type": "supporting_document",
+        "subsection_field": "supporting_documents.lifecycle",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "self-demonstration"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T22:00:00+00:00",
+        "modified": "2025-12-30T22:00:00+00:00"
+      },
+      "e:dependency:incose-self-demonstration-spec:literature-review-spec": {
+        "file": "01_edges/dependency-incose-self-demonstration-spec:literature-review-spec.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:incose-self-demonstration-spec:literature-review-spec",
+        "name": "Dependency - Self-Demonstration Spec requires Literature Review Spec",
+        "description": "Self-demonstrating papers must have a literature review document conforming to spec-for-incose-literature-review",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:spec:incose-literature-review",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "dependency_type": "supporting_document",
+        "subsection_field": "supporting_documents.literature_review",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "self-demonstration"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T22:00:00+00:00",
+        "modified": "2025-12-30T22:00:00+00:00"
+      },
+      "e:dependency:incose-self-demonstration-spec:novel-contributions-spec": {
+        "file": "01_edges/dependency-incose-self-demonstration-spec:novel-contributions-spec.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:incose-self-demonstration-spec:novel-contributions-spec",
+        "name": "Dependency - Self-Demonstration Spec requires Novel Contributions Spec",
+        "description": "Self-demonstrating papers must have a novel contributions document conforming to spec-for-novel-contributions",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:spec:novel-contributions",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "dependency_type": "supporting_document",
+        "subsection_field": "supporting_documents.novel_contributions",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "self-demonstration"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T22:00:00+00:00",
+        "modified": "2025-12-30T22:00:00+00:00"
+      },
+      "e:inherits:incose-self-demonstration-guidance:incose-paper-guidance": {
+        "file": "01_edges/inherits-incose-self-demonstration-guidance:incose-paper-guidance.md",
+        "type": "edge/inherits",
+        "extends": "edge",
+        "id": "e:inherits:incose-self-demonstration-guidance:incose-paper-guidance",
+        "name": "Inherits - INCOSE Self-Demonstration Guidance extends INCOSE Paper Guidance",
+        "description": "Self-demonstrating paper guidance is a specialization of standard INCOSE paper guidance with additional quality criteria",
+        "source": "v:guidance:incose-self-demonstration",
+        "target": "v:guidance:incose-paper",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "inheritance_type": "domain_specialization",
+        "inherited_fields": [
+          "relevance_criteria",
+          "accessibility_criteria",
+          "rigor_criteria",
+          "novelty_criteria",
+          "theme_alignment_criteria",
+          "engagement_criteria",
+          "section_guidance",
+          "self_assessment_rubric"
+        ],
+        "added_fields": [
+          "document_coherence_criteria",
+          "architecture_alignment_criteria",
+          "lifecycle_enactment_criteria",
+          "literature_foundation_criteria",
+          "contribution_integrity_criteria",
+          "self_demonstration_credibility_criteria",
+          "traceability_criteria",
+          "extended_rubric"
+        ],
+        "tags": [
+          "edge",
+          "inherits",
+          "incose-paper",
+          "self-demonstration",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T22:30:00+00:00",
+        "modified": "2025-12-30T22:30:00+00:00"
+      },
+      "e:inherits:incose-self-demonstration:incose-paper": {
+        "file": "01_edges/inherits-incose-self-demonstration:incose-paper.md",
+        "type": "edge/inherits",
+        "extends": "edge",
+        "id": "e:inherits:incose-self-demonstration:incose-paper",
+        "name": "Inherits - INCOSE Self-Demonstration extends INCOSE Paper",
+        "description": "Self-demonstrating paper spec is a specialization of standard INCOSE paper spec with additional requirements",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:spec:incose-paper",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "inheritance_type": "domain_specialization",
+        "inherited_fields": [
+          "word_limit",
+          "required_sections",
+          "ai_disclosure_requirements",
+          "anonymization_requirements",
+          "template_format",
+          "structural_constraints"
+        ],
+        "added_fields": [
+          "self_demonstrating",
+          "supporting_documents",
+          "consistency_requirements",
+          "completeness_requirements",
+          "self_demonstration_requirements",
+          "assurance_status"
+        ],
+        "tags": [
+          "edge",
+          "inherits",
+          "incose-paper",
+          "self-demonstration"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T22:30:00+00:00",
+        "modified": "2025-12-30T22:30:00+00:00"
+      },
+      "e:validation:architecture-guidance:guidance-guidance": {
+        "file": "01_edges/validation-architecture-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:architecture-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-architecture against guidance-for-guidance",
+        "source": "v:guidance:architecture",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00"
+      },
+      "e:validation:architecture-incose:guidance-architecture": {
+        "file": "01_edges/validation-architecture-incose:guidance-architecture.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:architecture-incose:guidance-architecture",
+        "name": "Validation - doc-architecture-incose-paper against guidance-for-architecture",
+        "source": "v:doc:architecture-incose-paper",
+        "target": "v:guidance:architecture",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00"
+      },
+      "e:validation:architecture-spec:guidance-spec": {
+        "file": "01_edges/validation-architecture-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:architecture-spec:guidance-spec",
+        "name": "Validation - spec-for-architecture against guidance-for-spec",
+        "source": "v:spec:architecture",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00"
       },
       "e:validation:assurance_audit-guidance:guidance": {
         "file": "01_edges/validation-assurance_audit-guidance:guidance.md",
@@ -1169,6 +2042,213 @@
         "version": "1.0.0",
         "created": "2025-12-30T11:30:00+00:00",
         "modified": "2025-12-30T11:30:00+00:00"
+      },
+      "e:validation:lifecycle-guidance:guidance-guidance": {
+        "file": "01_edges/validation-lifecycle-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:lifecycle-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-lifecycle against guidance-for-guidance",
+        "source": "v:guidance:lifecycle",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "e:validation:lifecycle-incose:guidance-lifecycle": {
+        "file": "01_edges/validation-lifecycle-incose:guidance-lifecycle.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:lifecycle-incose:guidance-lifecycle",
+        "name": "Validation - doc-lifecycle-incose-paper against guidance-for-lifecycle",
+        "source": "v:doc:lifecycle-incose-paper",
+        "target": "v:guidance:lifecycle",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T20:45:00+00:00",
+        "modified": "2025-12-30T20:45:00+00:00"
+      },
+      "e:validation:lifecycle-spec:guidance-spec": {
+        "file": "01_edges/validation-lifecycle-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:lifecycle-spec:guidance-spec",
+        "name": "Validation - spec-for-lifecycle against guidance-for-spec",
+        "source": "v:spec:lifecycle",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "e:validation:literature-review-guidance:guidance-guidance": {
+        "file": "01_edges/validation-literature-review-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:literature-review-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-incose-literature-review against guidance-for-guidance",
+        "source": "v:guidance:incose-literature-review",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "e:validation:literature-review-incose:guidance-incose-literature-review": {
+        "file": "01_edges/validation-literature-review-incose:guidance-incose-literature-review.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:literature-review-incose:guidance-incose-literature-review",
+        "name": "Validation - doc-literature-review-incose-paper against guidance-for-incose-literature-review",
+        "source": "v:doc:literature-review-incose-paper",
+        "target": "v:guidance:incose-literature-review",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T21:00:00+00:00",
+        "modified": "2025-12-30T21:00:00+00:00"
+      },
+      "e:validation:literature-review-spec:guidance-spec": {
+        "file": "01_edges/validation-literature-review-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:literature-review-spec:guidance-spec",
+        "name": "Validation - spec-for-incose-literature-review against guidance-for-spec",
+        "source": "v:spec:incose-literature-review",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "e:validation:novel-contributions-guidance:guidance-guidance": {
+        "file": "01_edges/validation-novel-contributions-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:novel-contributions-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-novel-contributions against guidance-for-guidance",
+        "source": "v:guidance:novel-contributions",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00"
+      },
+      "e:validation:novel-contributions-incose:guidance-novel-contributions": {
+        "file": "01_edges/validation-novel-contributions-incose:guidance-novel-contributions.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:novel-contributions-incose:guidance-novel-contributions",
+        "name": "Validation - doc-novel-contributions-incose-paper against guidance-for-novel-contributions",
+        "source": "v:doc:novel-contributions-incose-paper",
+        "target": "v:guidance:novel-contributions",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T20:30:00+00:00",
+        "modified": "2025-12-30T20:30:00+00:00"
+      },
+      "e:validation:novel-contributions-spec:guidance-spec": {
+        "file": "01_edges/validation-novel-contributions-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:novel-contributions-spec:guidance-spec",
+        "name": "Validation - spec-for-novel-contributions against guidance-for-spec",
+        "source": "v:spec:novel-contributions",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00"
       },
       "e:validation:persona-claude:guidance": {
         "file": "01_edges/validation-persona-claude:guidance.md",
@@ -1531,6 +2611,63 @@
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00"
       },
+      "e:verification:architecture-guidance:spec-guidance": {
+        "file": "01_edges/verification-architecture-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:architecture-guidance:spec-guidance",
+        "name": "Verification - guidance-for-architecture against spec-for-guidance",
+        "source": "v:guidance:architecture",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00"
+      },
+      "e:verification:architecture-incose:spec-architecture": {
+        "file": "01_edges/verification-architecture-incose:spec-architecture.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:architecture-incose:spec-architecture",
+        "name": "Verification - doc-architecture-incose-paper against spec-for-architecture",
+        "source": "v:doc:architecture-incose-paper",
+        "target": "v:spec:architecture",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00"
+      },
+      "e:verification:architecture-spec:spec-spec": {
+        "file": "01_edges/verification-architecture-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:architecture-spec:spec-spec",
+        "name": "Verification - spec-for-architecture against spec-for-spec",
+        "source": "v:spec:architecture",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00"
+      },
       "e:verification:assurance_audit-guidance:guidance": {
         "file": "01_edges/verification-assurance_audit-guidance:guidance.md",
         "type": "edge/verification",
@@ -1740,6 +2877,205 @@
         "version": "1.0.0",
         "created": "2025-12-30T11:15:00+00:00",
         "modified": "2025-12-30T11:15:00+00:00"
+      },
+      "e:verification:lifecycle-guidance:spec-guidance": {
+        "file": "01_edges/verification-lifecycle-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:lifecycle-guidance:spec-guidance",
+        "name": "Verification - guidance-for-lifecycle against spec-for-guidance",
+        "source": "v:guidance:lifecycle",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "e:verification:lifecycle-incose:spec-lifecycle": {
+        "file": "01_edges/verification-lifecycle-incose:spec-lifecycle.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:lifecycle-incose:spec-lifecycle",
+        "name": "Verification - doc-lifecycle-incose-paper against spec-for-lifecycle",
+        "source": "v:doc:lifecycle-incose-paper",
+        "target": "v:spec:lifecycle",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T20:45:00+00:00",
+        "modified": "2025-12-30T20:45:00+00:00"
+      },
+      "e:verification:lifecycle-spec:spec-spec": {
+        "file": "01_edges/verification-lifecycle-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:lifecycle-spec:spec-spec",
+        "name": "Verification - spec-for-lifecycle against spec-for-spec",
+        "source": "v:spec:lifecycle",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "e:verification:literature-review-guidance:spec-guidance": {
+        "file": "01_edges/verification-literature-review-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:literature-review-guidance:spec-guidance",
+        "name": "Verification - guidance-for-incose-literature-review against spec-for-guidance",
+        "source": "v:guidance:incose-literature-review",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "e:verification:literature-review-incose:spec-incose-literature-review": {
+        "file": "01_edges/verification-literature-review-incose:spec-incose-literature-review.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:literature-review-incose:spec-incose-literature-review",
+        "name": "Verification - doc-literature-review-incose-paper against spec-for-incose-literature-review",
+        "source": "v:doc:literature-review-incose-paper",
+        "target": "v:spec:incose-literature-review",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T21:00:00+00:00",
+        "modified": "2025-12-30T21:00:00+00:00"
+      },
+      "e:verification:literature-review-spec:spec-spec": {
+        "file": "01_edges/verification-literature-review-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:literature-review-spec:spec-spec",
+        "name": "Verification - spec-for-incose-literature-review against spec-for-spec",
+        "source": "v:spec:incose-literature-review",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "e:verification:novel-contributions-guidance:spec-guidance": {
+        "file": "01_edges/verification-novel-contributions-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:novel-contributions-guidance:spec-guidance",
+        "name": "Verification - guidance-for-novel-contributions against spec-for-guidance",
+        "source": "v:guidance:novel-contributions",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00"
+      },
+      "e:verification:novel-contributions-incose:spec-novel-contributions": {
+        "file": "01_edges/verification-novel-contributions-incose:spec-novel-contributions.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:novel-contributions-incose:spec-novel-contributions",
+        "name": "Verification - doc-novel-contributions-incose-paper against spec-for-novel-contributions",
+        "source": "v:doc:novel-contributions-incose-paper",
+        "target": "v:spec:novel-contributions",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T20:30:00+00:00",
+        "modified": "2025-12-30T20:30:00+00:00"
+      },
+      "e:verification:novel-contributions-spec:spec-spec": {
+        "file": "01_edges/verification-novel-contributions-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:novel-contributions-spec:spec-spec",
+        "name": "Verification - spec-for-novel-contributions against spec-for-spec",
+        "source": "v:spec:novel-contributions",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00"
       },
       "e:verification:persona-claude:spec": {
         "file": "01_edges/verification-persona-claude:spec.md",
@@ -2060,6 +3396,114 @@
       }
     },
     "faces": {
+      "f:assurance:architecture-guidance": {
+        "file": "02_faces/assurance-architecture-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:architecture-guidance",
+        "name": "Assurance Face - guidance-for-architecture",
+        "description": "Complete assurance pattern for the architecture guidance",
+        "edges": [
+          "e:coupling:architecture",
+          "e:verification:architecture-guidance:spec-guidance",
+          "e:validation:architecture-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:architecture",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:architecture",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:architecture",
+        "verification_edge": "e:verification:architecture-guidance:spec-guidance",
+        "validation_edge": "e:validation:architecture-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00"
+      },
+      "f:assurance:architecture-incose": {
+        "file": "02_faces/assurance-architecture-incose.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:architecture-incose",
+        "name": "Assurance Face - doc-architecture-incose-paper",
+        "description": "Complete assurance pattern for the INCOSE paper architecture document",
+        "edges": [
+          "e:coupling:architecture",
+          "e:verification:architecture-incose:spec-architecture",
+          "e:validation:architecture-incose:guidance-architecture"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:doc:architecture-incose-paper",
+          "v:spec:architecture",
+          "v:guidance:architecture"
+        ],
+        "target": "v:doc:architecture-incose-paper",
+        "spec": "v:spec:architecture",
+        "guidance": "v:guidance:architecture",
+        "coupling_edge": "e:coupling:architecture",
+        "verification_edge": "e:verification:architecture-incose:spec-architecture",
+        "validation_edge": "e:validation:architecture-incose:guidance-architecture",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00"
+      },
+      "f:assurance:architecture-spec": {
+        "file": "02_faces/assurance-architecture-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:architecture-spec",
+        "name": "Assurance Face - spec-for-architecture",
+        "description": "Complete assurance pattern for the architecture specification",
+        "edges": [
+          "e:coupling:architecture",
+          "e:verification:architecture-spec:spec-spec",
+          "e:validation:architecture-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:architecture",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:architecture",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:architecture",
+        "verification_edge": "e:verification:architecture-spec:spec-spec",
+        "validation_edge": "e:validation:architecture-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T12:00:00+00:00",
+        "modified": "2025-12-30T12:00:00+00:00"
+      },
       "f:assurance:assurance_audit-guidance": {
         "file": "02_faces/assurance-assurance_audit-guidance.md",
         "type": "face/assurance",
@@ -2389,6 +3833,222 @@
         "version": "1.0.0",
         "created": "2025-12-30T11:45:00+00:00",
         "modified": "2025-12-30T11:45:00+00:00"
+      },
+      "f:assurance:lifecycle-guidance": {
+        "file": "02_faces/assurance-lifecycle-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:lifecycle-guidance",
+        "name": "Assurance Face - guidance-for-lifecycle",
+        "description": "Complete assurance pattern for the lifecycle guidance",
+        "edges": [
+          "e:coupling:lifecycle",
+          "e:verification:lifecycle-guidance:spec-guidance",
+          "e:validation:lifecycle-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:lifecycle",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:lifecycle",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:lifecycle",
+        "verification_edge": "e:verification:lifecycle-guidance:spec-guidance",
+        "validation_edge": "e:validation:lifecycle-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "f:assurance:lifecycle-spec": {
+        "file": "02_faces/assurance-lifecycle-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:lifecycle-spec",
+        "name": "Assurance Face - spec-for-lifecycle",
+        "description": "Complete assurance pattern for the lifecycle specification",
+        "edges": [
+          "e:coupling:lifecycle",
+          "e:verification:lifecycle-spec:spec-spec",
+          "e:validation:lifecycle-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:lifecycle",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:lifecycle",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:lifecycle",
+        "verification_edge": "e:verification:lifecycle-spec:spec-spec",
+        "validation_edge": "e:validation:lifecycle-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "f:assurance:literature-review-guidance": {
+        "file": "02_faces/assurance-literature-review-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:literature-review-guidance",
+        "name": "Assurance Face - guidance-for-incose-literature-review",
+        "description": "Complete assurance pattern for the INCOSE literature review guidance",
+        "edges": [
+          "e:coupling:incose-literature-review",
+          "e:verification:literature-review-guidance:spec-guidance",
+          "e:validation:literature-review-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:incose-literature-review",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:incose-literature-review",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:incose-literature-review",
+        "verification_edge": "e:verification:literature-review-guidance:spec-guidance",
+        "validation_edge": "e:validation:literature-review-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "f:assurance:literature-review-spec": {
+        "file": "02_faces/assurance-literature-review-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:literature-review-spec",
+        "name": "Assurance Face - spec-for-incose-literature-review",
+        "description": "Complete assurance pattern for the INCOSE literature review specification",
+        "edges": [
+          "e:coupling:incose-literature-review",
+          "e:verification:literature-review-spec:spec-spec",
+          "e:validation:literature-review-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:incose-literature-review",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:incose-literature-review",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:incose-literature-review",
+        "verification_edge": "e:verification:literature-review-spec:spec-spec",
+        "validation_edge": "e:validation:literature-review-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T19:00:00+00:00",
+        "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "f:assurance:novel-contributions-guidance": {
+        "file": "02_faces/assurance-novel-contributions-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:novel-contributions-guidance",
+        "name": "Assurance Face - guidance-for-novel-contributions",
+        "description": "Complete assurance pattern for the novel contributions guidance",
+        "edges": [
+          "e:coupling:novel-contributions",
+          "e:verification:novel-contributions-guidance:spec-guidance",
+          "e:validation:novel-contributions-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:novel-contributions",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:novel-contributions",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:novel-contributions",
+        "verification_edge": "e:verification:novel-contributions-guidance:spec-guidance",
+        "validation_edge": "e:validation:novel-contributions-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00"
+      },
+      "f:assurance:novel-contributions-spec": {
+        "file": "02_faces/assurance-novel-contributions-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:novel-contributions-spec",
+        "name": "Assurance Face - spec-for-novel-contributions",
+        "description": "Complete assurance pattern for the novel contributions specification",
+        "edges": [
+          "e:coupling:novel-contributions",
+          "e:verification:novel-contributions-spec:spec-spec",
+          "e:validation:novel-contributions-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:novel-contributions",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:novel-contributions",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:novel-contributions",
+        "verification_edge": "e:verification:novel-contributions-spec:spec-spec",
+        "validation_edge": "e:validation:novel-contributions-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-12-30T18:00:00+00:00"
       },
       "f:assurance:persona-claude": {
         "file": "02_faces/assurance-persona-claude.md",
@@ -3174,10 +4834,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 35,
-    "edge_count": 65,
-    "face_count": 27,
+    "vertex_count": 55,
+    "edge_count": 104,
+    "face_count": 36,
     "chart_count": 3,
-    "euler_characteristic": -3
+    "euler_characteristic": -13
   }
 }

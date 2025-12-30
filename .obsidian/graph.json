@@ -62,6 +62,13 @@
         "a": 1,
         "rgb": 16745944
       }
+    },
+    {
+      "query": "tag:#literature-review  ",
+      "color": {
+        "a": 1,
+        "rgb": 3477992
+      }
     }
   ],
   "collapse-display": true,
