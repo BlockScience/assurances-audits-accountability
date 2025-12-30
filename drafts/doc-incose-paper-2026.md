@@ -67,6 +67,16 @@ The distinction between verification and validation traces to Boehm's 1984 IEEE 
 
 These standards treat verification and validation as complementary but separate. Verification confirms that outputs conform to specified requirements; validation confirms that outputs satisfy stakeholder needs. What the standards do not formalize is the relationship between the requirements against which we verify and the criteria against which we validate. In practice, these should correspond—we verify structure against a specification and validate quality against guidance that interprets what "good" means for documents meeting that specification. But this coupling remains implicit in current frameworks.
 
+### The V-Model and Systems Engineering Lifecycle
+
+The "Vee" model for systems engineering was first publicly presented by Forsberg and Mooz at the 1991 NCOSE Conference.²¹ Their foundational paper established the graphical representation that has guided systems engineering lifecycle thinking for three decades: the left side of the V represents decomposition and specification (conceptual through physical design), while the right side represents integration and verification (component testing through acceptance).²² The V-model explicitly maps verification and validation activities to corresponding design activities at each level of abstraction.
+
+The INCOSE Systems Engineering Handbook, now in its fifth edition, elaborates the V-model within modern life cycle processes.⁸ The handbook describes four architectural layers that structure system design: conceptual (stakeholder needs and operational context), functional (what the system must do), logical (design-independent component structure), and physical (specific implementation choices).²³ Each layer on the left side of the V corresponds to a verification level on the right: conceptual requirements are validated through acceptance testing, functional requirements through system testing, logical architecture through integration testing, and physical design through unit testing.
+
+This four-layer framework aligns with other major architecture standards. The Department of Defense Architecture Framework (DoDAF) organizes views across operational, systems, and technical perspectives, with the Concept of Operations (ConOps) providing the operational context that drives architectural decisions.²⁴ NASA's Systems Engineering Handbook similarly structures design through logical decomposition—from conceptual architecture through functional analysis to physical integration—with verification "unwinding the process" to test whether each physical level meets the expectations and requirements.²⁵
+
+Our framework operationalizes this V-model structure for documents. A specification defines what must be present at each level (structural requirements); guidance defines what constitutes quality at each level (assessment criteria). The coupling edge formalizes what the V-model leaves implicit: that the verification standard and validation criteria must correspond. The assurance triangle completes the loop that the V-model depicts graphically.
+
 The INCOSE Systems Engineering Handbook elaborates verification and validation within the context of system life cycle processes.⁸ It emphasizes that validation assesses fitness for intended use, necessarily involving stakeholder judgment. This subjective element—human judgment about fitness—becomes critical when AI generates content. The handbook does not address who bears responsibility when content originates from automated systems.
 
 ### Algebraic Topology and Simplicial Complexes
@@ -537,7 +547,9 @@ This is not human versus AI but human *with* AI, with clear roles. The LLM contr
 
 **Good-faith assumption.** The framework detects missing approvals but cannot ensure approval quality. A rubber-stamp approval is structurally valid but substantively hollow. Implementation mitigates this risk by whitelisting validators at the github handle level.
 
-**Accessibility of topology.** Simplicial complexes and boundary operators may intimidate practitioners unfamiliar with algebraic topology. Examples mitigate this by restricting to simple documents, reserving demonstration of compound documents for future publications. 
+**Accessibility of topology.** Simplicial complexes and boundary operators may intimidate practitioners unfamiliar with algebraic topology. Examples mitigate this by restricting to simple documents, reserving demonstration of compound documents for future publications.
+
+**Post-processing for publication.** The verified source document exists as markdown with YAML frontmatter in a git repository, enabling automated verification and audit. Submission to venues like INCOSE requires post-processing: stripping metadata, converting to PDF, applying venue-specific templates. This creates a gap between the verified source and the published artifact. We mitigate this by maintaining explicit traceability: the submission file derives from the verified source through documented transformation, and the source repository remains the authoritative record of assurance status. Future work should integrate publication pipeline steps into the assurance framework itself.
 
 These limitations suggest adoption conditions: contexts where documentation stakes justify overhead, organizations with process discipline capacity, and teams willing to invest in topological concepts. Practical benefits of topological methods scale organizational and product complexity because human accountability and requirements traceability are reducible to local algebraic operations on the complex specified in the audit chart.
 
@@ -616,3 +628,13 @@ This disclosure follows the methodological precedent established in Ghrist's "Th
 19. Ghrist R. *Elementary Applied Topology*. Seattle, WA: CreateSpace; 2014.
 
 20. Ghrist R. The Forge (Appendix C). In: *The Geometry of Heaven and Hell*. 2024. [Methodological account of AI-assisted authorship with human oversight]
+
+21. Forsberg K, Mooz H. The relationship of system engineering to the project cycle. In: *Proceedings of the National Council on Systems Engineering (NCOSE) Conference*. Chattanooga, TN; October 1991:57-65. [First public presentation of the Vee model]
+
+22. Forsberg K, Mooz H, Cotterman H. *Visualizing Project Management: Models and Frameworks for Mastering Complex Systems*. 3rd ed. Hoboken, NJ: John Wiley & Sons; 2005.
+
+23. Walden DD, Roedler GJ, Forsberg K, et al. INCOSE Systems Engineering Handbook: Chapter 4 - System Definition. In: *Systems Engineering Handbook*. 5th ed. John Wiley & Sons; 2023:71-142.
+
+24. Department of Defense. DoD Architecture Framework Version 2.02. Washington, DC: DoD Deputy Chief Information Officer; 2010. Available at: https://dodcio.defense.gov/Library/DoD-Architecture-Framework/
+
+25. National Aeronautics and Space Administration. *NASA Systems Engineering Handbook*. Rev 2. NASA/SP-2016-6105. Washington, DC: NASA; 2016. Available at: https://www.nasa.gov/reference/2-0-fundamentals-of-systems-engineering/
