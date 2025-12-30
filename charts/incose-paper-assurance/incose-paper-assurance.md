@@ -12,7 +12,7 @@ construction_date: 2025-12-30T13:00:00Z
 
 # Chart purpose
 purpose: Demonstrate the assurance framework by showing how the INCOSE paper achieves dual assurance through two independent triangles
-scope: 24 vertices including boundary complex, supporting document types, supporting document instances, and paper content
+scope: 23 vertices including boundary complex, supporting document types, supporting document instances, paper content, and signer
 
 # Assurance audit specific metadata
 audit_date: 2025-12-30T23:55:00Z
@@ -57,7 +57,7 @@ elements:
     - v:doc:novel-contributions-incose-paper
     # Paper content (1 vertex)
     - v:doc:incose-paper-2026
-    # Signer (1 vertex)
+    # Signer (1 vertex - root serves as boundary signer)
     - v:signer:mzargham
   edges:
     # Boundary complex edges (13)
@@ -128,18 +128,63 @@ elements:
     # Paper assurance edges - self-demo triangle (2)
     - e:verification:incose-paper-2026:spec-incose-self-demonstration
     - e:validation:incose-paper-2026:guidance-incose-self-demonstration
-    # Signature edges - qualifies (2)
+    # Signature edges - qualifies for paper (2)
     - e:qualifies:mzargham:guidance-incose-paper
     - e:qualifies:mzargham:guidance-incose-self-demonstration
-    # Signature edges - signs (2)
+    # Signature edges - qualifies for supporting docs (4)
+    - e:qualifies:mzargham:guidance-architecture
+    - e:qualifies:mzargham:guidance-lifecycle
+    - e:qualifies:mzargham:guidance-incose-literature-review
+    - e:qualifies:mzargham:guidance-novel-contributions
+    # Signature edges - qualifies for meta-types (2)
+    - e:qualifies:mzargham:guidance-spec
+    - e:qualifies:mzargham:guidance-guidance
+    # Signature edges - signs for paper (2)
     - e:signs:mzargham:incose-paper-2026
     - e:signs:mzargham:incose-paper-2026-self-demo
+    # Signature edges - signs for supporting docs (4)
+    - e:signs:mzargham:architecture-incose
+    - e:signs:mzargham:lifecycle-incose
+    - e:signs:mzargham:literature-review-incose
+    - e:signs:mzargham:novel-contributions-incose
+    # Signature edges - signs for type specs (6)
+    - e:signs:mzargham:spec-architecture
+    - e:signs:mzargham:spec-lifecycle
+    - e:signs:mzargham:spec-incose-literature-review
+    - e:signs:mzargham:spec-novel-contributions
+    - e:signs:mzargham:spec-incose-paper
+    - e:signs:mzargham:spec-incose-self-demonstration
+    # Signature edges - signs for type guidances (6)
+    - e:signs:mzargham:guidance-architecture
+    - e:signs:mzargham:guidance-lifecycle
+    - e:signs:mzargham:guidance-incose-literature-review
+    - e:signs:mzargham:guidance-novel-contributions
+    - e:signs:mzargham:guidance-incose-paper
+    - e:signs:mzargham:guidance-incose-self-demonstration
+    # Citation edges - paper cites supporting docs (4)
+    - e:cites:incose-paper-2026:architecture-incose
+    - e:cites:incose-paper-2026:lifecycle-incose
+    - e:cites:incose-paper-2026:literature-review-incose
+    - e:cites:incose-paper-2026:novel-contributions-incose
+    # Root signer edges - qualifies (2)
+    - e:qualifies:root:guidance-spec
+    - e:qualifies:root:guidance-guidance
+    # Root signer edges - signs boundary assurances (4)
+    - e:signs:root:spec-spec
+    - e:signs:root:spec-guidance
+    - e:signs:root:guidance-spec
+    - e:signs:root:guidance-guidance
   faces:
-    # Boundary complex faces (4)
+    # Boundary complex assurance faces (4) - using b2 faces with root
+    - b2:spec-spec
     - f:assurance:spec-guidance
     - f:assurance:guidance-spec
-    - b2:spec-spec
     - b2:guidance-guidance
+    # Boundary complex signature faces - root (4)
+    - f:signature:spec-spec
+    - f:signature:spec-guidance
+    - f:signature:guidance-spec
+    - f:signature:guidance-guidance
     # INCOSE spec and guidance assurance faces (4)
     - f:assurance:incose-paper-spec
     - f:assurance:incose-paper-guidance
@@ -165,6 +210,25 @@ elements:
     # Paper dual signature faces (2)
     - f:signature:incose-paper-2026-base
     - f:signature:incose-paper-2026-self-demo
+    # Supporting document signature faces (4)
+    - f:signature:architecture-incose
+    - f:signature:lifecycle-incose
+    - f:signature:literature-review-incose
+    - f:signature:novel-contributions-incose
+    # Supporting document type signature faces (8)
+    - f:signature:architecture-spec
+    - f:signature:architecture-guidance
+    - f:signature:lifecycle-spec
+    - f:signature:lifecycle-guidance
+    - f:signature:literature-review-spec
+    - f:signature:literature-review-guidance
+    - f:signature:novel-contributions-spec
+    - f:signature:novel-contributions-guidance
+    # INCOSE type signature faces (4)
+    - f:signature:incose-paper-spec
+    - f:signature:incose-paper-guidance
+    - f:signature:incose-self-demonstration-spec
+    - f:signature:incose-self-demonstration-guidance
 
 tags:
   - chart

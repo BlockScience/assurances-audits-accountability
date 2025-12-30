@@ -21,6 +21,7 @@ version: 1.0.0
 created: 2025-12-30T23:35:00Z
 modified: 2025-12-30T23:35:00Z
 human_approver: mzargham
+orientation: oriented
 ---
 
 # Assurance Face - INCOSE Paper 2026 (Base)

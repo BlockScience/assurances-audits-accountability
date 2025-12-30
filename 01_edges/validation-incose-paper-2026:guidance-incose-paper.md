@@ -3,13 +3,19 @@ type: edge/validation
 id: e:validation:incose-paper-2026:guidance-incose-paper
 name: Validation - INCOSE Paper 2026 against Base Guidance
 source: v:doc:incose-paper-2026
+source_type: vertex/doc
 target: v:guidance:incose-paper
+target_type: vertex/guidance
+orientation: directed
 created: 2025-12-30T23:30:00Z
 modified: 2025-12-30T23:30:00Z
 version: 1.0.0
 validator: claude-opus-4-5-20251101
 validation_method: llm-assisted
 human_approver: mzargham
+tags:
+  - edge
+  - validation
 ---
 
 # Validation: INCOSE Paper 2026 against guidance-for-incose-paper

@@ -6,14 +6,14 @@
   "constructed_by": "claude-opus-4-5-20251101",
   "construction_method": "llm-assisted",
   "purpose": "Demonstrate the assurance framework by showing how the INCOSE paper achieves dual assurance through two independent triangles",
-  "scope": "24 vertices including boundary complex, supporting document types, supporting document instances, and paper content",
+  "scope": "23 vertices including boundary complex, supporting document types, supporting document instances, paper content, and signer",
   "element_counts": {
     "vertices": 23,
-    "edges": 55,
-    "faces": 24
+    "edges": 91,
+    "faces": 44
   },
   "topology": {
-    "euler_characteristic": -8,
+    "euler_characteristic": -24,
     "dimension": 2
   },
   "elements": {
@@ -311,6 +311,38 @@
         "element_type": "edge"
       },
       {
+        "id": "e:verification:incose-self-demonstration-spec:spec-spec",
+        "name": "Verification - spec-for-incose-self-demonstration against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:incose-self-demonstration-spec:guidance-spec",
+        "name": "Validation - spec-for-incose-self-demonstration against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:incose-self-demonstration-guidance:spec-guidance",
+        "name": "Verification - guidance-for-incose-self-demonstration against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:incose-self-demonstration",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:incose-self-demonstration-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-incose-self-demonstration against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:incose-self-demonstration",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
         "id": "e:coupling:architecture",
         "name": "Coupling - Spec-for-Architecture and Guidance-for-Architecture",
         "type": "edge/coupling",
@@ -583,6 +615,54 @@
         "element_type": "edge"
       },
       {
+        "id": "e:qualifies:mzargham:guidance-architecture",
+        "name": "Qualifies - mzargham for Architecture Guidance",
+        "type": "edge/qualifies",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:mzargham:guidance-lifecycle",
+        "name": "Qualifies - mzargham for Lifecycle Guidance",
+        "type": "edge/qualifies",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:mzargham:guidance-incose-literature-review",
+        "name": "Qualifies - mzargham for Literature Review Guidance",
+        "type": "edge/qualifies",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-literature-review",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:mzargham:guidance-novel-contributions",
+        "name": "Qualifies - mzargham for Novel Contributions Guidance",
+        "type": "edge/qualifies",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:novel-contributions",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:mzargham:guidance-spec",
+        "name": "Qualifies - mzargham for Guidance-for-Spec",
+        "type": "edge/qualifies",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:mzargham:guidance-guidance",
+        "name": "Qualifies - mzargham for Guidance-for-Guidance",
+        "type": "edge/qualifies",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
         "id": "e:signs:mzargham:incose-paper-2026",
         "name": "Signs - mzargham attests to INCOSE Paper 2026",
         "type": "edge/signs",
@@ -597,9 +677,229 @@
         "source": "v:signer:mzargham",
         "target": "v:doc:incose-paper-2026",
         "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:architecture-incose",
+        "name": "Signs - mzargham attests to Architecture Document",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:architecture-incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:lifecycle-incose",
+        "name": "Signs - mzargham attests to Lifecycle Document",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:lifecycle-incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:literature-review-incose",
+        "name": "Signs - mzargham attests to Literature Review Document",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:literature-review-incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:novel-contributions-incose",
+        "name": "Signs - mzargham attests to Novel Contributions Document",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:novel-contributions-incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:spec-architecture",
+        "name": "Signs - mzargham attests to spec-for-architecture",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:spec-lifecycle",
+        "name": "Signs - mzargham attests to spec-for-lifecycle",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:spec-incose-literature-review",
+        "name": "Signs - mzargham attests to spec-for-incose-literature-review",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:incose-literature-review",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:spec-novel-contributions",
+        "name": "Signs - mzargham attests to spec-for-novel-contributions",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:novel-contributions",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:spec-incose-paper",
+        "name": "Signs - mzargham attests to spec-for-incose-paper",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:spec-incose-self-demonstration",
+        "name": "Signs - mzargham attests to spec-for-incose-self-demonstration",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:incose-self-demonstration",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:guidance-architecture",
+        "name": "Signs - mzargham attests to guidance-for-architecture",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:guidance-lifecycle",
+        "name": "Signs - mzargham attests to guidance-for-lifecycle",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:guidance-incose-literature-review",
+        "name": "Signs - mzargham attests to guidance-for-incose-literature-review",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-literature-review",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:guidance-novel-contributions",
+        "name": "Signs - mzargham attests to guidance-for-novel-contributions",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:novel-contributions",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:guidance-incose-paper",
+        "name": "Signs - mzargham attests to guidance-for-incose-paper",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:mzargham:guidance-incose-self-demonstration",
+        "name": "Signs - mzargham attests to guidance-for-incose-self-demonstration",
+        "type": "edge/signs",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-self-demonstration",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:cites:incose-paper-2026:architecture-incose",
+        "name": "Cites - INCOSE Paper uses Architecture Document",
+        "type": "edge/dependency",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:doc:architecture-incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:cites:incose-paper-2026:lifecycle-incose",
+        "name": "Cites - INCOSE Paper uses Lifecycle Document",
+        "type": "edge/dependency",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:doc:lifecycle-incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:cites:incose-paper-2026:literature-review-incose",
+        "name": "Cites - INCOSE Paper uses Literature Review Document",
+        "type": "edge/dependency",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:doc:literature-review-incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:cites:incose-paper-2026:novel-contributions-incose",
+        "name": "Cites - INCOSE Paper uses Novel Contributions Document",
+        "type": "edge/dependency",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:doc:novel-contributions-incose-paper",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:root:guidance-spec",
+        "name": "Qualifies - Root for guidance-for-spec",
+        "type": "edge/qualifies",
+        "source": "b0:root",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:root:guidance-guidance",
+        "name": "Qualifies - Root for guidance-for-guidance",
+        "type": "edge/qualifies",
+        "source": "b0:root",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:root:spec-spec",
+        "name": "Signs - Root attests spec-for-spec assurance",
+        "type": "edge/signs",
+        "source": "b0:root",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:root:spec-guidance",
+        "name": "Signs - Root attests spec-for-guidance assurance",
+        "type": "edge/signs",
+        "source": "b0:root",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:root:guidance-spec",
+        "name": "Signs - Root attests guidance-for-spec assurance",
+        "type": "edge/signs",
+        "source": "b0:root",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:root:guidance-guidance",
+        "name": "Signs - Root attests guidance-for-guidance assurance",
+        "type": "edge/signs",
+        "source": "b0:root",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
       }
     ],
     "faces": [
+      {
+        "id": "b2:spec-spec",
+        "name": "Boundary Face - Spec-for-Spec Self-Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "b0:root",
+          "v:guidance:spec",
+          "v:spec:spec"
+        ],
+        "element_type": "face"
+      },
       {
         "id": "f:assurance:spec-guidance",
         "name": "Assurance Face - Spec-for-Guidance Assurance",
@@ -625,18 +925,6 @@
         "element_type": "face"
       },
       {
-        "id": "b2:spec-spec",
-        "name": "Boundary Face - Spec-for-Spec Self-Assurance",
-        "type": "face/b2",
-        "boundary": [],
-        "vertices": [
-          "b0:root",
-          "v:guidance:spec",
-          "v:spec:spec"
-        ],
-        "element_type": "face"
-      },
-      {
         "id": "b2:guidance-guidance",
         "name": "Boundary Face - Guidance-for-Guidance Self-Assurance",
         "type": "face/b2",
@@ -645,6 +933,54 @@
           "b0:root",
           "v:spec:guidance",
           "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:spec-spec",
+        "name": "Signature Face - spec-for-spec",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:spec:spec",
+          "v:guidance:spec",
+          "b0:root"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:spec-guidance",
+        "name": "Signature Face - spec-for-guidance",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:spec:guidance",
+          "v:guidance:spec",
+          "b0:root"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:guidance-spec",
+        "name": "Signature Face - guidance-for-spec",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:spec",
+          "v:guidance:guidance",
+          "b0:root"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:guidance-guidance",
+        "name": "Signature Face - guidance-for-guidance",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:guidance",
+          "v:spec:guidance",
+          "b0:root"
         ],
         "element_type": "face"
       },
@@ -887,11 +1223,203 @@
           "v:signer:mzargham"
         ],
         "element_type": "face"
+      },
+      {
+        "id": "f:signature:architecture-incose",
+        "name": "Signature Face - Architecture Document",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:doc:architecture-incose-paper",
+          "v:guidance:architecture",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:lifecycle-incose",
+        "name": "Signature Face - Lifecycle Document",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:doc:lifecycle-incose-paper",
+          "v:guidance:lifecycle",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:literature-review-incose",
+        "name": "Signature Face - Literature Review Document",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:doc:literature-review-incose-paper",
+          "v:guidance:incose-literature-review",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:novel-contributions-incose",
+        "name": "Signature Face - Novel Contributions Document",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:doc:novel-contributions-incose-paper",
+          "v:guidance:novel-contributions",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:architecture-spec",
+        "name": "Signature Face - spec-for-architecture",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:spec:architecture",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:architecture-guidance",
+        "name": "Signature Face - guidance-for-architecture",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:architecture",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:lifecycle-spec",
+        "name": "Signature Face - spec-for-lifecycle",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:spec:lifecycle",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:lifecycle-guidance",
+        "name": "Signature Face - guidance-for-lifecycle",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:lifecycle",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:literature-review-spec",
+        "name": "Signature Face - spec-for-incose-literature-review",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:spec:incose-literature-review",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:literature-review-guidance",
+        "name": "Signature Face - guidance-for-incose-literature-review",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:incose-literature-review",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:novel-contributions-spec",
+        "name": "Signature Face - spec-for-novel-contributions",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:spec:novel-contributions",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:novel-contributions-guidance",
+        "name": "Signature Face - guidance-for-novel-contributions",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:novel-contributions",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:incose-paper-spec",
+        "name": "Signature Face - spec-for-incose-paper",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:spec:incose-paper",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:incose-paper-guidance",
+        "name": "Signature Face - guidance-for-incose-paper",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:incose-paper",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:incose-self-demonstration-spec",
+        "name": "Signature Face - spec-for-incose-self-demonstration",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:spec:incose-self-demonstration",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:incose-self-demonstration-guidance",
+        "name": "Signature Face - guidance-for-incose-self-demonstration",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:incose-self-demonstration",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "element_type": "face"
       }
     ]
   },
   "metadata": {
-    "exported": "2025-12-30T15:52:38.865973",
+    "exported": "2025-12-30T18:33:35.629024",
     "source_file": "charts/incose-paper-assurance/incose-paper-assurance.md"
   },
   "assurance_requirements": {

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-12-30T20:52:33.546998+00:00",
+  "generated": "2025-12-30T23:33:31.330333+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -1204,6 +1204,98 @@
         "created": "2025-12-27T22:15:00+00:00",
         "modified": "2025-12-27T22:15:00+00:00"
       },
+      "e:cites:incose-paper-2026:architecture-incose": {
+        "file": "01_edges/cites-incose-paper-2026:architecture-incose.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:cites:incose-paper-2026:architecture-incose",
+        "name": "Cites - INCOSE Paper uses Architecture Document",
+        "description": "The INCOSE paper leverages content from the architecture document",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:doc:architecture-incose-paper",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "reference",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "citation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "e:cites:incose-paper-2026:lifecycle-incose": {
+        "file": "01_edges/cites-incose-paper-2026:lifecycle-incose.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:cites:incose-paper-2026:lifecycle-incose",
+        "name": "Cites - INCOSE Paper uses Lifecycle Document",
+        "description": "The INCOSE paper leverages content from the lifecycle document",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:doc:lifecycle-incose-paper",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "reference",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "citation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "e:cites:incose-paper-2026:literature-review-incose": {
+        "file": "01_edges/cites-incose-paper-2026:literature-review-incose.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:cites:incose-paper-2026:literature-review-incose",
+        "name": "Cites - INCOSE Paper uses Literature Review Document",
+        "description": "The INCOSE paper leverages content from the literature review document",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:doc:literature-review-incose-paper",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "reference",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "citation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "e:cites:incose-paper-2026:novel-contributions-incose": {
+        "file": "01_edges/cites-incose-paper-2026:novel-contributions-incose.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:cites:incose-paper-2026:novel-contributions-incose",
+        "name": "Cites - INCOSE Paper uses Novel Contributions Document",
+        "description": "The INCOSE paper leverages content from the novel contributions document",
+        "source": "v:doc:incose-paper-2026",
+        "target": "v:doc:novel-contributions-incose-paper",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "reference",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "citation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
       "e:coupling:architecture": {
         "file": "01_edges/coupling-architecture.md",
         "type": "edge/coupling",
@@ -1791,6 +1883,75 @@
         "created": "2025-12-30T22:30:00+00:00",
         "modified": "2025-12-30T22:30:00+00:00"
       },
+      "e:qualifies:mzargham:guidance-architecture": {
+        "file": "01_edges/qualifies-mzargham:guidance-architecture.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:mzargham:guidance-architecture",
+        "name": "Qualifies - mzargham for Architecture Guidance",
+        "description": "Establishes mzargham's qualification to validate against guidance-for-architecture",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:architecture",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "expertise",
+        "granted_by": "self-declared (framework author)",
+        "granted_date": "2025-12-30T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "e:qualifies:mzargham:guidance-guidance": {
+        "file": "01_edges/qualifies-mzargham:guidance-guidance.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:mzargham:guidance-guidance",
+        "name": "Qualifies - mzargham for Guidance-for-Guidance",
+        "description": "Establishes mzargham's qualification to validate guidances against guidance-for-guidance",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "expertise",
+        "granted_by": "self-declared (framework author)",
+        "granted_date": "2025-12-30T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "e:qualifies:mzargham:guidance-incose-literature-review": {
+        "file": "01_edges/qualifies-mzargham:guidance-incose-literature-review.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:mzargham:guidance-incose-literature-review",
+        "name": "Qualifies - mzargham for Literature Review Guidance",
+        "description": "Establishes mzargham's qualification to validate against guidance-for-incose-literature-review",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-literature-review",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "expertise",
+        "granted_by": "self-declared (framework author)",
+        "granted_date": "2025-12-30T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
       "e:qualifies:mzargham:guidance-incose-paper": {
         "file": "01_edges/qualifies-mzargham:guidance-incose-paper.md",
         "type": "edge/qualifies",
@@ -1837,6 +1998,274 @@
         "created": "2025-12-30T23:00:00+00:00",
         "modified": "2025-12-30T23:00:00+00:00"
       },
+      "e:qualifies:mzargham:guidance-lifecycle": {
+        "file": "01_edges/qualifies-mzargham:guidance-lifecycle.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:mzargham:guidance-lifecycle",
+        "name": "Qualifies - mzargham for Lifecycle Guidance",
+        "description": "Establishes mzargham's qualification to validate against guidance-for-lifecycle",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:lifecycle",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "expertise",
+        "granted_by": "self-declared (framework author)",
+        "granted_date": "2025-12-30T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "e:qualifies:mzargham:guidance-novel-contributions": {
+        "file": "01_edges/qualifies-mzargham:guidance-novel-contributions.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:mzargham:guidance-novel-contributions",
+        "name": "Qualifies - mzargham for Novel Contributions Guidance",
+        "description": "Establishes mzargham's qualification to validate against guidance-for-novel-contributions",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:novel-contributions",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "expertise",
+        "granted_by": "self-declared (framework author)",
+        "granted_date": "2025-12-30T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "e:qualifies:mzargham:guidance-spec": {
+        "file": "01_edges/qualifies-mzargham:guidance-spec.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:mzargham:guidance-spec",
+        "name": "Qualifies - mzargham for Guidance-for-Spec",
+        "description": "Establishes mzargham's qualification to validate specs against guidance-for-spec",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "expertise",
+        "granted_by": "self-declared (framework author)",
+        "granted_date": "2025-12-30T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "e:qualifies:root:guidance-guidance": {
+        "file": "01_edges/qualifies-root:guidance-guidance.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:root:guidance-guidance",
+        "name": "Qualifies - Root for guidance-for-guidance",
+        "description": "Bootstrap qualification where root is axiomatically qualified to sign guidance documents",
+        "source": "b0:root",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/b0",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "qualifies",
+          "boundary",
+          "genesis"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00"
+      },
+      "e:qualifies:root:guidance-spec": {
+        "file": "01_edges/qualifies-root:guidance-spec.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:root:guidance-spec",
+        "name": "Qualifies - Root for guidance-for-spec",
+        "description": "Bootstrap qualification where root is axiomatically qualified to sign spec documents",
+        "source": "b0:root",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/b0",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "qualifies",
+          "boundary",
+          "genesis"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00"
+      },
+      "e:signs:mzargham:architecture-incose": {
+        "file": "01_edges/signs-mzargham:architecture-incose.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:architecture-incose",
+        "name": "Signs - mzargham attests to Architecture Document",
+        "description": "Attestation event where mzargham signs the architecture document",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:architecture-incose-paper",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:30:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-architecture",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "e:signs:mzargham:guidance-architecture": {
+        "file": "01_edges/signs-mzargham:guidance-architecture.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:guidance-architecture",
+        "name": "Signs - mzargham attests to guidance-for-architecture",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:architecture",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "e:signs:mzargham:guidance-incose-literature-review": {
+        "file": "01_edges/signs-mzargham:guidance-incose-literature-review.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:guidance-incose-literature-review",
+        "name": "Signs - mzargham attests to guidance-for-incose-literature-review",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-literature-review",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "e:signs:mzargham:guidance-incose-paper": {
+        "file": "01_edges/signs-mzargham:guidance-incose-paper.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:guidance-incose-paper",
+        "name": "Signs - mzargham attests to guidance-for-incose-paper",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-paper",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:55:00+00:00",
+        "commit_hash": "pending",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "e:signs:mzargham:guidance-incose-self-demonstration": {
+        "file": "01_edges/signs-mzargham:guidance-incose-self-demonstration.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:guidance-incose-self-demonstration",
+        "name": "Signs - mzargham attests to guidance-for-incose-self-demonstration",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:incose-self-demonstration",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:55:00+00:00",
+        "commit_hash": "pending",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "e:signs:mzargham:guidance-lifecycle": {
+        "file": "01_edges/signs-mzargham:guidance-lifecycle.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:guidance-lifecycle",
+        "name": "Signs - mzargham attests to guidance-for-lifecycle",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:lifecycle",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "e:signs:mzargham:guidance-novel-contributions": {
+        "file": "01_edges/signs-mzargham:guidance-novel-contributions.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:guidance-novel-contributions",
+        "name": "Signs - mzargham attests to guidance-for-novel-contributions",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:novel-contributions",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
       "e:signs:mzargham:incose-paper-2026-self-demo": {
         "file": "01_edges/signs-mzargham:incose-paper-2026-self-demo.md",
         "type": "edge/signs",
@@ -1882,6 +2311,307 @@
         "version": "1.0.0",
         "created": "2025-12-30T23:00:00+00:00",
         "modified": "2025-12-30T23:00:00+00:00"
+      },
+      "e:signs:mzargham:lifecycle-incose": {
+        "file": "01_edges/signs-mzargham:lifecycle-incose.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:lifecycle-incose",
+        "name": "Signs - mzargham attests to Lifecycle Document",
+        "description": "Attestation event where mzargham signs the lifecycle document",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:lifecycle-incose-paper",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:30:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-lifecycle",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "e:signs:mzargham:literature-review-incose": {
+        "file": "01_edges/signs-mzargham:literature-review-incose.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:literature-review-incose",
+        "name": "Signs - mzargham attests to Literature Review Document",
+        "description": "Attestation event where mzargham signs the literature review document",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:literature-review-incose-paper",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:30:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-incose-literature-review",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "e:signs:mzargham:novel-contributions-incose": {
+        "file": "01_edges/signs-mzargham:novel-contributions-incose.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:novel-contributions-incose",
+        "name": "Signs - mzargham attests to Novel Contributions Document",
+        "description": "Attestation event where mzargham signs the novel contributions document",
+        "source": "v:signer:mzargham",
+        "target": "v:doc:novel-contributions-incose-paper",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:30:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-novel-contributions",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "e:signs:mzargham:spec-architecture": {
+        "file": "01_edges/signs-mzargham:spec-architecture.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:spec-architecture",
+        "name": "Signs - mzargham attests to spec-for-architecture",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:architecture",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "e:signs:mzargham:spec-incose-literature-review": {
+        "file": "01_edges/signs-mzargham:spec-incose-literature-review.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:spec-incose-literature-review",
+        "name": "Signs - mzargham attests to spec-for-incose-literature-review",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:incose-literature-review",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "e:signs:mzargham:spec-incose-paper": {
+        "file": "01_edges/signs-mzargham:spec-incose-paper.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:spec-incose-paper",
+        "name": "Signs - mzargham attests to spec-for-incose-paper",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:incose-paper",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:55:00+00:00",
+        "commit_hash": "pending",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "e:signs:mzargham:spec-incose-self-demonstration": {
+        "file": "01_edges/signs-mzargham:spec-incose-self-demonstration.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:spec-incose-self-demonstration",
+        "name": "Signs - mzargham attests to spec-for-incose-self-demonstration",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:incose-self-demonstration",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:55:00+00:00",
+        "commit_hash": "pending",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "e:signs:mzargham:spec-lifecycle": {
+        "file": "01_edges/signs-mzargham:spec-lifecycle.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:spec-lifecycle",
+        "name": "Signs - mzargham attests to spec-for-lifecycle",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:lifecycle",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "e:signs:mzargham:spec-novel-contributions": {
+        "file": "01_edges/signs-mzargham:spec-novel-contributions.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:mzargham:spec-novel-contributions",
+        "name": "Signs - mzargham attests to spec-for-novel-contributions",
+        "source": "v:signer:mzargham",
+        "target": "v:spec:novel-contributions",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "tags": [
+          "edge",
+          "signs"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "e:signs:root:guidance-guidance": {
+        "file": "01_edges/signs-root:guidance-guidance.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:root:guidance-guidance",
+        "name": "Signs - Root attests guidance-for-guidance assurance",
+        "description": "Bootstrap signing edge where root anchors the guidance-for-guidance assurance",
+        "source": "b0:root",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/b0",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "signing_date": "2025-12-27T00:00:00+00:00",
+        "commit_hash": "genesis",
+        "qualifies_edge": "e:qualifies:root:guidance-guidance",
+        "tags": [
+          "edge",
+          "signs",
+          "boundary",
+          "genesis"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00"
+      },
+      "e:signs:root:guidance-spec": {
+        "file": "01_edges/signs-root:guidance-spec.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:root:guidance-spec",
+        "name": "Signs - Root attests guidance-for-spec assurance",
+        "description": "Bootstrap signing edge where root anchors the guidance-for-spec assurance",
+        "source": "b0:root",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/b0",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "signing_date": "2025-12-27T00:00:00+00:00",
+        "commit_hash": "genesis",
+        "qualifies_edge": "e:qualifies:root:guidance-guidance",
+        "tags": [
+          "edge",
+          "signs",
+          "boundary",
+          "genesis"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00"
+      },
+      "e:signs:root:spec-guidance": {
+        "file": "01_edges/signs-root:spec-guidance.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:root:spec-guidance",
+        "name": "Signs - Root attests spec-for-guidance assurance",
+        "description": "Bootstrap signing edge where root anchors the spec-for-guidance assurance",
+        "source": "b0:root",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/b0",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "signing_date": "2025-12-27T00:00:00+00:00",
+        "commit_hash": "genesis",
+        "qualifies_edge": "e:qualifies:root:guidance-spec",
+        "tags": [
+          "edge",
+          "signs",
+          "boundary",
+          "genesis"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00"
+      },
+      "e:signs:root:spec-spec": {
+        "file": "01_edges/signs-root:spec-spec.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:root:spec-spec",
+        "name": "Signs - Root attests spec-for-spec assurance",
+        "description": "Bootstrap signing edge where root anchors the spec-for-spec assurance",
+        "source": "b0:root",
+        "target": "v:spec:spec",
+        "source_type": "vertex/b0",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "signing_date": "2025-12-27T00:00:00+00:00",
+        "commit_hash": "genesis",
+        "qualifies_edge": "e:qualifies:root:guidance-spec",
+        "tags": [
+          "edge",
+          "signs",
+          "boundary",
+          "genesis"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00"
       },
       "e:validation:architecture-guidance:guidance-guidance": {
         "file": "01_edges/validation-architecture-guidance:guidance-guidance.md",
@@ -2117,6 +2847,48 @@
         "created": "2025-12-27T21:30:00+00:00",
         "modified": "2025-12-27T21:30:00+00:00"
       },
+      "e:validation:incose-paper-2026:guidance-incose-paper": {
+        "file": "01_edges/validation-incose-paper-2026:guidance-incose-paper.md",
+        "type": "edge/validation",
+        "id": "e:validation:incose-paper-2026:guidance-incose-paper",
+        "name": "Validation - INCOSE Paper 2026 against Base Guidance",
+        "source": "v:doc:incose-paper-2026",
+        "source_type": "vertex/doc",
+        "target": "v:guidance:incose-paper",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00",
+        "version": "1.0.0",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ]
+      },
+      "e:validation:incose-paper-2026:guidance-incose-self-demonstration": {
+        "file": "01_edges/validation-incose-paper-2026:guidance-incose-self-demonstration.md",
+        "type": "edge/validation",
+        "id": "e:validation:incose-paper-2026:guidance-incose-self-demonstration",
+        "name": "Validation - INCOSE Paper 2026 against Self-Demonstration Guidance",
+        "source": "v:doc:incose-paper-2026",
+        "source_type": "vertex/doc",
+        "target": "v:guidance:incose-self-demonstration",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "created": "2025-12-30T23:50:00+00:00",
+        "modified": "2025-12-30T23:50:00+00:00",
+        "version": "1.0.0",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ]
+      },
       "e:validation:incose-paper-content:guidance-incose-paper": {
         "file": "01_edges/validation-incose-paper-content:guidance-incose-paper.md",
         "type": "edge/validation",
@@ -2185,6 +2957,50 @@
         "version": "1.0.0",
         "created": "2025-12-30T11:30:00+00:00",
         "modified": "2025-12-30T11:30:00+00:00"
+      },
+      "e:validation:incose-self-demonstration-guidance:guidance-guidance": {
+        "file": "01_edges/validation-incose-self-demonstration-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:incose-self-demonstration-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-incose-self-demonstration against guidance-for-guidance",
+        "source": "v:guidance:incose-self-demonstration",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "human_approver": "mzargham"
+      },
+      "e:validation:incose-self-demonstration-spec:guidance-spec": {
+        "file": "01_edges/validation-incose-self-demonstration-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:incose-self-demonstration-spec:guidance-spec",
+        "name": "Validation - spec-for-incose-self-demonstration against guidance-for-spec",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "human_approver": "mzargham"
       },
       "e:validation:lifecycle-guidance:guidance-guidance": {
         "file": "01_edges/validation-lifecycle-guidance:guidance-guidance.md",
@@ -2964,6 +3780,46 @@
         "created": "2025-12-27T20:51:00+00:00",
         "modified": "2025-12-27T20:51:00+00:00"
       },
+      "e:verification:incose-paper-2026:spec-incose-paper": {
+        "file": "01_edges/verification-incose-paper-2026:spec-incose-paper.md",
+        "type": "edge/verification",
+        "id": "e:verification:incose-paper-2026:spec-incose-paper",
+        "name": "Verification - INCOSE Paper 2026 against Base Spec",
+        "source": "v:doc:incose-paper-2026",
+        "source_type": "vertex/doc",
+        "target": "v:spec:incose-paper",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00",
+        "version": "1.0.0",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "automated-check",
+        "tags": [
+          "edge",
+          "verification"
+        ]
+      },
+      "e:verification:incose-paper-2026:spec-incose-self-demonstration": {
+        "file": "01_edges/verification-incose-paper-2026:spec-incose-self-demonstration.md",
+        "type": "edge/verification",
+        "id": "e:verification:incose-paper-2026:spec-incose-self-demonstration",
+        "name": "Verification - INCOSE Paper 2026 against Self-Demonstration Spec",
+        "source": "v:doc:incose-paper-2026",
+        "source_type": "vertex/doc",
+        "target": "v:spec:incose-self-demonstration",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00",
+        "version": "1.0.0",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "automated-check",
+        "tags": [
+          "edge",
+          "verification"
+        ]
+      },
       "e:verification:incose-paper-content:spec-incose-paper": {
         "file": "01_edges/verification-incose-paper-content:spec-incose-paper.md",
         "type": "edge/verification",
@@ -3020,6 +3876,44 @@
         "version": "1.0.0",
         "created": "2025-12-30T11:15:00+00:00",
         "modified": "2025-12-30T11:15:00+00:00"
+      },
+      "e:verification:incose-self-demonstration-guidance:spec-guidance": {
+        "file": "01_edges/verification-incose-self-demonstration-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:incose-self-demonstration-guidance:spec-guidance",
+        "name": "Verification - guidance-for-incose-self-demonstration against spec-for-guidance",
+        "source": "v:guidance:incose-self-demonstration",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "e:verification:incose-self-demonstration-spec:spec-spec": {
+        "file": "01_edges/verification-incose-self-demonstration-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:incose-self-demonstration-spec:spec-spec",
+        "name": "Verification - spec-for-incose-self-demonstration against spec-for-spec",
+        "source": "v:spec:incose-self-demonstration",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
       },
       "e:verification:lifecycle-guidance:spec-guidance": {
         "file": "01_edges/verification-lifecycle-guidance:spec-guidance.md",
@@ -3868,6 +4762,66 @@
         "version": "1.0.0",
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00"
+      },
+      "f:assurance:incose-paper-2026-base": {
+        "file": "02_faces/assurance-incose-paper-2026-base.md",
+        "type": "face/assurance",
+        "id": "f:assurance:incose-paper-2026-base",
+        "name": "Assurance Face - INCOSE Paper 2026 (Base)",
+        "target": "v:doc:incose-paper-2026",
+        "edges": [
+          "e:verification:incose-paper-2026:spec-incose-paper",
+          "e:validation:incose-paper-2026:guidance-incose-paper",
+          "e:coupling:incose-paper"
+        ],
+        "vertices": [
+          "v:doc:incose-paper-2026",
+          "v:spec:incose-paper",
+          "v:guidance:incose-paper"
+        ],
+        "assurance_level": "base",
+        "tags": [
+          "face",
+          "assurance",
+          "incose",
+          "paper"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:35:00+00:00",
+        "modified": "2025-12-30T23:35:00+00:00",
+        "human_approver": "mzargham",
+        "orientation": "oriented"
+      },
+      "f:assurance:incose-paper-2026-self-demo": {
+        "file": "02_faces/assurance-incose-paper-2026-self-demo.md",
+        "type": "face/assurance",
+        "id": "f:assurance:incose-paper-2026-self-demo",
+        "name": "Assurance Face - INCOSE Paper 2026 (Self-Demonstration)",
+        "target": "v:doc:incose-paper-2026",
+        "edges": [
+          "e:verification:incose-paper-2026:spec-incose-self-demonstration",
+          "e:validation:incose-paper-2026:guidance-incose-self-demonstration",
+          "e:coupling:incose-self-demonstration"
+        ],
+        "vertices": [
+          "v:doc:incose-paper-2026",
+          "v:spec:incose-self-demonstration",
+          "v:guidance:incose-self-demonstration"
+        ],
+        "assurance_level": "extended",
+        "inherits_from": "f:assurance:incose-paper-2026-base",
+        "tags": [
+          "face",
+          "assurance",
+          "incose",
+          "paper",
+          "self-demonstrating"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00",
+        "human_approver": "mzargham",
+        "orientation": "oriented"
       },
       "f:assurance:incose-paper-content": {
         "file": "02_faces/assurance-incose-paper-content.md",
@@ -4948,6 +5902,179 @@
         "created": "2025-12-27T22:20:00+00:00",
         "modified": "2025-12-27T22:20:00+00:00"
       },
+      "f:signature:architecture-guidance": {
+        "file": "02_faces/signature-architecture-guidance.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:architecture-guidance",
+        "name": "Signature Face - guidance-for-architecture",
+        "vertices": [
+          "v:guidance:architecture",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:guidance:architecture",
+        "guidance": "v:guidance:guidance",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:architecture-guidance:guidance-guidance",
+          "e:signs:mzargham:guidance-architecture",
+          "e:qualifies:mzargham:guidance-guidance"
+        ],
+        "validation_edge": "e:validation:architecture-guidance:guidance-guidance",
+        "signs_edge": "e:signs:mzargham:guidance-architecture",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:architecture-guidance",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "f:signature:architecture-incose": {
+        "file": "02_faces/signature-architecture-incose.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:architecture-incose",
+        "name": "Signature Face - Architecture Document",
+        "description": "Accountability triangle for the architecture document assurance",
+        "vertices": [
+          "v:doc:architecture-incose-paper",
+          "v:guidance:architecture",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:doc:architecture-incose-paper",
+        "guidance": "v:guidance:architecture",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:architecture-incose:guidance-architecture",
+          "e:signs:mzargham:architecture-incose",
+          "e:qualifies:mzargham:guidance-architecture"
+        ],
+        "validation_edge": "e:validation:architecture-incose:guidance-architecture",
+        "signs_edge": "e:signs:mzargham:architecture-incose",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-architecture",
+        "signing_date": "2025-12-30T23:30:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:architecture-incose",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "f:signature:architecture-spec": {
+        "file": "02_faces/signature-architecture-spec.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:architecture-spec",
+        "name": "Signature Face - spec-for-architecture",
+        "vertices": [
+          "v:spec:architecture",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:spec:architecture",
+        "guidance": "v:guidance:spec",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:architecture-spec:guidance-spec",
+          "e:signs:mzargham:spec-architecture",
+          "e:qualifies:mzargham:guidance-spec"
+        ],
+        "validation_edge": "e:validation:architecture-spec:guidance-spec",
+        "signs_edge": "e:signs:mzargham:spec-architecture",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:architecture-spec",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "f:signature:guidance-guidance": {
+        "file": "02_faces/signature-guidance-guidance.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:guidance-guidance",
+        "name": "Signature Face - guidance-for-guidance",
+        "vertices": [
+          "v:guidance:guidance",
+          "v:spec:guidance",
+          "b0:root"
+        ],
+        "doc": "v:guidance:guidance",
+        "guidance": "v:spec:guidance",
+        "signer": "b0:root",
+        "edges": [
+          "e:validation:guidance-guidance:guidance-guidance",
+          "e:signs:root:guidance-guidance",
+          "e:qualifies:root:guidance-guidance"
+        ],
+        "validation_edge": "e:validation:guidance-guidance:guidance-guidance",
+        "signs_edge": "e:signs:root:guidance-guidance",
+        "qualifies_edge": "e:qualifies:root:guidance-guidance",
+        "signing_date": "2025-12-27T00:00:00+00:00",
+        "commit_hash": "genesis",
+        "assurance_face": "b2:guidance-guidance",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature",
+          "boundary-complex"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00"
+      },
+      "f:signature:guidance-spec": {
+        "file": "02_faces/signature-guidance-spec.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:guidance-spec",
+        "name": "Signature Face - guidance-for-spec",
+        "vertices": [
+          "v:guidance:spec",
+          "v:guidance:guidance",
+          "b0:root"
+        ],
+        "doc": "v:guidance:spec",
+        "guidance": "v:guidance:guidance",
+        "signer": "b0:root",
+        "edges": [
+          "e:validation:guidance-spec:guidance-guidance",
+          "e:signs:root:guidance-spec",
+          "e:qualifies:root:guidance-guidance"
+        ],
+        "validation_edge": "e:validation:guidance-spec:guidance-guidance",
+        "signs_edge": "e:signs:root:guidance-spec",
+        "qualifies_edge": "e:qualifies:root:guidance-guidance",
+        "signing_date": "2025-12-27T00:00:00+00:00",
+        "commit_hash": "genesis",
+        "assurance_face": "f:assurance:guidance-spec",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature",
+          "boundary-complex"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00"
+      },
       "f:signature:incose-paper-2026-base": {
         "file": "02_faces/signature-incose-paper-2026-base.md",
         "type": "face/signature",
@@ -5017,6 +6144,521 @@
         "version": "1.0.0",
         "created": "2025-12-30T23:00:00+00:00",
         "modified": "2025-12-30T23:00:00+00:00"
+      },
+      "f:signature:incose-paper-guidance": {
+        "file": "02_faces/signature-incose-paper-guidance.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:incose-paper-guidance",
+        "name": "Signature Face - guidance-for-incose-paper",
+        "vertices": [
+          "v:guidance:incose-paper",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:guidance:incose-paper",
+        "guidance": "v:guidance:guidance",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:incose-paper-guidance:guidance-guidance",
+          "e:signs:mzargham:guidance-incose-paper",
+          "e:qualifies:mzargham:guidance-guidance"
+        ],
+        "validation_edge": "e:validation:incose-paper-guidance:guidance-guidance",
+        "signs_edge": "e:signs:mzargham:guidance-incose-paper",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "signing_date": "2025-12-30T23:55:00+00:00",
+        "commit_hash": "pending",
+        "assurance_face": "f:assurance:incose-paper-guidance",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "f:signature:incose-paper-spec": {
+        "file": "02_faces/signature-incose-paper-spec.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:incose-paper-spec",
+        "name": "Signature Face - spec-for-incose-paper",
+        "vertices": [
+          "v:spec:incose-paper",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:spec:incose-paper",
+        "guidance": "v:guidance:spec",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:incose-paper-spec:guidance-spec",
+          "e:signs:mzargham:spec-incose-paper",
+          "e:qualifies:mzargham:guidance-spec"
+        ],
+        "validation_edge": "e:validation:incose-paper-spec:guidance-spec",
+        "signs_edge": "e:signs:mzargham:spec-incose-paper",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "signing_date": "2025-12-30T23:55:00+00:00",
+        "commit_hash": "pending",
+        "assurance_face": "f:assurance:incose-paper-spec",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "f:signature:incose-self-demonstration-guidance": {
+        "file": "02_faces/signature-incose-self-demonstration-guidance.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:incose-self-demonstration-guidance",
+        "name": "Signature Face - guidance-for-incose-self-demonstration",
+        "vertices": [
+          "v:guidance:incose-self-demonstration",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:guidance:incose-self-demonstration",
+        "guidance": "v:guidance:guidance",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:incose-self-demonstration-guidance:guidance-guidance",
+          "e:signs:mzargham:guidance-incose-self-demonstration",
+          "e:qualifies:mzargham:guidance-guidance"
+        ],
+        "validation_edge": "e:validation:incose-self-demonstration-guidance:guidance-guidance",
+        "signs_edge": "e:signs:mzargham:guidance-incose-self-demonstration",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "signing_date": "2025-12-30T23:55:00+00:00",
+        "commit_hash": "pending",
+        "assurance_face": "f:assurance:incose-self-demonstration-guidance",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "f:signature:incose-self-demonstration-spec": {
+        "file": "02_faces/signature-incose-self-demonstration-spec.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:incose-self-demonstration-spec",
+        "name": "Signature Face - spec-for-incose-self-demonstration",
+        "vertices": [
+          "v:spec:incose-self-demonstration",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:spec:incose-self-demonstration",
+        "guidance": "v:guidance:spec",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:incose-self-demonstration-spec:guidance-spec",
+          "e:signs:mzargham:spec-incose-self-demonstration",
+          "e:qualifies:mzargham:guidance-spec"
+        ],
+        "validation_edge": "e:validation:incose-self-demonstration-spec:guidance-spec",
+        "signs_edge": "e:signs:mzargham:spec-incose-self-demonstration",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "signing_date": "2025-12-30T23:55:00+00:00",
+        "commit_hash": "pending",
+        "assurance_face": "f:assurance:incose-self-demonstration-spec",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:55:00+00:00",
+        "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "f:signature:lifecycle-guidance": {
+        "file": "02_faces/signature-lifecycle-guidance.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:lifecycle-guidance",
+        "name": "Signature Face - guidance-for-lifecycle",
+        "vertices": [
+          "v:guidance:lifecycle",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:guidance:lifecycle",
+        "guidance": "v:guidance:guidance",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:lifecycle-guidance:guidance-guidance",
+          "e:signs:mzargham:guidance-lifecycle",
+          "e:qualifies:mzargham:guidance-guidance"
+        ],
+        "validation_edge": "e:validation:lifecycle-guidance:guidance-guidance",
+        "signs_edge": "e:signs:mzargham:guidance-lifecycle",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:lifecycle-guidance",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "f:signature:lifecycle-incose": {
+        "file": "02_faces/signature-lifecycle-incose.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:lifecycle-incose",
+        "name": "Signature Face - Lifecycle Document",
+        "description": "Accountability triangle for the lifecycle document assurance",
+        "vertices": [
+          "v:doc:lifecycle-incose-paper",
+          "v:guidance:lifecycle",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:doc:lifecycle-incose-paper",
+        "guidance": "v:guidance:lifecycle",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:lifecycle-incose:guidance-lifecycle",
+          "e:signs:mzargham:lifecycle-incose",
+          "e:qualifies:mzargham:guidance-lifecycle"
+        ],
+        "validation_edge": "e:validation:lifecycle-incose:guidance-lifecycle",
+        "signs_edge": "e:signs:mzargham:lifecycle-incose",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-lifecycle",
+        "signing_date": "2025-12-30T23:30:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:lifecycle-incose",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "f:signature:lifecycle-spec": {
+        "file": "02_faces/signature-lifecycle-spec.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:lifecycle-spec",
+        "name": "Signature Face - spec-for-lifecycle",
+        "vertices": [
+          "v:spec:lifecycle",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:spec:lifecycle",
+        "guidance": "v:guidance:spec",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:lifecycle-spec:guidance-spec",
+          "e:signs:mzargham:spec-lifecycle",
+          "e:qualifies:mzargham:guidance-spec"
+        ],
+        "validation_edge": "e:validation:lifecycle-spec:guidance-spec",
+        "signs_edge": "e:signs:mzargham:spec-lifecycle",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:lifecycle-spec",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "f:signature:literature-review-guidance": {
+        "file": "02_faces/signature-literature-review-guidance.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:literature-review-guidance",
+        "name": "Signature Face - guidance-for-incose-literature-review",
+        "vertices": [
+          "v:guidance:incose-literature-review",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:guidance:incose-literature-review",
+        "guidance": "v:guidance:guidance",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:literature-review-guidance:guidance-guidance",
+          "e:signs:mzargham:guidance-incose-literature-review",
+          "e:qualifies:mzargham:guidance-guidance"
+        ],
+        "validation_edge": "e:validation:literature-review-guidance:guidance-guidance",
+        "signs_edge": "e:signs:mzargham:guidance-incose-literature-review",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:literature-review-guidance",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "f:signature:literature-review-incose": {
+        "file": "02_faces/signature-literature-review-incose.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:literature-review-incose",
+        "name": "Signature Face - Literature Review Document",
+        "description": "Accountability triangle for the literature review document assurance",
+        "vertices": [
+          "v:doc:literature-review-incose-paper",
+          "v:guidance:incose-literature-review",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:doc:literature-review-incose-paper",
+        "guidance": "v:guidance:incose-literature-review",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:literature-review-incose:guidance-incose-literature-review",
+          "e:signs:mzargham:literature-review-incose",
+          "e:qualifies:mzargham:guidance-incose-literature-review"
+        ],
+        "validation_edge": "e:validation:literature-review-incose:guidance-incose-literature-review",
+        "signs_edge": "e:signs:mzargham:literature-review-incose",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-incose-literature-review",
+        "signing_date": "2025-12-30T23:30:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:literature-review-incose",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "f:signature:literature-review-spec": {
+        "file": "02_faces/signature-literature-review-spec.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:literature-review-spec",
+        "name": "Signature Face - spec-for-incose-literature-review",
+        "vertices": [
+          "v:spec:incose-literature-review",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:spec:incose-literature-review",
+        "guidance": "v:guidance:spec",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:literature-review-spec:guidance-spec",
+          "e:signs:mzargham:spec-incose-literature-review",
+          "e:qualifies:mzargham:guidance-spec"
+        ],
+        "validation_edge": "e:validation:literature-review-spec:guidance-spec",
+        "signs_edge": "e:signs:mzargham:spec-incose-literature-review",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:literature-review-spec",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "f:signature:novel-contributions-guidance": {
+        "file": "02_faces/signature-novel-contributions-guidance.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:novel-contributions-guidance",
+        "name": "Signature Face - guidance-for-novel-contributions",
+        "vertices": [
+          "v:guidance:novel-contributions",
+          "v:guidance:guidance",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:guidance:novel-contributions",
+        "guidance": "v:guidance:guidance",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:novel-contributions-guidance:guidance-guidance",
+          "e:signs:mzargham:guidance-novel-contributions",
+          "e:qualifies:mzargham:guidance-guidance"
+        ],
+        "validation_edge": "e:validation:novel-contributions-guidance:guidance-guidance",
+        "signs_edge": "e:signs:mzargham:guidance-novel-contributions",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-guidance",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:novel-contributions-guidance",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "f:signature:novel-contributions-incose": {
+        "file": "02_faces/signature-novel-contributions-incose.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:novel-contributions-incose",
+        "name": "Signature Face - Novel Contributions Document",
+        "description": "Accountability triangle for the novel contributions document assurance",
+        "vertices": [
+          "v:doc:novel-contributions-incose-paper",
+          "v:guidance:novel-contributions",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:doc:novel-contributions-incose-paper",
+        "guidance": "v:guidance:novel-contributions",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:novel-contributions-incose:guidance-novel-contributions",
+          "e:signs:mzargham:novel-contributions-incose",
+          "e:qualifies:mzargham:guidance-novel-contributions"
+        ],
+        "validation_edge": "e:validation:novel-contributions-incose:guidance-novel-contributions",
+        "signs_edge": "e:signs:mzargham:novel-contributions-incose",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-novel-contributions",
+        "signing_date": "2025-12-30T23:30:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:novel-contributions-incose",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:30:00+00:00",
+        "modified": "2025-12-30T23:30:00+00:00"
+      },
+      "f:signature:novel-contributions-spec": {
+        "file": "02_faces/signature-novel-contributions-spec.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:novel-contributions-spec",
+        "name": "Signature Face - spec-for-novel-contributions",
+        "vertices": [
+          "v:spec:novel-contributions",
+          "v:guidance:spec",
+          "v:signer:mzargham"
+        ],
+        "doc": "v:spec:novel-contributions",
+        "guidance": "v:guidance:spec",
+        "signer": "v:signer:mzargham",
+        "edges": [
+          "e:validation:novel-contributions-spec:guidance-spec",
+          "e:signs:mzargham:spec-novel-contributions",
+          "e:qualifies:mzargham:guidance-spec"
+        ],
+        "validation_edge": "e:validation:novel-contributions-spec:guidance-spec",
+        "signs_edge": "e:signs:mzargham:spec-novel-contributions",
+        "qualifies_edge": "e:qualifies:mzargham:guidance-spec",
+        "signing_date": "2025-12-30T23:45:00+00:00",
+        "commit_hash": "f66b6747acfe6d10ca7c878cb98ad332338aa06f",
+        "assurance_face": "f:assurance:novel-contributions-spec",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-30T23:45:00+00:00",
+        "modified": "2025-12-30T23:45:00+00:00"
+      },
+      "f:signature:spec-guidance": {
+        "file": "02_faces/signature-spec-guidance.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:spec-guidance",
+        "name": "Signature Face - spec-for-guidance",
+        "vertices": [
+          "v:spec:guidance",
+          "v:guidance:spec",
+          "b0:root"
+        ],
+        "doc": "v:spec:guidance",
+        "guidance": "v:guidance:spec",
+        "signer": "b0:root",
+        "edges": [
+          "e:validation:spec-guidance:guidance-spec",
+          "e:signs:root:spec-guidance",
+          "e:qualifies:root:guidance-spec"
+        ],
+        "validation_edge": "e:validation:spec-guidance:guidance-spec",
+        "signs_edge": "e:signs:root:spec-guidance",
+        "qualifies_edge": "e:qualifies:root:guidance-spec",
+        "signing_date": "2025-12-27T00:00:00+00:00",
+        "commit_hash": "genesis",
+        "assurance_face": "f:assurance:spec-guidance",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature",
+          "boundary-complex"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00"
+      },
+      "f:signature:spec-spec": {
+        "file": "02_faces/signature-spec-spec.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:spec-spec",
+        "name": "Signature Face - spec-for-spec",
+        "vertices": [
+          "v:spec:spec",
+          "v:guidance:spec",
+          "b0:root"
+        ],
+        "doc": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "signer": "b0:root",
+        "edges": [
+          "e:validation:spec-spec:guidance-spec",
+          "e:signs:root:spec-spec",
+          "e:qualifies:root:guidance-spec"
+        ],
+        "validation_edge": "e:validation:spec-spec:guidance-spec",
+        "signs_edge": "e:signs:root:spec-spec",
+        "qualifies_edge": "e:qualifies:root:guidance-spec",
+        "signing_date": "2025-12-27T00:00:00+00:00",
+        "commit_hash": "genesis",
+        "assurance_face": "b2:spec-spec",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature",
+          "boundary-complex"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T00:00:00+00:00",
+        "modified": "2025-12-30T00:00:00+00:00"
       }
     },
     "charts": {
@@ -5095,7 +6737,7 @@
         "construction_method": "llm-assisted",
         "construction_date": "2025-12-30T13:00:00+00:00",
         "purpose": "Demonstrate the assurance framework by showing how the INCOSE paper achieves dual assurance through two independent triangles",
-        "scope": "24 vertices including boundary complex, supporting document types, supporting document instances, and paper content",
+        "scope": "23 vertices including boundary complex, supporting document types, supporting document instances, paper content, and signer",
         "audit_date": "2025-12-30T23:55:00+00:00",
         "auditor": "claude-opus-4-5-20251101",
         "audit_status": "PASS",
@@ -5189,14 +6831,50 @@
             "e:validation:incose-paper-2026:guidance-incose-self-demonstration",
             "e:qualifies:mzargham:guidance-incose-paper",
             "e:qualifies:mzargham:guidance-incose-self-demonstration",
+            "e:qualifies:mzargham:guidance-architecture",
+            "e:qualifies:mzargham:guidance-lifecycle",
+            "e:qualifies:mzargham:guidance-incose-literature-review",
+            "e:qualifies:mzargham:guidance-novel-contributions",
+            "e:qualifies:mzargham:guidance-spec",
+            "e:qualifies:mzargham:guidance-guidance",
             "e:signs:mzargham:incose-paper-2026",
-            "e:signs:mzargham:incose-paper-2026-self-demo"
+            "e:signs:mzargham:incose-paper-2026-self-demo",
+            "e:signs:mzargham:architecture-incose",
+            "e:signs:mzargham:lifecycle-incose",
+            "e:signs:mzargham:literature-review-incose",
+            "e:signs:mzargham:novel-contributions-incose",
+            "e:signs:mzargham:spec-architecture",
+            "e:signs:mzargham:spec-lifecycle",
+            "e:signs:mzargham:spec-incose-literature-review",
+            "e:signs:mzargham:spec-novel-contributions",
+            "e:signs:mzargham:spec-incose-paper",
+            "e:signs:mzargham:spec-incose-self-demonstration",
+            "e:signs:mzargham:guidance-architecture",
+            "e:signs:mzargham:guidance-lifecycle",
+            "e:signs:mzargham:guidance-incose-literature-review",
+            "e:signs:mzargham:guidance-novel-contributions",
+            "e:signs:mzargham:guidance-incose-paper",
+            "e:signs:mzargham:guidance-incose-self-demonstration",
+            "e:cites:incose-paper-2026:architecture-incose",
+            "e:cites:incose-paper-2026:lifecycle-incose",
+            "e:cites:incose-paper-2026:literature-review-incose",
+            "e:cites:incose-paper-2026:novel-contributions-incose",
+            "e:qualifies:root:guidance-spec",
+            "e:qualifies:root:guidance-guidance",
+            "e:signs:root:spec-spec",
+            "e:signs:root:spec-guidance",
+            "e:signs:root:guidance-spec",
+            "e:signs:root:guidance-guidance"
           ],
           "faces": [
+            "b2:spec-spec",
             "f:assurance:spec-guidance",
             "f:assurance:guidance-spec",
-            "b2:spec-spec",
             "b2:guidance-guidance",
+            "f:signature:spec-spec",
+            "f:signature:spec-guidance",
+            "f:signature:guidance-spec",
+            "f:signature:guidance-guidance",
             "f:assurance:incose-paper-spec",
             "f:assurance:incose-paper-guidance",
             "f:assurance:incose-self-demonstration-spec",
@@ -5216,7 +6894,23 @@
             "f:assurance:incose-paper-2026-base",
             "f:assurance:incose-paper-2026-self-demo",
             "f:signature:incose-paper-2026-base",
-            "f:signature:incose-paper-2026-self-demo"
+            "f:signature:incose-paper-2026-self-demo",
+            "f:signature:architecture-incose",
+            "f:signature:lifecycle-incose",
+            "f:signature:literature-review-incose",
+            "f:signature:novel-contributions-incose",
+            "f:signature:architecture-spec",
+            "f:signature:architecture-guidance",
+            "f:signature:lifecycle-spec",
+            "f:signature:lifecycle-guidance",
+            "f:signature:literature-review-spec",
+            "f:signature:literature-review-guidance",
+            "f:signature:novel-contributions-spec",
+            "f:signature:novel-contributions-guidance",
+            "f:signature:incose-paper-spec",
+            "f:signature:incose-paper-guidance",
+            "f:signature:incose-self-demonstration-spec",
+            "f:signature:incose-self-demonstration-guidance"
           ]
         },
         "tags": [
@@ -5275,9 +6969,9 @@
   },
   "statistics": {
     "vertex_count": 56,
-    "edge_count": 108,
-    "face_count": 43,
+    "edge_count": 148,
+    "face_count": 65,
     "chart_count": 3,
-    "euler_characteristic": -9
+    "euler_characteristic": -27
   }
 }
