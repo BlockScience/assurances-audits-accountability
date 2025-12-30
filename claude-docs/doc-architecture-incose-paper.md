@@ -147,18 +147,18 @@ Component integration is verified when:
 
 Specific implementation choices for each logical component:
 
-| Element                    | Technology/Tool                                                                   | Purpose                                                   |
-| -------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| **Document Store**         | Markdown files with YAML frontmatter in git repository                            | Version-controlled, human-readable persistence            |
-| **Type System**            | Python scripts parsing YAML frontmatter                                           | Type validation and inheritance resolution                |
-| **Verification Service**   | `verify_template_based.py` Python script                                          | Structural compliance checking                            |
-| **Validation Service**     | Claude Code (claude-opus-4-5) with human review                                   | LLM-assisted quality assessment with human accountability |
-| **Assurance Service**      | Manual document creation following templates                                      | Face assembly with accountability statements              |
-| **Topology Analyzer**      | `topology.py` and `audit_assurance_chart.py` Python scripts                       | Euler characteristic and coverage analysis                |
-| **Accountability Tracker** | Git commit history + `human_approver` frontmatter field                           | Immutable record of who approved what                     |
-| **CI Enforcement**         | GitHub Actions workflows                                                          | Automated verification on commit, approver validation     |
-| **Authoring Environment**  | VS Code for coding, Obsidian for wiki-style navigation and document review & edit | Developer experience for document authors                 |
-| **LLM Integration**        | Claude Code CLI with Purpose-Persona-Protocol system prompt                       | AI assistance with systematic workflow                    |
+| Element | Technology/Tool | Purpose |
+|---------|----------------|---------|
+| **Document Store** | Markdown files with YAML frontmatter in git repository | Version-controlled, human-readable persistence |
+| **Type System** | Python scripts parsing YAML frontmatter | Type validation and inheritance resolution |
+| **Verification Service** | `verify_template_based.py` Python script | Structural compliance checking |
+| **Validation Service** | Claude Code (claude-opus-4-5) with human review | LLM-assisted quality assessment with human accountability |
+| **Assurance Service** | Manual document creation following templates | Face assembly with accountability statements |
+| **Topology Analyzer** | `topology.py` and `audit_assurance_chart.py` Python scripts | Euler characteristic and coverage analysis |
+| **Accountability Tracker** | Git commit history + `human_approver` frontmatter field | Immutable record of who approved what |
+| **CI Enforcement** | GitHub Actions workflows | Automated verification on commit, approver validation |
+| **Authoring Environment** | VS Code for editing, Obsidian for wiki-style navigation | Developer experience for document authors |
+| **LLM Integration** | Claude Code CLI with PPP framework | AI assistance with systematic workflow |
 
 ### Technology Rationale
 
