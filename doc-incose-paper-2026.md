@@ -533,13 +533,13 @@ This is not human versus AI but human *with* AI, with clear roles. The LLM contr
 
 **Framework overhead.** For small projects or informal documents, the specification-guidance-assurance structure may exceed practical needs.
 
-**Discipline required.** Without practitioners maintaining coupling edges and conducting validations, gaps accumulate.
+**Discipline required.** Without practitioners maintaining coupling edges and conducting validations, gaps accumulate. Implementation mitigates risk with doc-kit registry containing valid assurance triangles with demonstrative example docs satifying coupled spec-guidance pair.
 
-**Good-faith assumption.** The framework detects missing approvals but cannot ensure approval quality. A rubber-stamp approval is structurally valid but substantively hollow.
+**Good-faith assumption.** The framework detects missing approvals but cannot ensure approval quality. A rubber-stamp approval is structurally valid but substantively hollow. Implementation mitigates this risk by whitelisting validators at the github handle level.
 
-**Accessibility of topology.** Simplicial complexes and boundary operators may intimidate practitioners unfamiliar with algebraic topology.
+**Accessibility of topology.** Simplicial complexes and boundary operators may intimidate practitioners unfamiliar with algebraic topology. Examples mitigate this by restricting to simple documents, reserving demonstration of compound documents for future publications. 
 
-These limitations suggest adoption conditions: contexts where documentation stakes justify overhead, organizations with process discipline capacity, and teams willing to invest in topological concepts.
+These limitations suggest adoption conditions: contexts where documentation stakes justify overhead, organizations with process discipline capacity, and teams willing to invest in topological concepts. Practical benefits of topological methods scale organizational and product complexity because human accountability and requirements traceability are reducible to local algebraic operations on the complex specified in the audit chart.
 
 ---
 
@@ -557,7 +557,7 @@ Five key takeaways emerge:
 
 3. **Accountability must be explicit and attributed.** Named humans, not anonymous processes, bear responsibility for subjective quality judgments.
 
-4. **Mathematical formalization enables auditing.** Topological structures provide invariants and integrity checks that support automated quality assessment.
+4. **Mathematical formalization enables auditing.** Topological structures provide local rules and global invariant for integrity checks that support automated quality assessment.
 
 5. **Self-reference is possible with proper foundations.** Boundary complexes with explicit axioms resolve "who validates the validators?" without infinite regress.
 
@@ -569,7 +569,7 @@ As AI capabilities advance, human accountability becomes more rather than less i
 
 ## Acknowledgments
 
-**AI Assistance Disclosure:** Claude (Opus 4.5) assisted with content generation for drafting sections, literature organization, and framework documentation development. The idea for applying typed simplicial complexes to constrain directed and evaluate arose from a pain point around requirements (non)tracibility to AI generated specifications. All research design, framework architecture, validation methodology, and conclusions are original author work. The paper's central contributions—explicit coupling of specification and guidance to form valid simplicial complexes and to leverage algebraic topology for efficient auditing as well as sandwhiching human accountability for validation between machine verification and assurance steps—were conceived and directed by the author. Claude also provided editorial support for grammar and clarity. The author maintained oversight of all AI-assisted work and made final editorial decisions.
+**AI Assistance Disclosure:** Claude (Opus 4.5) assisted with content generation for drafting sections, literature organization, and framework documentation development. The idea for applying typed simplicial complexes to constrain directed and evaluate arose from a pain point around requirements (non)tracibility to AI generated documents. All research design, framework architecture, validation methodology, and conclusions are original author work. The paper's central contributions—explicit coupling of specification and guidance to form valid simplicial complexes and to leverage algebraic topology for efficient auditing as well as sandwhiching human accountability for validation between machine verification and assurance steps—were conceived and directed by the author. Claude projected that content on the document space characterized by the Spec and Guidance documents. Claude also provided editorial support for grammar and clarity. Final stage involved iterative author tuning and AI executed regression tests. The author maintained oversight of all AI-assisted work and made final editorial decisions.
 
 This disclosure follows the methodological precedent established in Ghrist's "The Forge" (Appendix C of *The Geometry of Heaven and Hell*),²⁰ which documents a comparable process of AI-assisted authorship where the human provides intellectual substance, direction, oversight, and approval while AI contributes drafting capability.
 
