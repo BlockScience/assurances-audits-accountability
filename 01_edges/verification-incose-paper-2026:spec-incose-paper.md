@@ -3,12 +3,18 @@ type: edge/verification
 id: e:verification:incose-paper-2026:spec-incose-paper
 name: Verification - INCOSE Paper 2026 against Base Spec
 source: v:doc:incose-paper-2026
+source_type: vertex/doc
 target: v:spec:incose-paper
+target_type: vertex/spec
+orientation: directed
 created: 2025-12-30T23:30:00Z
 modified: 2025-12-30T23:30:00Z
 version: 1.0.0
 verifier: claude-opus-4-5-20251101
 verification_method: automated-check
+tags:
+  - edge
+  - verification
 ---
 
 # Verification: INCOSE Paper 2026 against spec-for-incose-paper

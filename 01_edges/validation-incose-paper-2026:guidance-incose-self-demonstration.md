@@ -3,13 +3,19 @@ type: edge/validation
 id: e:validation:incose-paper-2026:guidance-incose-self-demonstration
 name: Validation - INCOSE Paper 2026 against Self-Demonstration Guidance
 source: v:doc:incose-paper-2026
+source_type: vertex/doc
 target: v:guidance:incose-self-demonstration
+target_type: vertex/guidance
+orientation: directed
 created: 2025-12-30T23:50:00Z
 modified: 2025-12-30T23:50:00Z
 version: 1.0.0
 validator: claude-opus-4-5-20251101
 validation_method: llm-assisted
 human_approver: mzargham
+tags:
+  - edge
+  - validation
 ---
 
 # Validation: INCOSE Paper 2026 against guidance-for-incose-self-demonstration

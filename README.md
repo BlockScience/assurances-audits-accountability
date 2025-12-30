@@ -4,10 +4,9 @@ Supporting material for INCOSE IS 2026 paper submission.
 
 This repository contains the implementation and demonstration of a typed simplicial complex framework for document verification, validation, and assurance with explicit human accountability.
 
-<!-- Hero image placeholder - will be updated when assured-signed chart is complete -->
-<!-- ![Accountability Complex](images/assured-signed-complex.png) -->
+![Accountability Complex](docs/images/assurance_complex.png)
 
-**Element Counts:** 55 vertices | 104 edges | 39 faces | χ = -10
+**Element Counts:** 56 vertices | 148 edges | 65 faces | χ = -27
 
 ## The Paper
 
@@ -155,7 +154,17 @@ The existence of this repository with passing audits proves the framework works.
 
 ## License
 
-See [LICENSE](LICENSE) file.
+**Copyright (c) 2025 Michael Zargham / Block Science. All rights reserved.**
+
+This repository is currently **proprietary** and **not open source**. No license is granted for use, modification, or distribution without explicit written permission.
+
+We are actively researching the right balance between open source availability and commercial sustainability for this technology. If you are interested in using this framework, please reach out to us at **info@block.science**.
+
+### AI Training Restriction
+
+This repository and its contents may **not** be used for training machine learning models, large language models, or any AI/ML systems without explicit written permission. Automated scraping or crawling for AI training purposes is prohibited.
+
+See [LICENSE](LICENSE) for full terms.
 
 ## AI Disclosure
 

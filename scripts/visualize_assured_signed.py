@@ -333,6 +333,7 @@ def create_edge_legend_html() -> str:
         ('validation', COLORS['validation'], 'Doc → Guidance assessment'),
         ('signs', COLORS['signs'], 'Signer → Doc attestation'),
         ('qualifies', COLORS['qualifies'], 'Signer → Guidance credential'),
+        ('dependency', COLORS['dependency'], 'Doc → Doc citation/requirement'),
         ('boundary', COLORS['boundary_edge'], 'Connection to root'),
     ]
 
@@ -590,9 +591,9 @@ def create_visualization(chart_data: dict) -> go.Figure:
     e_count = chart_data['element_counts']['edges']
     f_count = chart_data['element_counts']['faces']
 
-    # Count face types for metadata
+    # Count face types for metadata (b2 boundary faces count as assurance)
     assurance_count = sum(1 for f in chart_data['elements']['faces']
-                          if get_face_type_category(f) == 'assurance')
+                          if get_face_type_category(f) in ('assurance', 'boundary_face'))
     signature_count = sum(1 for f in chart_data['elements']['faces']
                           if get_face_type_category(f) == 'signature')
 

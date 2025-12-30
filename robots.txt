@@ -1,0 +1,64 @@
+# Robots.txt for assurances-audits-accountability repository
+# This file requests that AI training crawlers and web scrapers do not index this repository.
+
+# Block common AI training crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+# Block generic scrapers
+User-agent: ia_archiver
+Disallow: /
+
+# Allow standard search engines for discoverability
+User-agent: Googlebot
+Allow: /README.md
+Disallow: /
+
+User-agent: Bingbot
+Allow: /README.md
+Disallow: /
+
+# Default: block everything else
+User-agent: *
+Allow: /README.md
+Allow: /LICENSE
+Disallow: /
