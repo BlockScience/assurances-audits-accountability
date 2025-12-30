@@ -1,0 +1,10 @@
+# Knowledge Complex CLI Tools - Dependencies
+
+# YAML parsing for frontmatter
+PyYAML>=6.0.1
+
+# Testing framework
+pytest>=7.4.0
+
+# Type hints support
+typing-extensions>=4.7.0; python_version < '3.11'

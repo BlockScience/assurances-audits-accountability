@@ -1,0 +1,373 @@
+---
+type: chart/assurance_audit
+extends: chart
+id: c:<name>
+name: <Chart Name>
+description: <Brief description of what this assurance audit chart represents>
+
+# Chart construction metadata
+constructed_by: "<person or system name>"
+construction_method: manual | assisted | automated
+construction_date: YYYY-MM-DDTHH:MM:SSZ
+
+# Chart purpose
+purpose: <Why this assurance audit was constructed>
+scope: <What is included and excluded from this audit>
+
+# Assurance audit specific metadata
+audit_date: YYYY-MM-DDTHH:MM:SSZ
+auditor: "<person or system performing audit>"
+audit_status: PASS | FAIL | PARTIAL
+audit_coverage: <percentage or description of coverage>
+
+# Elements comprising this chart
+elements:
+  vertices:
+    - <vertex-id-1>
+    - <vertex-id-2>
+  edges:
+    - <edge-id-1>
+    - <edge-id-2>
+  faces:
+    - <face-id-1>
+    - <face-id-2>
+
+# Assurance requirements
+assurance_requirements:
+  all_vertices_assured: true  # REQUIRED: Every vertex must have valid assurance
+  assurance_method: <boundary | standard | mixed>  # How vertices achieve assurance
+  minimum_assurance_level: <ASSURED | VERIFIED | VALIDATED>
+
+tags:
+  - chart
+  - assurance_audit
+version: 1.0.0
+created: YYYY-MM-DDTHH:MM:SSZ
+modified: YYYY-MM-DDTHH:MM:SSZ
+---
+
+# Assurance Audit Chart: <Chart Name>
+
+<Brief description of the assurance audit and what it validates>
+
+## Why This Assurance Audit Exists
+
+**Motivation:** <Why was this audit performed? What assurance question does it answer?>
+
+**Context:** <What prompted this audit? What needs to be assured?>
+
+**Intended Use:** <How should this audit be used? Who relies on it?>
+
+## What This Audit Validates
+
+### Scope Definition
+
+**Included:**
+- <What elements are being audited>
+- <What assurance properties are checked>
+- <What coverage is achieved>
+
+**Excluded:**
+- <What elements are not audited>
+- <What is out of scope>
+- <Why certain elements were excluded>
+
+**Boundaries:**
+- <Where this audit begins and ends>
+- <What defines the audit perimeter>
+
+### Audit Requirements
+
+**Assurance Completeness:**
+- ✅ Every vertex must have at least one assurance face
+- ✅ All assurance faces must be valid (proper triangles)
+- ✅ All verification edges must pass structural checks
+- ✅ All validation edges must pass quality checks
+
+**Assurance Types Accepted:**
+- Standard assurance faces (coupling + verification + validation)
+- Boundary assurance faces (b2) with root vertex
+- Mixed configurations as appropriate
+
+**Minimum Standards:**
+- Verification: All structural checks must pass
+- Validation: Quality assessment must meet threshold
+- Coupling: Spec and guidance must be aligned
+
+## Audit Results
+
+### Overall Status
+
+**Status:** ✅ PASS | ❌ FAIL | ⚠️ PARTIAL
+
+**Audit Date:** YYYY-MM-DD
+
+**Auditor:** <person or system>
+
+**Coverage:** <N vertices audited / M total vertices = X%>
+
+### Vertex Assurance Status
+
+List all vertices and their assurance status:
+
+| Vertex ID | Vertex Name | Assurance Status | Assurance Face(s) | Notes |
+|-----------|-------------|------------------|-------------------|-------|
+| <vertex-id> | <name> | ✅ ASSURED / ❌ UNASSURED | <face-id(s)> | <any issues or notes> |
+
+**Summary:**
+- ✅ Assured Vertices: N
+- ❌ Unassured Vertices: M
+- Total Vertices: N+M
+
+### Assurance Face Validation
+
+List all assurance faces and their validity:
+
+| Face ID | Target Vertex | Type | Edges Valid | Status | Issues |
+|---------|---------------|------|-------------|--------|--------|
+| <face-id> | <vertex-id> | standard/boundary | ✅/❌ | VALID/INVALID | <any issues> |
+
+**Summary:**
+- ✅ Valid Faces: N
+- ❌ Invalid Faces: M
+- Total Faces: N+M
+
+### Edge Validation Results
+
+#### Verification Edges
+
+| Edge ID | Source | Target | Checks | Status | Issues |
+|---------|--------|--------|--------|--------|--------|
+| <edge-id> | <source> | <target> | N/N | ✅/❌ | <issues if any> |
+
+**Summary:**
+- ✅ Passing: N edges
+- ❌ Failing: M edges
+
+#### Validation Edges
+
+| Edge ID | Source | Target | Assessment | Status | Issues |
+|---------|--------|--------|------------|--------|--------|
+| <edge-id> | <source> | <target> | <quality> | ✅/❌ | <issues if any> |
+
+**Summary:**
+- ✅ Passing: N edges
+- ❌ Failing: M edges
+
+## Assurance Coverage Analysis
+
+### Vertices by Assurance Type
+
+| Assurance Type | Count | Percentage | Vertices |
+|----------------|-------|------------|----------|
+| Standard (f:) | N | X% | <vertex-ids> |
+| Boundary (b2:) | M | Y% | <vertex-ids> |
+| Mixed | P | Z% | <vertex-ids> |
+| Unassured | Q | W% | <vertex-ids> |
+
+### Assurance Gaps
+
+**Identified Gaps:**
+- <List any vertices without assurance>
+- <List any incomplete assurance>
+- <List any failed checks>
+
+**Gap Severity:**
+- 🔴 Critical: <Foundational vertices without assurance>
+- 🟡 Warning: <Important vertices with partial assurance>
+- 🟢 Minor: <Optional vertices missing assurance>
+
+**Remediation Plan:**
+- <How to address critical gaps>
+- <Timeline for remediation>
+- <Responsible parties>
+
+## Audit Findings
+
+### Positive Findings
+
+**Strengths:**
+- <What assurance is working well>
+- <Particularly strong assurance patterns>
+- <Exemplary assurance implementations>
+
+**Best Practices Observed:**
+- <Notable good practices>
+- <Patterns to replicate>
+
+### Issues and Concerns
+
+**Critical Issues:**
+- <Any vertices that must be assured but aren't>
+- <Any invalid assurance faces>
+- <Any failed verification/validation>
+
+**Warnings:**
+- <Partial assurance>
+- <Weak assurance>
+- <Potential future issues>
+
+**Recommendations:**
+- <How to strengthen assurance>
+- <What should be prioritized>
+- <Process improvements>
+
+## Assurance Topology
+
+### Topological Properties
+
+- **Euler Characteristic:** χ = V - E + F = <value>
+- **Assurance Coverage:** <percentage of vertices with valid assurance>
+- **Assurance Depth:** <average number of assurance faces per vertex>
+
+### Structural Properties
+
+- **Completeness:** <Is assurance complete for all vertices?>
+- **Redundancy:** <Do any vertices have multiple assurance paths?>
+- **Dependencies:** <Are there circular assurance dependencies?>
+- **Boundary Elements:** <Count of b0, b1, b2 elements used>
+
+## Interpretation
+
+### What This Audit Reveals
+
+<What does this audit tell us about the assurance state of the complex?>
+
+**Key Insights:**
+- <Important finding 1>
+- <Important finding 2>
+- <Important finding 3>
+
+**Assurance Patterns:**
+- <Observed assurance patterns>
+- <Effective strategies>
+- <Common weaknesses>
+
+**Trust Implications:**
+- <What can we trust based on this audit?>
+- <What remains uncertain?>
+- <What needs additional assurance?>
+
+## Compliance Assessment
+
+### Against Assurance Triangle Specification
+
+**Compliance Status:** ✅ COMPLIANT | ❌ NON-COMPLIANT | ⚠️ PARTIAL
+
+**Specification Requirements:**
+- ✅/❌ Every vertex has assurance face
+- ✅/❌ Verification edges pass structural checks
+- ✅/❌ Validation edges assess quality
+- ✅/❌ Coupling edges align spec and guidance
+- ✅/❌ Boundary elements used correctly (if applicable)
+
+**Deviations:**
+- <Any deviations from specification>
+- <Justification for deviations>
+- <Impact of deviations>
+
+## Verification
+
+### Audit Verification Commands
+
+```bash
+# Verify chart structure
+python scripts/verify_chart.py charts/<chart-name>.md
+
+# Verify all assurance faces
+for face in <face-ids>; do
+  python scripts/verify_template_based.py 02_faces/$face.md
+done
+
+# Check assurance coverage
+python scripts/audit_assurance.py charts/<chart-name>.md
+```
+
+**Expected Results:**
+- All vertices have at least one valid assurance face
+- All assurance faces have valid triangular structure
+- All verification edges pass checks
+- All validation edges have quality assessments
+
+## Audit Metadata
+
+| Property | Value |
+|----------|-------|
+| Audit ID | <unique-audit-id> |
+| Chart ID | c:<name> |
+| Audit Date | YYYY-MM-DD |
+| Auditor | <auditor-name> |
+| Audit Method | <manual/assisted/automated> |
+| Coverage | <X%> |
+| Status | PASS/FAIL/PARTIAL |
+| Vertices Audited | N |
+| Assurance Faces | M |
+| Critical Issues | P |
+| Warnings | Q |
+
+## Related Audits
+
+| Audit | Date | Relationship | Status |
+|-------|------|--------------|--------|
+| [Previous Audit](path/to/audit.md) | YYYY-MM-DD | Previous version | <status> |
+| [Related Chart Audit](path/to/audit.md) | YYYY-MM-DD | Overlapping scope | <status> |
+
+---
+
+## Template Usage Notes
+
+### When to Create an Assurance Audit Chart
+
+Create an assurance audit chart when:
+- **Validation Required:** Need to verify all vertices have valid assurance
+- **Trust Establishment:** Need to establish trust in a subset of the complex
+- **Compliance Check:** Need to verify compliance with assurance specifications
+- **Quality Gate:** Need to validate assurance before proceeding
+
+### Assurance Audit Requirements
+
+**Hard Requirements (MUST):**
+1. ✅ Every vertex in the chart MUST have at least one valid assurance face
+2. ✅ All assurance faces MUST form valid triangles (3 edges, 3 vertices)
+3. ✅ All verification edges MUST have structural check results
+4. ✅ All validation edges MUST have quality assessments
+5. ✅ Chart MUST document assurance status for every vertex
+
+**Soft Requirements (SHOULD):**
+- Should use standard assurance faces where possible
+- Should use boundary assurance (b2) only for self-referential foundational vertices
+- Should document any assurance gaps
+- Should provide remediation plan for gaps
+
+**Restrictions:**
+- Cannot include vertices without assurance (unless documenting gaps)
+- Cannot include invalid assurance faces
+- Cannot claim PASS status with unassured vertices
+
+### Audit Statuses
+
+**PASS:** All vertices have valid assurance, no critical issues
+**PARTIAL:** Some vertices have valid assurance, some gaps exist
+**FAIL:** Critical vertices lack assurance or have invalid assurance
+
+### Assurance Types
+
+**Standard Assurance (f:):**
+- Coupling: Spec ↔ Guidance
+- Verification: Document → Spec (structural checks)
+- Validation: Document → Guidance (quality assessment)
+
+**Boundary Assurance (b2:):**
+- For self-referential foundational vertices only
+- Uses b0:root as proxy
+- Uses b1 boundary edges
+- Resolves self-referential paradox
+
+**Mixed:**
+- Some vertices use standard, some use boundary
+- Document which vertices use which type
+- Justify the configuration
+
+---
+
+**Note:** Assurance audit charts are special restricted charts that validate the assurance state of a portion of the knowledge complex. Unlike general charts that can include any elements, assurance audits MUST verify that every vertex has valid assurance. They serve as quality gates and trust anchors.

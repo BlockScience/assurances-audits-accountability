@@ -1,0 +1,213 @@
+{
+  "chart_id": "c:boundary-complex",
+  "name": "Boundary Complex - Root-Anchored Assurance Foundation",
+  "description": "Complete 5-vertex boundary complex showing how root vertex resolves self-referential paradox",
+  "type": "chart/chart",
+  "constructed_by": "mzargham",
+  "construction_method": "assisted",
+  "purpose": "Demonstrate how b0:root vertex enables valid assurance triangles for self-referential foundational documents",
+  "scope": "5 boundary vertices (root, SS, SG, GS, GG) with 2 boundary faces (b2) and 2 standard faces",
+  "element_counts": {
+    "vertices": 5,
+    "edges": 12,
+    "faces": 4
+  },
+  "topology": {
+    "euler_characteristic": -3,
+    "dimension": 2
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "b0:root",
+        "name": "Root - Boundary Anchor",
+        "type": "vertex/b0",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:spec",
+        "name": "Specification for Specifications",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:guidance",
+        "name": "Specification for Guidance Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:spec",
+        "name": "Guidance for Specifications",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:guidance",
+        "name": "Guidance for Guidance Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:coupling:spec",
+        "name": "Coupling - Spec-for-Spec and Guidance-for-Spec",
+        "type": "edge/coupling",
+        "source": "v:spec:spec",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:guidance",
+        "name": "Coupling - Spec-for-Guidance and Guidance-for-Guidance",
+        "type": "edge/coupling",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:spec-guidance:spec-spec",
+        "name": "Verification - Spec-for-Guidance verifies against Spec-for-Spec",
+        "type": "edge/verification",
+        "source": "v:spec:guidance",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-spec:spec-guidance",
+        "name": "Verification - Guidance-for-Spec verifies against Spec-for-Guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:spec",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-guidance:spec-guidance",
+        "name": "Verification - Guidance-for-Guidance verifies against Spec-for-Guidance (Self-Verification)",
+        "type": "edge/verification",
+        "source": "v:guidance:guidance",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-spec:guidance-spec",
+        "name": "Validation - Spec-for-Spec validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:spec",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-guidance:guidance-spec",
+        "name": "Validation - Spec-for-Guidance validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:guidance-spec:guidance-guidance",
+        "name": "Validation - Guidance-for-Spec validates against Guidance-for-Guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:spec",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:self-verification",
+        "name": "Boundary Edge - Self-Verification of Spec-for-Spec",
+        "type": "edge/b1",
+        "source": "v:spec:spec",
+        "target": "b0:root",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:self-validation",
+        "name": "Boundary Edge - Self-Validation of Guidance-for-Guidance",
+        "type": "edge/b1",
+        "source": "v:guidance:guidance",
+        "target": "b0:root",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:couples-GS-root",
+        "name": "Boundary Edge - Couples Guidance-for-Spec to Root",
+        "type": "edge/b1",
+        "source": "b0:root",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:couples-SG-root",
+        "name": "Boundary Edge - Couples Spec-for-Guidance to Root",
+        "type": "edge/b1",
+        "source": "b0:root",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      }
+    ],
+    "faces": [
+      {
+        "id": "f:assurance:spec-guidance",
+        "name": "Assurance Face - Spec-for-Guidance Assurance",
+        "type": "face/assurance",
+        "boundary": [
+          "e:coupling:spec-guidance:guidance-spec",
+          "e:verification:spec-guidance:spec-spec",
+          "e:validation:spec-guidance:guidance-spec"
+        ],
+        "vertices": [
+          "v:spec:guidance",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:guidance-spec",
+        "name": "Assurance Face - Guidance-for-Spec Assurance",
+        "type": "face/assurance",
+        "boundary": [
+          "e:coupling:guidance-spec:spec-guidance",
+          "e:verification:guidance-spec:spec-guidance",
+          "e:validation:guidance-spec:guidance-guidance"
+        ],
+        "vertices": [
+          "v:guidance:spec",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "b2:spec-spec",
+        "name": "Boundary Face - Spec-for-Spec Self-Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "b0:root",
+          "v:guidance:spec",
+          "v:spec:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "b2:guidance-guidance",
+        "name": "Boundary Face - Guidance-for-Guidance Self-Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "b0:root",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      }
+    ]
+  },
+  "metadata": {
+    "exported": "2025-12-27T18:47:14.410250",
+    "source_file": "charts/boundary-complex/boundary-complex.md"
+  }
+}

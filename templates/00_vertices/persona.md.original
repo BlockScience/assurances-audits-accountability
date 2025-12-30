@@ -1,0 +1,51 @@
+---
+type: vertex/persona
+extends: doc
+id: v:persona:<name>
+name: <Persona Name>
+description: <Brief description of this persona>
+tags:
+  - vertex
+  - doc
+  - persona
+version: 1.0.0
+created: YYYY-MM-DDTHH:MM:SSZ
+modified: YYYY-MM-DDTHH:MM:SSZ
+dependencies: []
+domain: <optional domain>
+---
+
+# Persona - <Name>
+
+## Purpose
+
+This persona defines [role/identity description].
+
+## Role and Identity
+
+[1-2 paragraphs defining who the AI is - specific role, professional identity, character]
+
+## Domain Expertise
+
+- [Specific expertise area 1]
+- [Specific expertise area 2]
+- [Specific expertise area 3 - Optional]
+- [Specific expertise area 4 - Optional]
+
+## Approach and Methodology
+
+[Description of thinking style, analytical approach, working method]
+
+## Communication Tone
+
+[Description of tone, formality level, relationship with user]
+
+## Boundaries and Limitations
+
+- [Explicit limitation 1]
+- [Explicit limitation 2]
+- [Explicit limitation 3]
+
+---
+
+**Note:** This persona is part of the PPP (Persona-Purpose-Protocol) framework.

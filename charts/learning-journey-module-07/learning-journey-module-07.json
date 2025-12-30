@@ -1,0 +1,153 @@
+{
+  "chart_id": "c:learning-journey-module-07",
+  "name": "Learning Journey - Module 07",
+  "description": "Seventh module in learning journey teaching reference and reuse via doc-kit pattern libraries",
+  "type": "chart/syllabus",
+  "constructed_by": "Claude Sonnet 4.5",
+  "construction_method": "assisted",
+  "purpose": "Demonstrate skill accumulation for Module 7 (reference-reuse) building on Module 5, teaching doc-kit pattern for reusable documentation",
+  "scope": "One module (reference-reuse) with 1 prerequisite skill and 1 developed skill, showing student state transition from assurance-learner to document-architect (convergence point, Path 2)",
+  "element_counts": {
+    "vertices": 5,
+    "edges": 7,
+    "faces": 3
+  },
+  "topology": {
+    "euler_characteristic": 1,
+    "dimension": 2
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "v:student:assurance-learner",
+        "name": "Assurance Learner",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:assurance-audits",
+        "name": "Assurance & Audits",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:skill:reference-reuse",
+        "name": "Reference & Reuse via Doc-Kits",
+        "type": "vertex/skill",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:learning-module:reference-reuse",
+        "name": "Reference & Reuse via Doc-Kits",
+        "type": "vertex/learning-module",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:student:document-architect",
+        "name": "Document Architect",
+        "type": "vertex/student",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:has-skill:assurance-learner:assurance-audits",
+        "name": "assurance-learner has skill assurance-audits",
+        "type": "edge/has-skill",
+        "source": "v:student:assurance-learner",
+        "target": "v:skill:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:requires-skill:reference-reuse:assurance-audits",
+        "name": "reference-reuse requires skill assurance-audits",
+        "type": "edge/requires-skill",
+        "source": "v:learning-module:reference-reuse",
+        "target": "v:skill:assurance-audits",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:develops-skill:reference-reuse:reference-reuse",
+        "name": "reference-reuse develops skill reference-reuse",
+        "type": "edge/develops-skill",
+        "source": "v:learning-module:reference-reuse",
+        "target": "v:skill:reference-reuse",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:studies:assurance-learner:reference-reuse",
+        "name": "assurance-learner studies reference-reuse",
+        "type": "edge/studies",
+        "source": "v:student:assurance-learner",
+        "target": "v:learning-module:reference-reuse",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:transitions-to:assurance-learner:document-architect",
+        "name": "assurance-learner transitions-to document-architect",
+        "type": "edge/transitions-to",
+        "source": "v:student:assurance-learner",
+        "target": "v:student:document-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:advances:reference-reuse:document-architect",
+        "name": "reference-reuse advances document-architect",
+        "type": "edge/advances",
+        "source": "v:learning-module:reference-reuse",
+        "target": "v:student:document-architect",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-skill:document-architect:reference-reuse",
+        "name": "document-architect has skill reference-reuse",
+        "type": "edge/has-skill",
+        "source": "v:student:document-architect",
+        "target": "v:skill:reference-reuse",
+        "element_type": "edge"
+      }
+    ],
+    "faces": [
+      {
+        "id": "f:prerequisite:assurance-learner:assurance-audits:reference-reuse",
+        "name": "Prerequisite triangle - assurance-learner with assurance-audits for reference-reuse",
+        "type": "face/prerequisite",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:skill:assurance-audits",
+          "v:learning-module:reference-reuse"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:completion:assurance-learner:reference-reuse:document-architect",
+        "name": "completion assurance-learner reference-reuse document-architect",
+        "type": "face/completion",
+        "boundary": [],
+        "vertices": [
+          "v:student:assurance-learner",
+          "v:learning-module:reference-reuse",
+          "v:student:document-architect"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:skill-gain:document-architect:reference-reuse:reference-reuse",
+        "name": "skill-gain document-architect reference-reuse reference-reuse",
+        "type": "face/skill-gain",
+        "boundary": [],
+        "vertices": [
+          "v:student:document-architect",
+          "v:learning-module:reference-reuse",
+          "v:skill:reference-reuse"
+        ],
+        "element_type": "face"
+      }
+    ]
+  },
+  "metadata": {
+    "exported": "2025-12-28T19:13:30.839309",
+    "source_file": "charts/learning-journey-module-07/learning-journey-module-07.md"
+  }
+}

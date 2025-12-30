@@ -1,0 +1,189 @@
+---
+type: template/vertex/guidance
+extends: doc
+id: template:vertex:guidance
+name: Guidance Type Template
+description: Guidances define quality criteria, best practices, and "how well" evaluations
+instantiable: true
+tags:
+  - template
+  - vertex
+  - doc
+  - guidance
+version: 1.0.0
+created: 2025-12-27T15:00:00Z
+modified: 2025-12-27T15:00:00Z
+---
+
+# Guidance Type Template
+
+**Guidances define quality criteria, best practices, and "how well" evaluations.**
+
+Guidances extend docs and serve as the qualitative authority in the assurance triangle.
+
+## Type Hierarchy
+
+```
+vertex (abstract)
+└── doc (concrete)
+    └── guidance (concrete) ← YOU ARE HERE
+```
+
+## Inheritance
+
+- **Extends:** `doc`
+- **Extended by:** None (terminal type in this hierarchy)
+- **Instantiable:** Yes
+
+## Required Frontmatter Fields
+
+Inherits all doc/vertex fields, plus:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `type` | string | Must be `vertex/guidance` |
+| `extends` | string | Must be `doc` |
+| `tags` | array | Must include `[vertex, doc, guidance]` |
+
+## Tag Requirements
+
+The `tags` array MUST include the full inheritance chain:
+
+```yaml
+tags:
+  - vertex      # base type
+  - doc         # parent type
+  - guidance    # concrete type
+```
+
+## Optional Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `dependencies` | array | List of guidance IDs this guidance depends on (compositional dependencies) |
+| `criteria` | array | Enumerated evaluation criteria |
+| `rubric` | object | Scoring rubric for assessment |
+| `examples` | object | Good/bad examples |
+
+### Dependencies Field
+
+The `dependencies` field declares compositional dependencies - other guidances that this guidance references or builds upon:
+
+```yaml
+dependencies:
+  - v:guidance:persona
+  - v:guidance:purpose
+  - v:guidance:protocol
+```
+
+- **Empty array if no dependencies:** Guidances without compositional dependencies should use `dependencies: []` or omit the field
+- **Used for compositional guidances:** When a guidance references quality criteria from other guidances (like system_prompt guidance references persona, purpose, protocol guidances)
+- **Parallel to spec dependencies:** Guidances typically have dependencies parallel to their corresponding specs
+- **Enables dependency tracking:** Tools can use this to understand compositional relationships
+- **Creates dependency edges:** Each dependency should have a corresponding `edge/dependency` connecting the guidances
+
+## Body Content
+
+Guidance bodies should contain:
+- **Quality criteria** - What makes a good/excellent instance
+- **Best practices** - Recommended approaches
+- **Anti-patterns** - Common mistakes to avoid
+- **Assessment methodology** - How to evaluate conformance
+- **Examples** - Concrete instances with quality commentary
+
+## Role in Assurance Pattern
+
+Guidances participate as **parent_guidance** in assurance faces:
+
+```
+          child_doc
+           /      \
+          /        \
+  verification   validation
+        /            \
+       /              \
+   parent_spec ---- parent_guidance
+              coupling
+```
+
+- **Validation edges** point from docs to guidances (doc → guidance)
+- Guidances define "how to assess quality"
+- Guidances are coupled with specs that define structure
+
+## Self-Referential Bootstrap
+
+The knowledge complex requires:
+- **guidance-for-guidance** - A guidance that defines how to evaluate guidance quality
+- This guidance validates itself, creating the foundation for all other guidances
+
+## Guidance vs. Spec
+
+| Aspect | Spec | Guidance |
+|--------|------|----------|
+| **Answers** | "What?" | "How well?" |
+| **Focus** | Structure, schema, requirements | Quality, best practices, evaluation |
+| **Edge** | Verification | Validation |
+| **Nature** | Prescriptive | Descriptive/evaluative |
+| **Check** | Pass/fail (structural) | Assessed quality level |
+
+## Example Instance
+
+```yaml
+---
+type: vertex/guidance
+extends: doc
+id: v:guidance:documentation-quality
+name: Documentation Quality Guidance
+tags:
+  - vertex
+  - doc
+  - guidance
+version: 1.0.0
+created: 2025-01-15T10:00:00Z
+modified: 2025-01-15T10:00:00Z
+---
+
+# Documentation Quality Guidance
+
+Criteria for evaluating the quality of technical documentation.
+
+## Quality Criteria
+
+### 1. Clarity
+- **Excellent:** Concepts explained with precise, unambiguous language
+- **Good:** Generally clear with minor ambiguities
+- **Needs Improvement:** Frequent unclear or confusing passages
+
+### 2. Completeness
+- **Excellent:** All necessary information present with appropriate detail
+- **Good:** Core information present, minor gaps
+- **Needs Improvement:** Significant information missing
+
+### 3. Examples
+- **Excellent:** Multiple concrete examples covering common and edge cases
+- **Good:** Basic examples provided
+- **Needs Improvement:** Few or no examples
+
+## Assessment Methodology
+
+1. Read document in full
+2. Evaluate against each criterion
+3. Provide specific feedback with references
+4. Assign overall quality rating
+
+## Anti-Patterns
+
+- Wall-of-text without structure
+- Assumptions about reader knowledge
+- Outdated examples
+- Missing context or prerequisites
+```
+
+## Validation Rules
+
+1. **Type Format:** `type` must be `vertex/guidance`
+2. **Tag Chain:** Tags must include `[vertex, doc, guidance]`
+3. **Extends:** Must extend `doc`
+4. **Validation Target:** Can be target of validation edges
+5. **Coupling:** Should be coupled with corresponding spec
+6. **Content:** Body should define quality criteria and assessment methods

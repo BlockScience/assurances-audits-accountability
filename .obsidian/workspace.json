@@ -1,0 +1,224 @@
+{
+  "main": {
+    "id": "1d410a9a3a0f1254",
+    "type": "split",
+    "children": [
+      {
+        "id": "bb20ff2aed1db036",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "02867e44cc539128",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1fb03166ddd368fc",
+    "type": "split",
+    "children": [
+      {
+        "id": "e729327334bf33df",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b833731b524a941b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "8c9874858203f489",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "194d74f1d3dbc2e9",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "3f0c5a3e5c7105de",
+    "type": "split",
+    "children": [
+      {
+        "id": "dd4cc155decf2329",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d37399f99d65724d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "49bd64f02952daf0",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "e6c46c26a4f6ff82",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "0f3d16fc3c1ee263",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "9b7435715e5f7eb3",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "obsidian-importer:Open Importer": false
+    }
+  },
+  "active": "02867e44cc539128",
+  "lastOpenFiles": [
+    "docs/MODULES-06-07-COMPLETION-PLAN.md",
+    "MODULES-06-07-COMPLETION-PLAN.md",
+    "docs/org-chart-completion-plan.md",
+    "01_edges/responsible-evan-build.md",
+    "01_edges/accountable-dana-build.md",
+    "01_edges/responsible-charlie-monitor.md",
+    "01_edges/responsible-bob-monitor.md",
+    "01_edges/accountable-alice-monitor.md",
+    "01_edges/responsible-charlie-deploy.md",
+    "01_edges/responsible-bob-deploy.md",
+    "01_edges/accountable-alice-deploy.md",
+    "02_faces/assignment-evan-developer-build.md",
+    "02_faces/assignment-dana-senior-developer-build.md",
+    "02_faces/assignment-charlie-sre-monitor.md",
+    "02_faces/assignment-bob-sre-monitor.md",
+    "02_faces/assignment-alice-tech-lead-monitor.md",
+    "02_faces/assignment-charlie-sre-deploy.md",
+    "02_faces/assignment-bob-sre-deploy.md",
+    "02_faces/assignment-alice-tech-lead-deploy.md",
+    "charts/composed-org-chart/composed-org-chart.html",
+    "charts/resource-management-chart/resource-management-chart.html",
+    "charts/raci-coordination-chart/raci-coordination-chart.html",
+    "charts/composed-org-chart/composed-org-chart.json",
+    "charts/resource-management-chart/resource-management-chart.json",
+    "charts/raci-coordination-chart/raci-coordination-chart.json",
+    "charts/composed-org-chart/composed-org-chart.md",
+    "charts/resource-management-chart/resource-management-chart.md",
+    "01_edges/produces-deploy-running-service.md",
+    "01_edges/consumes-deploy-tested-code.md",
+    "01_edges/produces-test-tested-code.md",
+    "01_edges/consumes-test-built-artifact.md",
+    "01_edges/produces-build-built-artifact.md",
+    "charts/doc-kit-registry/doc-kit-registry.html",
+    "charts/doc-kit-registry/doc-kit-registry.json",
+    "charts/composed-org-chart",
+    "charts/resource-management-chart",
+    "charts/learning-journey-full/learning-journey-full.png",
+    "charts/learning-journey-full/newplot (2).png",
+    "docs/images/boundary.png",
+    "docs/images/assurance.png",
+    "Untitled.canvas"
+  ]
+}

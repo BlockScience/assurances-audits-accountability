@@ -1,0 +1,156 @@
+{
+  "chart_id": "c:org:resource-management-chart",
+  "name": "Resource Management Chart",
+  "description": "Management chart showing resource flows through functions operated by Platform and Product teams",
+  "type": "chart/organization",
+  "constructed_by": "Claude (LLM-assisted)",
+  "construction_method": "assisted",
+  "purpose": "Document resource flows through the deployment pipeline operated by Platform and Product teams",
+  "scope": "Two teams, 3 functions, 4 resources, with production and consumption flows",
+  "element_counts": {
+    "vertices": 9,
+    "edges": 9,
+    "faces": 0
+  },
+  "topology": {
+    "euler_characteristic": 0,
+    "dimension": 1
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "v:actor:team:platform",
+        "name": "Platform Team",
+        "type": "vertex/actor/team",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:actor:team:product",
+        "name": "Product Team",
+        "type": "vertex/actor/team",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:function:build",
+        "name": "Build Service",
+        "type": "vertex/function",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:function:test",
+        "name": "Test Service",
+        "type": "vertex/function",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:function:deploy",
+        "name": "Deploy Service",
+        "type": "vertex/function",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:resource:source-code",
+        "name": "Source Code",
+        "type": "vertex/resource",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:resource:built-artifact",
+        "name": "Built Artifact",
+        "type": "vertex/resource",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:resource:tested-code",
+        "name": "Tested Code",
+        "type": "vertex/resource",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:resource:running-service",
+        "name": "Running Service",
+        "type": "vertex/resource",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:operates:product:build",
+        "name": "Product Team operates Build",
+        "type": "edge/operates",
+        "source": "v:actor:team:product",
+        "target": "v:function:build",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:operates:product:test",
+        "name": "Product Team operates Test",
+        "type": "edge/operates",
+        "source": "v:actor:team:product",
+        "target": "v:function:test",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:operates:platform:deploy",
+        "name": "Platform Team operates Deploy",
+        "type": "edge/operates",
+        "source": "v:actor:team:platform",
+        "target": "v:function:deploy",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:consumes:build:source-code",
+        "name": "Build consumes Source Code",
+        "type": "edge/consumes",
+        "source": "v:function:build",
+        "target": "v:resource:source-code",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:consumes:test:built-artifact",
+        "name": "Test consumes Built Artifact",
+        "type": "edge/consumes",
+        "source": "v:function:test",
+        "target": "v:resource:built-artifact",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:consumes:deploy:tested-code",
+        "name": "Deploy consumes Tested Code",
+        "type": "edge/consumes",
+        "source": "v:function:deploy",
+        "target": "v:resource:tested-code",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:produces:build:built-artifact",
+        "name": "Build produces Built Artifact",
+        "type": "edge/produces",
+        "source": "v:function:build",
+        "target": "v:resource:built-artifact",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:produces:test:tested-code",
+        "name": "Test produces Tested Code",
+        "type": "edge/produces",
+        "source": "v:function:test",
+        "target": "v:resource:tested-code",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:produces:deploy:running-service",
+        "name": "Deploy produces Running Service",
+        "type": "edge/produces",
+        "source": "v:function:deploy",
+        "target": "v:resource:running-service",
+        "element_type": "edge"
+      }
+    ],
+    "faces": []
+  },
+  "metadata": {
+    "exported": "2025-12-29T00:49:27.443585",
+    "source_file": "charts/resource-management-chart/resource-management-chart.md"
+  }
+}
