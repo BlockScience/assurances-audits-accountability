@@ -121,6 +121,22 @@ The framework models document assurance as a typed simplicial complex. Three cat
 
 **Faces (2-simplices)** are assurance triangles: when a content document has a verification edge to a specification, that specification has a coupling edge to guidance, and the content has a validation edge to that same guidance, the three edges bound a triangular face representing complete assurance.
 
+### An Optimization Intuition
+
+The framework can be understood through the lens of constrained optimization. Consider intellectual substance—research findings, design decisions, analytical insights—that must be expressed for publication. A document is the *serialized representation* of this intellectual substance, projected onto a document space defined by the specification.
+
+The specification defines the *feasible region*: structural constraints that any valid document must satisfy (word limits, required sections, format rules). Verification checks feasibility—is this serialization structurally valid?
+
+The guidance defines the *objective function*: quality criteria that distinguish better representations from worse ones within the feasible region (clarity, rigor, relevance). Validation evaluates the objective—how well does this serialization serve its purpose?
+
+Writing is then a projection operation: projecting intellectual substance onto the document space characterized by the specification, with the guidance providing direction for selecting among alternative feasible representations. Different phrasings, organizations, or emphases may all satisfy the spec (all feasible), but the guidance helps choose which serialization best communicates the underlying substance.
+
+This framing clarifies the verification-validation distinction:
+- **Verification** answers: "Is this point in the feasible region?" (Binary: pass/fail)
+- **Validation** answers: "How good is this feasible point?" (Qualitative: assessment with rationale)
+
+The coupling edge ensures we optimize the right objective over the right feasible region—we cannot accidentally verify against one spec while optimizing for unrelated guidance. We are, in effect, programming in document space.
+
 ### Edge Payload Structures
 
 Verification and validation edges carry distinct payloads reflecting their different natures. A verification edge documents deterministic structural checks:
@@ -271,26 +287,22 @@ When all three edges exist and connect consistently, they bound a 2-simplex (fac
 
 Topologically, the boundary operator ∂ maps faces to edges: ∂(face) = edge₁ + edge₂ + edge₃. For assurance, this means the boundary of complete assurance is the sum of verification, coupling, and validation. Removing any edge opens the boundary—the face no longer exists.
 
-### The Audit Chart Invariant: V - F = 1
+### The Assurance Requirement and Its Puzzle
 
-A critical property emerges from the framework's structure. In a valid audit chart:
+Two requirements govern assurance in the framework:
 
-- Each assurance face can assure exactly one target vertex
-- One vertex (the root) provides assurance to others but does not itself require assurance
-- Therefore, the number of faces must equal the number of vertices minus one
+1. **Every document must be assured.** Each vertex in an audit chart requires a complete assurance face—verification against a spec, validation against coupled guidance, triangle closed.
 
-This yields the **audit chart invariant**: **V - F = 1**
+2. **Every assurance face assures exactly one document.** A face cannot assure multiple documents; it targets precisely one.
 
-This invariant is not arbitrary but follows from the framework's semantics. The root vertex anchors the boundary complex, enabling self-referential foundations without paradox. Every other vertex requires exactly one assurance face. A full audit lists every vertex and details the assurance face that attests to it by enumerating the coupling, verification, validation edges which bound it. The audit chart invariant provides a simple, computationally efficient integrity check: if V - F ≠ 1, either some vertex lacks assurance or the structure is malformed.
+These requirements create a puzzle. Consider the foundational documents: spec-for-spec, spec-for-guidance, guidance-for-spec, guidance-for-guidance. Each must be assured. But what are they assured *against*?
 
-The audit tooling explicitly tests this invariant:
+- Spec-for-spec must be verified against... a specification. Which specification? Itself—it is the specification for specifications.
+- Guidance-for-guidance must be validated against... guidance. Which guidance? Itself—it is the guidance for guidance.
 
-```
-Audit Results for c:incose-paper-assurance
-Status: PASS
-Coverage: 100.0% (7/7 vertices)
-Invariant V - F = 1: 8 - 7 = 1 ✓
-```
+Self-reference seems unavoidable. But self-referential assurance creates topological problems: a document cannot be a vertex in its own assurance triangle without degeneracy.
+
+The resolution comes from type inheritance. In the framework's type system, `vertex/spec` and `vertex/guidance` both extend `vertex/doc`. Specs and guidance documents *are* documents. This means the foundational four documents (SS, SG, GS, GG) can assure each other through cross-verification and cross-validation, while a special structure—the boundary complex—handles the remaining self-referential cases. We defer the full resolution to the Results section, where we demonstrate how the root vertex completes the boundary complex.
 
 ### Human Accountability as Structural Requirement
 
@@ -318,9 +330,58 @@ This paper demonstrates the framework through self-application. The paper exists
 
 The self-demonstration is not circular. The specification and guidance were developed before the paper content. The paper was written to satisfy both. Verification and validation assessed the completed paper against pre-existing standards. The assurance face documents the completed assessment.
 
+### The Boundary Complex
+
+Before presenting the full audit, we must explain the foundation that makes auditing possible. The boundary complex resolves a potential paradox: what assures the specification for specifications?
+
+**[Figure 2: Boundary Complex Structure]**
+
+![boundary complex](figures/figure3-final.png)
+
+*Figure 2. The boundary complex resolves self-referential foundations. The root vertex (b0:root) anchors boundary faces (b2, blue) that enable spec-for-spec and guidance-for-guidance to be self-referential without paradox. Standard assurance faces (green) cover the cross-domain documents. The boundary complex forms the axiomatic foundation from which all other document types derive assurance.*
+
+Consider the foundational documents:
+
+- **Spec-for-spec** is verified against itself (self-verification) and validated against guidance-for-spec. These two documents are coupled. Logically sound—but only two edges connect three vertices, not forming a closed triangle.
+
+- **Guidance-for-guidance** is validated against itself (self-validation) and verified against spec-for-guidance. These two documents are coupled. Again logically sound—but the same problem: two edges, not a closed face.
+
+These "boundary assurances" are semantically valid but topologically incomplete. A 2-simplex (face) requires exactly three edges bounding a triangle. With only two edges, computational topology methods cannot operate—we cannot compute Euler characteristics, detect missing assurance, or audit structural integrity.
+
+The root vertex resolves this by providing the third point. Instead of:
+
+```text
+spec-for-spec ←→ guidance-for-spec (coupling)
+spec-for-spec → spec-for-spec (self-verification)
+```
+
+We construct:
+
+```text
+spec-for-spec ←→ guidance-for-spec (coupling)
+spec-for-spec → spec-for-spec (self-verification, rewired through root)
+guidance-for-spec → spec-for-spec (validation)
+root anchors the boundary face
+```
+
+The root vertex sits outside the typed system—it is not a spec, guidance, or content document. It exists solely to close boundary faces, transforming logically valid but topologically incomplete assurances into proper 2-simplices. This is not circular reasoning but explicit axiomatization: the framework declares its foundations rather than hiding them, and the declaration takes a form that unlocks the computational topology methods we employ for auditing.
+
+### The Audit Chart Invariant: V - F = 1
+
+With the boundary complex understood, we can now state a key property. Recall the two requirements from Methodology:
+
+1. Every document must be assured by exactly one face
+2. Every face assures exactly one document
+
+The root vertex is special: it provides assurance to others (anchoring boundary faces) but does not itself require assurance—it sits outside the typed document system. This yields a simple invariant:
+
+**V - F = 1**
+
+In any valid audit chart, the number of vertices minus the number of faces equals one. The "one" is the root. Every other vertex has exactly one corresponding face; every face has exactly one target vertex. The invariant provides a computationally efficient integrity check: if V - F ≠ 1, either some vertex lacks assurance or the structure is malformed.
+
 ### Complete Assurance Audit
 
-The assurance audit used `audit_assurance_chart.py`, which analyzes chart documents for completeness and tests the V - F = 1 invariant.
+With the boundary complex and invariant established, we can present the full audit. The assurance audit used `audit_assurance_chart.py`, which analyzes chart documents for completeness and tests the V - F = 1 invariant.
 
 **Table 1: Complete Vertex Assurance Status**
 
@@ -348,16 +409,6 @@ The assurance audit used `audit_assurance_chart.py`, which analyzes chart docume
 | Boundary anchoring | b2:spec-spec, b2:guidance-guidance | ✓ PASS |
 
 *Table 2. Summary audit metrics. The invariant V - F = 1 confirms structural integrity: every vertex except root has exactly one assurance face. Coverage confirms no unassured vertices exist.*
-
-### The Boundary Complex
-
-**[Figure 2: Boundary Complex Structure]**
-
-![boundary complex](figures/figure3-final.png)
-
-*Figure 2. The boundary complex resolves self-referential foundations. The root vertex (b0:root) anchors boundary faces (b2, blue) that enable spec-for-spec and guidance-for-guidance to be self-referential without paradox. Standard assurance faces (green) cover the cross-domain documents. The boundary complex forms the axiomatic foundation from which all other document types derive assurance.*
-
-The boundary complex resolves a potential paradox: what assures the specification for specifications? The answer involves the root vertex, which sits outside the typed system. Foundational documents verify and validate against themselves, with the root vertex providing the third point of their assurance triangles. This is not circular reasoning but explicit axiomatization—the framework declares its foundations rather than hiding them.
 
 ### Reference vs. Referent: The Audit Chart's Self-Reference
 
