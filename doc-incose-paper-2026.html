@@ -301,8 +301,8 @@ its accuracy.
 spec-for-spec ←→ guidance-for-spec (validation)
 spec-for-spec → spec-for-spec (self-verification)
 </code></pre><p>We construct:</p>
-<pre data-role="codeBlock" data-info="text" class="language-text text"><code>spec-for-spec ←→ guidance-for-spec (coupling, rewired through root)
-spec-for-spec → spec-for-spec (self-verification, rewired through root)
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>spec-for-spec ←→ root (coupling, rewired from guidance-for-spec)
+spec-for-spec → root (self-verification, rewired from spec-for-spec)
 guidance-for-spec → spec-for-spec (validation)
 root anchors the boundary face
 </code></pre><p>The root vertex sits outside the typed system—it is not a spec, guidance, or content document. It exists solely to close boundary faces, transforming logically valid but topologically incomplete assurances into proper 2-simplices. This is not circular reasoning but explicit axiomatization: the framework declares its foundations rather than hiding them, and the declaration takes a form that unlocks the computational topology methods we employ for auditing.</p>

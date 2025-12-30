@@ -359,8 +359,8 @@ spec-for-spec → spec-for-spec (self-verification)
 We construct:
 
 ```text
-spec-for-spec ←→ guidance-for-spec (coupling, rewired through root)
-spec-for-spec → spec-for-spec (self-verification, rewired through root)
+spec-for-spec ←→ root (coupling, rewired from guidance-for-spec)
+spec-for-spec → root (self-verification, rewired from spec-for-spec)
 guidance-for-spec → spec-for-spec (validation)
 root anchors the boundary face
 ```
