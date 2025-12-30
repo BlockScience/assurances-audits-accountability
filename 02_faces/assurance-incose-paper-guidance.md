@@ -8,7 +8,7 @@ edges:
   - e:coupling:guidance
   - e:verification:incose-paper-guidance:spec-guidance
   - e:validation:incose-paper-guidance:guidance-guidance
-orientation: ccw
+orientation: oriented
 vertices:
   - v:guidance:incose-paper
   - v:spec:guidance

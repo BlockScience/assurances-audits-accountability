@@ -177,13 +177,31 @@ def infer_face_target(face_id: str) -> str:
     return None
 
 
-def build_assurance_network_from_frontmatter(chart_data: dict) -> dict:
+def get_face_target(face_id: str, base_dir: Path) -> str:
+    """
+    Get the target vertex for a face, preferring explicit metadata over inference.
+
+    First tries to load the face file and read its 'target' field.
+    Falls back to infer_face_target() if file not found or no target field.
+    """
+    # Try to load face file and read explicit target
+    face_data = load_element(face_id, base_dir)
+    if face_data and face_data.get('metadata'):
+        explicit_target = face_data['metadata'].get('target')
+        if explicit_target:
+            return explicit_target
+
+    # Fall back to inference from naming convention
+    return infer_face_target(face_id)
+
+
+def build_assurance_network_from_frontmatter(chart_data: dict, base_dir: Path = None) -> dict:
     """
     Build assurance network directly from chart frontmatter.
 
     Uses the F = V - 1 invariant: every vertex except root has exactly
-    one face that assures it. Face-to-vertex mapping is inferred from
-    face ID naming convention.
+    one face that assures it. Face-to-vertex mapping is read from face
+    metadata (preferred) or inferred from face ID naming convention (fallback).
 
     Returns:
         {
@@ -198,11 +216,20 @@ def build_assurance_network_from_frontmatter(chart_data: dict) -> dict:
     vertices = elements.get('vertices', [])
     faces = elements.get('faces', [])
 
+    # Determine base directory for loading face files
+    if base_dir is None:
+        chart_path = chart_data.get('path')
+        if chart_path:
+            # Go up from charts/<name>/<name>.md to repo root
+            base_dir = chart_path.parent.parent.parent
+        else:
+            base_dir = Path('.')
+
     # Build vertex -> face mapping
     assured_vertices = {}
 
     for face_id in faces:
-        target = infer_face_target(face_id)
+        target = get_face_target(face_id, base_dir)
         if target:
             assured_vertices[target] = face_id
 
