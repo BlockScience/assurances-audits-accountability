@@ -4,6 +4,11 @@ Supporting material for INCOSE IS 2026 paper submission.
 
 This repository contains the implementation and demonstration of a typed simplicial complex framework for document verification, validation, and assurance with explicit human accountability.
 
+<!-- Hero image placeholder - will be updated when assured-signed chart is complete -->
+<!-- ![Accountability Complex](images/assured-signed-complex.png) -->
+
+**Element Counts:** 55 vertices | 104 edges | 39 faces | χ = -10
+
 ## The Paper
 
 The paper **"Test-Driven Document Development: Simplicial Complexes for Verification, Validation, and Assurance with Human Accountability"** demonstrates a framework where:
@@ -106,6 +111,20 @@ The paper references three figures generated from this repository:
 | Figure 2 | Boundary Complex | [figures/figure3-final.png](figures/figure3-final.png) |
 | Figure 3 | Audit Chart | [figures/figure2-final.png](figures/figure2-final.png) |
 
+## Navigation
+
+For detailed exploration of the knowledge complex:
+
+- **[NAVIGATION.md](NAVIGATION.md)** - Central navigation hub
+- **[00_vertices/README.md](00_vertices/README.md)** - All 55 vertices by type
+- **[01_edges/README.md](01_edges/README.md)** - All 104 edges by type
+- **[02_faces/README.md](02_faces/README.md)** - All 39 faces by type
+
+This repository supports two workflows:
+
+1. **VS Code + Claude Code**: Construction, verification, analysis
+2. **Obsidian**: Knowledge graph navigation
+
 ## Scripts Reference
 
 | Script | Purpose |
@@ -114,6 +133,7 @@ The paper references three figures generated from this repository:
 | `audit_assurance_chart.py` | Check assurance coverage and V-F=1 invariant |
 | `topology.py` | Compute Euler characteristic |
 | `visualize_chart.py` | Generate interactive visualization |
+| `visualize_assured_signed.py` | Enhanced 3D visualization with layered architecture |
 | `build_cache.py` | Build element cache and validate all documents |
 
 ## The Self-Demonstration

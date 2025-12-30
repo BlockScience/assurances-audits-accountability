@@ -12,6 +12,7 @@ vertices:
   - v:doc:novel-contributions-incose-paper
   - v:spec:novel-contributions
   - v:guidance:novel-contributions
+orientation: oriented
 tags:
   - face
   - assurance

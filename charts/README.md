@@ -44,6 +44,50 @@ Markdown documentation explaining:
 
 ## Existing Charts
 
+### incose-paper-assurance
+
+**Location:** `charts/incose-paper-assurance/`
+
+**Purpose:** Complete assurance network for the INCOSE IS 2026 paper submission with dual assurance (base + self-demonstration)
+
+**Structure:**
+
+- 24 vertices (5 boundary + 4 INCOSE types + 8 supporting doc types + 4 instances + 1 paper + 2 self-demo)
+- 23 faces (dual assurance for paper)
+- V - F = 1 invariant satisfied
+
+**Special Property:** Self-demonstrating - the paper exists as a vertex in its own assurance chart
+
+**Files:**
+
+- `incose-paper-assurance.md` - Assurance audit chart document
+- `incose-paper-assurance.json` - Parsed chart data
+- `incose-paper-assurance.html` - Interactive 3D visualization (layered architecture)
+
+**Usage:**
+```bash
+# Run assurance audit
+python scripts/audit_assurance_chart.py charts/incose-paper-assurance/incose-paper-assurance.md
+
+# Export and visualize
+python scripts/export_chart_direct.py charts/incose-paper-assurance/incose-paper-assurance.md
+python scripts/visualize_assured_signed.py charts/incose-paper-assurance/incose-paper-assurance.json
+```
+
+### boundary-complex
+
+**Location:** `charts/boundary-complex/`
+
+**Purpose:** Foundation layer showing self-referential spec and guidance vertices
+
+**Structure:**
+
+- 5 vertices (root, SS, SG, GS, GG)
+- 12 edges
+- 4 faces (2 boundary, 2 standard assurance)
+
+**Special Property:** Contains the self-referential foundations (spec-for-spec assures itself)
+
 ### test-tetrahedron
 
 **Location:** `charts/test-tetrahedron/`

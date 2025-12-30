@@ -4,30 +4,8 @@
     "type": "split",
     "children": [
       {
-        "id": "bb20ff2aed1db036",
-        "type": "tabs",
-        "dimension": 51.445086705202314,
-        "children": [
-          {
-            "id": "02867e44cc539128",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "00_vertices/doc-literature-review-incose-paper.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "doc-literature-review-incose-paper"
-            }
-          }
-        ]
-      },
-      {
         "id": "1b5ad495c507f775",
         "type": "tabs",
-        "dimension": 48.554913294797686,
         "children": [
           {
             "id": "d8fe634073ae7dce",
@@ -35,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "claude-docs/DOCUMENT-DEVELOPMENT-TRACKER.md",
+                "file": "00_vertices/doc-incose-paper-2026.md",
                 "mode": "source",
-                "source": false
+                "source": true
               },
               "icon": "lucide-file",
-              "title": "DOCUMENT-DEVELOPMENT-TRACKER"
+              "title": "doc-incose-paper-2026"
             }
           }
         ]
@@ -100,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "3f0c5a3e5c7105de",
@@ -206,8 +183,30 @@
   },
   "active": "d8fe634073ae7dce",
   "lastOpenFiles": [
-    "00_vertices/doc-lifecycle-incose-paper.md",
+    "02_faces/signature-incose-paper-2026-self-demo.md",
+    "02_faces/signature-incose-paper-2026-base.md",
+    "01_edges/signs-mzargham:incose-paper-2026-self-demo.md",
+    "01_edges/signs-mzargham:incose-paper-2026.md",
+    "01_edges/qualifies-mzargham:guidance-incose-self-demonstration.md",
+    "01_edges/qualifies-mzargham:guidance-incose-paper.md",
+    "00_vertices/signer-mzargham.md",
+    "02_faces/assurance-incose-self-demonstration-guidance.md",
+    "02_faces/assurance-incose-self-demonstration-spec.md",
+    "02_faces/assurance-incose-paper-2026-self-demo.md",
+    "01_edges/validation-incose-paper-2026:guidance-incose-self-demonstration.md",
+    "01_edges/verification-incose-paper-2026:spec-incose-self-demonstration.md",
+    "02_faces/assurance-incose-paper-2026-base.md",
+    "01_edges/validation-incose-paper-2026:guidance-incose-paper.md",
+    "01_edges/verification-incose-paper-2026:spec-incose-paper.md",
+    "validation-assessment-incose-paper.md",
+    "submission/incose-paper-2026-anonymous.md",
     "claude-docs/DOCUMENT-DEVELOPMENT-TRACKER.md",
+    "NAVIGATION.md",
+    "02_faces/README.md",
+    "01_edges/README.md",
+    "00_vertices/README.md",
+    "scripts/visualize_assured_signed.py",
+    "00_vertices/doc-lifecycle-incose-paper.md",
     "images/obsidian-interface.png",
     "00_vertices/doc-literature-review-incose-paper.md",
     "00_vertices/guidance-for-guidance.md",
@@ -216,33 +215,12 @@
     "GOHH_Appendix_C_The_Forge.md",
     "GOHH appendix C.pdf",
     "GOHH.pdf",
-    "00_vertices/doc-architecture-incose-paper.md",
-    "02_faces/assurance-lifecycle-incose.md",
-    "claude-docs/INCOSE-IS2026-REQUIREMENTS-CACHE.md",
-    "claude-docs/doc-architecture-incose-paper.md",
-    "claude-docs/NOVEL-CONTRIBUTIONS.md",
     "claude-docs",
-    "validation-assessment-incose-paper.md",
-    "02_faces/assurance-literature-review-incose.md",
-    "01_edges/validation-literature-review-incose:guidance-incose-literature-review.md",
-    "01_edges/verification-literature-review-incose:spec-incose-literature-review.md",
-    "01_edges/validation-lifecycle-incose:guidance-lifecycle.md",
-    "01_edges/verification-lifecycle-incose:spec-lifecycle.md",
-    "templates/charts/assured_signed.md",
-    "00_vertices/guidance-for-assured-signed-chart.md",
-    "02_faces/assurance-novel-contributions-incose.md",
-    "01_edges/validation-novel-contributions-incose:guidance-novel-contributions.md",
-    "01_edges/verification-novel-contributions-incose:spec-novel-contributions.md",
-    "00_vertices/spec-for-assured-signed-chart.md",
-    "docs/MODULES-06-07-COMPLETION-PLAN.md",
-    "MODULES-06-07-COMPLETION-PLAN.md",
-    "docs/org-chart-completion-plan.md",
     "charts/composed-org-chart/composed-org-chart.html",
     "charts/resource-management-chart/resource-management-chart.html",
     "charts/raci-coordination-chart/raci-coordination-chart.html",
     "charts/composed-org-chart/composed-org-chart.json",
     "charts/resource-management-chart/resource-management-chart.json",
-    "charts/raci-coordination-chart/raci-coordination-chart.json",
     "charts/learning-journey-full/learning-journey-full.png",
     "charts/learning-journey-full/newplot (2).png",
     "docs/images/boundary.png",

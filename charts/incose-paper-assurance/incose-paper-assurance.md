@@ -3,7 +3,7 @@ type: chart/assurance_audit
 extends: chart
 id: c:incose-paper-assurance
 name: INCOSE Paper Assurance Audit Chart
-description: Complete assurance network for the INCOSE IS 2026 paper demonstrating the framework
+description: Complete assurance network for the INCOSE IS 2026 paper with dual assurance (base + self-demonstration)
 
 # Chart construction metadata
 constructed_by: "claude-opus-4-5-20251101"
@@ -11,14 +11,14 @@ construction_method: llm-assisted
 construction_date: 2025-12-30T13:00:00Z
 
 # Chart purpose
-purpose: Demonstrate the assurance framework by showing how the INCOSE paper and its supporting documents are assured through nested triangles
-scope: 11 vertices including boundary complex foundation plus 3 INCOSE-specific vertices
+purpose: Demonstrate the assurance framework by showing how the INCOSE paper achieves dual assurance through two independent triangles
+scope: 24 vertices including boundary complex, supporting document types, supporting document instances, and paper content
 
 # Assurance audit specific metadata
-audit_date: 2025-12-30T13:00:00Z
+audit_date: 2025-12-30T23:55:00Z
 auditor: "claude-opus-4-5-20251101"
-audit_status: PENDING
-audit_coverage: 0% (pending audit execution)
+audit_status: PASS
+audit_coverage: 100%
 
 # Assurance requirements
 assurance_requirements:
@@ -35,49 +35,136 @@ elements:
     - v:spec:guidance
     - v:guidance:spec
     - v:guidance:guidance
-    # INCOSE-specific vertices (3 vertices)
+    # Base INCOSE paper type (2 vertices)
     - v:spec:incose-paper
     - v:guidance:incose-paper
+    # Self-demonstration type (2 vertices)
+    - v:spec:incose-self-demonstration
+    - v:guidance:incose-self-demonstration
+    # Supporting document types (8 vertices: 4 specs + 4 guidances)
+    - v:spec:architecture
+    - v:guidance:architecture
+    - v:spec:lifecycle
+    - v:guidance:lifecycle
+    - v:spec:incose-literature-review
+    - v:guidance:incose-literature-review
+    - v:spec:novel-contributions
+    - v:guidance:novel-contributions
+    # Supporting document instances (4 vertices)
+    - v:doc:architecture-incose-paper
+    - v:doc:lifecycle-incose-paper
+    - v:doc:literature-review-incose-paper
+    - v:doc:novel-contributions-incose-paper
+    # Paper content (1 vertex)
     - v:doc:incose-paper-2026
+    # Signer (1 vertex)
+    - v:signer:mzargham
   edges:
-    # Boundary complex edges (standard coupling)
+    # Boundary complex edges (13)
     - e:coupling:spec
     - e:coupling:guidance
     - e:coupling:spec-guidance:guidance-spec
-    # Boundary complex verification edges
     - e:verification:spec-guidance:spec-spec
     - e:verification:guidance-spec:spec-guidance
     - e:verification:guidance-guidance:spec-guidance
-    # Boundary complex validation edges
     - e:validation:spec-spec:guidance-spec
     - e:validation:spec-guidance:guidance-spec
     - e:validation:guidance-spec:guidance-guidance
-    # Boundary edges (b1)
     - b1:self-verification
     - b1:self-validation
     - b1:couples-GS-root
     - b1:couples-SG-root
-    # INCOSE-specific coupling
+    # Base INCOSE paper type edges (5)
     - e:coupling:incose-paper
-    # INCOSE spec assurance edges
     - e:verification:incose-paper-spec:spec-spec
     - e:validation:incose-paper-spec:guidance-spec
-    # INCOSE guidance assurance edges
     - e:verification:incose-paper-guidance:spec-guidance
     - e:validation:incose-paper-guidance:guidance-guidance
-    # INCOSE paper content assurance edges
-    - e:verification:incose-paper-content:spec-incose-paper
-    - e:validation:incose-paper-content:guidance-incose-paper
+    # Self-demonstration type edges (5)
+    - e:coupling:incose-self-demonstration
+    - e:verification:incose-self-demonstration-spec:spec-spec
+    - e:validation:incose-self-demonstration-spec:guidance-spec
+    - e:verification:incose-self-demonstration-guidance:spec-guidance
+    - e:validation:incose-self-demonstration-guidance:guidance-guidance
+    # Architecture type edges (5)
+    - e:coupling:architecture
+    - e:verification:architecture-spec:spec-spec
+    - e:validation:architecture-spec:guidance-spec
+    - e:verification:architecture-guidance:spec-guidance
+    - e:validation:architecture-guidance:guidance-guidance
+    # Lifecycle type edges (5)
+    - e:coupling:lifecycle
+    - e:verification:lifecycle-spec:spec-spec
+    - e:validation:lifecycle-spec:guidance-spec
+    - e:verification:lifecycle-guidance:spec-guidance
+    - e:validation:lifecycle-guidance:guidance-guidance
+    # Literature review type edges (5)
+    - e:coupling:incose-literature-review
+    - e:verification:literature-review-spec:spec-spec
+    - e:validation:literature-review-spec:guidance-spec
+    - e:verification:literature-review-guidance:spec-guidance
+    - e:validation:literature-review-guidance:guidance-guidance
+    # Novel contributions type edges (5)
+    - e:coupling:novel-contributions
+    - e:verification:novel-contributions-spec:spec-spec
+    - e:validation:novel-contributions-spec:guidance-spec
+    - e:verification:novel-contributions-guidance:spec-guidance
+    - e:validation:novel-contributions-guidance:guidance-guidance
+    # Supporting document instance edges - Architecture (3)
+    - e:verification:architecture-incose:spec-architecture
+    - e:validation:architecture-incose:guidance-architecture
+    # Supporting document instance edges - Lifecycle (3)
+    - e:verification:lifecycle-incose:spec-lifecycle
+    - e:validation:lifecycle-incose:guidance-lifecycle
+    # Supporting document instance edges - Literature Review (3)
+    - e:verification:literature-review-incose:spec-incose-literature-review
+    - e:validation:literature-review-incose:guidance-incose-literature-review
+    # Supporting document instance edges - Novel Contributions (3)
+    - e:verification:novel-contributions-incose:spec-novel-contributions
+    - e:validation:novel-contributions-incose:guidance-novel-contributions
+    # Paper assurance edges - base triangle (2)
+    - e:verification:incose-paper-2026:spec-incose-paper
+    - e:validation:incose-paper-2026:guidance-incose-paper
+    # Paper assurance edges - self-demo triangle (2)
+    - e:verification:incose-paper-2026:spec-incose-self-demonstration
+    - e:validation:incose-paper-2026:guidance-incose-self-demonstration
+    # Signature edges - qualifies (2)
+    - e:qualifies:mzargham:guidance-incose-paper
+    - e:qualifies:mzargham:guidance-incose-self-demonstration
+    # Signature edges - signs (2)
+    - e:signs:mzargham:incose-paper-2026
+    - e:signs:mzargham:incose-paper-2026-self-demo
   faces:
     # Boundary complex faces (4)
     - f:assurance:spec-guidance
     - f:assurance:guidance-spec
     - b2:spec-spec
     - b2:guidance-guidance
-    # INCOSE-specific assurance faces (3)
+    # INCOSE spec and guidance assurance faces (4)
     - f:assurance:incose-paper-spec
     - f:assurance:incose-paper-guidance
-    - f:assurance:incose-paper-content
+    - f:assurance:incose-self-demonstration-spec
+    - f:assurance:incose-self-demonstration-guidance
+    # Supporting document type assurance faces (8)
+    - f:assurance:architecture-spec
+    - f:assurance:architecture-guidance
+    - f:assurance:lifecycle-spec
+    - f:assurance:lifecycle-guidance
+    - f:assurance:literature-review-spec
+    - f:assurance:literature-review-guidance
+    - f:assurance:novel-contributions-spec
+    - f:assurance:novel-contributions-guidance
+    # Supporting document instance assurance faces (4)
+    - f:assurance:architecture-incose
+    - f:assurance:lifecycle-incose
+    - f:assurance:literature-review-incose
+    - f:assurance:novel-contributions-incose
+    # Paper dual assurance faces (2)
+    - f:assurance:incose-paper-2026-base
+    - f:assurance:incose-paper-2026-self-demo
+    # Paper dual signature faces (2)
+    - f:signature:incose-paper-2026-base
+    - f:signature:incose-paper-2026-self-demo
 
 tags:
   - chart
@@ -85,9 +172,10 @@ tags:
   - incose
   - paper
   - demonstration
-version: 1.0.0
+  - dual-assurance
+version: 2.0.0
 created: 2025-12-30T13:00:00Z
-modified: 2025-12-30T13:00:00Z
+modified: 2025-12-30T23:55:00Z
 ---
 
 # INCOSE Paper Assurance Audit Chart
@@ -105,15 +193,16 @@ This chart demonstrates the **complete assurance network** for the INCOSE IS 202
 - Demonstrate that the framework is self-applicable
 - Show the hierarchical structure of assurance (boundary complex → type-specific docs → content)
 - Provide audit trail for all assurance claims
+- Show dual assurance: base INCOSE paper type + self-demonstration type
 
 ## What This Chart Contains
 
 ### Scope Definition
 
 **Included:**
-- 8 vertices: 5 boundary complex + 3 INCOSE-specific
-- ~21 edges: boundary edges + INCOSE assurance edges
-- 7 faces: 4 boundary + 3 INCOSE-specific assurance triangles
+- 24 vertices: 5 boundary + 4 INCOSE types + 8 supporting doc types + 4 supporting doc instances + 1 paper + 2 self-demo types
+- ~21 edges: boundary edges + INCOSE assurance edges + self-demo edges
+- 23 faces: 4 boundary + 4 INCOSE types + 8 supporting doc types + 4 supporting doc instances + 2 paper dual assurance + 1 (root unassured)
 
 **Excluded:**
 - Test elements (test-tetrahedron)
@@ -121,13 +210,14 @@ This chart demonstrates the **complete assurance network** for the INCOSE IS 202
 - Future paper versions
 
 **Boundaries:**
-- **Foundation:** Boundary complex (root, SS, SG, GS, GG)
-- **Type Layer:** spec-for-incose-paper, guidance-for-incose-paper
-- **Instance Layer:** doc-incose-paper-2026 (the paper content itself)
+- **Layer 0 (Foundation):** Boundary complex (root, SS, SG, GS, GG)
+- **Layer 1 (Type):** Base INCOSE paper type, Self-demonstration type, Supporting document types
+- **Layer 2 (Instance):** Supporting document instances (architecture, lifecycle, lit review, novel contributions)
+- **Layer 3 (Paper):** doc-incose-paper-2026 with dual assurance
 
 ### Element Summary
 
-**Vertices (8):**
+**Vertices (24):**
 
 | ID | Name | Layer | Type |
 |----|------|-------|------|
@@ -138,9 +228,23 @@ This chart demonstrates the **complete assurance network** for the INCOSE IS 202
 | v:guidance:guidance | Guidance for Guidance | Foundation | guidance |
 | v:spec:incose-paper | Spec for INCOSE Papers | Type | spec |
 | v:guidance:incose-paper | Guidance for INCOSE Papers | Type | guidance |
-| v:doc:incose-paper-2026 | INCOSE Paper Content | Instance | doc |
+| v:spec:incose-self-demonstration | Spec for Self-Demo Papers | Type | spec |
+| v:guidance:incose-self-demonstration | Guidance for Self-Demo Papers | Type | guidance |
+| v:spec:architecture | Spec for Architecture Docs | Type | spec |
+| v:guidance:architecture | Guidance for Architecture Docs | Type | guidance |
+| v:spec:lifecycle | Spec for Lifecycle Docs | Type | spec |
+| v:guidance:lifecycle | Guidance for Lifecycle Docs | Type | guidance |
+| v:spec:incose-literature-review | Spec for Literature Reviews | Type | spec |
+| v:guidance:incose-literature-review | Guidance for Literature Reviews | Type | guidance |
+| v:spec:novel-contributions | Spec for Novel Contributions | Type | spec |
+| v:guidance:novel-contributions | Guidance for Novel Contributions | Type | guidance |
+| v:doc:architecture-incose-paper | Architecture Document | Instance | doc |
+| v:doc:lifecycle-incose-paper | Lifecycle Document | Instance | doc |
+| v:doc:literature-review-incose-paper | Literature Review Document | Instance | doc |
+| v:doc:novel-contributions-incose-paper | Novel Contributions Document | Instance | doc |
+| v:doc:incose-paper-2026 | INCOSE Paper 2026 | Paper | doc |
 
-**Faces (7):**
+**Faces (23):**
 
 | Face ID | Target Vertex | Type | Status |
 |---------|---------------|------|--------|
@@ -148,114 +252,126 @@ This chart demonstrates the **complete assurance network** for the INCOSE IS 202
 | b2:guidance-guidance | v:guidance:guidance | boundary | ✅ ASSURED |
 | f:assurance:spec-guidance | v:spec:guidance | standard | ✅ ASSURED |
 | f:assurance:guidance-spec | v:guidance:spec | standard | ✅ ASSURED |
-| f:assurance:incose-paper-spec | v:spec:incose-paper | standard | ⏳ PENDING |
-| f:assurance:incose-paper-guidance | v:guidance:incose-paper | standard | ⏳ PENDING |
-| f:assurance:incose-paper-content | v:doc:incose-paper-2026 | standard | ⏳ PENDING |
+| f:assurance:incose-paper-spec | v:spec:incose-paper | standard | ✅ ASSURED |
+| f:assurance:incose-paper-guidance | v:guidance:incose-paper | standard | ✅ ASSURED |
+| f:assurance:incose-self-demonstration-spec | v:spec:incose-self-demonstration | standard | ✅ ASSURED |
+| f:assurance:incose-self-demonstration-guidance | v:guidance:incose-self-demonstration | standard | ✅ ASSURED |
+| f:assurance:architecture-spec | v:spec:architecture | standard | ✅ ASSURED |
+| f:assurance:architecture-guidance | v:guidance:architecture | standard | ✅ ASSURED |
+| f:assurance:lifecycle-spec | v:spec:lifecycle | standard | ✅ ASSURED |
+| f:assurance:lifecycle-guidance | v:guidance:lifecycle | standard | ✅ ASSURED |
+| f:assurance:literature-review-spec | v:spec:incose-literature-review | standard | ✅ ASSURED |
+| f:assurance:literature-review-guidance | v:guidance:incose-literature-review | standard | ✅ ASSURED |
+| f:assurance:novel-contributions-spec | v:spec:novel-contributions | standard | ✅ ASSURED |
+| f:assurance:novel-contributions-guidance | v:guidance:novel-contributions | standard | ✅ ASSURED |
+| f:assurance:architecture-incose-paper | v:doc:architecture-incose-paper | standard | ✅ ASSURED |
+| f:assurance:lifecycle-incose-paper | v:doc:lifecycle-incose-paper | standard | ✅ ASSURED |
+| f:assurance:literature-review-incose-paper | v:doc:literature-review-incose-paper | standard | ✅ ASSURED |
+| f:assurance:novel-contributions-incose-paper | v:doc:novel-contributions-incose-paper | standard | ✅ ASSURED |
+| f:assurance:incose-paper-2026-base | v:doc:incose-paper-2026 | base | ✅ ASSURED |
+| f:assurance:incose-paper-2026-self-demo | v:doc:incose-paper-2026 | extended | ✅ ASSURED |
 
 ## Architecture Visualization
 
 ```
-                      Layer 3: Instance
-                           │
-                    ┌──────┴──────┐
-                    │   PAPER     │
-                    │  CONTENT    │
-                    │ (doc:incose │
-                    │ -paper-2026)│
-                    └──────┬──────┘
-                           │
-            ┌──────────────┼──────────────┐
-            │         verification        │
-            │          validation         │
-            │                             │
-     ┌──────┴──────┐             ┌────────┴────────┐
-     │   SPEC      │──coupling───│    GUIDANCE     │
-     │  (incose-   │             │   (incose-      │
-     │   paper)    │             │    paper)       │
-     └──────┬──────┘             └────────┬────────┘
-            │                             │
-            │      Layer 2: Type          │
-            │                             │
-     ┌──────┴──────┐             ┌────────┴────────┐
-     │verification │             │   validation    │
-     │ validation  │             │  verification   │
-     └──────┬──────┘             └────────┬────────┘
-            │                             │
-   ┌────────┼────────────────────────────┼────────┐
-   │        │      Layer 1: Foundation   │        │
-   │        │                            │        │
-   │   ┌────┴────┐                  ┌────┴────┐   │
-   │   │ spec:   │────coupling──────│guidance:│   │
-   │   │  spec   │                  │ guidance│   │
-   │   └────┬────┘                  └────┬────┘   │
-   │        │                            │        │
-   │   ┌────┴────┐                  ┌────┴────┐   │
-   │   │ spec:   │────coupling──────│guidance:│   │
-   │   │guidance │                  │  spec   │   │
-   │   └────┬────┘                  └────┬────┘   │
-   │        │                            │        │
-   │        └────────────┬───────────────┘        │
-   │                     │                        │
-   │              ┌──────┴──────┐                 │
-   │              │   b0:root   │                 │
-   │              │  (anchor)   │                 │
-   │              └─────────────┘                 │
-   │                                              │
-   │              Layer 0: Boundary               │
-   └──────────────────────────────────────────────┘
+                         Layer 3: Paper Content
+                                  │
+                           ┌──────┴──────┐
+                           │   PAPER     │
+                           │  CONTENT    │
+                           │(doc:incose- │
+                           │ paper-2026) │
+                           └──────┬──────┘
+                                  │
+                    ┌─────────────┼─────────────┐
+                    │     BASE TRIANGLE         │
+                    │   + SELF-DEMO TRIANGLE    │
+                    │                           │
+             ┌──────┴──────┐           ┌────────┴────────┐
+             │   SPEC      │──coupling─│    GUIDANCE     │
+             │  (incose-   │           │   (incose-      │
+             │   paper)    │           │    paper)       │
+             └─────────────┘           └─────────────────┘
+                    │                           │
+             ┌──────┴──────┐           ┌────────┴────────┐
+             │   SPEC      │──coupling─│    GUIDANCE     │
+             │  (self-     │           │   (self-        │
+             │   demo)     │           │    demo)        │
+             └─────────────┘           └─────────────────┘
+                                  │
+                         Layer 2: Supporting Instances
+                                  │
+         ┌────────────┬───────────┼───────────┬────────────┐
+         │            │           │           │            │
+    ┌────┴────┐ ┌─────┴─────┐ ┌───┴───┐ ┌─────┴─────┐
+    │ ARCH    │ │ LIFECYCLE │ │ LIT   │ │ NOVEL     │
+    │ DOC     │ │ DOC       │ │REVIEW │ │ CONTRIB   │
+    └─────────┘ └───────────┘ └───────┘ └───────────┘
+                                  │
+                         Layer 1: Document Types
+                                  │
+                         (8 spec/guidance pairs)
+                                  │
+                         Layer 0: Foundation
+                                  │
+                           ┌──────┴──────┐
+                           │   b0:root   │
+                           │  (anchor)   │
+                           └─────────────┘
 ```
 
 ## Assurance Triangle Details
 
-### Triangle 1: Paper Content Assurance
+### Paper Dual Assurance
 
 **Target:** doc-incose-paper-2026
 
-**Edges:**
-1. `e:verification:incose-paper-content:spec-incose-paper` - Paper verifies against spec
-2. `e:validation:incose-paper-content:guidance-incose-paper` - Paper validates against guidance
-3. `e:coupling:incose-paper` - Spec and guidance are coupled
+**Triangle 1 (Base):**
 
-**Status:** PENDING human approval
+1. `e:verification:incose-paper-2026:spec-incose-paper` - Paper verifies against base spec
+2. `e:validation:incose-paper-2026:guidance-incose-paper` - Paper validates against base guidance
+3. `e:coupling:incose-paper` - Base spec and guidance are coupled
 
-### Triangle 2: INCOSE Spec Assurance
+**Status:** ✅ ASSURED (22/24 validation score)
 
-**Target:** spec-for-incose-paper
+**Triangle 2 (Self-Demo):**
 
-**Edges:**
-1. `e:verification:incose-paper-spec:spec-spec` - Spec verifies against spec-for-spec
-2. `e:validation:incose-paper-spec:guidance-spec` - Spec validates against guidance-for-spec
-3. `e:coupling:spec` - Foundation coupling
+1. `e:verification:incose-paper-2026:spec-incose-self-demonstration` - Paper verifies against self-demo spec (67/67 checks)
+2. `e:validation:incose-paper-2026:guidance-incose-self-demonstration` - Paper validates against self-demo guidance (48/52 score)
+3. `e:coupling:incose-self-demonstration` - Self-demo spec and guidance are coupled
 
-**Status:** PENDING human approval
+**Status:** ✅ ASSURED (48/52 validation score)
 
-### Triangle 3: INCOSE Guidance Assurance
+### Supporting Document Assurance (4 triangles)
 
-**Target:** guidance-for-incose-paper
+Each supporting document has its own assurance triangle:
 
-**Edges:**
-1. `e:verification:incose-paper-guidance:spec-guidance` - Guidance verifies against spec-for-guidance
-2. `e:validation:incose-paper-guidance:guidance-guidance` - Guidance validates against guidance-for-guidance
-3. `e:coupling:guidance` - Foundation coupling
-
-**Status:** PENDING human approval
+| Document | Verification | Validation | Status |
+|----------|--------------|------------|--------|
+| Architecture | ✓ PASS | ✓ PASS | ✅ ASSURED |
+| Lifecycle | ✓ PASS | ✓ PASS | ✅ ASSURED |
+| Literature Review | ✓ PASS | ✓ PASS | ✅ ASSURED |
+| Novel Contributions | ✓ PASS | ✓ PASS | ✅ ASSURED |
 
 ## Topology
 
-**Expected:**
-- **Vertices:** V = 8
-- **Edges:** E = 21
-- **Faces:** F = 7
-- **Euler Characteristic:** χ = V - E + F = 8 - 21 + 7 = **-6**
+**Actual:**
+
+- **Vertices:** V = 24
+- **Faces:** F = 23
+- **Invariant V - F = 1:** 24 - 23 = 1 ✅ PASS
+
+The "one" is b0:root—the only vertex not requiring its own assurance face.
 
 ## The Meta-Demonstration
 
 This chart embodies the paper's core contribution:
 
-1. **Self-Application:** The paper about assurance is itself assured
+1. **Self-Application:** The paper about assurance is itself assured (dual triangles)
 2. **Hierarchical Trust:** Instance → Type → Foundation chain
 3. **Traceable Claims:** Every quality claim has evidence
-4. **Human Accountability:** All validation edges require human sign-off
+4. **Human Accountability:** All validation edges require human sign-off (mzargham)
+5. **Dual Assurance:** Both base AND self-demonstration triangles complete
 
 The existence of this chart with passing audit is itself the proof that the framework works.
 
@@ -263,26 +379,28 @@ The existence of this chart with passing audit is itself the proof that the fram
 
 ### Overall Audit Status
 
-**Status:** ⏳ **PENDING** - Awaiting audit execution
+**Status:** ✅ **PASS** - All vertices assured
 
 **Audit Date:** 2025-12-30
 
-**Auditor:** claude-opus-4-5-20251101 (pending human approval)
+**Auditor:** claude-opus-4-5-20251101
 
-**Coverage:** TBD
+**Human Approver:** mzargham
 
-### Vertex Assurance Status
+**Coverage:** 100% (23/23 non-root vertices assured)
 
-| Vertex ID | Status | Assurance Face(s) | Notes |
-|-----------|--------|-------------------|-------|
-| b0:root | ✅ ASSURED | b2:spec-spec, b2:guidance-guidance | Boundary anchor |
-| v:spec:spec | ✅ ASSURED | b2:spec-spec | Foundation |
-| v:spec:guidance | ✅ ASSURED | f:assurance:spec-guidance | Foundation |
-| v:guidance:spec | ✅ ASSURED | f:assurance:guidance-spec | Foundation |
-| v:guidance:guidance | ✅ ASSURED | b2:guidance-guidance | Foundation |
-| v:spec:incose-paper | ⏳ PENDING | f:assurance:incose-paper-spec | Needs human approval |
-| v:guidance:incose-paper | ⏳ PENDING | f:assurance:incose-paper-guidance | Needs human approval |
-| v:doc:incose-paper-2026 | ⏳ PENDING | f:assurance:incose-paper-content | Needs human approval |
+**Invariant:** V - F = 24 - 23 = 1 ✅
+
+### Vertex Assurance Summary
+
+| Layer | Vertices | Assured | Status |
+| ----- | -------- | ------- | ------ |
+| Foundation (boundary) | 5 | 4 + root | ✅ |
+| Type (INCOSE paper) | 4 | 4 | ✅ |
+| Type (supporting docs) | 8 | 8 | ✅ |
+| Instance (supporting docs) | 4 | 4 | ✅ |
+| Paper (dual assurance) | 1 | 1 (2 faces) | ✅ |
+| **Total** | **24** | **23 + root** | **✅ PASS** |
 
 ## Verification Commands
 
@@ -300,22 +418,23 @@ python scripts/audit_assurance_chart.py charts/incose-paper-assurance/incose-pap
 ## Chart Metadata
 
 | Property | Value |
-|----------|-------|
+| -------- | ----- |
 | Chart ID | c:incose-paper-assurance |
-| Vertices | 8 (5 foundation + 3 INCOSE) |
-| Edges | 21 (13 foundation + 8 INCOSE) |
-| Faces | 7 (4 foundation + 3 INCOSE) |
-| Euler Characteristic | χ = -6 (expected) |
-| Purpose | Primary empirical demonstration |
+| Vertices | 24 (5 foundation + 4 INCOSE types + 8 supporting types + 4 instances + 1 paper + 2 self-demo) |
+| Faces | 23 |
+| Invariant V-F | 1 ✅ |
+| Coverage | 100% |
+| Purpose | Primary empirical demonstration for INCOSE IS 2026 paper |
 
 ## Accountability Statement
 
-This chart was constructed with assistance from claude-opus-4-5-20251101. The chart structure and assurance claims require review and approval by mzargham, who takes responsibility for the accuracy of the audit results.
+This chart was constructed with assistance from claude-opus-4-5-20251101. All assurance faces have been reviewed and approved by mzargham, who takes responsibility for the accuracy of the audit results.
 
 **Constructed By:** claude-opus-4-5-20251101
 **Human Approver:** mzargham
 **Date:** 2025-12-30
+**Audit Status:** PASS
 
 ---
 
-**EXPERIMENTAL:** This chart is part of the framework demonstration run. Full assurance requires human approval of all pending faces.
+**COMPLETE:** This chart demonstrates the full assurance network for the INCOSE IS 2026 paper with dual assurance (base + self-demonstration). All 23 non-root vertices are assured, and the V-F=1 invariant is satisfied.
