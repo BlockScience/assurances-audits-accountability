@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="350" height="280"
+     viewBox="0 0 350 280">
+  <title>Figure 1: The Assurance Triangle Pattern</title>
+  <defs>
+    <style>
+      .label { font-family: Arial, Helvetica, sans-serif; }
+      .label-bold { font-family: Arial, Helvetica, sans-serif; font-weight: bold; }
+      .mono { font-family: 'Consolas', 'Monaco', monospace; }
+    </style>
+    <!-- Arrow marker for directed edges -->
+    <marker id="arrow-verification" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2ECC71" />
+    </marker>
+    <marker id="arrow-validation" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#E67E22" />
+    </marker>
+    <marker id="arrow-boundary" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#95A5A6" />
+    </marker>
+  </defs>
+  <!-- Face fill -->
+  <polygon points="100,70 250,70 175,200" fill="#F8F9FA" fill-opacity="0.7" />
+  <!-- Edges -->
+  <line x1="115" y1="90" x2="155" y2="185" stroke="#2ECC71" stroke-width="2.5" marker-end="url(#arrow-verification)" />
+  <line x1="125" y1="70" x2="225" y2="70" stroke="#E67E22" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrow-validation)" />
+  <line x1="196.84327075027613" y1="185.77611400011625" x2="236.84327075027613" y2="90.77611400011627" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="193.15672924972387" y1="184.22388599988375" x2="233.15672924972387" y2="89.22388599988373" stroke="#9B59B6" stroke-width="1.5" />
+  <!-- Vertices -->
+  <circle cx="100" cy="70" r="28" fill="#3498DB" stroke="#2471A3" stroke-width="2.5" />
+  <text x="100" y="74" text-anchor="middle" class="label" style="font-size: 11px; font-weight: bold;" fill="#FFFFFF">Doc</text>
+  <rect x="218" y="52" width="64" height="36" rx="8" ry="8" fill="#E67E22" stroke="#A04000" stroke-width="2.5" />
+  <text x="250" y="75" text-anchor="middle" class="label" style="font-size: 11px; font-weight: bold;" fill="#FFFFFF">Guidance</text>
+  <rect x="143" y="182" width="64" height="36" rx="0" ry="0" fill="#2ECC71" stroke="#1D8348" stroke-width="2.5" />
+  <text x="175" y="205" text-anchor="middle" class="label" style="font-size: 11px; font-weight: bold;" fill="#FFFFFF">Spec</text>
+  <!-- Edge annotations -->
+  <text x="115" y="145" text-anchor="middle" class="label" style="font-size: 9px; font-weight: normal;" fill="#666666">Verification</text>
+  <text x="115" y="157" text-anchor="middle" class="label" style="font-size: 8px; font-weight: normal;" fill="#7F8C8D">(structural)</text>
+  <text x="175" y="50" text-anchor="middle" class="label" style="font-size: 9px; font-weight: normal;" fill="#666666">Validation</text>
+  <text x="175" y="62" text-anchor="middle" class="label" style="font-size: 8px; font-weight: normal;" fill="#7F8C8D">(qualitative)</text>
+  <text x="235" y="150" text-anchor="middle" class="label" style="font-size: 9px; font-weight: normal;" fill="#666666">Coupling</text>
+  <text x="235" y="162" text-anchor="middle" class="label" style="font-size: 8px; font-weight: normal;" fill="#7F8C8D">(type coherence)</text>
+  <!-- Legend -->
+  <rect x="250" y="220" width="90" height="55" rx="4" ry="4" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" />
+  <text x="295" y="234" text-anchor="middle" class="label" style="font-size: 9px; font-weight: bold;" fill="#2C3E50">Legend</text>
+  <line x1="258" y1="248" x2="278" y2="248" stroke="#2ECC71" stroke-width="2" />
+  <text x="282" y="252" text-anchor="start" class="label" style="font-size: 8px; font-weight: normal;" fill="#2C3E50">Verification</text>
+  <line x1="258" y1="262" x2="278" y2="262" stroke="#E67E22" stroke-width="2" stroke-dasharray="4,2" />
+  <text x="282" y="266" text-anchor="start" class="label" style="font-size: 8px; font-weight: normal;" fill="#2C3E50">Validation</text>
+  <line x1="258.0" y1="276.5" x2="278.0" y2="276.5" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="258.0" y1="273.5" x2="278.0" y2="273.5" stroke="#9B59B6" stroke-width="1.5" />
+  <text x="282" y="279" text-anchor="start" class="label" style="font-size: 8px; font-weight: normal;" fill="#2C3E50">Coupling</text>
+</svg>
