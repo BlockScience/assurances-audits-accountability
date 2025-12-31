@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "00_vertices/doc-incose-paper-2026.md",
+                "file": "00_vertices/doc-architecture-incose-paper.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "doc-incose-paper-2026"
+              "title": "doc-architecture-incose-paper"
             }
           }
         ]
@@ -184,6 +184,7 @@
   },
   "active": "d8fe634073ae7dce",
   "lastOpenFiles": [
+    "00_vertices/doc-incose-paper-2026.md",
     "mermaid-filter.err",
     "mermaid-images/37d27cdd61b56ace9d792f2407f7f19949027cbf.mmd",
     "mermaid-images",
@@ -192,12 +193,10 @@
     "incose-paper-2026.html",
     "NAVIGATION.md",
     "01_edges/README.md",
-    "00_vertices/doc-incose-paper-2026.md",
     "tests/archive/__pycache__/test_compose_charts_multi.cpython-39-pytest-6.2.4.pyc",
     "tests/archive/__pycache__/test_compose_charts.cpython-39-pytest-6.2.4.pyc",
     "tests/archive/__pycache__",
     "tests/archive/test_compose_charts_multi.py",
-    "tests/archive/test_compose_charts.py",
     "QUICKSTART.md",
     "docs/concepts/specs-vs-templates.md",
     "docs/references/README.md",
