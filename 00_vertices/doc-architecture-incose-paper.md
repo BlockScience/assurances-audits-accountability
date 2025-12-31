@@ -151,7 +151,7 @@ Specific implementation choices for each logical component:
 | -------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------- |
 | **Document Store**         | Markdown files with YAML frontmatter in git repository                            | Version-controlled, human-readable persistence            |
 | **Type System**            | Python scripts parsing YAML frontmatter                                           | Type validation and inheritance resolution                |
-| **Verification Service**   | `verify_template_based.py` Python script                                          | Structural compliance checking                            |
+| **Verification Service**   | `verify_spec.py` and `verify_template_based.py` Python scripts                    | Structural compliance checking                            |
 | **Validation Service**     | Claude Code (claude-opus-4-5) with human review                                   | LLM-assisted quality assessment with human accountability |
 | **Assurance Service**      | Manual document creation following templates                                      | Face assembly with accountability statements              |
 | **Topology Analyzer**      | `topology.py` and `audit_assurance_chart.py` Python scripts                       | Euler characteristic and coverage analysis                |
