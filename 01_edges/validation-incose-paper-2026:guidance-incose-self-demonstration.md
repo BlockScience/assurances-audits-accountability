@@ -1,5 +1,6 @@
 ---
 type: edge/validation
+extends: edge
 id: e:validation:incose-paper-2026:guidance-incose-self-demonstration
 name: Validation - INCOSE Paper 2026 against Self-Demonstration Guidance
 source: v:doc:incose-paper-2026
@@ -12,6 +13,7 @@ modified: 2025-12-30T23:50:00Z
 version: 1.0.0
 validator: claude-opus-4-5-20251101
 validation_method: llm-assisted
+llm_model: claude-opus-4-5-20251101
 human_approver: mzargham
 tags:
   - edge
@@ -32,7 +34,15 @@ tags:
 - **Version:** 1.0.0
 - **Extends:** guidance-for-incose-paper
 
-## Inheritance Check
+## Validation Assessment
+
+**Guidance:** [guidance-for-incose-self-demonstration](../00_vertices/guidance-for-incose-self-demonstration.md)
+**Validator:** claude-opus-4-5-20251101
+**Method:** LLM-Assisted
+**Human Approver:** mzargham
+**Date:** 2025-12-30T23:50:00Z
+
+### Inheritance Check
 
 **Parent Guidance:** guidance-for-incose-paper v2.0.0
 **Parent Score:** 22/24 (PASS)
@@ -40,7 +50,7 @@ tags:
 
 ---
 
-## Extended Quality Criteria Evaluation
+### Extended Quality Criteria Evaluation
 
 ### SD1: Coherence Across Documents
 

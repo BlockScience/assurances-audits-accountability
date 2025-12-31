@@ -65,17 +65,19 @@ class TestGetVertexType:
         assert get_vertex_type('v:protocol:workflow', cache) == 'doc'
 
     def test_other_vertex(self):
-        """Test that b0 and test vertices are identified as 'other'."""
+        """Test that b0, test, and signer vertices are identified as 'other'."""
         cache = {
             'elements': {
                 'vertices': {
                     'v:b0': {'type': 'vertex/b0', 'id': 'v:b0'},
-                    'v:test': {'type': 'vertex/test', 'id': 'v:test'}
+                    'v:test': {'type': 'vertex/test', 'id': 'v:test'},
+                    'v:signer:mzargham': {'type': 'vertex/signer', 'id': 'v:signer:mzargham'}
                 }
             }
         }
         assert get_vertex_type('v:b0', cache) == 'other'
         assert get_vertex_type('v:test', cache) == 'other'
+        assert get_vertex_type('v:signer:mzargham', cache) == 'other'
 
     def test_unknown_vertex(self):
         """Test that non-existent vertices return 'unknown'."""

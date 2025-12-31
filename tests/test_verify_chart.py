@@ -5,10 +5,12 @@ Tests for verify_chart.py
 
 from pathlib import Path
 import sys
+import tempfile
+import os
 
 sys.path.insert(0, str(Path(__file__).parent.parent / 'scripts'))
 
-from verify_chart import get_edge_boundary, verify_chart_elements
+from verify_chart import get_edge_boundary, verify_chart_elements, find_cache_root, VerificationError
 
 
 class TestVerifyChart:
@@ -102,6 +104,58 @@ class TestVerifyChart:
         errors = verify_chart_elements(chart, cache)
         assert len(errors) > 0
         assert any('boundary vertices not in chart' in err for err in errors)
+
+
+class TestFindCacheRoot:
+    """Test cache root path resolution."""
+
+    def test_find_cache_in_current_dir(self):
+        """Test finding complex.json in current directory."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmppath = Path(tmpdir).resolve()  # Resolve symlinks for comparison
+            # Create complex.json in root
+            (tmppath / 'complex.json').write_text('{}')
+            # Search from root
+            result = find_cache_root(tmppath)
+            assert result == tmppath
+
+    def test_find_cache_in_parent_dir(self):
+        """Test finding complex.json in parent directory."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmppath = Path(tmpdir).resolve()  # Resolve symlinks for comparison
+            # Create complex.json in root
+            (tmppath / 'complex.json').write_text('{}')
+            # Create nested directory
+            nested = tmppath / 'charts' / 'my-chart'
+            nested.mkdir(parents=True)
+            # Search from nested dir - should find in grandparent
+            result = find_cache_root(nested)
+            assert result == tmppath
+
+    def test_find_cache_not_found(self):
+        """Test error when complex.json not found."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmppath = Path(tmpdir).resolve()
+            # No complex.json anywhere
+            try:
+                find_cache_root(tmppath)
+                assert False, "Should have raised VerificationError"
+            except VerificationError as e:
+                assert 'complex.json not found' in str(e)
+
+    def test_find_cache_prefers_nearest(self):
+        """Test that nearest complex.json is found first."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmppath = Path(tmpdir).resolve()  # Resolve symlinks for comparison
+            # Create complex.json in root
+            (tmppath / 'complex.json').write_text('{"location": "root"}')
+            # Create nested dir with its own complex.json
+            nested = tmppath / 'subdir'
+            nested.mkdir()
+            (nested / 'complex.json').write_text('{"location": "subdir"}')
+            # Search from nested - should find the nested one
+            result = find_cache_root(nested)
+            assert result == nested
 
 
 def run_tests():

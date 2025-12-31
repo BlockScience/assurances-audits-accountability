@@ -26,11 +26,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyyaml>=6.0.1
+          pip install pyyaml>=6.0.1 pytest>=7.0.0
 
       - name: Run test suite
         run: |
-          python tests/run_tests.py
+          python -m pytest tests/ -v --ignore=tests/archive/
 
       - name: Build cache
         run: |
@@ -57,23 +57,26 @@ jobs:
 
               The regression test suite has failed. Please review the test output in the workflow logs.
 
-              **Test Suites (10 total):**
-              - ✓ Template parser (4 tests)
-              - ✓ Template-based verification (6 tests)
-              - ✓ Accountability enforcement (4 tests)
-              - ✓ Template generation (13 tests)
-              - ✓ Dependency hierarchy (20 tests)
-              - ✓ Document compilation (13 tests)
-              - ✓ Cache building (2 tests)
-              - ✓ Topology validation (4 tests)
-              - ✓ Chart verification (3 tests)
-              - ✓ Element parsing (7 tests)
+              **Test Suites (13 total):**
+              - Template parser (4 tests)
+              - Template-based verification (6 tests)
+              - Accountability enforcement (4 tests)
+              - Template generation (13 tests)
+              - Dependency hierarchy (20 tests)
+              - Document compilation (13 tests)
+              - Cache building (2 tests)
+              - Topology validation (4 tests)
+              - Chart verification (7 tests)
+              - Element parsing (7 tests)
+              - Citation verification (25 tests)
+              - Audit assurance chart (46 tests)
+              - Structure validation (3 tests)
 
               **Additional Checks:**
               - Dependency hierarchy verification (CI tool)
               - Template freshness check (CI tool)
 
-              **Total:** 76+ tests covering 100% of critical functionality
+              **Total:** 135 tests covering 100% of critical functionality
 
               Please ensure all tests pass before merging.`
             })

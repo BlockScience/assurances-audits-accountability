@@ -19,6 +19,9 @@ tags:
 version: 1.0.0
 created: 2025-12-30T20:45:00Z
 modified: 2025-12-30T20:45:00Z
+assurer: claude-opus-4-5-20251101
+assurance_method: llm-assisted
+llm_model: claude-opus-4-5-20251101
 human_approver: mzargham
 ---
 

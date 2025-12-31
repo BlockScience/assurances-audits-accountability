@@ -1,5 +1,6 @@
 ---
 type: edge/validation
+extends: edge
 id: e:validation:incose-paper-2026:guidance-incose-paper
 name: Validation - INCOSE Paper 2026 against Base Guidance
 source: v:doc:incose-paper-2026
@@ -12,6 +13,7 @@ modified: 2025-12-30T23:30:00Z
 version: 1.0.0
 validator: claude-opus-4-5-20251101
 validation_method: llm-assisted
+llm_model: claude-opus-4-5-20251101
 human_approver: mzargham
 tags:
   - edge
@@ -31,7 +33,15 @@ tags:
 - **Path:** `00_vertices/guidance-for-incose-paper.md`
 - **Version:** 2.0.0
 
-## Quality Criteria Evaluation
+## Validation Assessment
+
+**Guidance:** [guidance-for-incose-paper](../00_vertices/guidance-for-incose-paper.md)
+**Validator:** claude-opus-4-5-20251101
+**Method:** LLM-Assisted
+**Human Approver:** mzargham
+**Date:** 2025-12-30T23:30:00Z
+
+### Quality Criteria Evaluation
 
 ### 1. Relevance to SE Community
 

@@ -145,13 +145,45 @@ def verify_chart_elements(chart: Dict[str, Any], cache: Dict[str, Any]) -> List[
     return errors
 
 
+def find_cache_root(start_path: Path) -> Path:
+    """
+    Search upward from start_path to find directory containing complex.json.
+
+    Args:
+        start_path: Starting directory to search from
+
+    Returns:
+        Path to directory containing complex.json
+
+    Raises:
+        VerificationError: If complex.json not found in any parent directory
+    """
+    current = start_path.resolve()
+
+    # Search upward through parent directories
+    while current != current.parent:  # Stop at filesystem root
+        cache_path = current / 'complex.json'
+        if cache_path.exists():
+            return current
+        current = current.parent
+
+    # Check filesystem root
+    if (current / 'complex.json').exists():
+        return current
+
+    raise VerificationError(
+        f"complex.json not found in any parent directory of {start_path}\n"
+        f"Run 'python scripts/build_cache.py' from the repository root first"
+    )
+
+
 def verify_chart_file(chart_path: Path, root_path: Path = None) -> List[str]:
     """
     Verify a chart file.
 
     Args:
         chart_path: Path to chart markdown file
-        root_path: Root directory (defaults to chart_path's grandparent)
+        root_path: Root directory (defaults to searching upward for complex.json)
 
     Returns:
         List of error messages (empty if valid)
@@ -164,10 +196,12 @@ def verify_chart_file(chart_path: Path, root_path: Path = None) -> List[str]:
     except ParseError as e:
         return [f"Parse error: {e}"]
 
-    # Determine root path
+    # Determine root path by searching upward for complex.json
     if root_path is None:
-        # Assume chart is in <root>/charts/*.md
-        root_path = chart_path.parent.parent
+        try:
+            root_path = find_cache_root(chart_path.parent)
+        except VerificationError as e:
+            return [str(e)]
 
     # Load cache
     try:

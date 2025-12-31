@@ -115,7 +115,13 @@
       "Bash(do if grep -q \"^id:\" \"$f\")",
       "Bash(! grep -q \"^name:\" \"$f\")",
       "Bash(then echo \"Missing name: $f\")",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(for dir in learning-journey-full learning-journey-module-01 learning-journey-module-02 learning-journey-module-03 learning-journey-module-04 learning-journey-module-05 learning-journey-module-06 learning-journey-module-07 learning-journey-module-08 learning-journey-module-09 learning-journey-module-10)",
+      "Bash(if [ -d \"/Users/z/Documents/GitHub/assurances-audits-accountability/charts/$dir\" ])",
+      "Bash(git -C /Users/z/Documents/GitHub/assurances-audits-accountability log --oneline)",
+      "Bash(do if grep -q \"validation_method: llm-assisted\" \"$f\")",
+      "Bash(! grep -q \"llm_model:\" \"$f\")",
+      "Bash(then echo \"$f\")"
     ]
   }
 }

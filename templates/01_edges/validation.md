@@ -49,7 +49,6 @@ Inherits all edge fields, plus validation-specific constraints:
 | `target_type` | string | Must be `vertex/guidance` |
 | `orientation` | string | Must be `directed` (child → guidance) |
 | `validator` | string | Identity of responsible party (person or system) |
-| `validated_by` | string | DEPRECATED: Use `validator` instead |
 | `validation_method` | string | How validation was performed: `manual`, `llm-assisted`, `automated` |
 | `llm_model` | string | REQUIRED if `validation_method` is `llm-assisted` (e.g., `claude-sonnet-4.5-20250929`) |
 | `human_approver` | string | REQUIRED if `validation_method` is `llm-assisted` or `automated` |
