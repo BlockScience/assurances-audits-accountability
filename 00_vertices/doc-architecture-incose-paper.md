@@ -34,12 +34,12 @@ This architecture document describes the framework at four abstraction levels, e
 
 ## V-Model Summary
 
-| Layer | Left Side (Idealized) | ← Evaluation → | Right Side (Realized) |
-|-------|----------------------|----------------|----------------------|
-| **Conceptual** | ConOps: Stakeholder need for requirements traceability and human accountability for machine-generated documents | Paper submitted for review | Acceptance Testing: Paper accepted at INCOSE IS 2026 = stakeholder acceptance |
-| **Functional** | Functional Architecture: Automated verification, validation assistance, accountability preservation | Paper passes author's final checks | System Testing: Complete assurance audit passes with 100% coverage |
-| **Logical** | Logical Architecture: Coupling edges, assurance triangles, typed document system | Documents being produced and assured | Integration Testing: Assurance faces close properly, cross-references resolve |
-| **Physical** | Physical Architecture: Python scripts, Claude Code, git repository, GitHub Actions | Software implementations tested | Unit Testing: Individual scripts pass pytest, templates verify correctly |
+| Layer          | Left Side (Idealized)                                                                                           | ← Evaluation →                       | Right Side (Realized)                                                         |
+| -------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ----------------------------------------------------------------------------- |
+| **Conceptual** | ConOps: Stakeholder need for requirements traceability and human accountability for machine-generated documents | Paper submitted for review           | Acceptance Testing: Paper accepted at INCOSE IS 2026 = stakeholder acceptance |
+| **Functional** | Functional Architecture: Automated verification, validation assistance, accountability preservation             | Paper passes author's final checks   | System Testing: Complete assurance audit passes with 100% coverage            |
+| **Logical**    | Logical Architecture: Coupling edges, assurance triangles, typed document system                                | Documents being produced and assured | Integration Testing: Assurance faces close properly, cross-references resolve |
+| **Physical**   | Physical Architecture: Python scripts, Claude Code, git repository, GitHub Actions                              | Software implementations tested      | Unit Testing: Individual scripts pass pytest, templates verify correctly      |
 
 ## Conceptual Layer
 
