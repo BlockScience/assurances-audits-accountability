@@ -5,6 +5,11 @@ id: template:face:signature
 name: Signature Face Template
 description: Accountability triangle coupling doc, guidance, and signer with shared validation edge
 instantiable: true
+edges:
+  - validation_edge (shared with assurance face)
+  - signs_edge
+  - qualifies_edge
+orientation: oriented
 tags:
   - template
   - face

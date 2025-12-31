@@ -1,6 +1,20 @@
 # Charts
 
-Charts are named collections of vertices, edges, and faces that form coherent subcomplexes within the knowledge complex.
+Named collections of vertices, edges, and faces forming coherent subcomplexes within the knowledge complex.
+
+**Navigation:** [[../README|Home]] | [[../NAVIGATION|Navigation Hub]] | [[../00_vertices/README|Vertices]] | [[../01_edges/README|Edges]] | [[../02_faces/README|Faces]]
+
+---
+
+## Summary
+
+| Chart | Purpose | Vertices | Faces |
+|-------|---------|----------|-------|
+| [[incose-paper-assurance/incose-paper-assurance\|incose-paper-assurance]] | INCOSE paper dual assurance | 24 | 23 |
+| [[boundary-complex/boundary-complex\|boundary-complex]] | Foundation layer | 5 | 4 |
+| [[test-tetrahedron/test-tetrahedron\|test-tetrahedron]] | Test fixture | 4 | 3 |
+
+---
 
 ## Purpose
 
@@ -313,8 +327,44 @@ Potential additions:
 
 ---
 
-**See also:**
-- [Chart Template](../templates/charts/chart.md)
-- [Test Tetrahedron](test-tetrahedron.md)
-- [verify_chart.py](../scripts/verify_chart.py)
-- [topology.py](../scripts/topology.py)
+## Chart Directory Contents
+
+### incose-paper-assurance/
+
+| File | Description |
+|------|-------------|
+| [[incose-paper-assurance/incose-paper-assurance\|incose-paper-assurance.md]] | Main assurance audit chart |
+| [[incose-paper-assurance/incose-paper-assurance-audit-trail\|incose-paper-assurance-audit-trail.md]] | Audit trail record |
+| `incose-paper-assurance.json` | Exported chart data |
+| `incose-paper-assurance.html` | Interactive 3D visualization |
+
+### boundary-complex/
+
+| File | Description |
+|------|-------------|
+| [[boundary-complex/boundary-complex\|boundary-complex.md]] | Foundation layer chart |
+| [[boundary-complex/boundary-complex-audit-trail\|boundary-complex-audit-trail.md]] | Audit trail record |
+| [[boundary-complex/TEACHING-GUIDE\|TEACHING-GUIDE.md]] | Educational guide |
+| `boundary-complex.json` | Exported chart data |
+| `boundary-complex.html` | Interactive visualization |
+
+### test-tetrahedron/
+
+| File | Description |
+|------|-------------|
+| [[test-tetrahedron/test-tetrahedron\|test-tetrahedron.md]] | Minimal test fixture |
+| [[test-tetrahedron/TEACHING-GUIDE\|TEACHING-GUIDE.md]] | Educational guide |
+| `test-tetrahedron.json` | Exported chart data |
+| `test-tetrahedron.html` | Interactive visualization |
+
+---
+
+## Related Directories
+
+| Directory | Description |
+|-----------|-------------|
+| [[../00_vertices/README\|Vertices]] | The nodes that charts reference |
+| [[../01_edges/README\|Edges]] | The relationships that charts include |
+| [[../02_faces/README\|Faces]] | The triangles that charts contain |
+| [[../templates/README\|Templates]] | Type definitions including chart template |
+| [[../scripts/README\|Scripts]] | Tools for verification and visualization |

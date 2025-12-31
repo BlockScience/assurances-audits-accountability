@@ -1,8 +1,6 @@
 # Assurances, Audits & Accountability
 
-Supporting material for INCOSE IS 2026 paper submission.
-
-This repository contains the implementation and demonstration of a typed simplicial complex framework for document verification, validation, and assurance with explicit human accountability.
+This repository contains the implementation and demonstration of a typed simplicial complex framework for document verification, validation, and assurance of AI Generated Content with explicit human accountability.
 
 ![Accountability Complex](docs/images/assurance_complex.png)
 
@@ -17,7 +15,44 @@ The paper **"Test-Driven Document Development: Simplicial Complexes for Verifica
 - **Assurance triangles are faces** (2-simplices) representing complete quality attestation
 - **Human accountability** is structurally required for validation judgments
 
-**The paper is its own proof.** The file [`doc-incose-paper-2026.md`](doc-incose-paper-2026.md) exists as a vertex in an assurance complex, verified against its specification, validated against its guidance, with all checks passing.
+**The paper is its own proof.** The file [`doc-incose-paper-2026.md`](00_vertices/doc-incose-paper-2026.md) exists as a vertex in an assurance complex, verified against its specification, validated against its guidance, with all checks passing.
+
+## Dual Interface: VS Code + Obsidian
+
+This repository is designed for **two complementary workflows**:
+
+### VS Code + Claude Code (Construction & Verification)
+
+![VS Code Interface](docs/images/vs-code-interface.png)
+
+**Best for:** Building, verifying, and analyzing the knowledge complex
+
+- Run verification scripts directly from terminal
+- Edit documents with full IDE features
+- Use Claude Code for AI-assisted document development
+- Git integration for version control and accountability
+
+**Key commands:**
+```bash
+python scripts/verify_template_based.py <file> --templates templates
+python scripts/audit_assurance_chart.py charts/<chart>/<chart>.md
+python scripts/build_cache.py
+```
+
+### Obsidian (Navigation & Exploration)
+
+![Obsidian Interface](docs/images/obsidian-interface.png)
+
+**Best for:** Exploring relationships and understanding structure
+
+- Wiki-style `[[wikilinks]]` for seamless navigation
+- Graph view visualizes document relationships
+- Backlinks show what references each document
+- Local-first, works offline
+
+**To use:** Open this repository as an Obsidian vault. See [[QUICKSTART]] for a 5-minute guide.
+
+---
 
 ## Quick Verification
 
@@ -29,7 +64,7 @@ uv venv && source .venv/bin/activate
 uv pip install -r requirements.txt
 
 # Verify the paper
-python scripts/verify_template_based.py doc-incose-paper-2026.md --templates templates
+python scripts/verify_template_based.py 00_vertices/doc-incose-paper-2026.md --templates templates
 
 # Run the assurance audit
 python scripts/audit_assurance_chart.py charts/incose-paper-assurance/incose-paper-assurance.md
@@ -53,30 +88,45 @@ Coverage: 100.0% (7/7 targets assured)
 
 ```text
 assurances-audits-accountability/
-├── doc-incose-paper-2026.md          # THE PAPER (also a vertex)
-├── 00_vertices/                       # Document vertices
-│   ├── spec-for-incose-paper.md      # Paper specification
-│   ├── guidance-for-incose-paper.md  # Paper quality criteria
-│   ├── spec-for-spec.md              # Foundational spec
-│   ├── guidance-for-guidance.md      # Foundational guidance
-│   └── ...
-├── 01_edges/                          # Relationship edges
-│   ├── verification-incose-paper-*   # Verification edges
-│   ├── validation-incose-paper-*     # Validation edges (with approvers)
-│   ├── coupling-incose-paper.md      # Spec-guidance coupling
-│   └── ...
-├── 02_faces/                          # Assurance faces
-│   ├── assurance-incose-paper-*.md   # Paper assurance triangles
-│   ├── b2-spec-spec.md               # Boundary face
-│   └── ...
-├── charts/
+├── 00_vertices/                       # Document vertices (56 files)
+│   ├── doc-incose-paper-2026.md      # THE PAPER (also a vertex)
+│   ├── spec-for-*.md                 # Specifications (27 files)
+│   ├── guidance-for-*.md             # Guidance documents (22 files)
+│   └── doc-*.md                      # Content documents (5 files)
+├── 01_edges/                          # Relationship edges (148 files)
+│   ├── verification-*.md             # Verification edges
+│   ├── validation-*.md               # Validation edges (with approvers)
+│   ├── coupling-*.md                 # Spec-guidance coupling
+│   └── signs-*.md, qualifies-*.md    # Signature infrastructure
+├── 02_faces/                          # Faces (65 files)
+│   ├── assurance-*.md                # Assurance triangles
+│   ├── signature-*.md                # Signature triangles
+│   └── b2-*.md                       # Boundary faces
+├── charts/                            # Composed subcomplexes
 │   ├── incose-paper-assurance/       # THE AUDIT CHART
-│   └── boundary-complex/             # Foundational structure
+│   ├── boundary-complex/             # Foundational structure
+│   └── test-tetrahedron/             # Test fixture
+├── docs/                              # Documentation
+│   ├── concepts/                     # Core concepts explained
+│   └── images/                       # Screen captures for documentation
 ├── figures/                           # Paper figures
 ├── scripts/                           # CLI tools
 ├── templates/                         # Type definitions
 └── tests/                             # Test suite
 ```
+
+## Navigation
+
+**Central hub:** [[NAVIGATION]] — Start here for exploring the knowledge complex
+
+| Directory | Obsidian | GitHub/VS Code | Contents |
+|-----------|----------|----------------|----------|
+| Vertices | [[00_vertices/README]] | [00_vertices/](00_vertices/) | 56 document vertices |
+| Edges | [[01_edges/README]] | [01_edges/](01_edges/) | 148 relationship edges |
+| Faces | [[02_faces/README]] | [02_faces/](02_faces/) | 65 triangular faces |
+| Charts | [[charts/README]] | [charts/](charts/) | Composed subcomplexes |
+| Docs | [[docs/README]] | [docs/](docs/) | Concepts & use cases |
+| Templates | [[templates/README]] | [templates/](templates/) | Type definitions |
 
 ## Key Concepts Demonstrated
 
@@ -110,20 +160,6 @@ The paper references three figures generated from this repository:
 | Figure 2 | Boundary Complex | [figures/figure3-final.png](figures/figure3-final.png) |
 | Figure 3 | Audit Chart | [figures/figure2-final.png](figures/figure2-final.png) |
 
-## Navigation
-
-For detailed exploration of the knowledge complex:
-
-- **[NAVIGATION.md](NAVIGATION.md)** - Central navigation hub
-- **[00_vertices/README.md](00_vertices/README.md)** - All 55 vertices by type
-- **[01_edges/README.md](01_edges/README.md)** - All 104 edges by type
-- **[02_faces/README.md](02_faces/README.md)** - All 39 faces by type
-
-This repository supports two workflows:
-
-1. **VS Code + Claude Code**: Construction, verification, analysis
-2. **Obsidian**: Knowledge graph navigation
-
 ## Scripts Reference
 
 | Script | Purpose |
@@ -139,10 +175,10 @@ This repository supports two workflows:
 
 This repository IS the evidence for the paper's claims:
 
-1. **The paper exists** as [`doc-incose-paper-2026.md`](doc-incose-paper-2026.md)
-2. **Verification passes** against [`spec-for-incose-paper.md`](00_vertices/spec-for-incose-paper.md)
-3. **Validation recorded** in [`validation-incose-paper-content:guidance-incose-paper.md`](01_edges/validation-incose-paper-content:guidance-incose-paper.md)
-4. **Assurance face closed** in [`assurance-incose-paper-content.md`](02_faces/assurance-incose-paper-content.md)
+1. **The paper exists** as [[doc-incose-paper-2026]] ([GitHub](00_vertices/doc-incose-paper-2026.md))
+2. **Verification passes** against [[spec-for-incose-paper]] ([GitHub](00_vertices/spec-for-incose-paper.md))
+3. **Validation recorded** in [[validation-incose-paper-2026:guidance-incose-paper]] ([GitHub](01_edges/validation-incose-paper-2026:guidance-incose-paper.md))
+4. **Assurance face closed** in [[assurance-incose-paper-2026-base]] ([GitHub](02_faces/assurance-incose-paper-2026-base.md))
 5. **Audit passes** with 100% coverage and V-F=1 verified
 
 The existence of this repository with passing audits proves the framework works.

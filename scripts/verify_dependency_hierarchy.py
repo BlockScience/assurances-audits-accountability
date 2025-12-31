@@ -44,8 +44,8 @@ def get_vertex_type(vertex_id: str, cache: Dict) -> str:
         return 'spec'
     elif vertex_type.startswith('vertex/guidance'):
         return 'guidance'
-    elif vertex_type in ['vertex/b0', 'vertex/test']:
-        return 'other'  # Boundary vertices and test vertices are special
+    elif vertex_type in ['vertex/b0', 'vertex/test', 'vertex/signer']:
+        return 'other'  # Boundary vertices, test vertices, and signers are special
     elif vertex_type.startswith('vertex/'):
         # All other typed vertices (persona, purpose, protocol, system_prompt, etc.)
         # are concrete documents

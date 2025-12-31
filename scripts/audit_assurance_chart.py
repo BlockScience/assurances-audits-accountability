@@ -3,8 +3,26 @@
 Audit an assurance_audit chart for complete assurance coverage.
 
 This tool validates that an assurance_audit chart has complete coverage
-using the F = V - 1 invariant (every vertex except root has exactly one
-assurance face).
+using the Assurances ≥ Documents invariant (every document vertex has at
+least one assurance face).
+
+The invariant is: number of assurance faces ≥ number of document vertices.
+Some documents may have multiple assurance faces (e.g., a paper assured
+against both a base spec and an extended self-demonstration spec).
+
+Document vertices are positively identified by their type prefix:
+  - v:spec:*     - specification documents
+  - v:guidance:* - guidance documents
+  - v:doc:*      - general documents
+  - c:*          - charts (which are also documents)
+
+Non-document vertices (do not require assurance):
+  - b0:*         - boundary/root vertices
+  - v:signer:*   - signer vertices (attestation identities)
+
+This positive identification approach preserves compositionality:
+when valid complexes are composed, the invariant holds because we
+identify what IS a document rather than excluding what ISN'T.
 
 The tool works directly with chart frontmatter - it does NOT require
 separate face files. Face definitions come from the chart's elements.faces
@@ -244,21 +262,65 @@ def build_assurance_network_from_frontmatter(chart_data: dict, base_dir: Path = 
     }
 
 
+def is_document_vertex(vertex_id: str) -> bool:
+    """
+    Determine if a vertex represents a document that requires assurance.
+
+    Document vertices are positively identified by their type prefix:
+      - v:spec:*     - specification documents
+      - v:guidance:* - guidance documents
+      - v:doc:*      - general documents
+      - c:*          - charts (which are also documents)
+
+    This positive identification preserves compositionality: when valid
+    complexes are composed, the invariant holds because we identify what
+    IS a document rather than excluding what ISN'T.
+
+    Non-document vertices (b0:*, v:signer:*) are implicitly excluded by
+    not matching any document pattern.
+    """
+    # Positive identification of document vertex types
+    document_prefixes = (
+        'v:spec:',      # specification documents
+        'v:guidance:',  # guidance documents
+        'v:doc:',       # general documents
+        'c:',           # charts
+    )
+    return vertex_id.startswith(document_prefixes)
+
+
 def check_invariant(network: dict) -> tuple:
     """
-    Check the F = V - 1 invariant.
+    Check the Assurances ≥ Documents invariant.
+
+    Every document vertex should have at least one assurance face.
+    Some documents may have multiple assurance faces (e.g., a paper
+    assured against both a base spec and an extended self-demonstration spec).
+
+    Document vertices are positively identified (v:spec:*, v:guidance:*,
+    v:doc:*, c:*) rather than negatively excluded, which preserves
+    compositionality under complex composition.
 
     Returns (passes, message)
     """
-    v_count = len(network['vertices'])
-    f_count = len(network['faces'])
+    # Count document vertices using positive identification
+    doc_vertices = [v for v in network['vertices'] if is_document_vertex(v)]
+    doc_count = len(doc_vertices)
 
-    expected_f = v_count - 1
+    # Count assurance faces (f:assurance:* and b2:*)
+    assurance_faces = [f for f in network['faces']
+                       if f.startswith('f:assurance:') or f.startswith('b2:')]
+    assurance_count = len(assurance_faces)
 
-    if f_count == expected_f:
-        return True, f"F = V - 1: {f_count} = {v_count} - 1 ✓"
+    if assurance_count >= doc_count:
+        if assurance_count == doc_count:
+            return True, f"Assurances = Documents: {assurance_count} assurances for {doc_count} documents ✓"
+        else:
+            extra = assurance_count - doc_count
+            return True, f"Assurances ≥ Documents: {assurance_count} assurances for {doc_count} documents ({extra} multi-assured) ✓"
     else:
-        return False, f"F = V - 1 VIOLATED: F={f_count}, expected {expected_f} (V={v_count})"
+        missing = doc_count - assurance_count
+        return False, f"Assurances < Documents: {assurance_count} assurances, {doc_count} documents ({missing} unassured)"
 
 
 def check_assurance_coverage(network: dict, audit_targets: list) -> dict:
@@ -276,8 +338,8 @@ def check_assurance_coverage(network: dict, audit_targets: list) -> dict:
     uncovered = []
 
     for vertex_id in audit_targets:
-        if vertex_id == 'b0:root':
-            # Root doesn't need assurance
+        if not is_document_vertex(vertex_id):
+            # Non-document vertices (b0:*, v:signer:*) don't need assurance
             covered.append(vertex_id)
         elif vertex_id in network['assured_vertices']:
             covered.append(vertex_id)
@@ -375,11 +437,18 @@ def audit_assurance_chart(chart_path: Path) -> dict:
     # Build vertex results
     vertex_results = {}
     for vertex_id in network['vertices']:
-        if vertex_id == 'b0:root':
+        if not is_document_vertex(vertex_id):
+            # Non-document vertices (b0:*, v:signer:*) don't require assurance
+            if vertex_id.startswith('b0:'):
+                note = 'Boundary vertex - provides assurance anchor, not assured itself'
+            elif vertex_id.startswith('v:signer:'):
+                note = 'Signer vertex - attestation identity, not a document'
+            else:
+                note = 'Non-document vertex - not subject to assurance'
             vertex_results[vertex_id] = {
                 'assured': True,
                 'face': None,
-                'note': 'Root vertex - provides assurance, not assured itself'
+                'note': note
             }
         elif vertex_id in network['assured_vertices']:
             vertex_results[vertex_id] = {

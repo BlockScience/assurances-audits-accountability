@@ -1,5 +1,6 @@
 ---
 type: edge/verification
+extends: edge
 id: e:verification:incose-paper-2026:spec-incose-self-demonstration
 name: Verification - INCOSE Paper 2026 against Self-Demonstration Spec
 source: v:doc:incose-paper-2026
@@ -12,6 +13,8 @@ modified: 2025-12-30T23:45:00Z
 version: 1.0.0
 verifier: claude-opus-4-5-20251101
 verification_method: automated-check
+llm_model: claude-opus-4-5-20251101
+human_approver: mzargham
 tags:
   - edge
   - verification
@@ -266,6 +269,30 @@ tags:
 | Self-demonstration (SD1-SD3) | 11 | 11 |
 | Assurance structure (SD-V11, V12) | 2 | 2 |
 | **Total** | **67** | **67** |
+
+## Verification Output
+
+```text
+Verification Result: PASS
+
+Checked against: v:spec:incose-self-demonstration (Specification for INCOSE Self-Demonstrating Paper v1.0.0)
+Document: v:doc:incose-paper-2026 (Test-Driven Document Development)
+
+Parent spec (inherited): 20/20 PASS
+Supporting documents (SD-V1-V4): 4/4 PASS
+Consistency checks (C1-C4): 18/18 PASS
+Completeness checks (CP1-CP4): 12/12 PASS
+Self-demonstration (SD1-SD3): 11/11 PASS
+Assurance structure: 2/2 PASS
+
+All 67 extended verification checks satisfied.
+```
+
+## Verification Status
+
+- **Status:** Pass
+- **Date:** 2025-12-30T23:45:00Z
+- **Tool:** automated-check + LLM analysis
 
 ## Overall Status
 

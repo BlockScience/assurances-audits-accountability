@@ -273,15 +273,14 @@ class TestVerifyAllCitations:
 
 
 class TestRealLiteratureReview:
-    """Test the actual LITERATURE-REVIEW.md file."""
+    """Test the actual literature-review.md file."""
 
     def test_literature_review_passes(self):
         """Verify that the real literature review file passes all checks."""
         # Try multiple paths to find the file
         possible_paths = [
-            Path(__file__).parent.parent / 'LITERATURE-REVIEW.md',
-            Path.cwd() / 'LITERATURE-REVIEW.md',
-            Path('/Users/z/Documents/GitHub/assurances-audits-accountability/LITERATURE-REVIEW.md'),
+            Path(__file__).parent.parent / 'docs' / 'references' / 'literature-review.md',
+            Path.cwd() / 'docs' / 'references' / 'literature-review.md',
         ]
 
         lit_review = None
@@ -291,7 +290,7 @@ class TestRealLiteratureReview:
                 break
 
         if lit_review is None:
-            pytest.skip("LITERATURE-REVIEW.md not found in any expected location")
+            pytest.skip("docs/references/literature-review.md not found")
 
         all_passed, results = verify_all_citations(lit_review)
 
@@ -303,7 +302,7 @@ class TestRealLiteratureReview:
                     for error in result.errors:
                         print(f"  - {error}")
 
-        assert all_passed, "LITERATURE-REVIEW.md should pass all citation checks"
+        assert all_passed, "literature-review.md should pass all citation checks"
 
 
 if __name__ == '__main__':
