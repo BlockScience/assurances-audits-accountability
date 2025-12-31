@@ -1,16 +1,29 @@
 #!/usr/bin/env python
 """
 Tests for accountability enforcement functionality.
+
+Tests two categories of accountability:
+1. Commit-time checks: Ensure validation edges are committed by the right person
+2. Consistency checks: Ensure signature/assurance/validation edge have matching accountable parties
 """
 
 import sys
 from pathlib import Path
 from unittest.mock import patch
+import pytest
 
 # Add scripts to path
 sys.path.insert(0, str(Path(__file__).parent.parent / 'scripts'))
 
-from check_accountability import check_validation_edge_accountability
+from check_accountability import (
+    check_validation_edge_accountability,
+    extract_username_from_signer,
+    is_boundary_signature,
+    usernames_match,
+    normalize_username,
+    check_shared_validation_edge_consistency,
+    check_all_signature_accountability,
+)
 
 
 def test_manual_validation_accountability():
@@ -94,6 +107,106 @@ def test_username_matching():
     passed, _ = check_validation_edge_accountability(edge_path, 'Michael Zargham', '')
     # This might not pass depending on frontmatter format - that's ok
     print("✓ Username matching strategies work")
+
+
+class TestUsernameExtraction:
+    """Test username extraction and matching functions."""
+
+    def test_extract_username_from_signer(self):
+        """Test extracting username from signer vertex ID."""
+        assert extract_username_from_signer('v:signer:mzargham') == 'mzargham'
+        assert extract_username_from_signer('v:signer:alice-smith') == 'alice-smith'
+        assert extract_username_from_signer('b0:root') == 'b0:root'
+        assert extract_username_from_signer('mzargham') == 'mzargham'
+
+    def test_normalize_username(self):
+        """Test username normalization."""
+        assert normalize_username('mzargham') == 'mzargham'
+        assert normalize_username('  MZargham  ') == 'mzargham'
+        assert normalize_username('"mzargham"') == 'mzargham'
+        assert normalize_username("'mzargham'") == 'mzargham'
+        assert normalize_username('') == ''
+
+    def test_usernames_match(self):
+        """Test username matching logic."""
+        # Exact match
+        assert usernames_match('mzargham', 'mzargham')
+
+        # Case insensitive
+        assert usernames_match('MZargham', 'mzargham')
+
+        # Substring matches (must be actual substrings after lowercasing)
+        assert usernames_match('alice', 'alice.smith')
+        assert usernames_match('mzargham', 'mzargham@github.com')
+        assert usernames_match('bob', 'bobby')
+
+        # Non-matches
+        assert not usernames_match('alice', 'bob')
+        assert not usernames_match('', 'mzargham')
+        assert not usernames_match('mzargham', '')
+        # Note: 'mzargham' is NOT a substring of 'michael zargham'
+        assert not usernames_match('mzargham', 'Michael Zargham')
+
+
+class TestBoundarySignature:
+    """Test boundary signature detection."""
+
+    def test_is_boundary_signature_by_signer(self):
+        """Test detecting boundary signature by b0: signer."""
+        fm = {'signer': 'b0:root', 'tags': []}
+        assert is_boundary_signature(fm)
+
+        fm = {'signer': 'b0:other', 'tags': []}
+        assert is_boundary_signature(fm)
+
+    def test_is_boundary_signature_by_tag(self):
+        """Test detecting boundary signature by tag."""
+        fm = {'signer': 'v:signer:someone', 'tags': ['boundary-complex']}
+        assert is_boundary_signature(fm)
+
+    def test_is_not_boundary_signature(self):
+        """Test non-boundary signature detection."""
+        fm = {'signer': 'v:signer:mzargham', 'tags': ['face', 'signature']}
+        assert not is_boundary_signature(fm)
+
+
+class TestSharedValidationEdgeConsistency:
+    """Test accountability consistency at shared validation edges."""
+
+    def test_boundary_signature_exempt(self):
+        """Test that boundary signatures are exempt from consistency check."""
+        repo_root = Path(__file__).parent.parent
+        sig_path = repo_root / '02_faces' / 'signature-spec-guidance.md'
+
+        if not sig_path.exists():
+            pytest.skip("signature-spec-guidance.md not found")
+
+        passed, message, details = check_shared_validation_edge_consistency(sig_path, repo_root)
+        assert passed, f"Boundary signature should pass: {message}"
+        assert 'Boundary signature' in message
+
+    def test_regular_signature_consistency(self):
+        """Test that regular signatures check consistency."""
+        repo_root = Path(__file__).parent.parent
+        sig_path = repo_root / '02_faces' / 'signature-architecture-spec.md'
+
+        if not sig_path.exists():
+            pytest.skip("signature-architecture-spec.md not found")
+
+        passed, message, details = check_shared_validation_edge_consistency(sig_path, repo_root)
+        assert passed, f"Regular signature should have consistent accountability: {message}"
+        assert 'mzargham' in message or 'Accountability consistent' in message
+
+    def test_all_signatures_pass_consistency(self):
+        """Test that all signature faces in repository pass consistency check."""
+        repo_root = Path(__file__).parent.parent
+        all_passed, messages = check_all_signature_accountability(repo_root)
+
+        # Print details for debugging
+        for msg in messages:
+            print(msg)
+
+        assert all_passed, "All signature faces should pass accountability consistency"
 
 
 def run_all_tests():

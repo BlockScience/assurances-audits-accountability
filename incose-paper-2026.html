@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="keywords" content="verification, validation, assurance, simplicial
+complex, human accountability, AI-assisted documentation" />
+  <meta name="description" content="Research paper demonstrating typed simplicial complex framework for verification, validation, and assurance with human accountability" />
+  <title>Test-Driven Document Development</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Test-Driven Document Development</h1>
+</header>
+<h1
+id="test-driven-document-development-simplicial-complexes-for-verification-validation-and-assurance-with-human-accountability">Test-Driven
+Document Development: Simplicial Complexes for Verification, Validation,
+and Assurance with Human Accountability</h1>
+<h2 id="abstract">Abstract</h2>
+<p>As artificial intelligence increasingly assists systems engineering
+documentation, a critical question emerges: who is accountable for
+document quality? Current verification and validation frameworks treat
+structural compliance and fitness-for-purpose as separate concerns,
+lacking formal mechanisms to integrate them or attribute accountability
+for subjective quality judgments. This gap creates risk in AI-assisted
+workflows where generated content may satisfy structural requirements
+while failing to serve its intended purpose.</p>
+<p>We present a framework using typed simplicial complexes to formalize
+document assurance. Documents become vertices, verification and
+validation relationships become edges, and complete assurance forms
+triangular faces (2-simplices). The framework introduces three
+innovations: explicit coupling edges that pair specifications with
+corresponding guidance documents, assurance triangles that require both
+verification and validation for completeness, and mandatory human
+accountability for all validation judgments. Large language model
+assistance is tracked but cannot substitute for human sign-off on
+fitness-for-purpose assessments.</p>
+<p>We demonstrate the framework through self-reference: this paper is
+itself an instance of the framework, verified against its specification,
+validated against its guidance, with the assurance triangle completed by
+human approval. Four assured supporting documents—architecture,
+lifecycle, literature review, and novel contributions—provide the
+intellectual foundation, each with complete assurance chains. Audit
+tooling confirms 100% assurance coverage with valid topological
+invariants. This proof-by-existence shows the framework is not merely
+described but operational.</p>
+<p>The contribution is a practical, mathematically grounded approach
+achieving harmony between AI capability and human
+accountability—directly addressing the IS 2026 theme of “Seeking Wa in
+Systems Engineering.” The framework enables organizations to adopt AI
+assistance confidently while maintaining clear, auditable chains of
+human responsibility for document quality.</p>
+<p><strong>Keywords:</strong> verification, validation, assurance,
+simplicial complexes, accountability, AI-assisted documentation,
+test-driven development</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>When artificial intelligence assists in creating systems engineering
+documentation, who bears responsibility for the result? This question
+has moved from philosophical abstraction to practical urgency. The 2024
+DORA State of DevOps Report reveals that 76% of developers now use AI
+tools daily, yet delivery stability has decreased by 7.2%.¹ AI
+assistance is accelerating, but accountability structures have not kept
+pace.</p>
+<p>The systems engineering community recognizes this challenge. INCOSE’s
+International Symposium 2026 introduces mandatory AI assistance
+disclosure requirements, signaling institutional awareness that
+AI-generated content requires new accountability mechanisms.² The
+symposium theme—“Beyond Digital Engineering: Seeking Wa in
+SE”—explicitly calls for harmony between human judgment and
+technological capability.³ Yet recognition of a problem differs from its
+solution.</p>
+<h3 id="the-accountability-gap">1.1 The Accountability Gap</h3>
+<p>Barry Boehm’s classic formulation distinguishes verification (“Are we
+building the product right?”) from validation (“Are we building the
+right product?”).⁴ This distinction has guided systems engineering for
+four decades, codified in IEEE 1012⁵ and ISO/IEC/IEEE 15288.⁶ But
+traditional frameworks treat verification and validation as separate
+activities. A document may pass structural verification—correct format,
+required sections present, word count within limits—while failing
+validation because it does not serve its intended purpose. Conversely, a
+document may demonstrate fitness-for-purpose while violating structural
+requirements. Neither condition alone constitutes assured quality.</p>
+<p>The missing element is formal coupling. Structural requirements
+(specifications) define what must be present; quality criteria
+(guidance) define what makes content effective. These naturally pair:
+one cannot meaningfully verify a document against a specification while
+validating it against unrelated guidance. Yet existing frameworks do not
+formalize this relationship, leaving it implicit or ignored.</p>
+<p>A second gap concerns accountability for validation. Verification can
+be automated: checking word counts, section presence, and format
+compliance requires no judgment. Validation is inherently
+subjective—assessing whether content is clear, rigorous, or practically
+useful requires human evaluation. When AI assists in generating content,
+who is responsible for judging its fitness? The answer cannot be “the
+AI” because language models cannot bear accountability. It must be a
+named human who reviewed, evaluated, and approved.</p>
+<h3 id="our-contribution">1.2 Our Contribution</h3>
+<p>This paper presents a framework addressing both gaps. We model
+document assurance using typed simplicial complexes from algebraic
+topology.⁷ Documents, specifications, and guidance become vertices.
+Verification, validation, and coupling become edges connecting them.
+When a document is verified against a specification, validated against
+coupled guidance, and the coupling relationship is explicit, the three
+edges form a triangular face—a 2-simplex in topological terms. This face
+represents complete assurance: structural compliance plus
+fitness-for-purpose plus explicit coupling, with human accountability
+attributed for validation.</p>
+<p>The framework makes three specific contributions:</p>
+<ol type="1">
+<li><strong>Structural accountability enforcement</strong> through typed
+simplicial complexes where validation edges cannot exist without a named
+<code>human_approver</code> field—making accountability structurally
+required rather than merely recommended</li>
+<li><strong>Explicit coupling of specification and guidance</strong>
+through coupling edges that formally pair verification criteria with
+validation criteria, preventing misalignment</li>
+<li><strong>Assurance triangles as 2-simplices</strong> that require all
+three relationships (verification, coupling, validation) for complete
+assurance, enabling topological auditing</li>
+</ol>
+<p>We demonstrate the framework through self-reference. This paper is
+not merely a description but an instance: it exists as a vertex in its
+own assurance complex, verified against a specification we developed,
+validated against corresponding guidance, with the assurance triangle
+completed by human approval. Four assured supporting
+documents—architecture, lifecycle, literature review, and novel
+contributions—provide the intellectual foundation. If you are reading
+this paper in the symposium proceedings, the framework succeeded—the
+demonstration is the proof.</p>
+<h3 id="paper-structure">1.3 Paper Structure</h3>
+<p>Section 2 reviews related work in verification and validation,
+algebraic topology, test-driven development, and AI accountability.
+Section 3 presents the framework architecture using the four-layer model
+from the INCOSE SE Handbook. Section 4 demonstrates results through
+self-application and audit. Section 5 describes the engineering
+lifecycle that produced this paper. Section 6 discusses implications and
+limitations. Section 7 concludes with key takeaways.</p>
+<hr />
+<h2 id="background-and-related-work">2. Background and Related Work</h2>
+<h3 id="verification-and-validation-foundations">2.1 Verification and
+Validation Foundations</h3>
+<p>The distinction between verification and validation traces to Boehm’s
+1984 IEEE Software paper, which posed the questions that have guided
+quality assurance since: “Are we building the product right?”
+(verification) and “Are we building the right product?” (validation).⁴
+IEEE Standard 1012-2016 codifies verification and validation processes
+for systems, software, and hardware, defining integrity levels and
+process requirements.⁵ ISO/IEC/IEEE 15288:2023 establishes verification
+and validation as distinct life cycle processes within the broader
+systems engineering framework.⁶</p>
+<p>These standards treat verification and validation as complementary
+but separate. Verification confirms that outputs conform to specified
+requirements; validation confirms that outputs satisfy stakeholder
+needs. What the standards do not formalize is the relationship between
+the requirements against which we verify and the criteria against which
+we validate. In practice, these should correspond—we verify structure
+against a specification and validate quality against guidance that
+interprets what “good” means for documents meeting that specification.
+But this coupling remains implicit in current frameworks.</p>
+<p>The INCOSE Systems Engineering Handbook elaborates verification and
+validation within the context of system life cycle processes.⁸ It
+emphasizes that validation assesses fitness for intended use,
+necessarily involving stakeholder judgment. This subjective
+element—human judgment about fitness—becomes critical when AI generates
+content. The handbook does not address who bears responsibility when
+content originates from automated systems.</p>
+<h3 id="the-v-model-and-systems-engineering-lifecycle">2.2 The V-Model
+and Systems Engineering Lifecycle</h3>
+<p>The “Vee” model for systems engineering was first publicly presented
+by Forsberg and Mooz at the 1991 NCOSE Conference.⁹ Their foundational
+paper established the graphical representation that has guided systems
+engineering lifecycle thinking for three decades: the left side of the V
+represents decomposition and specification (conceptual through physical
+design), while the right side represents integration and verification
+(component testing through acceptance).²⁰ The V-model explicitly maps
+verification and validation activities to corresponding design
+activities at each level of abstraction.</p>
+<p>The INCOSE Systems Engineering Handbook, now in its fifth edition,
+elaborates the V-model within modern life cycle processes.⁸ The handbook
+describes four architectural layers that structure system design:
+conceptual (stakeholder needs and operational context), functional (what
+the system must do), logical (design-independent component structure),
+and physical (specific implementation choices). Each layer on the left
+side of the V corresponds to a verification level on the right:
+conceptual requirements are validated through acceptance testing,
+functional requirements through system testing, logical architecture
+through integration testing, and physical design through unit
+testing.</p>
+<p>This four-layer framework aligns with other major architecture
+standards. The Department of Defense Architecture Framework (DoDAF)
+organizes views across operational, systems, and technical perspectives,
+with the Concept of Operations (ConOps) providing the operational
+context that drives architectural decisions.²¹ NASA’s Systems
+Engineering Handbook similarly structures design through logical
+decomposition—from conceptual architecture through functional analysis
+to physical integration—with verification “unwinding the process” to
+test whether each physical level meets the expectations and
+requirements.²²</p>
+<p>Our framework operationalizes this V-model structure for documents. A
+specification defines what must be present at each level (structural
+requirements); guidance defines what constitutes quality at each level
+(assessment criteria). The coupling edge formalizes what the V-model
+leaves implicit: that the verification standard and validation criteria
+must correspond. The assurance triangle completes the loop that the
+V-model depicts graphically.</p>
+<h3 id="algebraic-topology-and-simplicial-complexes">2.3 Algebraic
+Topology and Simplicial Complexes</h3>
+<p>Algebraic topology studies shapes through algebraic invariants,
+enabling rigorous analysis of structural properties.⁷ A simplicial
+complex is a combinatorial structure built from simplices: vertices
+(0-simplices), edges (1-simplices), triangles (2-simplices), and
+higher-dimensional analogs.¹⁰ The power of simplicial complexes lies in
+their ability to capture relationships at multiple levels—not just
+pairwise connections (edges) but higher-order relationships (faces).</p>
+<p>Carlsson’s 2009 survey established topology as a tool for data
+analysis, demonstrating that topological invariants reveal structural
+features invisible to traditional statistics.¹¹ Ghrist’s work spans both
+theoretical foundations and accessible exposition—from the barcodes
+paper introducing persistent homology¹² to the comprehensive textbook
+<em>Elementary Applied Topology</em>¹³ that makes these methods
+accessible to engineers.</p>
+<p>The Euler characteristic χ = V - E + F provides a simple but powerful
+invariant: for a well-formed complex, this quantity reveals topological
+properties independent of specific representation. Reimann et
+al. applied directed clique complexes to brain networks, showing that
+Euler characteristic serves as a meaningful network invariant.¹⁴ We
+adopt this principle for document assurance: topological invariants
+audit structural integrity.</p>
+<h3 id="test-driven-development">2.4 Test-Driven Development</h3>
+<p>Kent Beck’s formulation of test-driven development (TDD) inverts the
+traditional code-then-test sequence: write tests first, then write code
+to pass them.¹⁵ The red-green-refactor cycle—failing test, passing
+implementation, improved design—creates a rhythm of specification-first
+development. Tests become executable specifications that code must
+satisfy.</p>
+<p>Extending TDD to documentation treats specifications as tests that
+documents must pass. A document specification defines required
+structure: sections, fields, formats, constraints. A document either
+satisfies these requirements or fails. This binary outcome mirrors unit
+tests: pass or fail, no ambiguity.</p>
+<p>But TDD for documentation requires extension. Code tests verify
+behavior; they do not assess whether the code solves the right problem.
+Similarly, specification compliance verifies structure but not quality.
+The extension requires coupling: specifications (structural tests)
+paired with guidance (quality criteria). Only both together constitute
+complete quality assurance.</p>
+<h3 id="ai-ethics-and-accountability">2.5 AI Ethics and
+Accountability</h3>
+<p>Floridi and Cowls propose five principles for AI in society:
+beneficence, non-maleficence, autonomy, justice, and explicability.¹⁶
+The fifth principle—explicability—comprises intelligibility (how the
+system works) and accountability (who is responsible for outcomes). For
+AI-assisted documentation, intelligibility means understanding what the
+AI contributed; accountability means attributing responsibility for the
+result.</p>
+<p>UNESCO’s 2021 Recommendation on the Ethics of Artificial
+Intelligence, adopted by all 194 member states, establishes global
+standards emphasizing transparency, human oversight, and
+accountability.¹⁷ The UN High-Level Advisory Body on AI reinforces these
+principles in its 2024 governance framework, calling for “accountability
+anchored in human responsibility.”¹⁸</p>
+<p>What existing work lacks is a practical mechanism for accountability.
+Principles are valuable but insufficient. We need schemas that require
+accountability attribution, processes that enforce human review, and
+auditing that detects gaps.</p>
+<p>From a systems engineering perspective, AI agents are fundamentally
+not self-governing—every autonomous system is deployed <em>by
+someone</em>, and there is always an accountable stakeholder.²³ Agency
+requires a principal who provisions, deploys, and monitors the system.
+Autonomy does not eliminate oversight; rather, it represents delegated
+control within clearly defined parameters. The principal defines the
+mission, establishes constraints, and retains responsibility for
+outcomes. LLMs are tools embedded within larger systems, not autonomous
+agents themselves—they generate text but lack persistent goals or
+feedback loops. True agency emerges from orchestrated systems where
+humans retain accountability.</p>
+<p>Our framework provides these mechanisms through structural
+requirements: validation edges cannot exist without a named human
+approver.</p>
+<h3 id="prior-art-ghrists-the-forge">2.6 Prior Art: Ghrist’s “The
+Forge”</h3>
+<p>Robert Ghrist’s Appendix C “The Forge” in <em>The Geometry of Heaven
+&amp; Hell</em> (2025) documents the only known methodology for
+AI-assisted scholarly writing with explicit human accountability.¹⁹
+Notably, Ghrist’s topological mathematics (barcodes, persistent
+homology) also informs our simplicial complex model.</p>
+<p>Ghrist’s key methodological insight: “Every sentence in this book
+passed through my judgment; every connection earned my conviction; every
+claim bears my responsibility.”</p>
+<p><strong>Distinction from our approach:</strong> Ghrist’s methodology
+is <em>procedural</em>—it documents how he wrote a book through
+disciplined practice. Our framework is <em>structural</em>—it formalizes
+accountability through typed simplicial complexes where validation edges
+cannot exist without a <code>human_approver</code> field. Ghrist
+demonstrates accountability can be achieved; we demonstrate it can be
+enforced.</p>
+<hr />
+<h2 id="framework-architecture">3. Framework Architecture</h2>
+<p>Our framework architecture follows the four-layer model from the
+INCOSE SE Handbook, mapping each layer to corresponding V-model
+evaluation. This section presents the architecture; Section 5 describes
+the lifecycle that implements it.</p>
+<h3 id="conceptual-layer-stakeholder-needs-and-acceptance-criteria">3.1
+Conceptual Layer: Stakeholder Needs and Acceptance Criteria</h3>
+<p><strong>Problem Statement:</strong> Cognizant engineers and technical
+authorities need requirements traceability and human accountability for
+machine-generated documents. Current gap: AI can draft documents but
+cannot bear responsibility for their fitness-for-purpose.</p>
+<p><strong>Stakeholder Needs:</strong></p>
+<ol type="1">
+<li><strong>Requirements Traceability</strong>: Trace document
+requirements through verification and validation</li>
+<li><strong>Human Accountability</strong>: Named human approvers for
+qualitative assessments</li>
+<li><strong>Automated Verification</strong>: Deterministic structural
+checks without human intervention</li>
+<li><strong>Quality Assessment</strong>: Systematic evaluation of
+fitness-for-purpose</li>
+<li><strong>Audit Trail</strong>: Traceable records of who approved
+what, when, and on what basis</li>
+</ol>
+<p><strong>Acceptance Criteria:</strong> The framework is accepted when:
+(1) this paper is produced using the framework with complete assurance
+infrastructure; (2) paper accepted at INCOSE IS 2026; (3) named human
+attests to all assured documents; (4) assurance audit shows 100% vertex
+coverage with V-F=1 invariant satisfied.</p>
+<h3 id="functional-layer-system-functions">3.2 Functional Layer: System
+Functions</h3>
+<p>The system performs six primary functions:</p>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 18%" />
+<col style="width: 21%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr>
+<th>Function</th>
+<th>Input</th>
+<th>Output</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1: Verify Document</td>
+<td>Document + Spec</td>
+<td>Pass/Fail + Check Results</td>
+<td>Check document structure against specification requirements</td>
+</tr>
+<tr>
+<td>F2: Validate Document</td>
+<td>Document + Guidance + Human</td>
+<td>Quality Assessment</td>
+<td>Evaluate document fitness-for-purpose against guidance criteria</td>
+</tr>
+<tr>
+<td>F3: Assure Document</td>
+<td>Verification + Validation + Coupling</td>
+<td>Assurance Face</td>
+<td>Combine V + V + C into assurance triangle</td>
+</tr>
+<tr>
+<td>F4: Couple Spec-Guidance</td>
+<td>Spec + Guidance</td>
+<td>Coupling Edge</td>
+<td>Link specification and guidance for coherent document type</td>
+</tr>
+<tr>
+<td>F5: Audit Assurance</td>
+<td>Chart</td>
+<td>Coverage Report</td>
+<td>Analyze completeness and topology of assurance network</td>
+</tr>
+<tr>
+<td>F6: Trace to Root</td>
+<td>Document</td>
+<td>Trace Path</td>
+<td>Verify document connects to boundary complex foundation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>System Testing:</strong> Functions are tested by observing
+whether the paper passes verification scripts (F1), receives human
+validation (F2), achieves assurance triangle closure (F3), has coupled
+spec-guidance (F4), passes audit (F5), and traces to boundary complex
+(F6).</p>
+<h3 id="logical-layer-design-independent-components">3.3 Logical Layer:
+Design-Independent Components</h3>
+<p>The design-independent component structure uses typed simplicial
+complexes:</p>
+<h4 id="an-optimization-intuition">An Optimization Intuition</h4>
+<p>The framework can be understood through the lens of constrained
+optimization. Consider intellectual substance—research findings, design
+decisions, analytical insights—that must be expressed for publication. A
+document is the <em>serialized representation</em> of this intellectual
+substance, projected onto a document space defined by the
+specification.</p>
+<p>The specification defines the <em>feasible region</em>: structural
+constraints that any valid document must satisfy (word limits, required
+sections, format rules). Verification checks feasibility—is this
+serialization structurally valid?</p>
+<p>The guidance defines the <em>objective function</em>: quality
+criteria that distinguish better representations from worse ones within
+the feasible region (clarity, rigor, relevance). Validation evaluates
+the objective—how well does this serialization serve its purpose?</p>
+<p>Writing is then a projection operation: projecting intellectual
+substance onto the document space characterized by the specification,
+with the guidance providing direction for selecting among alternative
+feasible representations. Different phrasings, organizations, or
+emphases may all satisfy the spec (all feasible), but the guidance helps
+choose which serialization best communicates the underlying
+substance.</p>
+<p>This framing clarifies the verification-validation distinction:</p>
+<ul>
+<li><strong>Verification</strong> answers: “Is this point in the
+feasible region?” (Binary: pass/fail)</li>
+<li><strong>Validation</strong> answers: “How good is this feasible
+point?” (Qualitative: assessment with rationale)</li>
+</ul>
+<p>The coupling edge ensures we optimize the right objective over the
+right feasible region—we cannot accidentally verify against one spec
+while optimizing for unrelated guidance.</p>
+<h4 id="typed-simplicial-complex-structure">Typed Simplicial Complex
+Structure</h4>
+<p><strong>Vertices (0-simplices)</strong> are documents of three types:
+- <em>Specifications</em> define structural requirements: required
+sections, fields, formats, constraints. They answer “what must be
+present?” - <em>Guidance</em> documents define quality criteria: how to
+evaluate effectiveness, clarity, rigor. They answer “what makes it
+good?” - <em>Content</em> documents are the artifacts being assured:
+papers, reports, requirements, designs.</p>
+<p><strong>Edges (1-simplices)</strong> are relationships of three
+types: - <em>Verification edges</em> connect content to specifications,
+asserting structural compliance. - <em>Validation edges</em> connect
+content to guidance, asserting fitness-for-purpose. These require a
+named human approver. - <em>Coupling edges</em> connect specifications
+to guidance, asserting correspondence between structural and qualitative
+requirements.</p>
+<p><strong>Faces (2-simplices)</strong> are assurance triangles: when a
+content document has a verification edge to a specification, that
+specification has a coupling edge to guidance, and the content has a
+validation edge to that same guidance, the three edges bound a
+triangular face representing complete assurance.</p>
+<p><strong>The Assurance Triangle:</strong></p>
+<pre><code>          doc
+         /   \
+  verification  validation
+       /         \
+      /           \
+    spec ------- guidance
+         coupling</code></pre>
+<p>An assurance face closes when three edges form a valid triangle:
+verification (doc→spec), validation (doc→guidance), and coupling
+(spec↔︎guidance). The face attests that:</p>
+<ol type="1">
+<li>The document is structurally compliant (verification passed)</li>
+<li>The document meets quality criteria (validation passed)</li>
+<li>The spec and guidance are properly coupled</li>
+<li>A human has reviewed and approved the complete pattern</li>
+</ol>
+<p><strong>Accountability Model:</strong> Every validation edge and
+assurance face requires human accountability. When LLM-assisted,
+<code>human_approver</code> is REQUIRED—the human takes responsibility
+for the assessment. This is not optional; it is structurally enforced
+through schema validation.</p>
+<h4 id="edge-payload-structures">Edge Payload Structures</h4>
+<p>Verification and validation edges carry distinct payloads reflecting
+their different natures. A verification edge documents deterministic
+structural checks:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> edge/verification</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span><span class="kw">:</span><span class="at"> e:verification:incose-paper-content:spec-incose-paper</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span><span class="kw">:</span><span class="at"> v:doc:incose-paper-2026</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">target</span><span class="kw">:</span><span class="at"> v:spec:incose-paper</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Verification Output</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">Required Sections Check</span><span class="kw">:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">✓ Title - Present (line 45)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">✓ Abstract - Present (lines 47-58)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="at">✓ Introduction - Present (lines 61-89)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at">✓ Background - Present (lines 93-142)</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="at">✓ Framework - Present (lines 145-258)</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="at">✓ Results - Present (lines 261-356)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="at">✓ Discussion - Present (lines 408-451)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="at">✓ Conclusion - Present (lines 454-486)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="at">✓ Acknowledgments with AI Disclosure - Present (lines 489-506)</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="at">✓ References - Present (lines 508-559)</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">Format Constraints</span><span class="kw">:</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">✓ Word count</span><span class="kw">:</span><span class="at"> ~6,800 (limit: 7,000)</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="at">✓ AI disclosure statement present and complete</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">Overall</span><span class="kw">:</span><span class="at"> PASS</span></span></code></pre></div>
+<p>The verification payload contains objective, reproducible check
+results. Any tool running the same checks against the same document
+produces identical output.</p>
+<p>A validation edge, by contrast, documents subjective quality
+assessment requiring human judgment:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">type</span><span class="kw">:</span><span class="at"> edge/validation</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span><span class="kw">:</span><span class="at"> e:validation:incose-paper-content:guidance-incose-paper</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span><span class="kw">:</span><span class="at"> v:doc:incose-paper-2026</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">target</span><span class="kw">:</span><span class="at"> v:guidance:incose-paper</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">validator</span><span class="kw">:</span><span class="at"> claude-opus-4-5-20251101</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">validation_method</span><span class="kw">:</span><span class="at"> llm-assisted</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">human_approver</span><span class="kw">:</span><span class="at"> mzargham</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Quality Criteria Evaluation</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">## 1. Relevance to SE Community</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ot">**Level:**</span><span class="at"> Excellent (4/4)</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ot">**Rationale:**</span><span class="at"> Addresses clearly identified SE challenge—maintaining</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="at">quality assurance when LLMs assist documentation.</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">## 2. Accessibility and Clarity</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ot">**Level:**</span><span class="at"> Good (3/4)</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ot">**Rationale:**</span><span class="at"> Generally accessible with clear logical flow.</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="at">Simplicial complexes explained, though mathematical content</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="at">may challenge some readers.</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">## 3. Rigor and Validity</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="ot">**Level:**</span><span class="at"> Excellent (4/4)</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="ot">**Rationale:**</span><span class="at"> Methods clearly articulated. Self-demonstration</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="at">provides unique validation—the paper&#39;s existence proves its claims.</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">## Overall Assessment</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="ot">**Score:**</span><span class="at"> 22/24</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="ot">**Recommendation:**</span><span class="at"> Pass</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">## Accountability Statement</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="at">This validation was generated with LLM assistance and reviewed</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="at">and approved by mzargham, who takes full responsibility for</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="at">its accuracy.</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ot">**Signed:**</span><span class="at"> mzargham</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="ot">**Date:**</span><span class="at"> 2025-12-30</span></span></code></pre></div>
+<p>The validation payload contains qualitative assessments with
+rationale. Critically, it includes the <code>human_approver</code>
+field—without this, the validation edge is structurally invalid. The LLM
+assists; the human approves and bears accountability.</p>
+<p><strong>Boundary Complex:</strong> The framework bootstraps through
+four foundational vertices (spec-for-spec, spec-for-guidance,
+guidance-for-spec, guidance-for-guidance) connected in a
+self-referential pattern. A root vertex (b0:root) resolves the
+self-referential paradox by anchoring boundary faces. The boundary
+complex satisfies the invariant V - F = 1, where the “one” is the root
+vertex—the only vertex not requiring its own assurance face.</p>
+<p><strong>Integration Testing:</strong> Components integrate correctly
+when assurance faces close properly (all three edges present),
+cross-references resolve, and the V - F = 1 invariant computes
+correctly.</p>
+<h3 id="physical-layer-implementation-choices">3.4 Physical Layer:
+Implementation Choices</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 33%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr>
+<th>Element</th>
+<th>Technology</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Document Store</td>
+<td>Markdown + YAML frontmatter in git repo</td>
+<td>Human-readable, version-controlled, diff-friendly</td>
+</tr>
+<tr>
+<td>Type System</td>
+<td>Python scripts parsing YAML</td>
+<td>Accessible, good library support, CI integration</td>
+</tr>
+<tr>
+<td>Development/Analysis Interface</td>
+<td>VS Code with Claude Code Plugin</td>
+<td>Smooth UX for prompting, running scripts, tracking changes, and
+processing review requests.</td>
+</tr>
+<tr>
+<td>Verification Service</td>
+<td><code>verify_template_based.py</code></td>
+<td>Structural compliance checking against specs</td>
+</tr>
+<tr>
+<td>Validation Service</td>
+<td>Claude Code + human review</td>
+<td>LLM assistance with mandatory human accountability</td>
+</tr>
+<tr>
+<td>Audit Tool</td>
+<td><code>audit_assurance_chart.py</code></td>
+<td>Coverage and topology analysis</td>
+</tr>
+<tr>
+<td>Accountability Tracker</td>
+<td>Git history + <code>human_approver</code> field</td>
+<td>Immutable approval records, committer verification</td>
+</tr>
+<tr>
+<td>CI Enforcement</td>
+<td>GitHub Actions</td>
+<td>Validates that committer matches signer</td>
+</tr>
+<tr>
+<td>Author/Reader Interface</td>
+<td>Obsidian Vault</td>
+<td>Provides Reader and Source view, smooth navigation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Unit Testing:</strong> Individual scripts pass pytest.
+Template verification catches malformed documents. Type schemas enforce
+required fields. The <code>check_accountability.py</code> script
+validates that approver fields are present and match whitelisted
+identities.</p>
+<hr />
+<h2 id="results-self-demonstration">4. Results: Self-Demonstration</h2>
+<h3 id="supporting-document-infrastructure">4.1 Supporting Document
+Infrastructure</h3>
+<p>This paper was produced using four assured supporting documents, each
+with complete assurance chains:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 18%" />
+<col style="width: 26%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr>
+<th>Document</th>
+<th>Purpose</th>
+<th>Key Content</th>
+<th>Assurance Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Architecture</td>
+<td>4-layer framework description</td>
+<td>Conceptual, Functional, Logical, Physical layers with V-model
+mapping</td>
+<td>Verified + Validated + Assured</td>
+</tr>
+<tr>
+<td>Lifecycle</td>
+<td>Engineering process (4 phases)</td>
+<td>Type Definition → Architecture → Content Development →
+Post-Processing</td>
+<td>Verified + Validated + Assured</td>
+</tr>
+<tr>
+<td>Literature Review</td>
+<td>18 citations across 5 themes</td>
+<td>V&amp;V Foundations, Simplicial Complexes, TDD, AI Ethics, Prior
+Art</td>
+<td>Verified + Validated + Assured</td>
+</tr>
+<tr>
+<td>Novel Contributions</td>
+<td>8 ranked contributions</td>
+<td>Structural Accountability (Highly Novel) through Discovered Gap
+(Incremental)</td>
+<td>Verified + Validated + Assured</td>
+</tr>
+</tbody>
+</table>
+<p>Each supporting document was verified against its specification,
+validated against its guidance by a named human approver (mzargham), and
+closed into an assurance triangle before being used as input to this
+paper. The consistency of terminology and concepts across all five
+documents (including this paper) is enforced through explicit
+cross-referencing and validation criteria.</p>
+<h3 id="incose-paper-type">4.2 INCOSE Paper Type</h3>
+<p>We created specification and guidance documents for INCOSE papers
+derived from the IS 2026 Call for Papers:</p>
+<p><strong>spec-for-incose-paper</strong> (v2.0.0) defines: - 7,000 word
+limit (REQUIRED) - 12 required sections (Title through Author Biography)
+- Abstract: 150-300 words - AI disclosure requirements per INCOSE 2026
+guidelines - INCOSE template format - 15 validation rules (V1-V15)</p>
+<p><strong>guidance-for-incose-paper</strong> (v2.0.0) defines: - Six
+quality criteria: Relevance, Accessibility, Rigor, Novelty, Theme
+Alignment, Engagement - Section-by-section authoring guidance - Scoring
+rubric with 24 maximum points (4 points × 6 criteria) - Target: ≥20/24
+for acceptance recommendation</p>
+<h3 id="dual-assurance">4.3 Dual Assurance</h3>
+<p>This paper is assured against two spec/guidance pairs (independent
+triangles):</p>
+<p><strong>Level 1 (Base INCOSE Paper Type):</strong> - Verified against
+<code>spec-for-incose-paper</code> (15 rules) - Validated against
+<code>guidance-for-incose-paper</code> (6 criteria, target ≥20/24) -
+Coupling: <code>coupling-incose-paper</code></p>
+<p><strong>Level 2 (Self-Demonstrating Paper Type):</strong> - Verified
+against <code>spec-for-incose-self-demonstration</code> (12 extended
+rules) - Validated against
+<code>guidance-for-incose-self-demonstration</code> (7 additional
+criteria) - Coupling:
+<code>coupling-incose-self-demonstration</code></p>
+<p>The self-demonstration specification requires: - <strong>Consistency
+(C1-C4)</strong>: Terminology and concepts match all four supporting
+documents - <strong>Completeness (CP1-CP4)</strong>: All supporting
+document content adequately represented - <strong>Self-Demonstration
+(SD1-SD3)</strong>: Paper serves as instance, includes concrete
+evidence, demonstrates recursive consistency</p>
+<h3 id="the-boundary-complex">4.4 The Boundary Complex</h3>
+<p>Before presenting the full audit, we explain the foundation that
+makes auditing possible. The boundary complex resolves a potential
+paradox: what assures the specification for specifications?</p>
+<p>Consider the foundational documents: - <strong>Spec-for-spec</strong>
+must be verified against… a specification. Which specification? Itself.
+- <strong>Guidance-for-guidance</strong> must be validated against…
+guidance. Which guidance? Itself.</p>
+<p>Self-reference seems unavoidable. But self-referential assurance
+creates topological problems: a document cannot be a vertex in its own
+assurance triangle without degeneracy.</p>
+<p>The root vertex resolves this by providing the third point. The root
+vertex sits outside the typed system—it is not a spec, guidance, or
+content document. It exists solely to close boundary faces, transforming
+logically valid but topologically incomplete assurances into proper
+2-simplices. This is not circular reasoning but explicit axiomatization:
+the framework declares its foundations rather than hiding them.</p>
+<h3 id="complete-assurance-audit">4.5 Complete Assurance Audit</h3>
+<p>The assurance audit uses <code>audit_assurance_chart.py</code>, which
+analyzes chart documents for completeness by matching every vertex
+(except root) to the face that assures it, and checks the V - F = 1
+invariant.</p>
+<p><strong>Table 1: Audit Summary</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total vertices (V)</td>
+<td>24</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Assurance faces (F)</td>
+<td>23</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Invariant V - F = 1</td>
+<td>24 - 23 = 1</td>
+<td>✓ PASS</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>100% (23/23 non-root vertices)</td>
+<td>✓ PASS</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Vertex Categories:</strong> - Boundary complex: 5 vertices
+(root + 4 foundational) - INCOSE paper type: 4 vertices (spec, guidance,
+self-demo spec, self-demo guidance) - Supporting document types: 8
+vertices (4 types × spec + guidance) - Supporting document instances: 4
+vertices (architecture, lifecycle, lit review, novel contributions) -
+This paper: 1 vertex - Coupling edges close assurance triangles for
+each</p>
+<h3 id="reference-vs.-referent-the-audit-charts-self-reference">4.6
+Reference vs. Referent: The Audit Chart’s Self-Reference</h3>
+<p>A subtle but important distinction: the audit chart is both a
+<em>document</em> (a vertex in the complex) and a <em>reference</em> to
+a topological object (the complex itself). This dual nature requires
+careful handling.</p>
+<p>The audit chart exists as a markdown file with YAML frontmatter—it is
+a document that can be verified against <code>spec-for-chart</code> and
+validated against <code>guidance-for-chart</code>. As a document, it is
+a vertex.</p>
+<p>But the audit chart also <em>references</em> a topological structure:
+24 vertices, many edges, 23 faces. This referent—the mathematical
+object—is not the same as the reference (the document describing it).
+The audit chart document is a vertex, auditable using spec and guidance
+for charts, which are themselves auditable against the boundary
+complex.</p>
+<p>The spec for audit charts requires element data in YAML frontmatter
+and encodes rules about every vertex requiring an assurance face.
+Running verification on an audit chart also systematically checks that
+all vertices therein are assured.</p>
+<p>This referent/reference distinction enables controlled
+self-reference—similar to how the boundary complex enables
+self-referential specifications. The audit chart document can include
+itself in its vertex list, with the framework’s formal structure
+preventing paradox.</p>
+<h3 id="discovered-and-addressed-issues">4.7 Discovered and Addressed
+Issues</h3>
+<p>The self-demonstration revealed a tooling gap. Initial audit runs
+showed 85.7% coverage instead of 100%. Investigation revealed that the
+audit script inferred assurance face targets from naming conventions
+rather than reading explicit <code>target:</code> fields in face
+metadata.</p>
+<p>This gap was discovered, diagnosed, and fixed during framework
+application:</p>
+<ol type="1">
+<li><strong>Discovery</strong>: Audit reported the paper content vertex
+as unassured</li>
+<li><strong>Diagnosis</strong>: Script used naming pattern matching
+instead of explicit metadata</li>
+<li><strong>Fix</strong>: Added <code>get_face_target()</code> function
+to read explicit target fields</li>
+<li><strong>Verification</strong>: Re-ran audit; 100% coverage
+achieved</li>
+</ol>
+<p>This sequence demonstrates the framework operating: a gap was
+detected through systematic auditing, root cause was identified, fix was
+implemented, and verification confirmed resolution. The meta-observation
+is that the framework’s tooling caught a tooling defect—the
+self-referential nature of the demonstration strengthened rather than
+undermined confidence.</p>
+<h3 id="recursive-proof">4.8 Recursive Proof</h3>
+<p>The framework’s central claim—that typed simplicial complexes can
+enforce human accountability for document quality—is demonstrated by
+this paper’s existence:</p>
+<ol type="1">
+<li>This paper cannot exist as an assured vertex without passing
+verification</li>
+<li>Verification cannot pass without structural compliance with
+specification</li>
+<li>This paper cannot be assured without passing validation</li>
+<li>Validation cannot pass without a named human approver</li>
+<li>This paper exists as an assured vertex</li>
+<li>Therefore: A human approved this paper’s fitness-for-purpose</li>
+</ol>
+<p>The proof is structural, not procedural. The
+<code>human_approver</code> field is required by the type system—not by
+policy, but by data structure.</p>
+<hr />
+<h2 id="engineering-lifecycle">5. Engineering Lifecycle</h2>
+<p>The framework enacts a four-phase lifecycle aligned with the V-model.
+This section describes how this paper was actually produced.</p>
+<h3 id="phase-1-document-type-definition">5.1 Phase 1: Document Type
+Definition</h3>
+<p><strong>Purpose:</strong> Create assured specification and guidance
+defining what constitutes a valid document.</p>
+<p><strong>Activities:</strong> 1. Analyze INCOSE IS 2026 Call for
+Papers requirements 2. Create <code>spec-for-incose-paper</code>
+capturing structural requirements 3. Create
+<code>guidance-for-incose-paper</code> defining quality criteria 4.
+Verify both against foundational documents (spec-for-spec,
+guidance-for-guidance) 5. Create coupling edge linking spec to guidance
+6. Close assurance triangles with human approval</p>
+<p><strong>Output:</strong> Assured INCOSE paper type (spec + guidance +
+coupling)</p>
+<p><strong>Verification Gate:</strong> Type documents pass template
+verification before proceeding.</p>
+<h3 id="phase-2-architecture-and-content-development">5.2 Phase 2:
+Architecture and Content Development</h3>
+<p><strong>Purpose:</strong> Create assured supporting documents
+capturing the intellectual framework.</p>
+<p><strong>Activities:</strong> 1. Create architecture document using
+4-layer model 2. Create lifecycle document describing the process 3.
+Create literature review organizing prior work 4. Create novel
+contributions ranking intellectual contributions 5. Verify each against
+its spec; validate each against its guidance 6. Close assurance
+triangles with human approval</p>
+<p><strong>Output:</strong> Four assured supporting documents</p>
+<p><strong>Verification Gate:</strong> All supporting documents pass
+verification and validation before use in paper.</p>
+<h3 id="phase-3-content-assembly-iterative">5.3 Phase 3: Content
+Assembly (Iterative)</h3>
+<p><strong>Purpose:</strong> Synthesize supporting documents into paper
+meeting dual assurance requirements.</p>
+<p><strong>Activities:</strong> 1. Structure paper sections to mirror
+literature review themes (SD4 compliance) 2. Map architecture layers to
+Framework section (SD2 compliance) 3. Include lifecycle narrative in
+Section 5 (SD3 compliance) 4. Use novel contributions ranking for
+emphasis (SD5 compliance) 5. Iterate until verification passes and
+validation achieves target score 6. Create verification and validation
+edges for both spec/guidance pairs</p>
+<p><strong>Convergence Criteria:</strong> - Base verification: 100% of
+applicable checks pass - Base validation: ≥20/24 on 6-criteria rubric -
+Self-demo verification: 100% of extended checks pass - Self-demo
+validation: ≥40/52 on 13-criteria rubric</p>
+<p><strong>Output:</strong> Assured paper with dual assurance
+triangles</p>
+<h3 id="phase-4-post-processing">5.4 Phase 4: Post-Processing</h3>
+<p><strong>Purpose:</strong> Transform assured source to submittable
+artifact.</p>
+<p><strong>Activities:</strong> 1. Generate PDF from markdown source 2.
+Apply INCOSE template formatting 3. Strip YAML frontmatter for
+submission 4. Verify word count in final format 5. Document traceability
+from PDF to source</p>
+<p><strong>Acknowledged Gap:</strong> The verified source (markdown in
+repository) differs from the submitted artifact (PDF). Mitigation: the
+source repository remains the authoritative record of assurance status;
+the PDF is a derived artifact with documented transformation.</p>
+<p><strong>Output:</strong> Submission-ready PDF with explicit source
+traceability</p>
+<h3 id="lifecycle-visualization">5.5 Lifecycle Visualization</h3>
+<p>Figure 1 presents the complete assured document development
+lifecycle, showing how foundation documents enable custom type
+definition (Phase 1), architecture development (Phase 2), iterative
+content development (Phase 3), and post-processing for submission (Phase
+4). Verification loops (automated) and validation loops (human) are
+explicit at each phase.</p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph Foundation[&quot;Phase 0: Boundary Complex (Pre-existing Foundation)&quot;]
+        direction LR
+        SS[&quot;spec-for-spec&lt;br/&gt;ASSURED&quot;]
+        SG[&quot;spec-for-guidance&lt;br/&gt;ASSURED&quot;]
+        GS[&quot;guidance-for-spec&lt;br/&gt;ASSURED&quot;]
+        GG[&quot;guidance-for-guidance&lt;br/&gt;ASSURED&quot;]
+        ROOT[&quot;b0:root&lt;br/&gt;(Anchor)&quot;]
+    end
+
+    subgraph Phase1[&quot;Phase 1: Document Type Definition&quot;]
+        direction TB
+        PM[&quot;INCOSE Requirements&lt;br/&gt;(Call for Papers)&quot;]
+
+        PM --&gt; DS[&quot;Draft spec-for-&lt;br/&gt;incose-paper&quot;]
+        PM --&gt; DG[&quot;Draft guidance-for-&lt;br/&gt;incose-paper&quot;]
+
+        DS --&gt; VS{&quot;Verify&quot;}
+        VS --&gt;|FAIL| DS
+        VS --&gt;|PASS| VaS{&quot;Validate&lt;br/&gt;(Human)&quot;}
+        VaS --&gt;|REVISE| DS
+        VaS --&gt;|APPROVE| AS[&quot;Assured&lt;br/&gt;Spec&quot;]
+
+        DG --&gt; VG{&quot;Verify&quot;}
+        VG --&gt;|FAIL| DG
+        VG --&gt;|PASS| VaG{&quot;Validate&lt;br/&gt;(Human)&quot;}
+        VaG --&gt;|REVISE| DG
+        VaG --&gt;|APPROVE| AG[&quot;Assured&lt;br/&gt;Guidance&quot;]
+
+        AS --&gt; CE[&quot;Coupling&lt;br/&gt;Edge&quot;]
+        AG --&gt; CE
+        CE --&gt; ADT[&quot;ASSURED&lt;br/&gt;DOCUMENT TYPE&quot;]
+    end
+
+    subgraph Phase2[&quot;Phase 2: Supporting Documents&quot;]
+        direction TB
+        IC[&quot;Framework Design&lt;br/&gt;+ Repository&quot;]
+
+        IC --&gt; DA[&quot;Draft Architecture,&lt;br/&gt;Lifecycle, Lit Review,&lt;br/&gt;Novel Contributions&quot;]
+        DA --&gt; VAr{&quot;Verify&lt;br/&gt;Each&quot;}
+        VAr --&gt;|FAIL| DA
+        VAr --&gt;|PASS| VaAr{&quot;Validate&lt;br/&gt;(Human)&quot;}
+        VaAr --&gt;|REVISE| DA
+        VaAr --&gt;|APPROVE| AAr[&quot;4 ASSURED&lt;br/&gt;SUPPORTING DOCS&quot;]
+    end
+
+    subgraph Phase3[&quot;Phase 3: Content Assembly (Iterative)&quot;]
+        direction TB
+
+        INPUTS[&quot;Inputs:&lt;br/&gt;- Assured Type&lt;br/&gt;- Assured Docs&lt;br/&gt;- Author Direction&quot;]
+
+        INPUTS --&gt; DP[&quot;Draft Paper&lt;br/&gt;Content&quot;]
+        DP --&gt; VC{&quot;Verify vs&lt;br/&gt;Spec&quot;}
+        VC --&gt;|FAIL| DP
+        VC --&gt;|PASS| VaC{&quot;Validate vs&lt;br/&gt;Guidance&lt;br/&gt;(Human)&quot;}
+        VaC --&gt;|REVISE| DP
+        VaC --&gt;|APPROVE| SAT{&quot;Author&lt;br/&gt;Satisfied?&quot;}
+        SAT --&gt;|NO| DP
+        SAT --&gt;|YES| AC[&quot;ASSURED&lt;br/&gt;PAPER&quot;]
+    end
+
+    subgraph Phase4[&quot;Phase 4: Post-Processing&quot;]
+        direction TB
+        AC2[&quot;Assured&lt;br/&gt;Source&quot;] --&gt; STRIP[&quot;Strip YAML&lt;br/&gt;Metadata&quot;]
+        STRIP --&gt; ANON[&quot;Anonymize&lt;br/&gt;for Review&quot;]
+        ANON --&gt; PDF[&quot;Convert&lt;br/&gt;to PDF&quot;]
+        PDF --&gt; SUB[&quot;SUBMITTABLE&lt;br/&gt;ARTIFACT&quot;]
+    end
+
+    %% Foundation connections (dotted)
+    SS -.-&gt; VS
+    GS -.-&gt; VaS
+    SG -.-&gt; VG
+    GG -.-&gt; VaG
+
+    %% Cross-phase connections
+    ADT --&gt; INPUTS
+    AAr --&gt; INPUTS
+    AC --&gt; AC2
+
+    %% Parallel indicator
+    Phase1 -.-&gt;|can run in parallel| Phase2
+
+    %% Styling
+    style Foundation fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style Phase1 fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    style Phase2 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Phase3 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style Phase4 fill:#fce4ec,stroke:#c2185b,stroke-width:2px</code></pre>
+<p><strong>Figure 1.</strong> Assured Document Development Lifecycle.
+The boundary complex (Phase 0) provides the trusted foundation. Document
+type definition (Phase 1) and supporting document creation (Phase 2) can
+proceed in parallel. Content assembly (Phase 3) iterates through
+verification and validation loops until convergence. Post-processing
+(Phase 4) transforms assured source to submittable artifact with
+acknowledged traceability gap.</p>
+<hr />
+<h2 id="discussion">6. Discussion</h2>
+<h3 id="key-findings">6.1 Key Findings</h3>
+<p>The self-demonstration succeeds: this paper exists, was verified
+against its specification, validated against its guidance, and both
+assurance triangles closed with human approval. Three findings merit
+emphasis:</p>
+<p><strong>Structural accountability is the critical
+innovation.</strong> Where Ghrist’s “The Forge” demonstrates that
+procedural accountability is achievable through disciplined practice,
+our framework demonstrates it can be <em>enforced</em>. The
+<code>human_approver</code> field is not optional; validation edges
+without it fail type verification. This transforms accountability from a
+process recommendation to a structural requirement.</p>
+<p><strong>Explicit coupling prevents misalignment.</strong> Traditional
+V&amp;V frameworks leave the specification-guidance relationship
+implicit. Making it explicit through coupling edges ensures that
+verification and validation assess the same coherent “document type.”
+Without coupling, a paper could pass verification against INCOSE
+requirements while being validated against IEEE criteria—the mismatch
+invisible until peer review failure.</p>
+<p><strong>Topological structure enables auditing.</strong> The V - F =
+1 invariant provides an efficient integrity check. Every non-root vertex
+requires exactly one assurance face; every face assures exactly one
+vertex. Violations indicate either unassured vertices or malformed
+structure. This makes requirements traceability computationally
+verifiable.</p>
+<h3 id="connection-to-seeking-wa">6.2 Connection to “Seeking Wa”</h3>
+<p>The IS 2026 theme calls for harmony between human capability and
+technological tools.³ This framework embodies that harmony: it embraces
+LLM contributions while requiring human accountability for subjective
+judgments.</p>
+<p>The assurance triangle formalizes what “Seeking Wa” means for
+documentation: the dynamic balance between automated checking
+(verification) and human judgment (validation), coupled through explicit
+relationship. The LLM contributes capability (drafting, analysis,
+organization). The human contributes responsibility (judgment, approval,
+accountability). Neither dominates; both contribute according to their
+strengths.</p>
+<h3 id="limitations">6.3 Limitations</h3>
+<p><strong>Single implementation.</strong> This paper is one
+demonstration. The framework’s value at scale remains to be validated
+across organizations, document types, and time.</p>
+<p><strong>Framework overhead.</strong> Creating specifications and
+guidance for each document type requires investment. The framework is
+most valuable for high-stakes or repeatedly-used document types where
+the overhead is amortized.</p>
+<p><strong>Good-faith assumption.</strong> The framework detects missing
+approvals but cannot ensure approval quality. A rubber-stamp approval is
+structurally valid but substantively hollow. Mitigation: validator
+whitelisting and CI enforcement that committer matches signer.</p>
+<p><strong>Post-processing gap.</strong> The verified source (markdown)
+differs from the submitted artifact (PDF). Future work should integrate
+publication pipeline steps into the assurance framework itself.</p>
+<p><strong>Accessibility of topology.</strong> Simplicial complexes and
+boundary operators may intimidate practitioners unfamiliar with
+algebraic topology. The concepts are simpler than they appear—triangles
+with named edges—but the terminology creates barriers.</p>
+<h3 id="implications-for-practice">6.4 Implications for Practice</h3>
+<p>Organizations can adopt the framework incrementally:</p>
+<ol type="1">
+<li><p><strong>Start with specification-guidance pairs.</strong> For
+each document type, develop explicit specifications and corresponding
+guidance. Link them through coupling edges.</p></li>
+<li><p><strong>Add verification.</strong> Implement template-based
+verification checking documents against specifications. This can be
+automated.</p></li>
+<li><p><strong>Introduce validation with accountability.</strong> For
+documents requiring quality judgment, implement validation edges with
+mandatory human approvers.</p></li>
+<li><p><strong>Build assurance faces and audit.</strong> Assemble
+complete triangles. Test the V - F = 1 invariant. Identify
+gaps.</p></li>
+<li><p><strong>Trace to foundations.</strong> Establish boundary
+complexes for foundational types. Make axioms explicit.</p></li>
+</ol>
+<hr />
+<h2 id="conclusion">7. Conclusion</h2>
+<p>We have presented a framework for document assurance using typed
+simplicial complexes, addressing accountability gaps in AI-assisted
+documentation through three innovations: structural accountability
+enforcement, explicit coupling of specifications and guidance, and
+assurance triangles as complete quality attestation.</p>
+<h3 id="key-contributions">7.1 Key Contributions</h3>
+<ol type="1">
+<li><p><strong>Structural Accountability Enforcement</strong>: Human
+accountability is required by the type system, not just recommended by
+policy. Validation edges cannot exist without
+<code>human_approver</code>. “The Forge demonstrates accountability is
+achievable; we demonstrate it can be enforced.”</p></li>
+<li><p><strong>Explicit Coupling of Specification and Guidance</strong>:
+The coupling edge formally links verification criteria with validation
+criteria, ensuring coherent assessment and closing the gap in
+traditional V&amp;V.</p></li>
+<li><p><strong>Assurance Triangle as 2-Simplex</strong>: Using algebraic
+topology to model document assurance enables topological invariants (V -
+F = 1) for auditing and composition rules from simplicial complex
+theory.</p></li>
+<li><p><strong>Self-Demonstrating Proof</strong>: The framework’s
+viability is demonstrated by this paper’s existence as an assured vertex
+with four assured supporting documents—the recursive proof is our
+primary empirical result.</p></li>
+</ol>
+<h3 id="key-insights">7.2 Key Insights</h3>
+<p>From our eight novel contributions, three key insights for the SE
+community:</p>
+<ol type="1">
+<li><p><strong>Lead with structural accountability</strong>: The key
+differentiation from procedural approaches is that we formalize
+accountability as enforceable structure, not documented
+process.</p></li>
+<li><p><strong>Position coupling as core innovation</strong>: The
+explicit relationship between verification and validation is what’s
+missing from existing V&amp;V frameworks. The coupling edge answers “how
+do verification and validation relate?”</p></li>
+<li><p><strong>Math provides precision, not just metaphor</strong>:
+Simplicial complexes enable topological invariants, auditing, and
+composition rules—they are engineering tools, not decoration.</p></li>
+</ol>
+<h3 id="future-work">7.3 Future Work</h3>
+<ul>
+<li>Integration with MBSE tools for model verification</li>
+<li>Multi-organization deployment to validate scalability</li>
+<li>Application of persistent homology to track assurance evolution over
+time</li>
+<li>Composition patterns for large document ecosystems</li>
+</ul>
+<p>As AI capabilities advance, human accountability becomes more rather
+than less important. The framework provides practical mechanisms for
+maintaining that accountability while embracing AI assistance—achieving
+the harmony between human and machine that systems engineering
+requires.</p>
+<hr />
+<h2 id="acknowledgments">Acknowledgments</h2>
+<h3 id="ai-assistance-disclosure">AI Assistance Disclosure</h3>
+<p><strong>Tools used:</strong> Claude (claude-opus-4-5-20251101)</p>
+<p><strong>Usage categories:</strong> - <strong>Content
+generation:</strong> Drafting all sections based on framework
+understanding and four assured supporting documents -
+<strong>Analysis:</strong> Generating verification outputs, quality
+assessments, and assurance documentation - <strong>Conceptual:</strong>
+Framework architecture emerged through iterative human-AI
+collaboration</p>
+<p><strong>Author involvement:</strong> The framework architecture,
+research questions, and all accountability decisions are original author
+work. The author directed all AI-assisted content generation, made all
+editorial decisions, and approved all supporting document assurance. The
+self-demonstration (using the framework to write itself) was conceived
+and orchestrated by the author. Claude projected intellectual substance
+onto the document space characterized by the specification and guidance
+documents.</p>
+<p><strong>Human accountability:</strong> The named human approver
+(mzargham) reviewed all AI-generated content and takes full
+responsibility for the paper’s claims and conclusions. All validation
+edges and assurance faces in the supporting infrastructure bear the
+<code>human_approver: mzargham</code> attribution.</p>
+<p>This disclosure follows the methodological precedent established in
+Ghrist’s “The Forge,”¹⁹ which documents a comparable process of
+AI-assisted authorship where the human provides intellectual substance,
+direction, oversight, and approval while AI contributes drafting
+capability.</p>
+<hr />
+<h2 id="references">References</h2>
+<ol type="1">
+<li><p>Google Cloud, DORA Team. Accelerate State of DevOps Report 2024.
+Google Cloud; 2024.</p></li>
+<li><p>INCOSE. IS 2026 Call for Submissions. International Council on
+Systems Engineering; 2025.</p></li>
+<li><p>INCOSE. Beyond Digital Engineering: Seeking Wa in SE - IS 2026
+Theme. International Council on Systems Engineering; 2025.</p></li>
+<li><p>Boehm BW. Verifying and validating software requirements and
+design specifications. IEEE Software. 1984;1(1):75-88.</p></li>
+<li><p>Institute of Electrical and Electronics Engineers. IEEE Standard
+for System, Software, and Hardware Verification and Validation. IEEE
+1012-2016. IEEE; 2016.</p></li>
+<li><p>International Organization for Standardization. Systems and
+software engineering — System life cycle processes. ISO/IEC/IEEE
+15288:2023. ISO; 2023.</p></li>
+<li><p>Hatcher A. Algebraic Topology. Cambridge, UK: Cambridge
+University Press; 2002.</p></li>
+<li><p>International Council on Systems Engineering. Systems Engineering
+Handbook: A Guide for System Life Cycle Processes and Activities. 5th
+ed. Walden DD, Shortell TM, Roedler GJ, et al., eds. San Diego, CA: John
+Wiley &amp; Sons; 2023.</p></li>
+<li><p>Forsberg K, Mooz H. The relationship of system engineering to the
+project cycle. In: Proceedings of the National Council on Systems
+Engineering (NCOSE) Conference. Chattanooga, TN; October
+1991:57-65.</p></li>
+<li><p>Edelsbrunner H, Harer JL. Computational Topology: An
+Introduction. Providence, RI: American Mathematical Society;
+2010.</p></li>
+<li><p>Carlsson G. Topology and data. Bull Am Math Soc.
+2009;46(2):255-308.</p></li>
+<li><p>Ghrist R. Barcodes: The persistent topology of data. Bull Am Math
+Soc. 2008;45(1):61-75.</p></li>
+<li><p>Ghrist R. Elementary Applied Topology. Seattle, WA: CreateSpace;
+2014.</p></li>
+<li><p>Reimann MW, Nolte M, Scolamiero M, et al. Cliques of neurons
+bound into cavities provide a missing link between structure and
+function. Front Comput Neurosci. 2017;11:48.</p></li>
+<li><p>Beck K. Test-Driven Development: By Example. Boston, MA:
+Addison-Wesley; 2003.</p></li>
+<li><p>Floridi L, Cowls J. A unified framework of five principles for AI
+in society. Harvard Data Science Review. 2019;1(1).
+doi:10.1162/99608f92.8cd550d1</p></li>
+<li><p>United Nations Educational, Scientific and Cultural Organization.
+Recommendation on the Ethics of Artificial Intelligence. UNESCO;
+2021.</p></li>
+<li><p>United Nations Secretary-General’s High-level Advisory Body on
+Artificial Intelligence. Governing AI for Humanity: Final Report. United
+Nations; 2024.</p></li>
+<li><p>Ghrist R. The Forge (Appendix C). In: The Geometry of Heaven and
+Hell. 2025.</p></li>
+<li><p>Forsberg K, Mooz H, Cotterman H. Visualizing Project Management:
+Models and Frameworks for Mastering Complex Systems. 3rd ed. Hoboken,
+NJ: John Wiley &amp; Sons; 2005.</p></li>
+<li><p>Department of Defense. DoD Architecture Framework Version 2.02.
+Washington, DC: DoD Deputy Chief Information Officer; 2010.</p></li>
+<li><p>National Aeronautics and Space Administration. NASA Systems
+Engineering Handbook. Rev 2. NASA/SP-2016-6105. Washington, DC: NASA;
+2016.</p></li>
+<li><p>Zargham M. A Systems Engineering Perspective on AI Agents. Block
+Science Blog; 2024. Available at:
+https://blog.block.science/systems-engineering-perspective-ai-agents/</p></li>
+<li><p>Ahmad Z, et al. Large language models (LLMs) in systems
+engineering and design. 2024. doi:10.13140/RG.2.2.28013.97766</p></li>
+<li><p>Badshah T, et al. Large language models (LLMs) for requirements
+engineering (RE): A systematic literature review. arXiv preprint. 2024.
+arXiv:2509.11446</p></li>
+<li><p>Friedenthal S, Moore A, Steiner R. A Practical Guide to SysML.
+3rd ed. Morgan Kaufmann; 2015.</p></li>
+</ol>
+<hr />
+<h2 id="author-biography">Author Biography</h2>
+<p>[To be added for final submission - omitted for anonymous review]</p>
+</body>
+</html>

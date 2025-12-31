@@ -121,7 +121,14 @@
       "Bash(git -C /Users/z/Documents/GitHub/assurances-audits-accountability log --oneline)",
       "Bash(do if grep -q \"validation_method: llm-assisted\" \"$f\")",
       "Bash(! grep -q \"llm_model:\" \"$f\")",
-      "Bash(then echo \"$f\")"
+      "Bash(then echo \"$f\")",
+      "Bash(pandoc:*)",
+      "Bash(export PATH=\"/Library/TeX/texbin:$PATH\")",
+      "Bash(pip install:*)",
+      "Bash(pip show:*)",
+      "Bash(export PATH=\"/Library/TeX/texbin:/opt/anaconda3/bin:$PATH\")",
+      "Bash(npm install:*)",
+      "Bash(export PATH=\"/Library/TeX/texbin:/opt/homebrew/bin:$PATH\")"
     ]
   }
 }
