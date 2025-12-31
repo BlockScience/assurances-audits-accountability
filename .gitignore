@@ -1,5 +1,5 @@
 # submisison materials (serialized final form)
-submission/
+submission/*.pdf
 
 # Python virtual environment
 .venv/

@@ -1,0 +1,433 @@
+% =================================================================
+% INCOSE Conference LaTeX Template V1.2 (Release Date: November 4th, 2025)
+% Copyright (c) 2025 INCOSE
+% 
+% This template is provided for use in preparing manuscripts for
+% INCOSE conferences. You may use, modify, and 
+% distribute this template for academic and professional purposes.
+% 
+% This template is provided "as is" without warranty of any kind.
+% The author(s) disclaim all warranties, express or implied,
+% including but not limited to warranties of merchantability and
+% fitness for a particular purpose.
+
+% =================================================================
+
+\documentclass[11pt,letterpaper]{article} % Remove this line if using A4 size.
+%\documentclass[11pt,a4]{article} % A4 is also accepted and is typically used for non-US submissions.
+
+% ---------- Core layout ----------
+\usepackage[
+  letterpaper,
+  left=0.6in,right=0.6in,top=0.6in,bottom=0.6in,
+  headheight=85pt,headsep=-45pt
+]{geometry}
+\raggedbottom
+\usepackage{graphicx}
+\graphicspath{{./}{figures/}}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+% ---------- Captions & float spacing ----------
+\usepackage{caption}
+\captionsetup{
+  font={sf,bf,footnotesize},
+  labelfont={sf,bf,footnotesize},
+  justification=centering,
+  labelsep=period,
+  hypcap=false
+}
+\setlength{\textfloatsep}{8pt}
+\setlength{\floatsep}{6pt}
+\setlength{\intextsep}{8pt}
+\setlength{\abovecaptionskip}{12pt}
+\setlength{\belowcaptionskip}{1pt}
+
+% ---------- Tables / lists ----------
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage[table]{xcolor}
+\definecolor{tableheader}{HTML}{D9D9D9}
+\newcolumntype{P}[1]{>{\sffamily\centering\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\sffamily\centering\arraybackslash}X}
+\newcolumntype{A}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\raggedright\arraybackslash}m{#1}}
+
+% ---------- Fonts ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{PTSerif}
+\usepackage[scaled]{helvet}
+\renewcommand{\sfdefault}{phv}
+\newcommand{\headingfont}{\sffamily}
+
+% ---------- Headings ----------
+\usepackage{titlesec}
+\setcounter{secnumdepth}{0}
+
+% Heading 1
+\titleformat{\section}
+  {\headingfont\bfseries\raggedright\fontsize{18pt}{18pt}\selectfont}{}{0.75em}{}
+% Heading 2
+\titleformat{\subsection}
+  {\headingfont\bfseries\raggedright\fontsize{15pt}{16pt}\selectfont}{}{0.75em}{}
+% Heading 3
+\titleformat{\subsubsection}
+  {\headingfont\bfseries\raggedright\fontsize{12pt}{14pt}\selectfont}{}{0.75em}{}
+
+% Heading spacing
+\titlespacing*{\section}{0pt}{7pt}{6pt}
+\titlespacing*{\subsection}{0pt}{7pt}{6pt}
+\titlespacing*{\subsubsection}{0pt}{7pt}{6pt}
+
+\newcommand{\miniheading}[1]{%
+  \par\noindent{\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #1}\par\vspace{4pt}%
+}
+
+% ---------- Paragraphing ----------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 1pt minus 1pt}
+
+% ---------- Page numbers ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhfoffset[R]{18pt}
+\setlength{\footskip}{18pt}
+\fancyfoot[R]{\sffamily\bfseries\footnotesize \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% INCOSE logo
+\fancypagestyle{firstpage}{
+  \fancyhf{}
+  \fancyhfoffset[R]{18pt}
+  \fancyhead[R]{%
+    \smash{\raisebox{0pt}[0pt][0pt]{
+      \begingroup\setlength{\fboxsep}{20pt}
+        \colorbox{white}{\includegraphics[height=0.6in]{template-images/incose-logo.jpg}}%
+      \endgroup
+    }}
+  }
+  \fancyfoot[R]{\sffamily\bfseries\footnotesize \thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+% ---------- Title Formatting ----------
+\makeatletter
+\@ifundefined{theauthor}{}{\let\theauthor\relax}
+\makeatother
+\usepackage{titling}
+\pretitle{\headingfont\bfseries\fontsize{24pt}{26pt}\selectfont\raggedright}
+\posttitle{\par\vspace{-.3in}}
+\preauthor{}\postauthor{}
+\author{\mbox{}}
+\date{}
+\setlength{\droptitle}{-3.2\baselineskip}
+
+% ---------- Author cards ----------
+\newcommand{\authorcard}[5]{%
+  {\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #1}\par
+  {\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #2}\par
+  {\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #3}\par
+  {\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #4}\par
+  {\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #5}\par
+}
+
+% ---------- Biography photo placeholder and entry ----------
+
+\makeatletter
+\newcommand{\authorpic}[1]{%
+    \includegraphics[width=0.6in,height=0.6in,keepaspectratio,clip]{#1}%
+}
+\makeatother
+
+\newcommand{\authorbioentry}[3]{%
+  \noindent\begin{tabular}{@{}m{0.5in} M{\dimexpr\columnwidth-0.5in\relax}@{}}
+    \authorpic{#1} & \textbf{#2}\par #3
+  \end{tabular}\par\medskip
+}
+
+% ---------- Safe figure include ----------
+\makeatletter
+\newcommand{\colfig}[2][]{%
+  \IfFileExists{#2}{\includegraphics[width=\linewidth,#1]{#2}}{%
+    \fbox{\parbox[b][1.5in][c]{\linewidth}{\centering \textit{Missing figure: }#2}}}%
+}
+\makeatother
+
+% ---------- References: APA via biblatex/biber ----------
+\let\theauthor\relax
+\usepackage{csquotes}
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+% ---------- Highlight callouts ----------
+\usepackage{changepage}
+\newenvironment{highlight}[1][0.25in]{%
+  \begin{adjustwidth}{#1}{#1}\itshape}{\end{adjustwidth}}
+
+% ---------- Two-column setup ----------
+\usepackage{multicol}
+\setlength{\columnsep}{18pt}
+
+% ---------- Hyperlinks ----------
+\usepackage[hidelinks]{hyperref}
+
+% =========================
+% ===== Title & Authors ===
+% =========================
+\title{Formalizing Document Assurance: A Topological Framework for Verification, Validation, and Human Accountability}
+
+\begin{document}
+\maketitle
+\thispagestyle{firstpage}
+
+% ---- Authors ----
+% ---- OMITTED FOR ANONYMOUS REVIEW (INITIAL SUBMISSION) ----
+% ---- For the initial paper submission, do not include any author information. For the final paper submission, format author information as shown below. ------------------
+
+% \noindent
+% \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} A{0.32\textwidth} A{0.32\textwidth} A{0.32\textwidth}}
+%   \authorcard{Author One}{Organization}{Street Address}{City, Province, Postal}{author.one@email.com} &
+%   \authorcard{Author Two}{Organization}{Street Address}{City, Province, Postal}{author.two@email.com} &
+%   \authorcard{Author Three}{Organization}{Street Address}{City, Province, Postal}{author.three@email.com}
+% \end{tabular*}
+\addvspace{.25in}
+
+% ---- Two columns begin immediately after authors ----
+\begin{multicols*}{2}
+\raggedcolumns
+
+% ---- Copyright ----
+{\headingfont\bfseries\fontsize{8pt}{12pt}\selectfont
+Copyright~\textcopyright~ \the\year{} by the author(s). Permission granted to INCOSE to publish and use.}
+\\
+% =========================
+% ===== Abstract/Keywords =
+% =========================
+\phantomsection
+\miniheading{Abstract}
+As artificial intelligence increasingly assists systems engineering documentation, a critical question emerges: who is accountable for document quality? Current verification and validation frameworks lack formal mechanisms to integrate structural compliance with fitness-for-purpose, or to attribute accountability for subjective quality judgments.
+
+We present a framework using typed simplicial complexes to formalize document assurance. Documents become vertices, verification and validation relationships become edges, and complete assurance forms triangular faces requiring both verification and validation with mandatory human accountability for fitness-for-purpose judgments. LLM assistance is tracked but cannot substitute for human sign-off.
+
+We demonstrate through self-reference: this paper is verified against its specification, validated against its guidance, with assurance triangles completed by human approval. This proof-by-existence shows the framework is operational, enabling organizations to adopt AI assistance confidently while maintaining auditable chains of human responsibility.
+
+\phantomsection
+\subsubsection{Keywords}
+verification and validation, assurance, topological methods, accountability, AI-assisted documentation, human-in-the-loop
+
+% =========================
+% ===== Main Content ======
+% =========================
+\section{Introduction}
+This template will contain information on preparing the manuscript for INCOSE conferences. The remainder of this template will provide details on various formatting styles.
+
+\subsection{Paper Format}
+The paper size is letter, margins are 0.6'' for top, bottom, left, and right margins. %The paper size is A4, margins are 0.6'' for top, bottom, left, and right margins. 
+The acceptable paper length, including all exhibits and tables and excluding references, appendices, and table of contents should not exceed 7{,}000 words and shall not be less than 2{,}000 words. Manuscripts that do not meet this requirement will be returned to the authors for editing or rejected. We recommend that you use this template directly when writing your manuscript.
+
+\subsection{File Naming Convention}
+For first submission, name your word file as \emph{abreviatedtitle-V1.docx}, e.g., \emph{widgetmagic-V1.docx}; for subsequent submissions edit the version number to V2, V3, etc.; e.g., \emph{widgetmagic-V2.docx}. Do not put your name anywhere in the file, including the name of file.
+
+\subsection{Type, Font, and Text Body}
+The manuscript should be prepared in 11-pt PT Serif, single-spaced, with 0.6'' for top, bottom, left, and right margins. Use the styles to format text as Normal, and headings and subheadings accordingly. Avoid unnecessary capitalization. Do not use quotations except for quotes, instead considering using italics when highlighting a concept.  All continuing text should be fully justified.  Left justify headings and subheadings.
+
+Do not indent paragraphs; instead use the spacing as included in this template – 10 pt before paragraph.
+
+\subsubsection{Language}
+English is the official language of INCOSE conferences.
+
+\subsubsection{Footnotes}
+Footnotes should \underline{not} be used.
+
+\subsubsection{Page Numbers}
+Page numbers are already included in the footer. Do not make any changes to the page numbers.
+
+\subsection{Header and Footer}
+Headers will be different for the first page. Do not make any changes to the footers. Authors' last names should not be added to the header and footer.
+
+\subsubsection{Headings and Subheadings (use Subheading style for third level categories)}
+Please limit the headings and subheadings level to three levels (template is formatted for only these three levels). Heading 1, heading 2, and heading 3 headings should be left justified and bold using the \textit{template header style (Note: in some cases MS word versions will display your native settings, please follow the written instructions if you find discrepancies).}  Leave 10 pt spacing before each heading and subheading. When starting a new heading, please select the correct heading from the styles on the top menu (see Figure 1).
+
+\section{Major Section Headings (Heading 1)}
+Major section headings (first level) are to occupy a single line alone, bold, 18 pt, Helvetica font and should have the First Letter of Every Main Word Capitalized as in This Phrase. An example of first level heading in this template is the Introduction.
+
+\begin{figure}[H]
+  \centering
+  \colfig{figures/figure1.png}
+  \caption{Selection of Heading Type and Multilevel List}
+  \label{fig:sel}
+\end{figure}
+
+\subsection{Second Level Subheading (Heading 2)}
+The second level subheadings should be left aligned, bold, 15 pt, Helvetica font and occupy a single line alone. An example of second level subheading in this template is Manuscript Format.
+
+\subsubsection{Third Level Subheading (Heading 3)}
+The third level subheadings are to occupy a single line alone and should be left aligned, bold, 12 pt, Helvetica font. Capitalize main words. An example of third level subheading is the heading for this paragraph.
+
+\section{Specific Section Instructions}
+This section describes specific instructions for page layouts, exhibits, and special sections.
+
+\subsection{Paper Title and Author Information}
+The first page shall contain the title in full capital letters, left aligned, across the entire page. Use 24 pt Helvetica bold font for the title.
+
+\subsubsection{Author’s Identifying Information}
+Information regarding author(s) name and contact information should only be added to the last submission. Do not add at any other time.
+
+Five lines should be used for each author to include author’s name, and suffixes in Line 1, Author’s affiliation/organization in Line 2, Author’s contact information in Line 3 and 4, and Author’s email address in Line 5. Use 12 pt bold Helvetica font for all author line(s). Each author will place their name and subsequent information within the corresponding table cell as shown at the beginning of the document. 
+
+\subsection{Manuscript Structure}
+The manuscript should include at least the following sections: abstract, introduction, text body, conclusions, and references. Acknowledgement of funding support and/or any other kind of assistance should be contained in an Acknowledgements section located immediately before the References.
+
+\subsubsection{Abstract}
+All manuscripts are to include an abstract of no more than 300 words. The abstract should give purpose, scope, and principal results and conclusions. It should not contain literature citations or formulas. This abstract should be the same as entered in EasyChair.
+
+\subsubsection{Introduction}
+The introduction should state the problem or issue addressed in the paper, the background surrounding the elements of the paper, and the reason for the study or inquiry.
+
+\subsubsection{Tables, Figures, and Captions}
+Number figures consecutively, and place within the body of the text, using the Figure Style. A period should follow the figure number. The caption of each figure should follow the heading and figure number and be followed by a period.
+
+Try to avoid boxing figures but, if necessary, use the format as shown in Figure 3. Center the figure number and caption.  Cite each figure in the text before it appears. Use portrait layout always unless it is absolutely necessary to use landscape layout. As an example, Figures 2 and 3 show how to format a figure with or without a box.
+
+\begin{figure}[H]
+  \centering
+  \colfig{figures/figure2.png}
+  \caption{Example Figure Without Border}
+  \label{fig:nobox}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \colfig{figures/figure3.png}
+  \caption{Example Figure With Border}
+  \label{fig:boxed}
+\end{figure}
+
+A 10 pt space should separate the figure or table from the caption and a 10 pt space should separate the caption from the subsequent text that follows. Excessive white space should be avoided. Some white space at the bottom of a column is acceptable if it precedes an figure or new section heading.  Table 1 is an example of where such white space appears to be logical, as the caption must be below the table (or figure).
+
+If possible, tables and figures should be placed at the top of the page. However, inline formatting is acceptable, but not preferred. If possible, tables and figures should be placed within a single column. However, tables and figures that span both columns (within template margins) are acceptable, but not preferred.
+
+\subsubsection{Mathematical Notations and Equations}
+Each displayed equation should be preceded and followed by a single blank line. Display only the most important equations, and number the equations referenced in the text. Within the display, enclose the equation number in parentheses and place it flush with the right-hand margin of the column. Equation \eqref{eq:eq_label_1} is shown below.
+\begin{equation}
+  Y = \bar{X} + 3\frac{\sigma}{\sqrt{n}}
+  \label{eq:eq_label_1}
+\end{equation}
+
+% ---------- References (how to style; APA guidance) ----------
+\subsubsection{References}
+References should be complete, clear, styled as shown below, and listed alphabetically by author (chronologically for a particular author). Place the list of references after recommendations. The section should begin with the major heading References. Only references cited in the text should be included.
+
+\begingroup
+\renewcommand{\arraystretch}{2}
+\begin{tabularx}{\columnwidth}{@{}P{0.35\columnwidth}Y@{}}
+    \rowcolor{tableheader}
+    \multicolumn{1}{c}{\headingfont\bfseries Sections} &
+    \multicolumn{1}{c}{\headingfont\bfseries Definitions} \\
+    \addlinespace[8pt]
+    Abstract & Purpose, scope, and main results and conclusions \\
+    \addlinespace[10pt]
+    Introduction & Problem or issue, background, and reason for the study \\
+    \addlinespace[10pt]
+    Text Body & Methodology, analysis, or other value added process \\
+    \addlinespace[10pt]
+    Conclusions & Summary in layman's terms of the result of this study \\
+    \addlinespace[10pt]
+    Recommendations & Specific steps to follow as a result of this study \\
+    \addlinespace[10pt]
+    Acknowledgements & Note funding support and/or other assistance \\
+    \addlinespace[10pt]
+    References & Published sources of information used in support of this study \\
+\end{tabularx}
+\captionof{table}{Typical Sections of Your Paper}
+\label{tab:sections}
+\endgroup
+\vspace{6pt}
+
+% %NOTE: To extend a table across the full width of the page use this format
+% \begingroup
+% \begin{table*}[t]
+% \renewcommand{\arraystretch}{2}
+% \begin{tabularx}{\textwidth}{@{}P{0.35\textwidth}Y@{}}
+%     \rowcolor{tableheader}
+%     \multicolumn{1}{c}{\headingfont\bfseries Sections} &
+%     \multicolumn{1}{c}{\headingfont\bfseries Definitions} \\
+%     \addlinespace[8pt]
+%     Abstract & Purpose, scope, and main results and conclusions \\
+%     \addlinespace[10pt]
+%     Introduction & Problem or issue, background, and reason for the study \\
+%     \addlinespace[10pt]
+%     Text Body & Methodology, analysis, or other value added process \\
+%     \addlinespace[10pt]
+%     Conclusions & Summary in layman's terms of the result of this study \\
+%     \addlinespace[10pt]
+%     Recommendations & Specific steps to follow as a result of this study \\
+%     \addlinespace[10pt]
+%     Acknowledgements & Note funding support and/or other assistance \\
+%     \addlinespace[10pt]
+%     References & Published sources of information used in support of this study \\
+% \end{tabularx}
+% \caption{Typical Sections of Your Paper.}
+% \label{tab:sections}
+% \end{table*}
+% \endgroup
+
+Use American Psychological Association (APA) style of referencing for both in-text citation and reference list. For more information on APA style, please see the Conference Proceeding Reference on the APA website: \url{https://apastyle.apa.org/style-grammar-guidelines/references/examples/conference-proceeding-references}.
+Another good source of information can be found at Purdue Online Writing Lab: \url{https://owl.purdue.edu/owl/research_and_citation/apa_style/index.html}. 
+
+Following APA style, in-text citation should be (Author, year) for any form of references including journal articles, conference proceedings, books, and other forms of publications. Examples of in-text citation: (\cite{Denton1996}) for one author, (\cite{AmosSarchet1980}) for two authors, and (\cite{Keating2000}) for three or more authors. Note that for works with three or more authors, use "et al." from the first citation onward.
+
+For the list of references at the end of the manuscript, following the APA style, the reference should contain Author(s)' Last Name and Initials, (Year). Title of manuscript in sentence case (capitalize the first word, the first word after a colon or dash, and proper nouns). Publication Title (e.g., Journal Title, Conference Name) in Italics, Volume (Issue), pages. Please see the References section of this template for more information. Use hanging indentation to distinguish individual entries; the indentation should be one-half inch from left margin. Do not insert blank lines between references.
+
+In the Reference list of this template, the first reference is a website, second reference is a book, third reference is a refereed journal article, fourth reference is a printed proceeding from a conference, fifth reference is a conference proceeding on CD-ROM, and last reference is a website. If you are using word processing software that has a citation and referencing capability, we recommend using it, however care should be taken in checking the correctness and accuracy of such citations and references.
+
+% ---------- Highlighting example ----------
+\subsubsection{Highlighting Text or Citations}
+\begin{highlight}[0.5in]
+Text of this category must be italicized, justified, and have .5-inch margins all around. This ensures that important material is highlighted facilitating meaning conveyance.
+\end{highlight}
+
+\subsubsection{Recommendations}
+We strongly encourage you to use this document as a template for developing your own manuscript.
+
+% ---------- References (actual reference list) ----------
+% ---- Format references as shown below. Citations and references must comply with the APA reference style. For the initial paper submission, do not include title or author information in references to previous work by the paper’s author. Include full reference information for the final paper submission.
+
+% ---- Note 1: Begin the Refence section on a new page
+% ---- Note 2: If you have a reference manager, use APA 7th.
+% ---- Note 3: For the initial paper submission, do not include title or author information in references to previous work by the paper’s author. Include full reference information for the final paper submission
+
+\newpage
+\nocite{*}
+\section{References}
+\printbibliography[heading=none]
+
+% ---------- Biography Format ----------
+\newpage
+\phantomsection
+\makeatletter
+\renewcommand{\authorbioentry}[3]{%
+  \noindent\begin{tabular}{@{}m{0.5in} M{\dimexpr\columnwidth-0.5in\relax}@{}}
+    \authorpic{#1} &
+    {\headingfont\bfseries\raggedright\fontsize{12pt}{14pt}\selectfont #2}\par #3
+  \end{tabular}\par\medskip
+}
+\makeatother
+% ---------- Biography ----------
+% ---- Note : Begin the Biography section on a new page
+
+\section*{Biography}
+\authorbioentry{template-images/author1_pic.jpg}{Author Name}{Provide a short biography of the author. Provide a short biography of the author.}
+\authorbioentry{template-images/author2_pic.jpg}{Second Author}{Provide a short biography of the second author.}
+\authorbioentry{template-images/author3_pic.jpg}{Third Author}{Provide a short biography of the third author.}
+
+\end{multicols*}
+
+\end{document}
