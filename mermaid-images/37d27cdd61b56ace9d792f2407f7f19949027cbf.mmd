@@ -1,0 +1,89 @@
+flowchart TB
+    subgraph Foundation["Phase 0: Boundary Complex (Pre-existing Foundation)"]
+        direction LR
+        SS["spec-for-spec<br/>ASSURED"]
+        SG["spec-for-guidance<br/>ASSURED"]
+        GS["guidance-for-spec<br/>ASSURED"]
+        GG["guidance-for-guidance<br/>ASSURED"]
+        ROOT["b0:root<br/>(Anchor)"]
+    end
+
+    subgraph Phase1["Phase 1: Document Type Definition"]
+        direction TB
+        PM["INCOSE Requirements<br/>(Call for Papers)"]
+
+        PM --> DS["Draft spec-for-<br/>incose-paper"]
+        PM --> DG["Draft guidance-for-<br/>incose-paper"]
+
+        DS --> VS{"Verify"}
+        VS -->|FAIL| DS
+        VS -->|PASS| VaS{"Validate<br/>(Human)"}
+        VaS -->|REVISE| DS
+        VaS -->|APPROVE| AS["Assured<br/>Spec"]
+
+        DG --> VG{"Verify"}
+        VG -->|FAIL| DG
+        VG -->|PASS| VaG{"Validate<br/>(Human)"}
+        VaG -->|REVISE| DG
+        VaG -->|APPROVE| AG["Assured<br/>Guidance"]
+
+        AS --> CE["Coupling<br/>Edge"]
+        AG --> CE
+        CE --> ADT["ASSURED<br/>DOCUMENT TYPE"]
+    end
+
+    subgraph Phase2["Phase 2: Supporting Documents"]
+        direction TB
+        IC["Framework Design<br/>+ Repository"]
+
+        IC --> DA["Draft Architecture,<br/>Lifecycle, Lit Review,<br/>Novel Contributions"]
+        DA --> VAr{"Verify<br/>Each"}
+        VAr -->|FAIL| DA
+        VAr -->|PASS| VaAr{"Validate<br/>(Human)"}
+        VaAr -->|REVISE| DA
+        VaAr -->|APPROVE| AAr["4 ASSURED<br/>SUPPORTING DOCS"]
+    end
+
+    subgraph Phase3["Phase 3: Content Assembly (Iterative)"]
+        direction TB
+
+        INPUTS["Inputs:<br/>- Assured Type<br/>- Assured Docs<br/>- Author Direction"]
+
+        INPUTS --> DP["Draft Paper<br/>Content"]
+        DP --> VC{"Verify vs<br/>Spec"}
+        VC -->|FAIL| DP
+        VC -->|PASS| VaC{"Validate vs<br/>Guidance<br/>(Human)"}
+        VaC -->|REVISE| DP
+        VaC -->|APPROVE| SAT{"Author<br/>Satisfied?"}
+        SAT -->|NO| DP
+        SAT -->|YES| AC["ASSURED<br/>PAPER"]
+    end
+
+    subgraph Phase4["Phase 4: Post-Processing"]
+        direction TB
+        AC2["Assured<br/>Source"] --> STRIP["Strip YAML<br/>Metadata"]
+        STRIP --> ANON["Anonymize<br/>for Review"]
+        ANON --> PDF["Convert<br/>to PDF"]
+        PDF --> SUB["SUBMITTABLE<br/>ARTIFACT"]
+    end
+
+    %% Foundation connections (dotted)
+    SS -.-> VS
+    GS -.-> VaS
+    SG -.-> VG
+    GG -.-> VaG
+
+    %% Cross-phase connections
+    ADT --> INPUTS
+    AAr --> INPUTS
+    AC --> AC2
+
+    %% Parallel indicator
+    Phase1 -.->|can run in parallel| Phase2
+
+    %% Styling
+    style Foundation fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style Phase1 fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    style Phase2 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Phase3 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style Phase4 fill:#fce4ec,stroke:#c2185b,stroke-width:2px
