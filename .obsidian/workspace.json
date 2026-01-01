@@ -11,12 +11,14 @@
             "id": "d8fe634073ae7dce",
             "type": "leaf",
             "state": {
-              "type": "html-view",
+              "type": "markdown",
               "state": {
-                "file": "incose-paper-2026.html"
+                "file": "00_vertices/guidance-for-lifecycle.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "code-glyph",
-              "title": "incose-paper-2026"
+              "icon": "lucide-file",
+              "title": "guidance-for-lifecycle"
             }
           }
         ]
@@ -180,8 +182,16 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "b833731b524a941b",
+  "active": "d8fe634073ae7dce",
   "lastOpenFiles": [
+    "charts/boundary-complex/boundary-complex.md",
+    "charts/boundary-complex/boundary-complex.html",
+    "00_vertices/guidance-for-guidance.md",
+    "00_vertices/guidance-for-architecture.md",
+    "00_vertices/spec-for-architecture.md",
+    "00_vertices/doc-architecture-incose-paper.md",
+    "00_vertices/doc-incose-paper-2026.md",
+    "incose-paper-2026.html",
     "01_edges/validation-framework-architecture-section:guidance.md",
     "01_edges/validation-framework-intuition-section:guidance.md",
     "01_edges/validation-background-section:guidance.md",
@@ -209,22 +219,14 @@
     "submission/incose_conference_paper_template_and_instructions/references.bib",
     "submission/incose_conference_paper_template_and_instructions/main.tex",
     "submission/incose_conference_paper_template_and_instructions/figures",
-    "submission/incose_conference_paper_template_and_instructions",
-    "incose-paper-2026.html",
-    "00_vertices/doc-incose-paper-2026.md",
     "Untitled.md",
-    "00_vertices/doc-architecture-incose-paper.md",
     "README.md",
-    "00_vertices/spec-for-architecture.md",
-    "00_vertices/guidance-for-architecture.md",
     "01_edges/validation-incose-paper-2026:guidance-incose-paper.md",
     "02_faces/assurance-incose-paper-spec.md",
     "01_edges/validation-incose-paper-spec:guidance-spec.md",
     "00_vertices/spec-for-incose-paper.md",
     "NAVIGATION.md",
     "01_edges/README.md",
-    "QUICKSTART.md",
-    "docs/concepts/specs-vs-templates.md",
     "docs/images/vs-code-interface.png",
     "docs/images/obsidian-interface.png",
     "docs/images/assurance_complex.png",

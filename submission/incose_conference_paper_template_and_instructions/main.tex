@@ -382,7 +382,7 @@ The design-independent component structure uses typed simplicial complexes.
 
 \subsubsection{Typed Simplicial Complex Structure}
 
-The elements of our simplicial complex are equipped with semantic types in addition to their structural types: vertex, edge and face. This done through inheritance \parencite{Johnson1991}. Critically Document is a generic type which both Specification and Guidance inherit from, allowing Specification and Guidance type Documents to be assured.
+The elements of our simplicial complex are equipped with semantic types in addition to their structural types: vertex, edge and face. This is done through inheritance \parencite{Johnson1991}. Critically Document is a generic type which both Specification and Guidance inherit from, allowing Specification and Guidance type Documents to be assured.
 
 \textbf{Vertices (0-simplices)} are documents of three types:
 \begin{itemize}
@@ -402,11 +402,35 @@ The elements of our simplicial complex are equipped with semantic types in addit
 
 \textbf{Accountability Model:} Every validation edge and assurance face requires human accountability. When LLM-assisted, a named human approver is REQUIRED—the human takes responsibility for the assessment. This is not optional; it is structurally enforced through schema validation.
 
-\textbf{Boundary Complex:} The framework bootstraps through four foundational vertices (spec-for-spec, spec-for-guidance, guidance-for-spec, guidance-for-guidance) connected in a self-referential pattern. A root vertex (b0:root) resolves the self-referential paradox by anchoring boundary faces. The boundary complex satisfies the invariant $V - F = 1$, where the ``one'' is the root vertex—the only vertex not requiring its own assurance face.
+\textbf{Boundary Condition:} The topological assurance framework bootstraps through four foundational vertices: spec-for-spec(\textcolor{blue}{\textbf{SS}}), spec-for-guidance (\textcolor{green!50!black}{\textbf{SG}}), guidance-for-spec (\textcolor{yellow!80!black}{\textbf{GS}}), guidance-for-guidance (\textcolor{orange!80!black}{\textbf{GG}}) which are mutually assured in the self-referential pattern shown in Table \ref{tab:boundary}. Two of these configurations form valid assurance triangles(\textcolor{yellow!80!black}{\textbf{GS}} and \textcolor{green!50!black}{\textbf{SG}}), while the other two (\textcolor{blue}{\textbf{SS}} and \textcolor{orange!80!black}{\textbf{GG}}) rely on self-reference (\textcolor{blue}{\textbf{SS}} via self-verification \textcolor{blue}{\textbf{SS}}:\textcolor{blue}{\textbf{SS}}, \textcolor{orange!80!black}{\textbf{GG}} via self-validation \textcolor{orange!80!black}{\textbf{GG}}:\textcolor{orange!80!black}{\textbf{GG}}). This boundary condition is logically valid—each foundational document has verification, validation, and coupling edges—but the self-loops create degenerate faces that violate the formal requirements for a simplicial complex. 
 
-\subsection{Physical Layer: Implementation Choices}
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{0.04\linewidth}p{0.18\linewidth}p{0.16\linewidth}p{0.2\linewidth}p{0.18\linewidth}}
+\toprule
+\rowcolor{tableheader}
+\textbf{ID}&\textbf{Document} & \textbf{Coupling} & \textbf{Verification} & \textbf{Validation} \\
+\midrule
+\rowcolor{blue!10}
+\textcolor{blue}{\textbf{SS}} &spec-for-spec & \textcolor{blue}{\textbf{SS}}:\textcolor{yellow!80!black}{\textbf{GS}} & \textcolor{blue}{\textbf{SS}}:\textcolor{blue}{\textbf{SS}} & \textcolor{blue}{\textbf{SS}}:\textcolor{yellow!80!black}{\textbf{GS}} \\
+\rowcolor{green!10}
+\textcolor{green!50!black}{\textbf{SG}}&spec-for-guidance & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{orange!80!black}{\textbf{GG}} & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{blue}{\textbf{SS}} & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{orange!80!black}{\textbf{GG}} \\
+\rowcolor{yellow!20}
+\textcolor{yellow!80!black}{\textbf{GS}}& guidance-for-spec & \textcolor{blue}{\textbf{SS}}:\textcolor{yellow!80!black}{\textbf{GS}} & \textcolor{yellow!80!black}{\textbf{GS}}:\textcolor{green!50!black}{\textbf{SG}} & \textcolor{yellow!80!black}{\textbf{GS}}:\textcolor{orange!80!black}{\textbf{GG}} \\
+\rowcolor{orange!15}
+\textcolor{orange!80!black}{\textbf{GG}} & guidance-for-guidance & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{orange!80!black}{\textbf{GG}} & \textcolor{orange!80!black}{\textbf{GG}}:\textcolor{green!50!black}{\textbf{SG}} & \textcolor{orange!80!black}{\textbf{GG}}:\textcolor{orange!80!black}{\textbf{GG}} \\
+\bottomrule
+\end{tabular}
+\caption{Boundary Condition: Self-Referential Edges}
+\label{tab:boundary}
+\end{table}
 
-Table 2 summarizes implementation technology choices.
+In Section 5.1, this boundary condition is converted into a valid simplicial complex (the boundary complex) by introducing a root vertex that eliminates the degeneracies. 
+
+\subsection{Physical Layer: Implementation}
+
+Table 2 summarizes the implementation decisions.
 
 \begin{table}[H]
 \centering
@@ -430,7 +454,134 @@ Accountability & Git history, approver field & Username as identity, Github acti
 \label{tab:implementation}
 \end{table}
 
-\textbf{Unit Testing:} Individual scripts pass pytest. Template verification catches malformed documents. Type schemas enforce required fields. The \texttt{check\_accountability.py} script validates that approver fields are present and match whitelisted identities. Continunous integration is achieve through github actions which prevent pull requests from being merged if they fail the tests which check for verifications, signed validations and structural integrity of assurance triangles.
+\textbf{Unit Testing:} Individual scripts pass pytest. Template verification catches malformed documents. Type schemas enforce required fields. The \texttt{check\_accountability.py} script validates that approver fields are present and match whitelisted identities. Continuous integration is achieved through github actions which prevent pull requests from being merged if they fail the tests which check for verifications, signed validations and structural integrity of assurance triangles.
+% ===== Self-Demonstration Section =====
+\section{Self-Demonstration}
+
+This section demonstrates the framework by applying it to produce this document. If you are reading this paper in the symposium proceedings, the framework succeeded in producing a document that is both \textit{rules-compliant} and \textit{fit-for-purpose}.
+
+\subsection{Foundation: The Boundary Complex}
+
+Section 4.3 introduced the boundary condition: four foundational vertices mutually assured in a self-referential pattern. This boundary condition is logically valid—each document has verification, validation, and coupling—but contains degenerate faces due to self-loops (spec-for-spec verifies against itself; guidance-for-guidance validates against itself). This section describes how the boundary condition is converted into a valid simplicial complex—the boundary complex—by introducing an axiomatic root vertex.
+
+\textbf{The Rewiring:} A fifth vertex, \textit{root} (\textbf{b0}), is introduced as an axiomatic element (not a document requiring assurance). The degenerate self-loops are rewired to connect through the root as shown in Table \ref{tab:boundary-complex}.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{0.04\linewidth}p{0.18\linewidth}p{0.16\linewidth}p{0.2\linewidth}p{0.18\linewidth}}
+\toprule
+\rowcolor{tableheader}
+\textbf{ID}&\textbf{Document} & \textbf{Coupling} & \textbf{Verification} & \textbf{Validation} \\
+\midrule
+\textbf{b0} & root  & — & — & — \\
+\rowcolor{blue!10}
+\textcolor{blue}{\textbf{SS}} &spec-for-spec & \textbf{b0}:\textcolor{yellow!80!black}{\textbf{GS}}& \textcolor{blue}{\textbf{SS}}:\textbf{b0} & \textcolor{blue}{\textbf{SS}}:\textcolor{yellow!80!black}{\textbf{GS}} \\
+\rowcolor{green!10}
+\textcolor{green!50!black}{\textbf{SG}}&spec-for-guidance & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{orange!80!black}{\textbf{GG}} & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{blue}{\textbf{SS}} & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{orange!80!black}{\textbf{GG}} \\
+\rowcolor{yellow!20}
+\textcolor{yellow!80!black}{\textbf{GS}}& guidance-for-spec & \textcolor{blue}{\textbf{SS}}:\textcolor{yellow!80!black}{\textbf{GS}} & \textcolor{yellow!80!black}{\textbf{GS}}:\textcolor{green!50!black}{\textbf{SG}} & \textcolor{yellow!80!black}{\textbf{GS}}:\textcolor{orange!80!black}{\textbf{GG}} \\
+\rowcolor{orange!15}
+\textcolor{orange!80!black}{\textbf{GG}} & guidance-for-guidance & \textcolor{green!50!black}{\textbf{SG}}:\textbf{b0}& \textcolor{orange!80!black}{\textbf{GG}}:\textcolor{green!50!black}{\textbf{SG}} & \textcolor{orange!80!black}{\textbf{GG}}:\textbf{b0} \\
+\rowcolor{gray!10}
+\bottomrule
+\end{tabular}
+\caption{Boundary Complex: Rewired Through Axiomatic Root}
+\label{tab:boundary-complex}
+\end{table}
+
+This rewiring eliminates degeneracy and provides a foundation for the topological assurance structure. The root vertex does not require its own assurance—it is axiomatic. 
+
+The local constraints which characterizes our assurance complex are
+\begin{enumerate}
+    \item Assurance face \(a=(d,s,g)\) assures exactly one document vertex \(d\).
+    \item Assurance face \(a=(d,s,g)\) asserts verification edge from document vertex  $d$  to spec vertex $s$.
+    \item Assurance face \(a=(d,s,g)\) asserts a coupling edge from spec vertex $s$ to guidance vertex $g$.
+    \item  Assurance face \(a=(d,s,g)\) asserts a human signed validation edge from  vertex  $d$  to guidance vertex $g$.
+    \item Spec vertex $s$ is an assured document, and thus must have an assurance face \(a_s=(s,s_s,g_s)\).
+    \item Guidance vertex \(g\) is an assured document, and thus must have an assurance face $a_g=(g,s_g,g_g)$.
+\end{enumerate}
+
+As a consequence of the pairings of documents to assurances (d, $a_d$), and the presence of the root vertex, a valid assurance complex satisfies \(V-F\ge 1\), where  $V - F = 1$ when each document is assured exactly once.  It is possible to assure the same document $d$ against more than one coupled $(s,g)$, resulting in valid assurance complexes with \(V - F>1\). 
+
+The topological invariant \(V-F\ge 1\) is necessary but not sufficient for an assurance complex to be valid, and therefore can be used to spot check and quickly identity invalid assurance complexes.
+
+\subsection{Engineering Lifecycle}
+
+The framework enacts a four-phase lifecycle for assured document development, demonstrated through this paper's creation.
+
+\textbf{Phase 1: Document Type Definition.} We analyzed the INCOSE IS 2026 Call for Papers to create \textit{spec-for-incose-paper} (structural requirements) and \textit{guidance-for-incose-paper} (quality criteria). Both were verified against the \textit{spec-for-specs} (SS) and validated against the \textit{guidance-for-specs} (GS) with human approval. A coupling edge links them, allowing them to form assurances for document type \textit{incose-paper}.
+
+\textbf{Phase 2: Supporting Documents.} We created four supporting documents: framework architecture, literature review, lifecycle description, and novel contributions ranking. Each was verified against its spec and validated against its guidance, with human approval closing assurance triangles. The spec-guidance pairs for each of architecture, literature-review, lifecycle and novel-contributions are assured against the boundary complex.
+
+\textbf{Phase 3: Content Assembly.} This paper was drafted iteratively, with each section verified for structural compliance and validated for fitness-for-purpose. Verification is automated (template checks, type schemas); validation requires human judgment against quality criteria. Both verification and validation edges were created for each section, with coupling edges ensuring spec-guidance alignment. This process was inherently loopy but automation allowed rapid propagation of changes, and facilitated refreshing human approvals after changes were merged.
+
+\textbf{Phase 4: Post-Processing.} The assured markdown source is transformed to latex via a modified version of Phase 3 and this PDF was compiled for submission. Acknowledged gap: the verified sources (markdown and latex files) differ from the submitted artifact (PDF). Mitigation: the source repository remains the authoritative record; the PDF is a derived artifact with documented transformation.
+
+\subsection{Assurance Audit Results}
+
+This section presents results from auditing the assurance complex generated at the end of Phase 3. The assurance audit uses \texttt{audit\_assurance\_chart.py} to verify complete coverage. Every non-root vertex must have at least one assurance face.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{0.40\linewidth}p{0.20\linewidth}p{0.20\linewidth}}
+\toprule
+\rowcolor{tableheader}
+\textbf{Metric} & \textbf{Value} & \textbf{Status} \\
+\midrule
+Total vertices (V) & 24 & — \\
+Assurance faces (F) & 23 & — \\
+Invariant V - F = 1 & 24 - 23 = 1 & PASS \\
+Coverage & 100\% (23/23 non-root) & PASS \\
+\bottomrule
+\end{tabular}
+\caption{Assurance Audit Summary}
+\label{tab:audit}
+\end{table}
+
+The 24 vertices include: 5 in the boundary complex (root + 4 foundational), 4 for the INCOSE paper type, 8 for supporting document types (4 types $\times$ spec + guidance), 4 supporting document instances, and this paper itself. Each non-root vertex has an assurance face connecting it to its spec, guidance, and coupling edge.
+
+\subsection{Discovered Issues and Resolution}
+
+Self-demonstration revealed a tooling gap. Initial audit runs showed 85.7\% coverage instead of 100\%. The audit script inferred assurance face targets from naming conventions rather than reading explicit \texttt{target:} fields in face metadata.
+
+This was discovered, diagnosed, and fixed during framework application:
+\begin{enumerate}
+\item \textbf{Discovery}: Audit reported the paper content vertex as unassured
+\item \textbf{Diagnosis}: Script used naming pattern matching instead of explicit metadata
+\item \textbf{Fix}: Added \texttt{get\_face\_target()} function to read explicit target fields
+\item \textbf{Verification}: Re-ran audit; 100\% coverage achieved
+\end{enumerate}
+
+This sequence demonstrates the framework operating: a gap was detected through systematic auditing, root cause was identified, fix was implemented, and verification confirmed resolution. The meta-observation is that the framework's tooling caught a tooling defect—the self-referential nature strengthened rather than undermined confidence.
+
+\subsection{Recursive Assurance and Accountability}
+
+The framework's central claim—that typed simplicial complexes can enforce human accountability for document quality—is demonstrated by this paper:
+
+\begin{enumerate}
+\item Framework Axioms
+\begin{enumerate}
+    \item This paper cannot exist as an assured vertex without passing verification
+    \item Verification cannot pass without compliance with assured specification
+    \item This paper cannot be assured without validation against assured guidance 
+    \item Validation requires the guidance is coupled to the specification.
+    \item Validation cannot pass without a named human approver
+\end{enumerate}
+\item Observed Facts:
+\begin{enumerate}
+    \item This paper exists as an assured vertex
+\end{enumerate}
+\item Conclusion: 
+\begin{enumerate}
+    \item This document is structurally rule-compliant
+    \item A human validated this paper's fitness-for-purpose
+    \item All dependency documents (supporting documents, specs, and guidance) must also be assured with accountable human's signing the associated validations.
+\end{enumerate}
+\end{enumerate}
+
+The assurance and accountability properties are structural, not procedural. The Assurance complex checks for compliance with the framework axioms via \texttt{audit\_assurance\_chart.py}. The \texttt{human\_approver} field is required by the type system—not by policy, but by data structure. \textit{Github Actions} automate schema validation and matching the signer to the \textit{Github Username} making the git commit; this prevents validation edges without named accountable signers from being committed to the repository.
 % ===== PLACEHOLDER FOR REMAINING SECTIONS =====
 
 \subsection{Paper Format}

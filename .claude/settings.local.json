@@ -128,7 +128,8 @@
       "Bash(pip show:*)",
       "Bash(export PATH=\"/Library/TeX/texbin:/opt/anaconda3/bin:$PATH\")",
       "Bash(npm install:*)",
-      "Bash(export PATH=\"/Library/TeX/texbin:/opt/homebrew/bin:$PATH\")"
+      "Bash(export PATH=\"/Library/TeX/texbin:/opt/homebrew/bin:$PATH\")",
+      "Bash(detex:*)"
     ]
   }
 }
