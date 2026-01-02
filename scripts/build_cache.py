@@ -8,7 +8,7 @@ and generates a JSON cache file with all element metadata.
 import json
 import argparse
 from pathlib import Path
-from datetime import datetime, timezone
+from datetime import datetime, date, timezone
 from typing import Dict, Any, List
 
 from parse_chart import parse_directory, ParseError
@@ -25,6 +25,8 @@ def sanitize_for_json(obj: Any) -> Any:
         JSON-serializable version of obj
     """
     if isinstance(obj, datetime):
+        return obj.isoformat()
+    elif isinstance(obj, date):
         return obj.isoformat()
     elif isinstance(obj, dict):
         return {k: sanitize_for_json(v) for k, v in obj.items()}

@@ -19,8 +19,6 @@ criteria:
   - rigor
   - engagement
 rubric: validation-assessment
-dependencies:
-  - v:spec:incose-paper-section
 ---
 
 # Guidance for INCOSE Paper Sections

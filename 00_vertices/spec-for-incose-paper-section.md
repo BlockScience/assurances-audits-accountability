@@ -18,8 +18,6 @@ sections:
   - section_specific_requirements
 schema_type: markdown-section
 strictness: strict
-dependencies:
-  - INCOSE Conference LaTeX Template V1.2
 ---
 
 # Specification for INCOSE Paper Sections
