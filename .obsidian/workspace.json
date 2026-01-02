@@ -184,6 +184,7 @@
   },
   "active": "d8fe634073ae7dce",
   "lastOpenFiles": [
+    "scripts/__pycache__/generate_assurance_audit_elements.cpython-311.pyc",
     "charts/boundary-complex/boundary-complex.md",
     "charts/boundary-complex/boundary-complex.html",
     "00_vertices/guidance-for-guidance.md",
@@ -226,7 +227,6 @@
     "01_edges/validation-incose-paper-spec:guidance-spec.md",
     "00_vertices/spec-for-incose-paper.md",
     "NAVIGATION.md",
-    "01_edges/README.md",
     "docs/images/vs-code-interface.png",
     "docs/images/obsidian-interface.png",
     "docs/images/assurance_complex.png",

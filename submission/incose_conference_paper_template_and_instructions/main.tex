@@ -688,7 +688,7 @@ def audit_assurance(doc):
 \small
 
 \subsubsection{Audit Summary}
-Applying the audit algorithm to the Incose Paper documented yielded the results in Table \ref{tab:audit}.
+Applying the audit algorithm to the INCOSE Paper yielded the results in Table \ref{tab:audit}.
 \begin{table}[H]
 \centering
 \small
@@ -697,21 +697,21 @@ Applying the audit algorithm to the Incose Paper documented yielded the results 
 \rowcolor{tableheader}
 \textbf{Metric} & \textbf{Value} & \textbf{Status} \\
 \midrule
-Total vertices (V) & 24 & — \\
-Assurance faces (F) & 23 & — \\
-Invariant V - F = 1 & 24 - 23 = 1 & PASS \\
-Coverage & 100\% (23/23 non-root) & PASS \\
+Total vertices (V) & 22 & — \\
+Assurance faces (F) & 22 & — \\
+Approved Validation & 22 & — \\
+Coverage & 100\% (22/22) & PASS \\
 \bottomrule
 \end{tabular}
 \caption{Assurance Audit Summary}
 \label{tab:audit}
 \end{table}
 
-The 24 vertices include: 5 in the boundary complex (root + 4 foundational), 2 for the INCOSE paper type (Spec and Guidance), 8 for supporting document types (4 types $\times$ spec + guidance), 4 supporting document instances, and this paper itself. Each non-root vertex has an assurance face connecting it to its spec, guidance, and coupling edge.
+The 22 vertices comprise: 1 root (b0), 4 foundational (SS, SG, GS, GG), 6 specs for document types (architecture, lifecycle, incose-literature-review, novel-contributions, incose-paper, incose-self-demonstration), 6 corresponding guidances, 4 supporting document instances, and 1 INCOSE paper instance. The 22 assurance faces include 2 boundary faces (spec-spec and guidance-guidance) plus 20 standard assurance faces. The paper vertex is assured twice (assurance:incose-paper-2026-base, assurance:incose-paper-2026-self-demo), giving 22 total faces for 21 non-root document vertices. Each non-root document is assured exactly once, except the paper which achieves dual assurance through two independent spec-guidance pairs.
 
 \subsection{Discovered Issues and Resolution}
 
-Self-demonstration revealed a tooling gap. Initial audit runs showed 85.7\% coverage instead of 100\%. The audit script inferred assurance face targets from naming conventions rather than reading explicit \texttt{target:} fields in face metadata.
+Self-demonstration revealed a tooling gap. An audit of any earlier draft showed 85.7\% coverage instead of 100\%. The audit script inferred assurance face targets from naming conventions rather than reading explicit \texttt{target:} fields in face metadata.
 
 This was discovered, diagnosed, and fixed during framework application:
 \begin{enumerate}
@@ -723,7 +723,7 @@ This was discovered, diagnosed, and fixed during framework application:
 
 This sequence demonstrates the framework operating: a gap was detected through systematic auditing, root cause was identified, fix was implemented, and verification confirmed resolution. The meta-observation is that the framework's tooling caught a tooling defect—the self-referential nature strengthened rather than undermined confidence.
 
-\subsection{Recursive Assurance and Accountability}
+\subsection{Traceability and Accountability}
 
 The framework's central claim—that typed simplicial complexes can enforce human accountability for document quality—is demonstrated by this paper:
 
@@ -748,27 +748,33 @@ The framework's central claim—that typed simplicial complexes can enforce huma
 \end{enumerate}
 \end{enumerate}
 
-The assurance and accountability properties are structural, not procedural. The Assurance complex checks for compliance with the framework axioms via \texttt{audit\_assurance\_chart.py}. The \texttt{human\_approver} field is required by the type system—not by policy, but by data structure. \textit{Github Actions} automate schema validation and matching the signer to the \textit{Github Username} making the git commit; this prevents validation edges without named accountable signers from being committed to the repository.
+The traceability and accountability properties are structural, not procedural. The assurance complex checks for compliance with the framework axioms via \texttt{audit\_assurance\_chart.py}. The \texttt{human\_approver} field is required by the type system—not by policy, but by data structure. \textit{Github Actions} automate schema validation and matching the signer to the \textit{Github Username} making the git commit; this prevents validation edges without named accountable signers from being committed to the repository.
 
 \section{Implications and Limitations}
 
-The framework demonstrates how topological structures can formalize document assurance relationships that are typically managed through informal processes. By encoding verification, validation, and accountability as typed edges in a simplicial complex, the approach makes quality requirements structurally enforceable rather than procedurally recommended.
+The framework demonstrates how topological structures can formalize document quality assurance relationships that are typically managed through informal processes. By encoding verification, validation, and accountability as typed edges in a simplicial complex, the approach makes quality requirements structurally enforceable rather than procedurally recommended.
 
-The self-referential foundation addresses a fundamental challenge: how to specify the specification language itself. The boundary complex resolves this through an axiomatic root vertex that grounds the type system while maintaining topological validity. This pattern—introducing a distinguished element to transform degenerate structures into well-formed complexes—appears throughout mathematics and suggests broader applicability. The use formal mathematical boundary conditions is well established in engineering practice and our approach in particular invokes a mental model reminiscent of finite element analysis.
+The self-referential foundation addresses a fundamental challenge: how to specify the specification language itself. The boundary complex resolves this through an axiomatic root vertex that grounds the type system while maintaining topological validity. This pattern—introducing a distinguished element to transform degenerate structures into well-formed complexes—appears throughout mathematics and suggests broader applicability. The use formal mathematical boundary conditions is well established in engineering practice \parencite{SzaboBabuska2011}. Our approach invites an interpretation of document relationships that is reminiscent of finite element analysis.
 
-\textbf{Current limitations} include: (1) the framework requires computational infrastructure (Python scripts, version control, continuous integration) which may not be accessible to all organizations; (2) the type system is currently domain-specific to technical documentation and would require adaptation for other document types; (3) human accountability enforcement depends on organizational commitment to maintaining the validation discipline; (4) the boundary complex pattern has been demonstrated only for the foundational four-vertex case and scaling properties remain to be characterized. Stabilizing and packaging software components, as well as building document-type registries will mitigate risks and improve user experience.
+\textbf{Current limitations} (1) the framework requires computational infrastructure (Python scripts, version control, continuous integration) which may not be accessible to all organizations; (2) the type system is currently domain-specific to technical documentation and would require adaptation for other document types; (3) human accountability enforcement depends on organizational commitment to maintaining the validation discipline; (4) the boundary complex pattern has been demonstrated only for the foundational four-vertex case and scaling properties remain to be characterized; (5) stabilizing and packaging software components, as well as building document-type registries are needed to improve user experience and to mitigate user-error related risks.
 
-\textbf{Future work} should explore: compositional patterns for assembling larger complexes from assured sub-complexes; integration with existing requirements management tools; formal verification of the type system's soundness; and application to domains beyond technical documentation such as regulatory compliance, academic peer review, or governance documentation. Submitting documents to git-based version control with verifiable properties (including the presence of signatures for accountable humans) opens the door to applying Model-Based Systems Engineering to the aspects of organizational analysis, design, \textit{implementation} and \textit{quality assurance} which have heretofore been handled by bureaucracies\parencite{ZarghamBenMeir2026}. Our focus is on explicitly introducing actors, activities and resources into our topological modeling framework. Typed edges represent relationships, and faces are used to codify constraints which must be satisfied.
+\textbf{Future work} (1) compositional patterns for assembling larger complexes from assured sub-complexes; (2) integration with existing requirements management tools; (3) formal verification of the type system's soundness; and (4) application to domains beyond technical documentation such as regulatory compliance, academic peer review, or governance documentation. 
+
+Submitting documents to git-based version control with verifiable properties (including the presence of signatures for accountable humans) opens the door to applying Model-Based Systems Engineering to the aspects of organizational analysis, design, \textit{implementation} and \textit{quality assurance} which have heretofore been handled by bureaucracies \parencite{ZarghamBenMeir2026}. The authors' focus is on engineering organizations; our application of this framework introduce actors, activities and resources into our topological modeling framework. Typed edges represent relationships, and faces are used to codify constraints which must be satisfied. Domains specific research, development and operationalization will proceed along this vector.
 
 \section{Conclusions}
 
-This paper introduced a topological framework for document assurance that structurally enforces verification, validation, and human accountability requirements. The framework represents documents as vertices, quality relationships as typed edges, and assurance as 2-simplices in a simplicial complex, with human accountability guaranteed by type system constraints on validation edges.
+This paper introduced a topological framework for document assurance that structurally enforces verification, validation, and human accountability requirements. The framework represents documents as vertices, quality relationships as typed edges, and assurance as 2-simplices in a typed simplicial complex, with human accountability guaranteed by type system constraints on validation edges.
 
-The self-demonstration validates the approach: this paper exists as an assured vertex only because all framework axioms are satisfied, including human validation with named accountability. The recursive property—that assuring any document requires assuring its specification and guidance—creates an accountability chain traceable to the axiomatic root.
+The self-demonstration validates the approach: this paper exists as an assured vertex only because all framework axioms are satisfied, including human validation with named accountability. The recursive property—that assuring any document requires assuring its specification and guidance—creates an accountability chain traceable to a self-consistent boundary.
 
-The key insight is that topology provides more than analogy. Simplicial complexes offer precise mathematical language for reasoning about document relationships, compositional properties through boundary operators, and structural invariants (such as \(V - F \geq 1\)) that constrain valid configurations.  Where edges in knowledge graphs encode relationships, faces can encode constraints that must be jointly satisfied. This formalization transforms informal quality practices into mathematically verifiable structures.
+The key insight is that topology provides more than analogy. Simplicial complexes offer precise mathematical language for reasoning about document relationships, compositional properties through boundary operators, and locally verifiable rules that constrain valid global configurations to those with desirable properties.  Where edges in knowledge graphs encode relationships, faces can encode constraints that must be jointly satisfied. This formalization transforms informal quality practices into mathematically verifiable structures.
 
-For systems engineering practitioners, the framework offers: (1) automation of consistency checking across documentation networks; (2) structural enforcement of accountability requirements; (3) explicit representation of often-implicit specification-guidance relationships; (4) compositional patterns for managing complexity in large documentation systems. The approach aligns with the IS 2026 theme of seeking \textit{wa} (harmony) in systems engineering by providing rigorous foundations for coordinating human judgment, computational verification, requirements traceability and organizational accountability in document-intensive engineering processes.
+For systems engineering practitioners, the framework offers: (1) automation of consistency checking across documentation networks; (2) structural enforcement of accountability requirements; (3) explicit representation of often-implicit specification-guidance relationships; (4) compositional patterns for managing complexity in large documentation systems. Formalization of previous informal quality assurance practices and implementation via software based deterministic rule checking enables cognizant engineers access to the power of generative AI without loss of requirements traceability or diffusion of accountability. The approach aligns with the IS 2026 theme of seeking \textit{wa} (harmony) in systems engineering by providing rigorous foundations for balancing human judgment in validation with computational verification, requirements traceability and organizational accountability in document-intensive engineering processes.
+
+\section*{AI Use Acknowledgment}
+
+This paper was prepared with assistance from Claude (Anthropic), a large language model used for drafting, editing, and structuring content. All technical claims, methodological choices, and conclusions were reviewed, validated, and approved by the named author. The framework's requirement for named human validators on all validation edges was applied recursively to this paper itself—every assertion has been verified by a cognizant human engineer who takes accountability for its correctness. The use of LLM assistance in document preparation exemplifies the paper's central thesis: computational tools can accelerate generation and verification tasks while preserving human accountability through structural enforcement of validation requirements.
 
 % =========================
 % ===== References ========
