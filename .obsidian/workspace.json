@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "00_vertices/guidance-for-lifecycle.md",
+                "file": "00_vertices/doc-architecture-incose-paper.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "guidance-for-lifecycle"
+              "title": "doc-architecture-incose-paper"
             }
           }
         ]
@@ -184,6 +184,9 @@
   },
   "active": "d8fe634073ae7dce",
   "lastOpenFiles": [
+    "00_vertices/doc-lifecycle-incose-paper.md",
+    "00_vertices/spec-for-lifecycle.md",
+    "00_vertices/guidance-for-lifecycle.md",
     "scripts/__pycache__/generate_assurance_audit_elements.cpython-311.pyc",
     "charts/boundary-complex/boundary-complex.md",
     "charts/boundary-complex/boundary-complex.html",
@@ -219,14 +222,11 @@
     "submission/incose_conference_paper_template_and_instructions/template-images",
     "submission/incose_conference_paper_template_and_instructions/references.bib",
     "submission/incose_conference_paper_template_and_instructions/main.tex",
-    "submission/incose_conference_paper_template_and_instructions/figures",
     "Untitled.md",
     "README.md",
     "01_edges/validation-incose-paper-2026:guidance-incose-paper.md",
     "02_faces/assurance-incose-paper-spec.md",
     "01_edges/validation-incose-paper-spec:guidance-spec.md",
-    "00_vertices/spec-for-incose-paper.md",
-    "NAVIGATION.md",
     "docs/images/vs-code-interface.png",
     "docs/images/obsidian-interface.png",
     "docs/images/assurance_complex.png",
