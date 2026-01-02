@@ -1,14 +1,18 @@
-# submisison materials (serialized final form)
+# Submission materials (serialized final form)
 submission/*.pdf
 
+# Obsidian - ignore workspace (personal state), keep other configs
 .obsidian/workspace.json
+
+# Claude Code - ignore local settings, keep project instructions
+.claude/settings.local.json
 
 # Python virtual environment
 .venv/
 venv/
 env/
 
-# input-docs
+# Input docs (external/temporary)
 input-docs/
 
 # Python cache
@@ -22,6 +26,8 @@ __pycache__/
 .pytest_cache/
 .coverage
 htmlcov/
+.tox/
+.nox/
 
 # IDE
 .vscode/
@@ -38,3 +44,11 @@ Thumbs.db
 dist/
 build/
 *.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
