@@ -1,6 +1,8 @@
 # submisison materials (serialized final form)
 submission/*.pdf
 
+.obsidian/workspace.json
+
 # Python virtual environment
 .venv/
 venv/

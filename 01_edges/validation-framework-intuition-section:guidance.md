@@ -10,6 +10,7 @@ target_type: vertex/guidance
 orientation: directed
 validator: claude-sonnet-4-5-20250929
 validation_method: llm-assisted
+llm_model: claude-sonnet-4-5-20250929
 human_approver: mzargham
 approval_date: 2025-12-31
 tags:
@@ -35,7 +36,7 @@ This validation edge documents the assessment of the Framework Intuition section
 - **Target Guidance**: [guidance-for-incose-paper-section](../00_vertices/guidance-for-incose-paper-section.md)
 - **Note**: This is a NEW section created through user restructuring
 
-## Quality Criteria Assessment
+## Validation Assessment
 
 ### 1. Clarity
 **Score:** 4/4 (Excellent)

@@ -19,8 +19,6 @@ criteria:
   - roadmap-utility
   - flow-and-transitions
 rubric: validation-assessment
-dependencies:
-  - v:spec:introduction-section
 ---
 
 # Guidance for INCOSE Paper Introduction Section

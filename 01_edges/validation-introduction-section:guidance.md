@@ -10,6 +10,7 @@ target_type: vertex/guidance
 orientation: directed
 validator: claude-sonnet-4-5-20250929
 validation_method: llm-assisted
+llm_model: claude-sonnet-4-5-20250929
 human_approver: mzargham
 approval_date: 2025-12-31
 tags:
@@ -34,7 +35,7 @@ This validation edge documents the assessment of the Introduction section in [ma
 - **Source Document**: Introduction section (621 words, lines 228-258 of main.tex)
 - **Target Guidance**: [guidance-for-introduction-section](../00_vertices/guidance-for-introduction-section.md)
 
-## Quality Criteria Assessment
+## Validation Assessment
 
 ### 1. Hook Effectiveness
 **Score:** 4/4 (Excellent)

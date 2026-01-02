@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-12-31T00:13:23.173225+00:00",
+  "generated": "2026-01-02T19:04:56.493508+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -274,6 +274,30 @@
           "v:guidance:assurance_audit"
         ]
       },
+      "v:guidance:background-section": {
+        "file": "00_vertices/guidance-for-background-section.md",
+        "type": "vertex/guidance",
+        "extends": "guidance",
+        "id": "v:guidance:background-section",
+        "name": "Guidance for INCOSE Paper Background/Related Work Section",
+        "tags": [
+          "vertex",
+          "guidance",
+          "background"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T19:35:00+00:00",
+        "modified": "2025-12-31T19:35:00+00:00",
+        "description": "Quality criteria and best practices for writing excellent Background sections in INCOSE symposium papers",
+        "criteria": [
+          "synthesis-quality",
+          "gap-articulation",
+          "citation-appropriateness",
+          "balance-and-proportion",
+          "accessibility"
+        ],
+        "rubric": "validation-assessment"
+      },
       "v:guidance:chart": {
         "file": "00_vertices/guidance-for-charts.md",
         "type": "vertex/guidance",
@@ -325,6 +349,31 @@
         "modified": "2025-12-30T19:00:00+00:00",
         "dependencies": []
       },
+      "v:guidance:incose-paper-section": {
+        "file": "00_vertices/guidance-for-incose-paper-section.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:incose-paper-section",
+        "name": "Guidance for INCOSE Paper Sections",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T17:50:00+00:00",
+        "modified": "2025-12-31T17:50:00+00:00",
+        "description": "Quality criteria and best practices for writing excellent INCOSE symposium paper sections that resonate with reviewers",
+        "criteria": [
+          "clarity",
+          "coherence",
+          "contribution-visibility",
+          "practitioner-accessibility",
+          "rigor",
+          "engagement"
+        ],
+        "rubric": "validation-assessment"
+      },
       "v:guidance:incose-paper": {
         "file": "00_vertices/guidance-for-incose-paper.md",
         "type": "vertex/guidance",
@@ -360,6 +409,31 @@
         "dependencies": [
           "v:guidance:incose-paper"
         ]
+      },
+      "v:guidance:introduction-section": {
+        "file": "00_vertices/guidance-for-introduction-section.md",
+        "type": "vertex/guidance",
+        "extends": "guidance",
+        "id": "v:guidance:introduction-section",
+        "name": "Guidance for INCOSE Paper Introduction Section",
+        "tags": [
+          "vertex",
+          "guidance",
+          "introduction"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T19:10:00+00:00",
+        "modified": "2025-12-31T19:10:00+00:00",
+        "description": "Quality criteria and best practices for writing excellent Introduction sections in INCOSE symposium papers",
+        "criteria": [
+          "hook-effectiveness",
+          "problem-clarity",
+          "gap-articulation",
+          "contribution-visibility",
+          "roadmap-utility",
+          "flow-and-transitions"
+        ],
+        "rubric": "validation-assessment"
       },
       "v:guidance:learning-module": {
         "file": "00_vertices/guidance-for-learning-module.md",
@@ -699,6 +773,32 @@
           "v:spec:signer"
         ]
       },
+      "v:spec:background-section": {
+        "file": "00_vertices/spec-for-background-section.md",
+        "type": "vertex/spec",
+        "extends": "spec",
+        "id": "v:spec:background-section",
+        "name": "Specification for INCOSE Paper Background/Related Work Section",
+        "tags": [
+          "vertex",
+          "spec",
+          "background"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T19:30:00+00:00",
+        "modified": "2025-12-31T19:30:00+00:00",
+        "description": "Detailed structural requirements for Background and Related Work sections in INCOSE symposium papers",
+        "sections": [
+          "purpose",
+          "structural_requirements",
+          "content_requirements",
+          "format_constraints"
+        ],
+        "strictness": "strict",
+        "dependencies": [
+          "v:spec:incose-paper-section"
+        ]
+      },
       "v:spec:chart": {
         "file": "00_vertices/spec-for-charts.md",
         "type": "vertex/spec",
@@ -749,6 +849,30 @@
         "created": "2025-12-30T19:00:00+00:00",
         "modified": "2025-12-30T19:00:00+00:00",
         "dependencies": []
+      },
+      "v:spec:incose-paper-section": {
+        "file": "00_vertices/spec-for-incose-paper-section.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:incose-paper-section",
+        "name": "Specification for INCOSE Paper Sections",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T17:45:00+00:00",
+        "modified": "2025-12-31T17:45:00+00:00",
+        "description": "Structural requirements for sections within an INCOSE symposium research paper, derived from INCOSE Conference LaTeX Template V1.2",
+        "sections": [
+          "purpose",
+          "structural_requirements",
+          "format_constraints",
+          "section_specific_requirements"
+        ],
+        "schema_type": "markdown-section",
+        "strictness": "strict"
       },
       "v:spec:incose-paper": {
         "file": "00_vertices/spec-for-incose-paper.md",
@@ -803,6 +927,32 @@
           "doc",
           "edge-type",
           "inheritance"
+        ]
+      },
+      "v:spec:introduction-section": {
+        "file": "00_vertices/spec-for-introduction-section.md",
+        "type": "vertex/spec",
+        "extends": "spec",
+        "id": "v:spec:introduction-section",
+        "name": "Specification for INCOSE Paper Introduction Section",
+        "tags": [
+          "vertex",
+          "spec",
+          "introduction"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T19:00:00+00:00",
+        "modified": "2025-12-31T19:00:00+00:00",
+        "description": "Detailed structural requirements for Introduction sections in INCOSE symposium papers",
+        "sections": [
+          "purpose",
+          "structural_requirements",
+          "content_requirements",
+          "format_constraints"
+        ],
+        "strictness": "strict",
+        "dependencies": [
+          "v:spec:incose-paper-section"
         ]
       },
       "v:spec:learning-module": {
@@ -1411,6 +1561,26 @@
         "version": "1.0.0",
         "created": "2025-12-30T19:00:00+00:00",
         "modified": "2025-12-30T19:00:00+00:00"
+      },
+      "e:coupling:incose-paper-section": {
+        "file": "01_edges/coupling-incose-paper-section.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:incose-paper-section",
+        "name": "Coupling - INCOSE Paper Section Spec and Guidance",
+        "source": "v:spec:incose-paper-section",
+        "target": "v:guidance:incose-paper-section",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T18:00:00+00:00",
+        "modified": "2025-12-31T18:00:00+00:00",
+        "description": "Connects specification defining INCOSE paper section structural requirements with guidance defining section quality criteria"
       },
       "e:coupling:incose-paper": {
         "file": "01_edges/coupling-incose-paper.md",
@@ -2730,6 +2900,31 @@
         "created": "2025-12-27T23:15:00+00:00",
         "modified": "2025-12-27T23:15:00+00:00"
       },
+      "e:validation:background-section:guidance": {
+        "file": "01_edges/validation-background-section:guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:background-section:guidance",
+        "name": "Validation - Background Section against Guidance",
+        "source": "v:doc:incose-paper-background-section",
+        "target": "v:guidance:background-section",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-sonnet-4-5-20250929",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-sonnet-4-5-20250929",
+        "human_approver": "mzargham",
+        "approval_date": "2025-12-31",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T20:15:00+00:00",
+        "modified": "2025-12-31T20:15:00+00:00",
+        "description": "Human-approved validation of INCOSE paper Background section against quality criteria"
+      },
       "e:validation:boundary-complex-assurance-audit:assurance_audit": {
         "file": "01_edges/validation-boundary-complex-assurance-audit:assurance_audit.md",
         "type": "edge/validation",
@@ -2803,6 +2998,56 @@
         "created": "2025-12-27T23:15:00+00:00",
         "modified": "2025-12-27T23:15:00+00:00"
       },
+      "e:validation:framework-architecture-section:guidance": {
+        "file": "01_edges/validation-framework-architecture-section:guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:framework-architecture-section:guidance",
+        "name": "Validation - Framework Architecture Section against Guidance",
+        "source": "v:doc:incose-paper-framework-architecture-section",
+        "target": "v:guidance:incose-paper-section",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-sonnet-4-5-20250929",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-sonnet-4-5-20250929",
+        "human_approver": "mzargham",
+        "approval_date": "2025-12-31",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T21:00:00+00:00",
+        "modified": "2025-12-31T21:00:00+00:00",
+        "description": "Human-approved validation of INCOSE paper Framework Architecture section (Section 4) against quality criteria"
+      },
+      "e:validation:framework-intuition-section:guidance": {
+        "file": "01_edges/validation-framework-intuition-section:guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:framework-intuition-section:guidance",
+        "name": "Validation - Framework Intuition Section against Guidance",
+        "source": "v:doc:incose-paper-framework-intuition-section",
+        "target": "v:guidance:incose-paper-section",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-sonnet-4-5-20250929",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-sonnet-4-5-20250929",
+        "human_approver": "mzargham",
+        "approval_date": "2025-12-31",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T20:30:00+00:00",
+        "modified": "2025-12-31T20:30:00+00:00",
+        "description": "Human-approved validation of INCOSE paper Framework Intuition section (NEW Section 3) against quality criteria"
+      },
       "e:validation:guidance-guidance:guidance-guidance": {
         "file": "01_edges/validation-guidance-guidance.md",
         "type": "edge/validation",
@@ -2850,6 +3095,7 @@
       "e:validation:incose-paper-2026:guidance-incose-paper": {
         "file": "01_edges/validation-incose-paper-2026:guidance-incose-paper.md",
         "type": "edge/validation",
+        "extends": "edge",
         "id": "e:validation:incose-paper-2026:guidance-incose-paper",
         "name": "Validation - INCOSE Paper 2026 against Base Guidance",
         "source": "v:doc:incose-paper-2026",
@@ -2862,6 +3108,7 @@
         "version": "1.0.0",
         "validator": "claude-opus-4-5-20251101",
         "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
         "human_approver": "mzargham",
         "tags": [
           "edge",
@@ -2871,6 +3118,7 @@
       "e:validation:incose-paper-2026:guidance-incose-self-demonstration": {
         "file": "01_edges/validation-incose-paper-2026:guidance-incose-self-demonstration.md",
         "type": "edge/validation",
+        "extends": "edge",
         "id": "e:validation:incose-paper-2026:guidance-incose-self-demonstration",
         "name": "Validation - INCOSE Paper 2026 against Self-Demonstration Guidance",
         "source": "v:doc:incose-paper-2026",
@@ -2883,6 +3131,7 @@
         "version": "1.0.0",
         "validator": "claude-opus-4-5-20251101",
         "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
         "human_approver": "mzargham",
         "tags": [
           "edge",
@@ -2978,6 +3227,7 @@
         "modified": "2025-12-30T23:55:00+00:00",
         "validator": "claude-opus-4-5-20251101",
         "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
         "human_approver": "mzargham"
       },
       "e:validation:incose-self-demonstration-spec:guidance-spec": {
@@ -3000,7 +3250,33 @@
         "modified": "2025-12-30T23:55:00+00:00",
         "validator": "claude-opus-4-5-20251101",
         "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
         "human_approver": "mzargham"
+      },
+      "e:validation:introduction-section:guidance": {
+        "file": "01_edges/validation-introduction-section:guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:introduction-section:guidance",
+        "name": "Validation - Introduction Section against Guidance",
+        "source": "v:doc:incose-paper-introduction-section",
+        "target": "v:guidance:introduction-section",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-sonnet-4-5-20250929",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-sonnet-4-5-20250929",
+        "human_approver": "mzargham",
+        "approval_date": "2025-12-31",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-31T19:45:00+00:00",
+        "modified": "2025-12-31T19:45:00+00:00",
+        "description": "Human-approved validation of INCOSE paper Introduction section against quality criteria"
       },
       "e:validation:lifecycle-guidance:guidance-guidance": {
         "file": "01_edges/validation-lifecycle-guidance:guidance-guidance.md",
@@ -3783,6 +4059,7 @@
       "e:verification:incose-paper-2026:spec-incose-paper": {
         "file": "01_edges/verification-incose-paper-2026:spec-incose-paper.md",
         "type": "edge/verification",
+        "extends": "edge",
         "id": "e:verification:incose-paper-2026:spec-incose-paper",
         "name": "Verification - INCOSE Paper 2026 against Base Spec",
         "source": "v:doc:incose-paper-2026",
@@ -3795,6 +4072,8 @@
         "version": "1.0.0",
         "verifier": "claude-opus-4-5-20251101",
         "verification_method": "automated-check",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
         "tags": [
           "edge",
           "verification"
@@ -3803,6 +4082,7 @@
       "e:verification:incose-paper-2026:spec-incose-self-demonstration": {
         "file": "01_edges/verification-incose-paper-2026:spec-incose-self-demonstration.md",
         "type": "edge/verification",
+        "extends": "edge",
         "id": "e:verification:incose-paper-2026:spec-incose-self-demonstration",
         "name": "Verification - INCOSE Paper 2026 against Self-Demonstration Spec",
         "source": "v:doc:incose-paper-2026",
@@ -3815,6 +4095,8 @@
         "version": "1.0.0",
         "verifier": "claude-opus-4-5-20251101",
         "verification_method": "automated-check",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
         "tags": [
           "edge",
           "verification"
@@ -4789,6 +5071,9 @@
         "version": "1.0.0",
         "created": "2025-12-30T23:35:00+00:00",
         "modified": "2025-12-30T23:35:00+00:00",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
         "human_approver": "mzargham",
         "orientation": "oriented"
       },
@@ -4820,6 +5105,9 @@
         "version": "1.0.0",
         "created": "2025-12-30T23:55:00+00:00",
         "modified": "2025-12-30T23:55:00+00:00",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
         "human_approver": "mzargham",
         "orientation": "oriented"
       },
@@ -5064,6 +5352,9 @@
         "version": "1.0.0",
         "created": "2025-12-30T20:45:00+00:00",
         "modified": "2025-12-30T20:45:00+00:00",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
         "human_approver": "mzargham"
       },
       "f:assurance:lifecycle-spec": {
@@ -6968,10 +7259,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 56,
-    "edge_count": 148,
+    "vertex_count": 62,
+    "edge_count": 153,
     "face_count": 65,
     "chart_count": 3,
-    "euler_characteristic": -27
+    "euler_characteristic": -26
   }
 }

@@ -18,8 +18,6 @@ criteria:
   - balance-and-proportion
   - accessibility
 rubric: validation-assessment
-dependencies:
-  - v:spec:background-section
 ---
 
 # Guidance for INCOSE Paper Background/Related Work Section
