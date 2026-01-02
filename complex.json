@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-02T19:04:56.493508+00:00",
+  "generated": "2026-01-02T20:45:29.634453+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -581,6 +581,31 @@
         "modified": "2025-12-27T22:00:00+00:00",
         "dependencies": []
       },
+      "v:guidance:repository-policy": {
+        "file": "00_vertices/guidance-for-repository-policy.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:repository-policy",
+        "name": "Guidance for Repository Policy Documents",
+        "description": "Quality criteria and best practices for creating effective repository policy documents that govern contribution patterns and collaboration",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-02T12:00:00+00:00",
+        "modified": "2026-01-02T12:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "clarity",
+          "completeness",
+          "enforceability",
+          "inclusivity",
+          "maintainability"
+        ],
+        "rubric": "validation-assessment"
+      },
       "v:guidance:skill": {
         "file": "00_vertices/guidance-for-skill.md",
         "type": "vertex/guidance",
@@ -1109,6 +1134,23 @@
         "version": "1.0.0",
         "created": "2025-12-30T00:00:00+00:00",
         "modified": "2025-12-30T00:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:repository-policy": {
+        "file": "00_vertices/spec-for-repository-policy.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:repository-policy",
+        "name": "Specification for Repository Policy Documents",
+        "description": "Defines structural requirements for repository policy documents that govern contribution patterns and collaboration rules for git repositories",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-02T12:00:00+00:00",
+        "modified": "2026-01-02T12:00:00+00:00",
         "dependencies": []
       },
       "v:spec:signature": {
@@ -1714,6 +1756,25 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:30:00+00:00",
         "modified": "2025-12-27T23:30:00+00:00"
+      },
+      "e:coupling:repository-policy": {
+        "file": "01_edges/coupling-repository-policy.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:repository-policy",
+        "name": "Coupling - Spec-for-Repository-Policy and Guidance-for-Repository-Policy",
+        "source": "v:spec:repository-policy",
+        "target": "v:guidance:repository-policy",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-02T12:00:00+00:00",
+        "modified": "2026-01-02T12:00:00+00:00"
       },
       "e:coupling:spec-guidance:guidance-spec": {
         "file": "01_edges/coupling-spec-guidance-guidance-spec.md",
@@ -3706,6 +3767,52 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:50:00+00:00",
         "modified": "2025-12-27T23:50:00+00:00"
+      },
+      "e:validation:repository-policy-guidance:guidance-guidance": {
+        "file": "01_edges/validation-repository-policy-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:repository-policy-guidance:guidance-guidance",
+        "name": "Validation - Guidance-for-Repository-Policy validates against Guidance-for-Guidance",
+        "source": "v:guidance:repository-policy",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-assistant",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-02T18:00:00+00:00",
+        "modified": "2026-01-02T18:00:00+00:00"
+      },
+      "e:validation:repository-policy-spec:guidance-spec": {
+        "file": "01_edges/validation-repository-policy-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:repository-policy-spec:guidance-spec",
+        "name": "Validation - Spec-for-Repository-Policy validates against Guidance-for-Spec",
+        "source": "v:spec:repository-policy",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-assistant",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-02T18:00:00+00:00",
+        "modified": "2026-01-02T18:00:00+00:00"
       },
       "e:validation:spec-guidance:guidance-spec": {
         "file": "01_edges/validation-spec-guidance.md",
@@ -7259,10 +7366,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 62,
-    "edge_count": 153,
+    "vertex_count": 64,
+    "edge_count": 156,
     "face_count": 65,
     "chart_count": 3,
-    "euler_characteristic": -26
+    "euler_characteristic": -27
   }
 }
