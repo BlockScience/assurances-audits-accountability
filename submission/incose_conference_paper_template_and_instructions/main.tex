@@ -219,13 +219,13 @@ Copyright~\textcopyright~ \the\year{} by the author(s). Permission granted to IN
 \miniheading{Abstract}
 As artificial intelligence increasingly assists systems engineering documentation, a critical question emerges: who is accountable for document quality? Current verification and validation frameworks lack formal mechanisms to integrate structural compliance with fitness-for-purpose, or to attribute accountability for subjective quality judgments.
 
-We present a framework using typed simplicial complexes to formalize document assurance. Documents become vertices, verification and validation relationships become edges, and complete assurance forms triangular faces requiring both verification and validation with mandatory human accountability for fitness-for-purpose judgments. LLM assistance is tracked but cannot substitute for human sign-off.
+We present a framework using typed simplicial complexes to formalize document quality assurance. Documents become vertices (0-simplices), verification and validation relationships become edges (1-simplices), and spec-guidance coupling edges (1-simplices) complete assurance triangles to form faces (2-simplices). Assurances require verification and validation of fitness-for-purpose with mandatory human accountability. LLM assistance is tracked but cannot substitute for human judgement and associated sign-off.
 
-We demonstrate through self-reference: this paper is verified against its specification, validated against its guidance, with assurance triangles completed by human approval. This proof-by-existence shows the framework is operational, enabling organizations to adopt AI assistance confidently while maintaining auditable chains of human responsibility.
+We demonstrate through self-reference: first specifications and guidance documents were drafted for this paper, then the content was iteratively generated with LLM assistance regulated by deterministic automated testing made possible by our framework. This paper is verified against its specification, validated against its guidance, and the provided with assurances which were subsequently audited. This proof-by-existence shows the framework is operational, demonstrating how engineering organizations may adopt AI assistance confidently while assuring quality, traceability and maintaining auditable chains of human responsibility.
 
 \phantomsection
 \subsubsection{Keywords}
-verification and validation, quality assurance, topological methods, accountability, AI-assisted documentation, human-in-the-loop
+verification and validation, quality assurance, topological methods, accountability, generative AI, human-in-the-loop
 
 % =========================
 % ===== Main Content ======
@@ -262,6 +262,7 @@ We demonstrate the framework through self-reference. This paper is not merely a 
 
 Section 2 reviews related work in verification and validation, requirements traceability, algebraic topology, test-driven development, and AI accountability. Section 3 presents the framework intuition based optimization theory. Section 4 presents the framework architecture using a layered model consistent with the INCOSE SE Handbook. Section 5 demonstrates results through self-application and audit. Section 6 discusses implications and limitations. Section 7 concludes with key takeaways.
 % ===== Background Section =====
+\section{Background}
 \subsection{Verification and Validation}
 
 The distinction between verification and validation traces to Boehm's 1984 IEEE Software paper, which posed the questions that have guided quality assurance since: ``Are we building the product right?'' (verification) and ``Are we building the right product?'' (validation) \parencite{Boehm1984}. IEEE Standard 1012-2016 codifies verification and validation processes for systems, software, and hardware, defining integrity levels and process requirements \parencite{IEEE1012}. ISO/IEC/IEEE 15288:2023 establishes verification and validation as distinct life cycle processes within the broader systems engineering framework \parencite{ISO15288}.
@@ -319,7 +320,7 @@ What existing work lacks is a practical mechanism for accountability. Principles
 
 From a systems engineering perspective, AI agents are fundamentally not self-governing—every autonomous system is deployed \textit{by someone}, and there is always an accountable stakeholder \parencite{Zargham2024}. The term agent implies a principal who provisions, deploys and monitors them. Autonomy does not eliminate oversight; rather, it represents delegated control within clearly defined parameters. The principal defines the mission, establishes constraints, and retains responsibility for outcomes. LLMs are tools embedded within larger systems, not autonomous agents themselves; they generate text but remain the instruments of their operators and provisioners. The consequences of LLM use is realized within orchestrated systems where humans retain accountability.
 
-Our framework provides oversight and accountability mechanisms through structural requirements: validation edges cannot exist without a named human approver.
+Our framework provides oversight and accountability mechanisms through structural requirements: validation edges cannot exist without a human approver.
 
 \subsection{Prior Art: Ghrist's ``The Forge''}
 
@@ -492,14 +493,14 @@ Figure \ref{fig:UI1} provides a screenshot of the VS code and Claude code toolin
     \label{fig:UI1}
 \end{figure}
 
-Figure \ref{fig:UI2} provides a screenshot of the Obsidian interface for navigating, reading, reviewing and making minor edits to markdown files. 
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{obsidian-interface.png}
     \caption{Obsidian for Navigate, Read \& Review}
     \label{fig:UI2}
 \end{figure}
+
+Figure \ref{fig:UI2} provides a screenshot of the Obsidian interface for navigating, reading, reviewing and making minor edits to markdown files. 
 
 \textbf{Unit Testing:} Individual scripts pass pytest. Template verification catches malformed documents. Type schemas enforce required fields. The \texttt{check\_accountability.py} script validates that approver fields are present and match whitelisted identities. Continuous integration is achieved through Github actions which prevent pull requests from being merged if they fail the tests which check for verifications, signed validations and structural integrity of assurance triangles.
 % ===== Self-Demonstration Section =====
@@ -541,14 +542,12 @@ This rewiring eliminates degeneracy and provides a foundation for the topologica
     \item Assurance face \(a=(d,s,g)\) assures exactly one document vertex \(d\).
     \item Assurance face \(a\) asserts verification edge \((d,s)\) from document vertex  $d$  to spec vertex $s$.
     \item Assurance face \(a\) asserts a coupling edge \((s,g)\) from spec vertex $s$ to guidance vertex $g$.
-    \item  Assurance face \(a\) asserts a human signed validation edge \((d,g)\) from document verte $d$  to guidance vertex $g$.
+    \item  Assurance face \(a\) asserts a human signed validation edge \((d,g)\) from document vertex $d$  to guidance vertex $g$.
     \item Spec vertex $s$ is an assured document, and thus must have an assurance face \((s,s_s,g_s)\).
     \item Guidance vertex \(g\) is an assured document, and thus must have an assurance face $(g,s_g,g_g)$.
 \end{enumerate}
 
-As a consequence of the pairings of documents to assurances (d, $a_d$), and the presence of the root vertex, a valid assurance complex satisfies $V - F = 1$ when each document is assured exactly once.  It is possible to assure the same document $d$ against more than one coupled $(s,g)$, resulting in valid assurance complexes with \(V - F<1\). 
-
-The topological invariant \(V-F\le 1\) is necessary but not sufficient for an assurance complex to be valid, and therefore can be used to spot check and quickly identify invalid assurance complexes.
+As a consequence of the pairings of documents to assurances (d, $a_d$), and the presence of the root vertex, a valid assurance complex satisfies $V - F = 1$ when each document is assured exactly once.  It is possible to assure the same document $d$ against more than one coupled $(s,g)$, resulting in valid assurance complexes with \(V - F<1\). The invariant \(V-F\le 1\) is necessary but not sufficient for an assurance complex to be valid, and therefore can be used to spot check and quickly identify invalid assurance complexes.
 
 \subsection{Engineering Lifecycle}
 
@@ -602,8 +601,6 @@ The framework enacts a four-phase lifecycle for assured document development, de
 
 Figure \ref{fig:lifecycle-phases} illustrates the four-phase lifecycle. Phase 0 provides the foundation (boundary complex). Phases 1-3 are iterative and loopy—document types are defined, supporting documents created, and content assembled with cycles of verification, validation, and revision. Phase 4 is a one-way serialization transforming the assured markdown network into the final submission artifact.
 
-Figure \ref{fig:doc-workflow} details the iterative workflow for producing an individual assured document. The process begins with inputs (spec, guidance, supporting documents) and a coupling check prerequisite. The generate-verify-evaluate-validate cycle creates the two feedback loops characteristic of Phases 1-3: verification failures return to generation for structural fixes, while validation failures (based on evaluation reports) return to generation for content revision. Only when both verification and validation pass does the document emerge as assured.
-
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
@@ -653,9 +650,11 @@ Figure \ref{fig:doc-workflow} details the iterative workflow for producing an in
 \label{fig:doc-workflow}
 \end{figure}
 
+Figure \ref{fig:doc-workflow} details the iterative workflow for producing an individual assured document. The process begins with inputs (spec, guidance, supporting documents) and a coupling check prerequisite. The generate-verify-evaluate-validate cycle creates the two feedback loops characteristic of Phases 1-3: verification failures return to generation for structural fixes, while validation failures (based on evaluation reports) return to generation for content revision. Only when both verification and validation pass does the document emerge as assured.
+
 \subsection{Assurance Audit Results}
 
-This section presents results from auditing the assurance complex output at the end of Phase 3. Every non-root vertex must have at least one assurance face.
+This section presents results from auditing the assurance complex output at the end of Phase 3. Each non-root vertex must have at least one assurance face.
 
 \subsubsection{Audit Algorithm}
 Coverage is complete when all upstream dependencies trace to the boundary complex without encountering unassured vertices.
@@ -729,7 +728,7 @@ This was discovered, diagnosed, and fixed during framework application:
 
 This sequence demonstrates the framework operating: a gap was detected through systematic auditing, root cause was identified, fix was implemented, and verification confirmed resolution. The meta-observation is that the framework's tooling caught a tooling defect—the self-referential nature strengthened rather than undermined confidence. 
 
-A major benefit of this framework is regression testing, as the forward propagation of document updates by generative AI creates cascades that are powerful and dangerous.
+Early experiments demonstrated that allowing forward propagation of document updates by generative AI results edit cascades. This proved to be as dangerous as it was powerful. The development and integration of automated regression testing proved to be crucial for effectively regulating this behavior.
 
 \subsection{Traceability and Accountability}
 
