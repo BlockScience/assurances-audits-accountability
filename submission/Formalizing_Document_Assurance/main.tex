@@ -1,0 +1,804 @@
+% =================================================================
+% INCOSE Conference LaTeX Template V1.2 (Release Date: November 4th, 2025)
+% Copyright (c) 2025 INCOSE
+% 
+% This template is provided for use in preparing manuscripts for
+% INCOSE conferences. You may use, modify, and 
+% distribute this template for academic and professional purposes.
+% 
+% This template is provided "as is" without warranty of any kind.
+% The author(s) disclaim all warranties, express or implied,
+% including but not limited to warranties of merchantability and
+% fitness for a particular purpose.
+
+% =================================================================
+
+\documentclass[11pt,letterpaper]{article} % Remove this line if using A4 size.
+%\documentclass[11pt,a4]{article} % A4 is also accepted and is typically used for non-US submissions.
+
+% ---------- Core layout ----------
+\usepackage[
+  letterpaper,
+  left=0.6in,right=0.6in,top=0.6in,bottom=0.6in,
+  headheight=85pt,headsep=-45pt
+]{geometry}
+\raggedbottom
+\usepackage{graphicx}
+\graphicspath{{./}{figures/}}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+% ---------- Captions & float spacing ----------
+\usepackage{caption}
+\captionsetup{
+  font={sf,bf,footnotesize},
+  labelfont={sf,bf,footnotesize},
+  justification=centering,
+  labelsep=period,
+  hypcap=false
+}
+\setlength{\textfloatsep}{8pt}
+\setlength{\floatsep}{6pt}
+\setlength{\intextsep}{8pt}
+\setlength{\abovecaptionskip}{12pt}
+\setlength{\belowcaptionskip}{1pt}
+
+% ---------- Tables / lists ----------
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage[table]{xcolor}
+\definecolor{tableheader}{HTML}{D9D9D9}
+\newcolumntype{P}[1]{>{\sffamily\centering\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\sffamily\centering\arraybackslash}X}
+\newcolumntype{A}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\raggedright\arraybackslash}m{#1}}
+
+% ---------- Fonts ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{PTSerif}
+\usepackage[scaled]{helvet}
+\renewcommand{\sfdefault}{phv}
+\newcommand{\headingfont}{\sffamily}
+
+% ---------- Headings ----------
+\usepackage{titlesec}
+\setcounter{secnumdepth}{0}
+
+% Heading 1
+\titleformat{\section}
+  {\headingfont\bfseries\raggedright\fontsize{18pt}{18pt}\selectfont}{}{0.75em}{}
+% Heading 2
+\titleformat{\subsection}
+  {\headingfont\bfseries\raggedright\fontsize{15pt}{16pt}\selectfont}{}{0.75em}{}
+% Heading 3
+\titleformat{\subsubsection}
+  {\headingfont\bfseries\raggedright\fontsize{12pt}{14pt}\selectfont}{}{0.75em}{}
+
+% Heading spacing
+\titlespacing*{\section}{0pt}{7pt}{6pt}
+\titlespacing*{\subsection}{0pt}{7pt}{6pt}
+\titlespacing*{\subsubsection}{0pt}{7pt}{6pt}
+
+\newcommand{\miniheading}[1]{%
+  \par\noindent{\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #1}\par\vspace{4pt}%
+}
+
+% ---------- Paragraphing ----------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 1pt minus 1pt}
+
+% ---------- Page numbers ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhfoffset[R]{18pt}
+\setlength{\footskip}{18pt}
+\fancyfoot[R]{\sffamily\bfseries\footnotesize \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% INCOSE logo
+\fancypagestyle{firstpage}{
+  \fancyhf{}
+  \fancyhfoffset[R]{18pt}
+  \fancyhead[R]{%
+    \smash{\raisebox{0pt}[0pt][0pt]{
+      \begingroup\setlength{\fboxsep}{20pt}
+        \colorbox{white}{\includegraphics[height=0.6in]{template-images/incose-logo.jpg}}%
+      \endgroup
+    }}
+  }
+  \fancyfoot[R]{\sffamily\bfseries\footnotesize \thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+% ---------- Title Formatting ----------
+\makeatletter
+\@ifundefined{theauthor}{}{\let\theauthor\relax}
+\makeatother
+\usepackage{titling}
+\pretitle{\headingfont\bfseries\fontsize{24pt}{26pt}\selectfont\raggedright}
+\posttitle{\par\vspace{-.3in}}
+\preauthor{}\postauthor{}
+\author{\mbox{}}
+\date{}
+\setlength{\droptitle}{-3.2\baselineskip}
+
+% ---------- Author cards ----------
+\newcommand{\authorcard}[5]{%
+  {\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #1}\par
+  {\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #2}\par
+  {\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #3}\par
+  {\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #4}\par
+  {\headingfont\bfseries\fontsize{12pt}{14pt}\selectfont #5}\par
+}
+
+% ---------- Biography photo placeholder and entry ----------
+
+\makeatletter
+\newcommand{\authorpic}[1]{%
+    \includegraphics[width=0.6in,height=0.6in,keepaspectratio,clip]{#1}%
+}
+\makeatother
+
+\newcommand{\authorbioentry}[3]{%
+  \noindent\begin{tabular}{@{}m{0.5in} M{\dimexpr\columnwidth-0.5in\relax}@{}}
+    \authorpic{#1} & \textbf{#2}\par #3
+  \end{tabular}\par\medskip
+}
+
+% ---------- Safe figure include ----------
+\makeatletter
+\newcommand{\colfig}[2][]{%
+  \IfFileExists{#2}{\includegraphics[width=\linewidth,#1]{#2}}{%
+    \fbox{\parbox[b][1.5in][c]{\linewidth}{\centering \textit{Missing figure: }#2}}}%
+}
+\makeatother
+
+% ---------- References: APA via biblatex/biber ----------
+\let\theauthor\relax
+\usepackage{csquotes}
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{references.bib}
+% Better URL formatting
+\setcounter{biburlnumpenalty}{100}
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+
+% ---------- Highlight callouts ----------
+\usepackage{changepage}
+\newenvironment{highlight}[1][0.25in]{%
+  \begin{adjustwidth}{#1}{#1}\itshape}{\end{adjustwidth}}
+
+% ---------- Two-column setup ----------
+\usepackage{multicol}
+\setlength{\columnsep}{18pt}
+
+% ---------- Hyperlinks ----------
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}  % Better URL line breaking
+
+% =========================
+% ===== Title & Authors ===
+% =========================
+\title{Formalizing Document Assurance: A Topological Framework for Verification, Validation, and Human Accountability}
+
+\begin{document}
+\maketitle
+\thispagestyle{firstpage}
+
+% ---- Authors ----
+% ---- OMITTED FOR ANONYMOUS REVIEW (INITIAL SUBMISSION) ----
+% ---- For the initial paper submission, do not include any author information. For the final paper submission, format author information as shown below. ------------------
+
+% \noindent
+% \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} A{0.32\textwidth} A{0.32\textwidth} A{0.32\textwidth}}
+%   \authorcard{Author One}{Organization}{Street Address}{City, Province, Postal}{author.one@email.com} &
+%   \authorcard{Author Two}{Organization}{Street Address}{City, Province, Postal}{author.two@email.com} &
+%   \authorcard{Author Three}{Organization}{Street Address}{City, Province, Postal}{author.three@email.com}
+% \end{tabular*}
+\addvspace{.25in}
+
+% ---- Two columns begin immediately after authors ----
+\begin{multicols*}{2}
+\raggedcolumns
+
+% ---- Copyright ----
+{\headingfont\bfseries\fontsize{8pt}{12pt}\selectfont
+Copyright~\textcopyright~ \the\year{} by the author(s). Permission granted to INCOSE to publish and use.}
+\\
+% =========================
+% ===== Abstract/Keywords =
+% =========================
+\phantomsection
+\miniheading{Abstract}
+As artificial intelligence increasingly assists systems engineering documentation, a critical question emerges: who is accountable for document quality? Current verification and validation frameworks lack formal mechanisms to integrate structural compliance with fitness-for-purpose, or to attribute accountability for subjective quality judgments.
+
+We present a framework using typed simplicial complexes to formalize document quality assurance. Documents become vertices (0-simplices), verification and validation relationships become edges (1-simplices), and spec-guidance coupling edges (1-simplices) complete assurance triangles to form faces (2-simplices). Assurances require verification and validation of fitness-for-purpose with mandatory human accountability. LLM assistance is tracked but cannot substitute for human judgement and associated sign-off.
+
+We demonstrate through self-reference: first specifications and guidance documents were drafted for this paper, then the content was iteratively generated with LLM assistance regulated by deterministic automated testing made possible by our framework. This paper is verified against its specification, validated against its guidance, and then provided with assurances which were subsequently audited. This proof-by-existence shows that the framework is operational; it demonstrates how engineering organizations may adopt AI assistance confidently while assuring quality, guaranteeing traceability and maintaining auditable chains of human responsibility.
+
+\phantomsection
+\subsubsection{Keywords}
+verification and validation, quality assurance, topological methods, accountability, generative AI, human-in-the-loop
+
+% =========================
+% ===== Main Content ======
+% =========================
+\section{Introduction}
+
+When artificial intelligence assists in creating systems engineering documentation, who bears responsibility for the result? This question has moved from philosophical abstraction to practical urgency. The 2024 DORA State of DevOps Report reveals that 76\% of developers now use AI tools daily, yet delivery stability has decreased by 7.2\% \parencite{GoogleDORA2024}. AI assistance is accelerating, but accountability structures have not kept pace.
+
+The systems engineering community recognizes this challenge. INCOSE's International Symposium 2026 introduces mandatory AI assistance disclosure requirements, signaling institutional awareness that AI-generated content requires new accountability mechanisms \parencite{INCOSE2025CallForSubmissions}. The symposium theme—``Beyond Digital Engineering: Seeking Wa in SE''—explicitly calls for harmony between human judgment and technological capability \parencite{INCOSE2025Theme}. Yet recognition of a problem differs from its solution \parencite{EUAIAct2024}.
+
+\subsection{The Accountability Gap}
+
+Barry Boehm's classic formulation distinguishes verification (``Are we building the product right?'') from validation (``Are we building the right product?'') \parencite{Boehm1984}. This distinction has guided systems engineering for four decades, codified in IEEE 1012 \parencite{IEEE1012} and ISO/IEC/IEEE 15288 \parencite{ISO15288}. Traditional frameworks treat verification and validation as separate activities. A document may pass structural verification—correct format, required sections present, word count within limits—while failing validation because it does not serve its intended purpose. Conversely, a document may demonstrate fitness-for-purpose while violating structural requirements. Neither condition alone constitutes quality; furthermore quality assurance requires the active attestation of a qualified authority.
+
+The missing element is formal coupling. Structural requirements (specifications) define what must be present; quality criteria (guidance) define what makes content effective. These naturally pair: one cannot meaningfully verify a document against a specification while validating it against unrelated guidance. Yet existing frameworks do not formalize this relationship, leaving it implicit or ignored.
+
+A second gap concerns accountability for validation. Verification can be automated: checking word counts, section presence, and format compliance requires no judgment. Validation is inherently subjective—assessing whether content is clear, rigorous, or practically useful requires human evaluation. This aligns with principles from cognitive systems engineering: automation should support rather than replace human expertise \parencite{Hollnagel2003, BoyEtAl2015}. When AI assists in generating content, who is responsible for judging its fitness? The answer cannot be ``the AI'' because language models cannot bear accountability. There must be a named human responsible for review, evaluation, and approval.
+
+\subsection{Our Contribution}
+
+This paper presents a framework addressing both gaps. We model document assurance using typed simplicial complexes from algebraic topology \parencite{Hatcher2002}. Documents, specifications, and guidance become vertices. Verification, validation, and coupling become edges connecting them. When a document is verified against a specification, validated against coupled guidance, and the coupling relationship is explicit, the three edges form a triangular face—a 2-simplex in topological terms. This face represents complete assurance: structural compliance plus fitness-for-purpose plus explicit coupling, with human accountability attributed for validation.
+
+The framework makes three specific contributions:
+
+\begin{enumerate}
+\item \textbf{Structural accountability enforcement} through typed simplicial complexes where validation edges cannot exist without a named human approver field—making accountability structurally required rather than merely recommended
+\item \textbf{Explicit coupling of specification and guidance} through coupling edges that formally pair verification criteria with validation criteria, preventing misalignment
+\item \textbf{Assurance triangles as 2-simplices} that require all three relationships (verification, coupling, validation) for complete assurance, enabling topological auditing
+\end{enumerate}
+
+We demonstrate the framework through self-reference. This paper is not merely a description but an instance: it exists as a vertex in its own assurance complex, verified against a specification we developed, validated against corresponding guidance, with the assurance triangle completed by human approval. Four assured supporting documents—architecture, lifecycle, literature review, and novel contributions—provide the intellectual foundation. If you are reading this paper in the symposium proceedings, the framework succeeded—the demonstration is the proof.
+
+\subsection{Paper Structure}
+
+Section 2 reviews related work in verification and validation, requirements traceability, algebraic topology, test-driven development, and AI accountability. Section 3 presents the framework intuition based on optimization theory. Section 4 presents the framework architecture using a layered model consistent with the INCOSE SE Handbook. Section 5 demonstrates results through self-application and audit. Section 6 discusses implications and limitations. Section 7 concludes with key takeaways.
+% ===== Background Section =====
+\section{Background}
+\subsection{Verification and Validation}
+
+The distinction between verification and validation traces to Boehm's 1984 IEEE Software paper, which posed the questions that have guided quality assurance since: ``Are we building the product right?'' (verification) and ``Are we building the right product?'' (validation) \parencite{Boehm1984}. IEEE Standard 1012-2016 codifies verification and validation processes for systems, software, and hardware, defining integrity levels and process requirements \parencite{IEEE1012}. ISO/IEC/IEEE 15288:2023 establishes verification and validation as distinct life cycle processes within the broader systems engineering framework \parencite{ISO15288}.
+
+These standards treat verification and validation as complementary but separate. Verification confirms that outputs conform to specified requirements; validation confirms that outputs satisfy stakeholder needs. What the standards do not formalize is the relationship between the requirements against which we verify and the criteria against which we validate. In practice, these should correspond—we verify structure against a specification and validate quality against guidance that interprets what ``good'' means for documents meeting that specification. But this coupling remains implicit in current frameworks.
+
+The INCOSE Systems Engineering Handbook elaborates verification and validation within the context of system life cycle processes \parencite{INCOSEHandbook2023}. It emphasizes that validation assesses fitness for intended use, necessarily involving stakeholder judgment. This subjective element—human judgment about fitness—becomes critical when AI generates content. The handbook does not address who bears responsibility when content originates from automated systems. Furthermore, some software engineering disciplines—most notably those involving cryptographically secured peer-to-peer networks—explicitly use the terms validation and validators for the act of checking the correct execution of a protocol, and the automated software services (or nodes) which perform those checks \parencite{ButerinEtAl2020}. This conflation proves challenging for engineering systems of systems within which these peer-to-peer networks are subsystems.
+
+\subsection{Requirements Traceability}
+
+Gotel and Finkelstein's foundational 1994 analysis identified requirements traceability as ``the ability to describe and follow the life of a requirement, in both forwards and backwards direction'' \parencite{GotelFinkelstein1994}. Their work distinguished between pre-requirements specification (pre-RS) traceability—tracking the origins of requirements from stakeholder needs—and post-requirements specification (post-RS) traceability—tracking requirements through design, implementation, and verification. This distinction remains central to requirements engineering practice.
+
+The Requirements Traceability Matrix (RTM) emerged as the standard tool for managing requirement relationships. An RTM records pairwise mappings: requirements to design elements, design elements to test cases, test results to acceptance criteria. ISO/IEC/IEEE 29148:2018 establishes requirements engineering practices including traceability as part of the broader requirements lifecycle \parencite{ISO29148}. The standard emphasizes bidirectional traceability to support impact analysis when requirements change and to demonstrate that all requirements have been addressed.
+
+Traditional RTMs have three key limitations relevant to our work. First, they represent only pairwise relationships—requirement A traces to test B—without capturing higher-order constraints that span multiple elements. Second, they lack built-in structural enforcement; compliance depends on process discipline rather than mathematical constraints. Third, they do not inherently address accountability for qualitative judgments about requirement satisfaction, which becomes critical when AI assists in generating artifacts that claim to satisfy requirements.
+
+Our assurance complexes extend the RTM concept from matrices to typed simplicial complexes. Where RTMs track pairwise requirement flows, assurance complexes encode verification edges (document-to-specification), coupling edges (specification-to-guidance), and validation edges (document-to-guidance) as typed 1-simplices. Where RTMs provide process recommendations, assurance complexes enforce local constraints that structurally guarantee traceability in addition to coverage. Where RTMs rely on external accountability mechanisms, assurance complexes require named human approvers as schema-enforced type constraints on validation edges, which are required for assurance triangles.
+
+\subsection{The V-Model and Systems Engineering Lifecycle}
+
+The V-model for systems engineering was first publicly presented by Forsberg and Mooz at the 1991 INCOSE Conference \parencite{ForsbergMooz1991}. Their foundational paper established the graphical representation that has guided systems engineering lifecycle thinking for three decades: the left side of the V represents decomposition and specification (conceptual through physical design), while the right side represents integration and verification (component testing through acceptance) \parencite{ForsbergMooz2005}. The V-model explicitly maps verification and validation activities to corresponding design activities at each level of abstraction.
+
+The INCOSE Systems Engineering Handbook, now in its fifth edition, elaborates the V-model within modern life cycle processes \parencite{INCOSEHandbook2023}. The handbook describes four architectural layers that structure system design: conceptual (stakeholder needs and operational context), functional (what the system must do), logical (design-independent component structure), and physical (specific implementation choices). Each layer on the left side of the V corresponds to a verification level on the right: conceptual requirements are validated through acceptance testing, functional requirements through system testing, logical architecture through integration testing, and physical design through unit testing.
+
+This four-layer framework aligns with other major architecture standards. The Department of Defense Architecture Framework (DoDAF) organizes views across operational, systems, and technical perspectives, with the Concept of Operations (ConOps) providing the operational context that drives architectural decisions \parencite{DoDAF2010}. NASA's Systems Engineering Handbook similarly structures design through logical decomposition—from conceptual architecture through functional analysis to physical integration—with verification ``unwinding the process'' to test whether each physical level meets the expectations and requirements \parencite{NASA2016}.
+
+Our framework operationalizes this V-model structure for documents. A specification defines what must be present at each level (structural requirements); guidance defines what constitutes quality at each level (assessment criteria). The coupling edge formalizes what the V-model leaves implicit: that the verification standard and validation criteria must correspond. The assurance triangle completes the loop that the V-model depicts graphically.
+
+\subsection{Algebraic Topology and Simplicial Complexes}
+
+Algebraic topology studies shapes through algebraic invariants, enabling rigorous analysis of structural properties \parencite{Hatcher2002}. A simplicial complex is a combinatorial structure built from simplices: vertices (0-simplices), edges (1-simplices), triangles (2-simplices), and higher-dimensional analogs \parencite{Edelsbrunner2010}. The power of simplicial complexes lies in their ability to capture relationships at multiple levels—not just pairwise connections (edges) but higher-order relationships (faces).
+
+Carlsson's 2009 survey established topology as a tool for data analysis, demonstrating that topological invariants reveal structural features invisible to traditional statistics \parencite{Carlsson2009}. Ghrist's work spans both theoretical foundations and accessible exposition—from the barcodes paper \parencite{Ghrist2008} introducing persistent homology as a tool for topological data analysis (TDA) to the comprehensive textbook \textit{Elementary Applied Topology} \parencite{Ghrist2014} that makes these methods accessible to engineers. We explore this principle for document assurance: local rules enforcement produces topological invariants which may be used to audit structural integrity.
+
+\subsection{Test-Driven Development}
+
+Kent Beck's formulation of test-driven development (TDD) inverts the traditional code-then-test sequence: write tests first, then write code to pass them \parencite{Beck2003}. The red-green-refactor cycle—failing test, passing implementation, improved design—creates a rhythm of specification-first development. Tests become executable specifications that code must satisfy.
+
+Extending TDD to documentation treats specifications as tests that documents must pass. A document specification defines required structure: sections, fields, formats, constraints. A document either satisfies these requirements or fails. This binary outcome mirrors unit tests: pass or fail, no ambiguity.
+
+But TDD for documentation requires extension. Code tests verify behavior; they do not assess whether the code solves the right problem. Similarly, specification compliance verifies structure but not quality. The extension requires coupling: specifications (structural tests) paired with guidance (quality criteria).
+
+\subsection{Assurance Cases and Safety Arguments}
+
+Model-based assurance cases provide structured arguments for system safety and reliability. The OMG Structured Assurance Case Metamodel (SACM) defines standardized representations for assurance arguments \parencite{OMGSACM2023}, while Goal Structuring Notation (GSN) offers graphical syntax for safety cases \parencite{GSN}. These approaches decompose high-level claims into evidence through argumentation structures. Our framework complements this work: where assurance cases argue that a system meets safety requirements, our assurance triangles ensure that documents meet quality requirements through coupled verification and validation.
+
+
+\subsection{AI Ethics and Accountability}
+
+Floridi and Cowls propose five principles for AI in society: beneficence, non-maleficence, autonomy, justice, and explicability \parencite{FloridiCowls2019}. The fifth principle—explicability—comprises intelligibility (how the system works) and accountability (who is responsible for outcomes). For AI-assisted documentation, intelligibility means understanding what the AI contributed; accountability means attributing responsibility for the result.
+
+UNESCO's 2021 Recommendation on the Ethics of Artificial Intelligence, adopted by all 194 member states, establishes global standards emphasizing transparency, human oversight, and accountability \parencite{UNESCO2021}. The UN High-Level Advisory Body on AI reinforces these principles in its 2024 governance framework, calling for ``accountability anchored in human responsibility'' \parencite{UNAI2024}.
+
+What existing work lacks is a practical mechanism for accountability. Principles are valuable but insufficient. We need schemas that require accountability attribution, processes that enforce human review, and auditing that detects gaps.
+
+From a systems engineering perspective, AI agents are fundamentally not self-governing—every autonomous system is deployed \textit{by someone}, and there is always an accountable stakeholder \parencite{Zargham2024}. The term ``agent'' implies a principal who provisions, deploys and monitors that agent. Autonomy does not eliminate oversight; rather, it represents delegated control within clearly defined parameters. The principal defines the mission, establishes constraints, and retains responsibility for outcomes. LLMs are tools embedded within larger systems, not autonomous agents themselves; they generate text but remain the instruments of their operators and provisioners. The consequences of LLM use are realized within orchestrated systems where humans retain accountability.
+
+Our framework provides oversight and accountability mechanisms through structural requirements: validation edges cannot exist without a human approver.
+
+\subsection{Prior Art: Ghrist's ``The Forge''}
+
+Robert Ghrist's ``Appendix C: The Forge'' in \textit{The Geometry of Heaven \& Hell} (2025) documents the only known methodology for AI-assisted scholarly writing with explicit human accountability \parencite{Ghrist2025Forge}. Notably, Ghrist's topological mathematics (barcodes, persistent homology for TDA) also informs our simplicial complex model.
+
+Ghrist's key methodological insight: ``Every sentence in this book passed through my judgment; every connection earned my conviction; every claim bears my responsibility.''
+
+\textbf{Distinction from our approach:} Ghrist's methodology is \textit{procedural}—it documents how he wrote a book through disciplined practice. Our framework is \textit{structural}—it formalizes accountability through typed simplicial complexes where validation edges cannot exist without a human approver field. Ghrist demonstrates accountability can be achieved; we demonstrate it can be enforced.
+% ===== Framework Intuition Section =====
+\section{Framework Intuition}
+
+The framework can be understood through the lens of constrained optimization. Consider intellectual substance—research findings, design decisions, analytical insights—that must be expressed for publication. A document is the \textit{serialized representation} of this intellectual substance, projected onto a document space defined by the specification.
+
+The specification defines the \textit{feasible region}: structural constraints that any valid document must satisfy (word limits, required sections, format rules). Verification checks feasibility—is this serialization structurally valid?
+
+The guidance defines the \textit{objective function}: quality criteria that distinguish better representations from worse ones within the feasible region (clarity, rigor, relevance). Validation evaluates the objective—how well does this serialization serve its purpose?
+
+Writing documentation is then a projection operation: projecting intellectual substance onto the document space characterized by the specification, with the guidance providing direction for selecting among alternative feasible representations. Different phrasings, organizations, or emphases may all satisfy the spec (all feasible), but the guidance helps choose which serialization best communicates the underlying substance.
+
+This framing clarifies the distinction:
+\begin{itemize}
+\item \textbf{Verification} answers: ``Is this point in the feasible region?'' (Binary: pass/fail; including enumerating individual criteria checked)
+\item \textbf{Validation} answers: ``How good is this feasible point?'' (Qualitative: assessment with rationale serving as gradient approximation)
+\end{itemize}
+
+The coupling edge ensures we optimize the right objective over the right feasible region—we cannot accidentally verify against one spec while optimizing for unrelated guidance.
+% ===== Framework Architecture Section =====
+\section{Framework Architecture}
+
+This section describes our system architecture across four layers: Conceptual, Functional, Logical and Physical. The conceptual architecture focuses on stakeholders and acceptable criteria regarding the delivered capabilities (not limited to technology delivery). The functional architecture describes what functions must be performed to deliver those capabilities. The logical architecture describes the mathematical structures, type system, processes and formal rules we've developed to enable the performance of these functions. The physical architecture describes the concrete implementation of those logics. 
+
+\subsection{Conceptual Layer: Stakeholder Needs and Acceptance Criteria}
+
+\textbf{Problem Statement:} Cognizant engineers and technical authorities need requirements traceability and human accountability for machine-generated documents. Current gap: AI can draft documents but cannot bear responsibility for their fitness-for-purpose.
+
+\textbf{Stakeholder Needs:}
+
+\begin{enumerate}
+\item \textbf{Requirements Traceability}: Auditable traces for document requirements through sequential (and nested) verification and validation cycles.
+\item \textbf{Human Accountability}: Named human approvers for qualitative assessments.
+\item \textbf{Automated Verification}: Deterministic structural checks without human intervention.
+\item \textbf{Quality Assessment}: Systematic evaluation of fitness-for-purpose and documentation of the associated rubrics and assessments.
+\item \textbf{Audit Trail}: Traceable records of who approved what, when, and on what basis.
+\end{enumerate}
+
+\textbf{Acceptance Criteria:} The framework is accepted when: (1) this paper is produced using the framework with complete assurance infrastructure; (2) paper is submitted to INCOSE IS 2026; (3) named human attests to all assured documents; (4) assurance audit shows 100\% vertex document coverage; (5) user continues to use the framework to produce requirements intensive documents after INCOSE IS paper pilot.
+
+\subsection{Functional Layer: System Functions}
+Table 1 summarizes the system functions: Couple, Verify, Evaluate, Validate, Assure, Audit and Trace.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{0.145\linewidth}p{0.19\linewidth}p{0.14\linewidth}p{0.36\linewidth}}
+\toprule
+\rowcolor{tableheader}
+\textbf{Function} & \textbf{Input} & \textbf{Output} & \textbf{Description} \\
+\midrule
+Couple & Guidance, Spec & Record & Link guidance to spec \\
+\midrule
+Verify & Doc, Spec & Pass, Fail & Check types \& structure against spec \\
+\midrule
+ Evaluate& Doc, Spec, Guidance & Report&Machine Evalulation of fitness-for-purpose\\
+\midrule
+Validate & Doc, Guidance, Eval& Signature& Human Decision on fitness-for-purpose\\
+\midrule
+Assure & Coupling, V\&V& Record & Combine V\&V + Coupling into assurance record\\
+\midrule
+Audit & Document & Report & Analyze assurance \\
+\midrule
+Trace & Document & Report & Identify and Audit Doc Dependencies \\
+\bottomrule
+\end{tabular}
+\caption{System Functions}
+\label{tab:functions}
+\end{table}
+
+\textbf{System Testing:} Functions are tested by observing whether the paper passes verification scripts, receives human validation,  has coupled spec-guidance, achieves assurance triangle closure, passes audit, and traces to boundary.
+
+\subsection{Logical Layer: Design-Independent Components}
+
+The design-independent component structure uses typed simplicial complexes.
+
+\subsubsection{Typed Simplicial Complex Structure}
+
+The elements of our simplicial complex are equipped with semantic types in addition to their structural types: vertex, edge and face. This is done through inheritance \parencite{Johnson1991}. \textit{Document} is a generic type which both \textit{Specification} and \textit{Guidance} inherit from, allowing Specification and Guidance type Documents to be assured.
+
+\textbf{Vertices (0-simplices)} are documents of three types:
+\begin{itemize}
+\item \textit{Specifications (Specs)} define structural requirements: required sections, fields, formats, constraints. They answer ``what must be present?''
+\item \textit{Guidance} documents define quality criteria: how to evaluate effectiveness, clarity, rigor. They answer ``what makes it good?''
+\item \textit{Documents (Docs)}  are the artifacts being assured: papers, reports, requirements, designs.
+\end{itemize}
+
+\textbf{Edges (1-simplices)} are relationships of three types:
+\begin{itemize}
+\item \textit{Verification edges} connect content to specifications, asserting structural compliance.
+\item \textit{Validation edges} connect content to guidance, asserting fitness-for-purpose. These require a named human approver.
+\item \textit{Coupling edges} connect specifications to guidance, asserting correspondence between structural and qualitative requirements.
+\end{itemize}
+
+\textbf{Faces (2-simplices)} are assurance triangles: when a content document has a verification edge to a specification, that specification has a coupling edge to guidance, and the content has a validation edge to that same guidance, the three edges bound a triangular face representing complete assurance.
+
+\textbf{Accountability Model:} Every validation edge and assurance face requires human accountability. When LLM-assisted, a named human approver is \textit{required}—the human takes responsibility for the assessment. This is not optional; it is structurally enforced through schema validation.
+
+\textbf{Boundary Condition:} The topological assurance framework bootstraps through four foundational vertices: spec-for-spec(\textcolor{blue}{\textbf{SS}}), spec-for-guidance (\textcolor{green!50!black}{\textbf{SG}}), guidance-for-spec (\textcolor{yellow!80!black}{\textbf{GS}}), guidance-for-guidance (\textcolor{orange!80!black}{\textbf{GG}}) which are mutually assured in the self-referential pattern shown in Table \ref{tab:boundary}.
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{0.04\linewidth}p{0.18\linewidth}p{0.16\linewidth}p{0.2\linewidth}p{0.18\linewidth}}
+\toprule
+\rowcolor{tableheader}
+\textbf{ID}&\textbf{Document} & \textbf{Coupling} & \textbf{Verification} & \textbf{Validation} \\
+\midrule
+\rowcolor{blue!10}
+\textcolor{blue}{\textbf{SS}} &spec-for-spec & \textcolor{blue}{\textbf{SS}}:\textcolor{yellow!80!black}{\textbf{GS}} & \textcolor{blue}{\textbf{SS}}:\textcolor{blue}{\textbf{SS}} & \textcolor{blue}{\textbf{SS}}:\textcolor{yellow!80!black}{\textbf{GS}} \\
+\rowcolor{green!10}
+\textcolor{green!50!black}{\textbf{SG}}&spec-for-guidance & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{orange!80!black}{\textbf{GG}} & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{blue}{\textbf{SS}} & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{orange!80!black}{\textbf{GG}} \\
+\rowcolor{yellow!20}
+\textcolor{yellow!80!black}{\textbf{GS}}& guidance-for-spec & \textcolor{blue}{\textbf{SS}}:\textcolor{yellow!80!black}{\textbf{GS}} & \textcolor{yellow!80!black}{\textbf{GS}}:\textcolor{green!50!black}{\textbf{SG}} & \textcolor{yellow!80!black}{\textbf{GS}}:\textcolor{orange!80!black}{\textbf{GG}} \\
+\rowcolor{orange!15}
+\textcolor{orange!80!black}{\textbf{GG}} & guidance-for-guidance & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{orange!80!black}{\textbf{GG}} & \textcolor{orange!80!black}{\textbf{GG}}:\textcolor{green!50!black}{\textbf{SG}} & \textcolor{orange!80!black}{\textbf{GG}}:\textcolor{orange!80!black}{\textbf{GG}} \\
+\bottomrule
+\end{tabular}
+\caption{Boundary Condition: Self-Referential Edges}
+\label{tab:boundary}
+\end{table}
+Two of these configurations form valid assurance triangles(\textcolor{yellow!80!black}{\textbf{GS}} and \textcolor{green!50!black}{\textbf{SG}}), while the other two (\textcolor{blue}{\textbf{SS}} and \textcolor{orange!80!black}{\textbf{GG}}) rely on self-reference (\textcolor{blue}{\textbf{SS}} via self-verification \textcolor{blue}{\textbf{SS}}:\textcolor{blue}{\textbf{SS}}, \textcolor{orange!80!black}{\textbf{GG}} via self-validation \textcolor{orange!80!black}{\textbf{GG}}:\textcolor{orange!80!black}{\textbf{GG}}). This boundary condition is logically valid—each foundational document has verification, validation, and coupling edges—but the self-loops create degenerate faces that violate the rules for a simplicial complex.  In the ``Self-Demonstration'' section, this boundary condition is converted into a valid simplicial complex (the boundary complex) by introducing a root vertex that eliminates the degeneracies. 
+
+\subsection{Physical Layer: Implementation}
+
+Table 2 presents the implementation technology stack organized by framework element. 
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{0.25\linewidth}p{0.30\linewidth}p{0.35\linewidth}}
+\toprule
+\rowcolor{tableheader}
+\textbf{Element} & \textbf{Technology} & \textbf{Rationale} \\
+\midrule
+Document Store & Directories, Markdown files, github & Human-readable, version-controlled \\
+\midrule
+Type System & YAML, Python & Human readable, library support \\
+\midrule
+Verification & Python script & Types \& structural compliance checks \\
+\midrule
+Validation & human review with obsidian; Claude Code for reports; git commit to sign & LLM assistance for assessments with human accountability for decisions \\
+\midrule
+Audit Tool & Python script & Coverage and topological analysis \\
+\midrule
+Accountability & Git history, approver field & Username as identity, Github Actions enforces rules \\
+\midrule
+UI for Develop and Write & VS Code with Claude Code & Smooth UX for LLM collaboration \\
+\midrule
+UI for Read and Review & Obsidian Vault & UX for navigating, reading and editing\\
+\bottomrule
+\end{tabular}
+\caption{Implementation Technologies}
+\label{tab:implementation}
+\end{table}
+The document store uses directories of Markdown files managed through GitHub, providing human-readable content under version control. The type system combines YAML schemas with Python for enforcement, balancing human readability with robust library support. Verification runs automated Python scripts to check type conformance and structural compliance against specifications. Validation leverages human review workflows in Obsidian for assessment, Claude Code for generating validation reports, and git commits as cryptographic signatures that bind the approver's identity to their judgment. The audit tool is implemented by Python scripts that analyze coverage completeness and verify topological invariants. Accountability tracking binds the Git history to the data in the assurance complex, with the approver field capturing usernames and GitHub Actions enforcing the validation signer matches the user at commit time. The development and writing interface uses VS Code with Claude Code to provide smooth workflows for human-LLM collaboration during document drafting. The reading and review interface uses an Obsidian vault to support navigation, graph visualization, and interactive editing of the document network. This technology stack prioritizes human readability, automated verification, and cryptographic accountability while maintaining pragmatic tooling accessible to technical teams.
+
+Figure \ref{fig:UI1} provides a screenshot of the VS Code and Claude Code tooling used to develop and execute scripts, write documents and approve commits.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{vs-code-interface.png}
+    \caption{VS Code for Develop, Write \& Approve}
+    \label{fig:UI1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{obsidian-interface.png}
+    \caption{Obsidian for Navigate, Read \& Review}
+    \label{fig:UI2}
+\end{figure}
+
+Figure \ref{fig:UI2} provides a screenshot of the Obsidian interface for navigating, reading, reviewing and making minor edits to markdown files. 
+
+\textbf{Unit Testing:} Individual scripts pass pytest. Template verification catches malformed documents. Type schemas enforce required fields. The \texttt{check\_accountability.py} script validates that approver fields are present and match whitelisted identities. Continuous integration is achieved through Github actions which prevent pull requests from being merged if they fail the tests which check for verifications, signed validations and structural integrity of assurance triangles.
+% ===== Self-Demonstration Section =====
+\section{Self-Demonstration}
+
+This section demonstrates the framework by applying it to produce this document. If you are reading this paper in the symposium proceedings, the framework succeeded in producing a document that is both \textit{rules-compliant} and \textit{fit-for-purpose}.
+
+\subsection{Foundation: The Boundary Complex}
+
+Section 4.3 introduced the boundary condition: four foundational vertices mutually assured in a self-referential pattern. This boundary condition is logically valid—each document has verification, validation, and coupling—but contains degenerate faces due to self-loops (spec-for-spec verifies against itself; guidance-for-guidance validates against itself). This section describes how the boundary condition is converted into a valid simplicial complex—the boundary complex—by introducing an axiomatic root vertex.
+
+\textbf{The Rewiring:} A fifth vertex, \textit{root} (\textbf{b0}), is introduced as an axiomatic element (not a document requiring assurance). The degenerate self-loops are rewired to connect through the root as shown in Table \ref{tab:boundary-complex}.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{0.04\linewidth}p{0.18\linewidth}p{0.16\linewidth}p{0.2\linewidth}p{0.18\linewidth}}
+\toprule
+\rowcolor{tableheader}
+\textbf{ID}&\textbf{Document} & \textbf{Coupling} & \textbf{Verification} & \textbf{Validation} \\
+\midrule
+\textbf{b0} & root  & — & — & — \\
+\rowcolor{blue!10}
+\textcolor{blue}{\textbf{SS}} &spec-for-spec & \textbf{b0}:\textcolor{yellow!80!black}{\textbf{GS}}& \textcolor{blue}{\textbf{SS}}:\textbf{b0} & \textcolor{blue}{\textbf{SS}}:\textcolor{yellow!80!black}{\textbf{GS}} \\
+\rowcolor{green!10}
+\textcolor{green!50!black}{\textbf{SG}}&spec-for-guidance & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{orange!80!black}{\textbf{GG}} & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{blue}{\textbf{SS}} & \textcolor{green!50!black}{\textbf{SG}}:\textcolor{orange!80!black}{\textbf{GG}} \\
+\rowcolor{yellow!20}
+\textcolor{yellow!80!black}{\textbf{GS}}& guidance-for-spec & \textcolor{blue}{\textbf{SS}}:\textcolor{yellow!80!black}{\textbf{GS}} & \textcolor{yellow!80!black}{\textbf{GS}}:\textcolor{green!50!black}{\textbf{SG}} & \textcolor{yellow!80!black}{\textbf{GS}}:\textcolor{orange!80!black}{\textbf{GG}} \\
+\rowcolor{orange!15}
+\textcolor{orange!80!black}{\textbf{GG}} & guidance-for-guidance & \textcolor{green!50!black}{\textbf{SG}}:\textbf{b0}& \textcolor{orange!80!black}{\textbf{GG}}:\textcolor{green!50!black}{\textbf{SG}} & \textcolor{orange!80!black}{\textbf{GG}}:\textbf{b0} \\
+\bottomrule
+\end{tabular}
+\caption{Boundary Complex: Rewired Through Axiomatic Root}
+\label{tab:boundary-complex}
+\end{table}
+
+This rewiring eliminates degeneracy and provides a foundation for the topological assurance structure. The root vertex does not require its own assurance—it is axiomatic. The local constraints which characterizes our assurance complex are
+\begin{enumerate}
+    \item Assurance face \(a=(d,s,g)\) assures exactly one document vertex \(d\).
+    \item Assurance face \(a\) asserts verification edge \((d,s)\) from document vertex  $d$  to spec vertex $s$.
+    \item Assurance face \(a\) asserts a coupling edge \((s,g)\) from spec vertex $s$ to guidance vertex $g$.
+    \item  Assurance face \(a\) asserts a human signed validation edge \((d,g)\) from document vertex $d$  to guidance vertex $g$.
+    \item Spec vertex $s$ is an assured document, and thus must have an assurance face \((s,s_s,g_s)\).
+    \item Guidance vertex \(g\) is an assured document, and thus must have an assurance face $(g,s_g,g_g)$.
+\end{enumerate}
+
+As a consequence of the pairings of documents to assurances (d, $a_d$), and the presence of the root vertex, a valid assurance complex satisfies $V - F = 1$ when each document is assured exactly once.  It is possible to assure the same document $d$ against more than one coupling edge $(s,g)$, resulting in valid assurance complexes with \(V - F<1\). The invariant \(V-F\le 1\) is necessary but not sufficient for an assurance complex to be valid, and therefore can be used to spot check and quickly identify invalid assurance complexes.
+
+\subsection{Engineering Lifecycle}
+
+The framework enacts a four-phase lifecycle for assured document development, demonstrated through this paper's creation.
+
+\textbf{Phase 1: Document Type Definition.} We analyzed the INCOSE IS 2026 Call for Papers to create \textit{spec-for-incose-paper} (structural requirements) and \textit{guidance-for-incose-paper} (quality criteria). Both were verified against the \textit{spec-for-specs} (SS) and validated against the \textit{guidance-for-specs} (GS) with human approval. A coupling edge links them, allowing them to form assurances for document type \textit{incose-paper}.
+
+\textbf{Phase 2: Supporting Documents.} We created four supporting documents: framework architecture, literature review, lifecycle description, and novel contributions ranking. Each was verified against its spec and validated against its guidance, with human approval closing assurance triangles. The spec-guidance pairs for each of architecture, literature-review, lifecycle and novel-contributions are assured against the boundary complex.
+
+\textbf{Phase 3: Content Assembly.} This paper was drafted iteratively, with each section verified for structural compliance and validated for fitness-for-purpose. Verification was automated (type \& schema checks); validation required human judgment against quality criteria. Both verification and validation edges were created for each section, with coupling edges ensuring spec-guidance alignment. This process was inherently loopy but automation allowed rapid propagation of changes and facilitated refreshing human approvals after changes were merged.
+
+\textbf{Phase 4: Serialization.} The assured Markdown source was transformed to LaTeX via a modified version of Phase 3 and this PDF was compiled for submission. Acknowledged gap: the verified sources (Markdown and LaTeX files) differ from the submitted artifact (PDF). The source repository remains the authoritative record.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  phase/.style={rectangle, rounded corners, draw=black, thick, minimum width=2.5cm, minimum height=1cm, align=center, font=\small\bfseries},
+  phase0/.style={phase, fill=gray!20},
+  phase123/.style={phase, fill=blue!15},
+  phase4/.style={phase, fill=orange!15},
+  arrow/.style={->, thick},
+  loop/.style={->, thick, bend left=45}
+]
+
+% Phase 0
+\node[phase0] (p0) at (0,0) {Phase 0\\Initial Condition\\(Boundary Complex)};
+
+% Phases 1-3 (loopy)
+\node[phase123] (p1) at (0,-2) {Phase 1\\Document Type\\Definition};
+\node[phase123] (p2) at (0,-4) {Phase 2\\Supporting\\Documents};
+\node[phase123] (p3) at (0,-6) {Phase 3\\Content\\Assembly};
+
+% Phase 4
+\node[phase4] (p4) at (0,-8) {Phase 4\\Serialization\\(One-way)};
+
+% Forward arrows
+\draw[arrow] (p0) -- (p1);
+\draw[arrow] (p1) -- (p2);
+\draw[arrow] (p2) -- (p3);
+\draw[arrow] (p3) -- (p4);
+
+% Loop arrows (backward feedback)
+\draw[loop] (p2.west) to node[right, font=\tiny] {iterate} (p1.west);
+\draw[loop] (p3.west) to node[right, font=\tiny] {iterate} (p2.west);
+\draw[loop, bend right=60] (p3.east) to node[right, font=\tiny] {revise} (p1.east);
+
+\end{tikzpicture}
+\caption{Four-Phase Lifecycle: Axiomatic Foundation, Iterative Development, Terminal Serialization}
+\label{fig:lifecycle-phases}
+\end{figure}
+
+Figure \ref{fig:lifecycle-phases} illustrates the four-phase lifecycle. Phase 0 provides the foundation (boundary complex). Phases 1-3 are iterative and loopy—document types are defined, supporting documents created, and content assembled with cycles of verification, validation, and revision. Phase 4 is a one-way serialization transforming the assured markdown network into the final submission artifact.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.5cm,
+  box/.style={rectangle, draw=black, thick, minimum width=2cm, minimum height=0.8cm, align=center, font=\small},
+  input/.style={box, fill=gray!10},
+  process/.style={box, fill=blue!10},
+  check/.style={rectangle, draw=black, thick, minimum width=1.8cm, minimum height=0.4cm, align=center, font=\tiny, inner sep=2pt},
+  output/.style={box, fill=green!10},
+  arrow/.style={->, thick},
+  backarrow/.style={->, thick, dashed}
+]
+
+% Inputs at top
+\node[input] (spec) at (-3,0) {Spec};
+\node[input] (guidance) at (0,0) {Guidance};
+\node[input] (support) at (3,0) {Supporting\\Docs};
+
+% Coupling check
+\node[check] (coupling) at (0,-1.5) {Coupled?};
+
+% Main workflow
+\node[process] (generate) at (0,-3.5) {Generate};
+\node[process] (verify) at (0,-5) {Verify};
+\node[process] (evaluate) at (0,-6.5) {Evaluate};
+\node[process] (validate) at (0,-8) {Validate};
+
+% Output
+\node[output] (output) at (0,-9.5) {Assured\\Document};
+
+% Forward flow
+\draw[arrow] (spec) -- (coupling);
+\draw[arrow] (guidance) -- (coupling);
+\draw[arrow] (support) --  (generate);
+\draw[arrow] (coupling) -- node[right, font=\tiny] {yes} (generate);
+\draw[arrow] (generate) -- node[right, font=\tiny] {draft} (verify);
+\draw[arrow] (verify) -- node[right, font=\tiny] {pass} (evaluate);
+\draw[arrow] (evaluate) -- node[right, font=\tiny] {report} (validate);
+
+\node[input]  (approver) at (-3,-6) {approver};
+\draw[arrow] (approver) -- node[left, font=\tiny] {approval} (validate);
+\draw[arrow] (validate) -- node[right, font=\tiny] {pass} (output);
+
+% Feedback loops
+\draw[backarrow] (verify.west) -- ++(-1.5,0) -- ++(0,1.5) -- node[above, font=\tiny] {fail} (generate.west);
+\draw[backarrow] (validate.east) -- ++(1.5,0) -- ++(0,4.5) -- node[above, font=\tiny] {fail} (generate.east);
+
+\end{tikzpicture}
+\caption{Individual Document Production Workflow: Iterative Generation, Verification, and Validation}
+\label{fig:doc-workflow}
+\end{figure}
+
+Figure \ref{fig:doc-workflow} details the iterative workflow for producing an individual assured document. The process begins with inputs (spec, guidance, supporting documents) and a coupling check prerequisite. The generate-verify-evaluate-validate cycle creates the two feedback loops characteristic of Phases 1-3: verification failures return to generation for structural fixes, while validation failures (based on evaluation reports) return to generation for content revision. Only when both verification and validation pass does the document emerge as assured.
+
+\subsection{Assurance Audit Results}
+
+This section presents results from auditing the assurance complex output at the end of Phase 3. Each non-root vertex must have at least one assurance face.
+
+\subsubsection{Audit Algorithm}
+Coverage is complete when all upstream dependencies trace to the boundary complex without encountering unassured vertices.
+\columnbreak
+\scriptsize{
+\begin{verbatim}
+def audit_assurance(doc):
+    """Audit document and return coverage records."""
+    records = []
+    visited = set()
+
+    def check_vertex(v):
+        if v in visited or v == "b0:root":
+            return  # Already checked or axiomatic
+        visited.add(v)
+
+        # Find assurance face for v
+        assurance = find_assurance_face(v)
+        if not assurance:
+            raise Error(f"No assurance for {v}")
+
+        # Extract assurance triple
+        (d, s, g) = assurance.triple
+        approver = assurance.validation.human_approver
+
+        # Record this assurance
+        records.append((d, s, g, assurance.id, approver))
+
+        # Recursively check upstream dependencies
+        check_vertex(s)  # Spec must be assured
+        check_vertex(g)  # Guidance must be assured
+
+    check_vertex(doc)
+    return records  # Guaranteed full coverage
+\end{verbatim}
+}
+\normalsize
+\subsubsection{Audit Summary}
+Applying the audit algorithm to the INCOSE Paper yielded the results in Table \ref{tab:audit}.
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{0.40\linewidth}p{0.20\linewidth}p{0.20\linewidth}}
+\toprule
+\rowcolor{tableheader}
+\textbf{Metric} & \textbf{Value} & \textbf{Status} \\
+\midrule
+Total vertices (V) & 22 & — \\
+Assurance faces (F) & 22 & — \\
+Approved Validation & 22 & — \\
+Coverage & 100\% (22/22) & PASS \\
+\bottomrule
+\end{tabular}
+\caption{Assurance Audit Summary}
+\label{tab:audit}
+\end{table}
+
+The 22 vertices comprise: 1 root (b0), 4 foundational (SS, SG, GS, GG), 6 specs for document types (architecture, lifecycle, incose-literature-review, novel-contributions, incose-paper, incose-self-demonstration), 6 corresponding guidances, 4 supporting document instances, and 1 INCOSE paper instance. The 22 assurance faces include 2 boundary faces (spec-spec and guidance-guidance) plus 20 standard assurance faces. The paper vertex is assured twice (once each against document types: incose-paper-2026-base and incose-paper-2026-self-demo), giving 22 total faces for 21 non-root document vertices. Each non-root document is assured exactly once, except the paper which achieves dual assurance through two independent spec-guidance pairs.
+
+\subsection{Discovered Issues and Resolution}
+
+Self-demonstration revealed a tooling gap. An audit of any earlier draft showed 85.7\% coverage instead of 100\%. The audit script inferred assurance face targets from naming conventions rather than reading explicit \texttt{target:} fields in face metadata.
+
+This was discovered, diagnosed, and fixed during framework application:
+\begin{enumerate}
+\item \textbf{Discovery}: Audit reported the paper content vertex as unassured
+\item \textbf{Diagnosis}: Script used naming pattern matching instead of explicit metadata
+\item \textbf{Fix}: Added \texttt{get\_face\_target()} function to read explicit target fields
+\item \textbf{Verification}: Re-ran audit; 100\% coverage achieved
+\end{enumerate}
+
+This sequence demonstrates the framework operating: a gap was detected through systematic auditing, root cause was identified, fix was implemented, and verification confirmed resolution. The meta-observation is that the framework's tooling caught a tooling defect—its self-referential nature strengthened rather than undermined confidence. 
+
+Early experiments demonstrated that allowing forward propagation of document updates by generative AI results in edit cascades. This proved to be as dangerous as it was powerful. The development and integration of automated regression testing was crucial for effectively regulating this behavior.
+
+\subsection{Traceability and Accountability}
+
+The framework's central claim—that typed simplicial complexes can enforce human accountability for document quality—is demonstrated by this paper:
+
+\begin{enumerate}
+\item Framework Axioms
+\begin{enumerate}
+    \item This paper cannot exist as an assured vertex without passing verification
+    \item Verification cannot pass without compliance with assured specification
+    \item This paper cannot be assured without validation against assured guidance 
+    \item Validation requires the guidance is coupled to the specification.
+    \item Validation cannot pass without a named human approver
+\end{enumerate}
+\item Observed Facts:
+\begin{enumerate}
+    \item This paper exists as an assured vertex
+\end{enumerate}
+\item Conclusion: 
+\begin{enumerate}
+    \item This document is structurally rule-compliant
+    \item A human author validated this paper's fitness-for-purpose
+    \item All dependency documents (supporting documents, specs, and guidance) have been assured with accountable humans signing the associated validations.
+\end{enumerate}
+\end{enumerate}
+
+The traceability and accountability properties are structural, not procedural. The assurance complex checks for compliance with the framework axioms via \texttt{audit\_assurance\_chart.py}. The \texttt{human\_approver} field is required by the type system—not by policy, but by data structure. Github Actions automate schema validation and matching the signer to the Github Username making the git commit; this prevents validation edges without named signers from being committed to the repository.
+
+\section{Implications and Limitations}
+
+The framework demonstrates how topological structures can formalize document quality assurance relationships that are typically managed through informal processes. By encoding verification, validation, and accountability as typed edges in a simplicial complex, the approach makes quality requirements structurally enforceable rather than procedurally recommended. 
+
+The self-referential foundation addresses a fundamental challenge: how to specify the specification language itself. The boundary complex resolves this through an axiomatic root vertex that grounds the type system while maintaining topological validity. This pattern—introducing a distinguished element to transform degenerate structures into well-formed complexes—appears throughout mathematics and suggests broader applicability. The use of formal mathematical boundary conditions is well established in engineering practice \parencite{SzaboBabuska2011}. Our approach invites an interpretation of document relationships that is reminiscent of finite element analysis.
+
+\textbf{Current limitations} (1) the framework requires computational infrastructure (Python scripts, version control, continuous integration) which may not be accessible to all organizations; (2) the type system is currently domain-specific to technical documentation and would require adaptation for other document types; (3) human accountability enforcement depends on organizational commitment to maintaining validation discipline; (4) the boundary complex pattern has been demonstrated only for the foundational four-vertex case and scaling properties remain to be characterized; (5) stabilizing and packaging software components, as well as building document-type registries are needed to improve user experience and to mitigate user-error related risks.
+
+\textbf{Future work} (1) compositional patterns for assembling larger complexes from assured sub-complexes, potentially leveraging categorical frameworks \parencite{Spivak2014}; (2) integration with existing requirements management tools; (3) formal verification of the type system's soundness using techniques from type theory \parencite{Pierce2002} or Hoare logic \parencite{Hoare1969}; and (4) application to domains beyond technical documentation such as regulatory compliance, academic peer review, or governance documentation. 
+
+Submitting documents to git-based version control with verifiable properties (including the presence of signatures for accountable humans) opens the door to applying Model-Based Systems Engineering to the aspects of organizational analysis, design, \textit{implementation} and \textit{quality assurance} which have heretofore been handled by bureaucracies \parencite{ZarghamBenMeir2026}. %The authors' focus is on engineering organizations; our application of this framework introduce actors, activities and resources into our topological modeling framework. Typed edges represent relationships, and faces are used to codify constraints which must be satisfied; research, development and operationalization will proceed along this direction.
+
+\section{Conclusions}
+
+This paper introduced a topological framework for document assurance that structurally enforces verification, validation, and human accountability requirements. The framework represents documents as vertices, quality relationships as typed edges, and assurances as 2-simplices in a typed simplicial complex, with human accountability guaranteed by type system constraints on validation edges.
+
+The self-demonstration validates the approach: this paper exists as an assured vertex only because all framework axioms are satisfied, including human validation with named accountability. The recursive property—that assuring any document requires assuring its specification and guidance—creates an accountability chain traceable to a self-consistent boundary.
+
+The key insight is that topology provides more than analogy. Simplicial complexes offer precise mathematical language for reasoning about document relationships, compositional properties through boundary operators, and locally verifiable rules that constrain valid global configurations to those with desirable properties.  Where edges in knowledge graphs encode relationships, faces can encode constraints that must be jointly satisfied. This formalization transforms informal quality practices into mathematically verifiable structures.
+
+For systems engineering practitioners, the framework offers: (1) automation of consistency checking across documentation networks; (2) structural enforcement of accountability requirements; (3) explicit representation of often-implicit specification-guidance relationships; (4) compositional patterns for managing complexity in large documentation systems.
+
+Formalization of previous informal quality assurance practices and implementation via software based deterministic rule checking enables cognizant engineers to access the power of generative AI without loss of requirements traceability or diffusion of accountability. The approach aligns with the IS 2026 theme of seeking \textit{wa} (harmony) in systems engineering by providing rigorous foundations for balancing human judgment in validation with computational verification, requirements traceability and organizational accountability in document-intensive engineering processes.
+
+\section*{AI Use Acknowledgment}
+
+\textbf{Tools Used:} Claude Code (Anthropic);\\ \texttt{claude-sonnet-4-5-20250929} 
+
+\textbf{Usage Categories:} (1) \textit{Content generation}—drafting all sections based on framework understanding and four assured supporting documents; (2) \textit{Analysis}—generating verification outputs, quality assessments, and assurance documentation; (3) \textit{Conceptual}—framework architecture emerged through iterative human-AI collaboration.
+
+\textbf{Author Involvement:} The framework architecture, research questions, and all accountability decisions are original author work. The author directed all AI-assisted content generation, made all editorial decisions, and approved all supporting document assurance. The self-demonstration (using the framework to assure itself) was conceived and orchestrated by the author.
+
+\textbf{Human Accountability:} The named human approver (author) reviewed all AI-generated content and takes full responsibility for the paper's claims and conclusions. All validation edges in the supporting infrastructure bear the \texttt{human\_approver: <author>} attribution, enforced by type system constraints and continuous integration checks.
+
+This disclosure follows the methodological precedent established in Ghrist's ``The Forge'' \parencite{Ghrist2025Forge}, which documents a comparable process of AI-assisted authorship in which the human provides intellectual substance, direction, oversight, and approval while AI contributes drafting capability. The use of LLM assistance in document preparation exemplifies this paper's central thesis: computational tools can accelerate generation and verification tasks while preserving human accountability through structural enforcement of validation requirements.
+
+% =========================
+% ===== References ========
+% =========================
+\printbibliography[heading=bibintoc]
+\end{multicols*}
+\end{document}
