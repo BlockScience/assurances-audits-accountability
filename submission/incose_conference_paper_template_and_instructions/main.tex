@@ -225,7 +225,7 @@ We demonstrate through self-reference: this paper is verified against its specif
 
 \phantomsection
 \subsubsection{Keywords}
-verification and validation, assurance, topological methods, accountability, AI-assisted documentation, human-in-the-loop
+verification and validation, quality assurance, topological methods, accountability, AI-assisted documentation, human-in-the-loop
 
 % =========================
 % ===== Main Content ======
@@ -260,9 +260,9 @@ We demonstrate the framework through self-reference. This paper is not merely a 
 
 \subsection{Paper Structure}
 
-Section 2 reviews related work in verification and validation, requirements traceability, algebraic topology, test-driven development, and AI accountability. Section 3 presents the framework intuition based optimization theory. Section 4 presents the framework architecture using a layered model consistent with the INCOSE SE Handbook. Section 5 demonstrates results through self-application and audit. Section 6 describes the engineering lifecycle that produced this paper. Section 7 discusses implications and limitations. Section 8 concludes with key takeaways.
+Section 2 reviews related work in verification and validation, requirements traceability, algebraic topology, test-driven development, and AI accountability. Section 3 presents the framework intuition based optimization theory. Section 4 presents the framework architecture using a layered model consistent with the INCOSE SE Handbook. Section 5 demonstrates results through self-application and audit. Section 6 discusses implications and limitations. Section 7 concludes with key takeaways.
 % ===== Background Section =====
-\subsection{Verification and Validation Foundations}
+\subsection{Verification and Validation}
 
 The distinction between verification and validation traces to Boehm's 1984 IEEE Software paper, which posed the questions that have guided quality assurance since: ``Are we building the product right?'' (verification) and ``Are we building the right product?'' (validation) \parencite{Boehm1984}. IEEE Standard 1012-2016 codifies verification and validation processes for systems, software, and hardware, defining integrity levels and process requirements \parencite{IEEE1012}. ISO/IEC/IEEE 15288:2023 establishes verification and validation as distinct life cycle processes within the broader systems engineering framework \parencite{ISO15288}.
 
@@ -278,7 +278,7 @@ The Requirements Traceability Matrix (RTM) emerged as the standard tool for mana
 
 Traditional RTMs have three key limitations relevant to our work. First, they represent only pairwise relationships—requirement A traces to test B—without capturing higher-order constraints that span multiple elements. Second, they lack built-in structural enforcement; compliance depends on process discipline rather than mathematical constraints. Third, they do not inherently address accountability for qualitative judgments about requirement satisfaction, which becomes critical when AI assists in generating artifacts that claim to satisfy requirements.
 
-Our assurance complexes extend the RTM concept from matrices to typed simplicial complexes. Where RTMs track pairwise requirement flows, assurance complexes encode verification edges (document-to-specification), coupling edges (specification-to-guidance), and validation edges (document-to-guidance) as typed 1-simplices. Where RTMs provide process recommendations, assurance complexes enforce topological invariants (\(V - F \geq 1\)) that structurally guarantee coverage. Where RTMs rely on external accountability mechanisms, assurance complexes require named human approvers as schema-enforced type constraints on validation edges.
+Our assurance complexes extend the RTM concept from matrices to typed simplicial complexes. Where RTMs track pairwise requirement flows, assurance complexes encode verification edges (document-to-specification), coupling edges (specification-to-guidance), and validation edges (document-to-guidance) as typed 1-simplices. Where RTMs provide process recommendations, assurance complexes enforce local constraints that structurally guarantee traceability in addition to coverage. Where RTMs rely on external accountability mechanisms, assurance complexes require named human approvers as schema-enforced type constraints on validation edges, which are required for assurance triangles.
 
 \subsection{The V-Model and Systems Engineering Lifecycle}
 
@@ -294,9 +294,9 @@ Our framework operationalizes this V-model structure for documents. A specificat
 
 Algebraic topology studies shapes through algebraic invariants, enabling rigorous analysis of structural properties \parencite{Hatcher2002}. A simplicial complex is a combinatorial structure built from simplices: vertices (0-simplices), edges (1-simplices), triangles (2-simplices), and higher-dimensional analogs \parencite{Edelsbrunner2010}. The power of simplicial complexes lies in their ability to capture relationships at multiple levels—not just pairwise connections (edges) but higher-order relationships (faces).
 
-Carlsson's 2009 survey established topology as a tool for data analysis, demonstrating that topological invariants reveal structural features invisible to traditional statistics \parencite{Carlsson2009}. Ghrist's work spans both theoretical foundations and accessible exposition—from the barcodes paper introducing persistent homology \parencite{Ghrist2008} to the comprehensive textbook \textit{Elementary Applied Topology} \parencite{Ghrist2014} that makes these methods accessible to engineers.
+Carlsson's 2009 survey established topology as a tool for data analysis, demonstrating that topological invariants reveal structural features invisible to traditional statistics \parencite{Carlsson2009}. Ghrist's work spans both theoretical foundations and accessible exposition—from the barcodes paper introducing persistent homology as a tool for topological data analysis (TDA) \parencite{Ghrist2008} to the comprehensive textbook \textit{Elementary Applied Topology} \parencite{Ghrist2014} that makes these methods accessible to engineers.
 
-The Euler characteristic $\chi = V - E + F$ provides a simple but powerful invariant: for a well-formed complex, this quantity reveals topological properties independent of specific representation. Reimann et al. applied directed clique complexes to brain networks, showing that Euler characteristic serves as a meaningful network invariant \parencite{Reimann2017}. We adopt this principle for document assurance: local rules enforcement produces topological invariants which may be used to audit structural integrity.
+The Euler characteristic $\chi = V - E + F$ provides a simple but powerful invariant: for a well-formed complex, this quantity reveals topological properties independent of specific representation. Reimann et al. applied directed clique complexes to brain networks, showing that Euler characteristic serves as a meaningful network invariant \parencite{Reimann2017}. We explore this principle for document assurance: local rules enforcement produces topological invariants which may be used to audit structural integrity.
 
 \subsection{Test-Driven Development}
 
@@ -314,13 +314,13 @@ UNESCO's 2021 Recommendation on the Ethics of Artificial Intelligence, adopted b
 
 What existing work lacks is a practical mechanism for accountability. Principles are valuable but insufficient. We need schemas that require accountability attribution, processes that enforce human review, and auditing that detects gaps.
 
-From a systems engineering perspective, AI agents are fundamentally not self-governing—every autonomous system is deployed \textit{by someone}, and there is always an accountable stakeholder \parencite{Zargham2024}. Agency requires a principal who provisions, deploys, and monitors the system. Autonomy does not eliminate oversight; rather, it represents delegated control within clearly defined parameters. The principal defines the mission, establishes constraints, and retains responsibility for outcomes. LLMs are tools embedded within larger systems, not autonomous agents themselves; they generate text but remain the instruments of their operators and provisioners. The consequences of LLM use is realized within orchestrated systems where humans retain accountability.
+From a systems engineering perspective, AI agents are fundamentally not self-governing—every autonomous system is deployed \textit{by someone}, and there is always an accountable stakeholder \parencite{Zargham2024}. The term agent implies a principal who provisions, deploys and monitors them. Autonomy does not eliminate oversight; rather, it represents delegated control within clearly defined parameters. The principal defines the mission, establishes constraints, and retains responsibility for outcomes. LLMs are tools embedded within larger systems, not autonomous agents themselves; they generate text but remain the instruments of their operators and provisioners. The consequences of LLM use is realized within orchestrated systems where humans retain accountability.
 
 Our framework provides oversight and accountability mechanisms through structural requirements: validation edges cannot exist without a named human approver.
 
 \subsection{Prior Art: Ghrist's ``The Forge''}
 
-Robert Ghrist's Appendix C ``The Forge'' in \textit{The Geometry of Heaven \& Hell} (2025) documents the only known methodology for AI-assisted scholarly writing with explicit human accountability \parencite{Ghrist2025Forge}. Notably, Ghrist's topological mathematics (barcodes, persistent homology) also informs our simplicial complex model.
+Robert Ghrist's Appendix C ``The Forge'' in \textit{The Geometry of Heaven \& Hell} (2025) documents the only known methodology for AI-assisted scholarly writing with explicit human accountability \parencite{Ghrist2025Forge}. Notably, Ghrist's topological mathematics (barcodes, persistent homology for TDA) also informs our simplicial complex model.
 
 Ghrist's key methodological insight: ``Every sentence in this book passed through my judgment; every connection earned my conviction; every claim bears my responsibility.''
 
@@ -334,7 +334,7 @@ The specification defines the \textit{feasible region}: structural constraints t
 
 The guidance defines the \textit{objective function}: quality criteria that distinguish better representations from worse ones within the feasible region (clarity, rigor, relevance). Validation evaluates the objective—how well does this serialization serve its purpose?
 
-Writing is then a projection operation: projecting intellectual substance onto the document space characterized by the specification, with the guidance providing direction for selecting among alternative feasible representations. Different phrasings, organizations, or emphases may all satisfy the spec (all feasible), but the guidance helps choose which serialization best communicates the underlying substance.
+Writing documentation is then a projection operation: projecting intellectual substance onto the document space characterized by the specification, with the guidance providing direction for selecting among alternative feasible representations. Different phrasings, organizations, or emphases may all satisfy the spec (all feasible), but the guidance helps choose which serialization best communicates the underlying substance.
 
 This framing clarifies the distinction:
 \begin{itemize}
@@ -373,10 +373,15 @@ Table 1 summarizes the system functions.
 \textbf{Function} & \textbf{Input} & \textbf{Output} & \textbf{Description} \\
 \midrule
 Verify & Doc, Spec & Pass, Fail & Check types \& structure against spec \\
+\midrule
 Validate & Doc, Spec, Guidance & Report & Evaluate fitness-for-purpose\\
+\midrule
 Couple & Guidance, Spec & Record & Link guidance to spec \\
+\midrule
 Assure & Coupling, V\&V& Record & Sign V\&V + Coupling into assurance record \\
+\midrule
 Audit & Document & Report & Analyze assurance \\
+\midrule
 Trace & Document & Report & Identify and Audit Doc Dependencies \\
 \bottomrule
 \end{tabular}
@@ -410,10 +415,9 @@ The elements of our simplicial complex are equipped with semantic types in addit
 
 \textbf{Faces (2-simplices)} are assurance triangles: when a content document has a verification edge to a specification, that specification has a coupling edge to guidance, and the content has a validation edge to that same guidance, the three edges bound a triangular face representing complete assurance.
 
-\textbf{Accountability Model:} Every validation edge and assurance face requires human accountability. When LLM-assisted, a named human approver is REQUIRED—the human takes responsibility for the assessment. This is not optional; it is structurally enforced through schema validation.
+\textbf{Accountability Model:} Every validation edge and assurance face requires human accountability. When LLM-assisted, a named human approver is \textit{required}—the human takes responsibility for the assessment. This is not optional; it is structurally enforced through schema validation.
 
-\textbf{Boundary Condition:} The topological assurance framework bootstraps through four foundational vertices: spec-for-spec(\textcolor{blue}{\textbf{SS}}), spec-for-guidance (\textcolor{green!50!black}{\textbf{SG}}), guidance-for-spec (\textcolor{yellow!80!black}{\textbf{GS}}), guidance-for-guidance (\textcolor{orange!80!black}{\textbf{GG}}) which are mutually assured in the self-referential pattern shown in Table \ref{tab:boundary}. Two of these configurations form valid assurance triangles(\textcolor{yellow!80!black}{\textbf{GS}} and \textcolor{green!50!black}{\textbf{SG}}), while the other two (\textcolor{blue}{\textbf{SS}} and \textcolor{orange!80!black}{\textbf{GG}}) rely on self-reference (\textcolor{blue}{\textbf{SS}} via self-verification \textcolor{blue}{\textbf{SS}}:\textcolor{blue}{\textbf{SS}}, \textcolor{orange!80!black}{\textbf{GG}} via self-validation \textcolor{orange!80!black}{\textbf{GG}}:\textcolor{orange!80!black}{\textbf{GG}}). This boundary condition is logically valid—each foundational document has verification, validation, and coupling edges—but the self-loops create degenerate faces that violate the formal requirements for a simplicial complex. 
-
+\textbf{Boundary Condition:} The topological assurance framework bootstraps through four foundational vertices: spec-for-spec(\textcolor{blue}{\textbf{SS}}), spec-for-guidance (\textcolor{green!50!black}{\textbf{SG}}), guidance-for-spec (\textcolor{yellow!80!black}{\textbf{GS}}), guidance-for-guidance (\textcolor{orange!80!black}{\textbf{GG}}) which are mutually assured in the self-referential pattern shown in Table \ref{tab:boundary}.
 \begin{table}[H]
 \centering
 \small
@@ -435,12 +439,11 @@ The elements of our simplicial complex are equipped with semantic types in addit
 \caption{Boundary Condition: Self-Referential Edges}
 \label{tab:boundary}
 \end{table}
-
-In Section 5.1, this boundary condition is converted into a valid simplicial complex (the boundary complex) by introducing a root vertex that eliminates the degeneracies. 
+Two of these configurations form valid assurance triangles(\textcolor{yellow!80!black}{\textbf{GS}} and \textcolor{green!50!black}{\textbf{SG}}), while the other two (\textcolor{blue}{\textbf{SS}} and \textcolor{orange!80!black}{\textbf{GG}}) rely on self-reference (\textcolor{blue}{\textbf{SS}} via self-verification \textcolor{blue}{\textbf{SS}}:\textcolor{blue}{\textbf{SS}}, \textcolor{orange!80!black}{\textbf{GG}} via self-validation \textcolor{orange!80!black}{\textbf{GG}}:\textcolor{orange!80!black}{\textbf{GG}}). This boundary condition is logically valid—each foundational document has verification, validation, and coupling edges—but the self-loops create degenerate faces that violate the rules for a simplicial complex.  In Section 5.1, this boundary condition is converted into a valid simplicial complex (the boundary complex) by introducing a root vertex that eliminates the degeneracies. 
 
 \subsection{Physical Layer: Implementation}
 
-Table 2 summarizes the implementation decisions.
+Table 2 presents the implementation technology stack organized by framework element. The document store uses directories of Markdown files managed through GitHub, providing human-readable content under version control. The type system combines YAML schemas with Python for enforcement, balancing human readability with robust library support. Verification runs automated Python scripts to check type conformance and structural compliance against specifications. Validation leverages human review workflows in Obsidian for assessment, Claude Code for generating validation reports, and git commits as cryptographic signatures that bind the approver's identity to their judgment. The audit tool implements Python scripts that analyze coverage completeness and verify topological invariants. Accountability tracking binds the Git history to the data in the assurance complex, with the approver field capturing usernames and GitHub Actions enforcing the validation signer match the user at commit time. The development and writing interface uses VS Code with Claude Code to provide smooth workflows for human-LLM collaboration during document drafting. The reading and review interface uses an Obsidian vault to support navigation, graph visualization, and interactive editing of the document network. This technology stack prioritizes human readability, automated verification, and cryptographic accountability while maintaining pragmatic tooling accessible to technical teams.
 
 \begin{table}[H]
 \centering
@@ -451,18 +454,39 @@ Table 2 summarizes the implementation decisions.
 \textbf{Element} & \textbf{Technology} & \textbf{Rationale} \\
 \midrule
 Document Store & Directories, Markdown files, github & Human-readable, version-controlled \\
+\midrule
 Type System & YAML, Python & Human readable, library support \\
-UI for Develop and Write & VS Code with Claude Code & Smooth UX for LLM collaboration \\
+\midrule
 Verification & python script & Types \& Structural compliance checks \\
-Validation & human review with obsidian; Claude Code for reports & LLM assistance for assessments with human accountability for decisions \\
+\midrule
+Validation & human review with obsidian; Claude Code for reports; git commit to sign & LLM assistance for assessments with human accountability for decisions \\
+\midrule
 Audit Tool & python script & Coverage and topology analysis \\
+\midrule
 Accountability & Git history, approver field & Username as identity, Github actions enforces rules \\
- UI for Read and Review & Obsidian Vault & Smooth navigation, graph view \\
+\midrule
+UI for Develop and Write & VS Code with Claude Code & Smooth UX for LLM collaboration \\
+\midrule
+UI for Read and Review & Obsidian Vault & UX for Navigating, Reading and Editing\\
 \bottomrule
 \end{tabular}
 \caption{Implementation Technologies}
 \label{tab:implementation}
 \end{table}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{vs-code-interface.png}
+    \caption{Enter Caption}
+    \label{fig:UI for Develop and Write}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{obsidian-interface.png}
+    \caption{Enter Caption}
+    \label{fig:UI for Read and Review}
+\end{figure}
 
 \textbf{Unit Testing:} Individual scripts pass pytest. Template verification catches malformed documents. Type schemas enforce required fields. The \texttt{check\_accountability.py} script validates that approver fields are present and match whitelisted identities. Continuous integration is achieved through github actions which prevent pull requests from being merged if they fail the tests which check for verifications, signed validations and structural integrity of assurance triangles.
 % ===== Self-Demonstration Section =====
@@ -499,16 +523,14 @@ Section 4.3 introduced the boundary condition: four foundational vertices mutual
 \label{tab:boundary-complex}
 \end{table}
 
-This rewiring eliminates degeneracy and provides a foundation for the topological assurance structure. The root vertex does not require its own assurance—it is axiomatic. 
-
-The local constraints which characterizes our assurance complex are
+This rewiring eliminates degeneracy and provides a foundation for the topological assurance structure. The root vertex does not require its own assurance—it is axiomatic. The local constraints which characterizes our assurance complex are
 \begin{enumerate}
     \item Assurance face \(a=(d,s,g)\) assures exactly one document vertex \(d\).
-    \item Assurance face \(a=(d,s,g)\) asserts verification edge from document vertex  $d$  to spec vertex $s$.
-    \item Assurance face \(a=(d,s,g)\) asserts a coupling edge from spec vertex $s$ to guidance vertex $g$.
-    \item  Assurance face \(a=(d,s,g)\) asserts a human signed validation edge from  vertex  $d$  to guidance vertex $g$.
-    \item Spec vertex $s$ is an assured document, and thus must have an assurance face \(a_s=(s,s_s,g_s)\).
-    \item Guidance vertex \(g\) is an assured document, and thus must have an assurance face $a_g=(g,s_g,g_g)$.
+    \item Assurance face \(a\) asserts verification edge \((d,s)\) from document vertex  $d$  to spec vertex $s$.
+    \item Assurance face \(a\) asserts a coupling edge \((s,g)\) from spec vertex $s$ to guidance vertex $g$.
+    \item  Assurance face \(a\) asserts a human signed validation edge \((d,g)\) from document verte $d$  to guidance vertex $g$.
+    \item Spec vertex $s$ is an assured document, and thus must have an assurance face \((s,s_s,g_s)\).
+    \item Guidance vertex \(g\) is an assured document, and thus must have an assurance face $(g,s_g,g_g)$.
 \end{enumerate}
 
 As a consequence of the pairings of documents to assurances (d, $a_d$), and the presence of the root vertex, a valid assurance complex satisfies \(V-F\ge 1\), where  $V - F = 1$ when each document is assured exactly once.  It is possible to assure the same document $d$ against more than one coupled $(s,g)$, resulting in valid assurance complexes with \(V - F>1\). 
