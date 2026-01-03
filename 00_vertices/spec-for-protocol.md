@@ -181,31 +181,47 @@ Quality checks and validation steps.
 
 ### 6. Tools and Scripts
 
-Explicit enumeration of tools, scripts, and commands used in the workflow.
+Explicit enumeration of tools, scripts, and commands the AI assistant is authorized to use. **This section is a key customization point** - it defines the assistant's operational capabilities by specifying what software tools are available, when to use them, and how to invoke them correctly.
+
+**Why This Matters:** In Claude Code and similar AI assistant environments, the assistant can execute local scripts, CLI tools, and commands. The Tools section is where you **provision these capabilities** - telling the assistant exactly what tools exist in your workspace and how to use them. Without explicit tool documentation, the assistant either cannot use tools effectively or must guess at invocation patterns.
 
 **Format:**
 ```markdown
 ## Tools and Scripts
 
-### Verification Tools
-- **[Tool name]** (`path/to/tool`) - [When to use] - [What it does]
-- Example: `python scripts/verify_template_based.py <file>` - [Usage description]
+### [Category Name] Tools
 
-### Analysis Tools
-- **[Tool name]** (`path/to/tool`) - [When to use] - [What it does]
+- **[Tool name]** (`command/path/syntax`)
+  - **When:** [Which phase(s), what trigger or condition]
+  - **What:** [Purpose and expected output]
+  - **Example:** `full command with parameters`
+
+### Verification Tools
+
+- **verify_template_based.py** (`python scripts/verify_template_based.py <file> --templates templates`)
+  - **When:** Phase 3 (immediately after generating/modifying any document)
+  - **What:** Verifies document structure matches template and spec requirements
+  - **Example:** `python scripts/verify_template_based.py 00_vertices/purpose-my-assistant.md --templates templates`
 
 ### [Additional Tool Categories as needed]
 ```
 
 **Requirements:**
-- MUST list all tools and scripts referenced in workflow phases
+- MUST list all tools and scripts the assistant is authorized to use
 - Each tool MUST specify:
   - Tool name or script path
   - When to use it (which phase, what trigger)
   - What it does (purpose and output)
-  - Command syntax or invocation pattern
-- Tools SHOULD be grouped by category (verification, analysis, generation, etc.)
+  - Command syntax or invocation pattern with example
+- Tools SHOULD be grouped by category (verification, analysis, generation, compilation, etc.)
+- Tool names referenced in Phase steps MUST match entries in this section
 - If no tools are used, section MAY be omitted OR include statement "No automated tools required"
+
+**Customization Guidance:**
+- Add any local scripts, CLI tools, or commands relevant to your workspace
+- Remove or mark as unavailable any tools that don't exist in your environment
+- For each tool, consider: What happens if it fails? What does success look like?
+- Group tools by purpose to help the assistant understand when each is appropriate
 
 ### 7. Consistent Principles
 
