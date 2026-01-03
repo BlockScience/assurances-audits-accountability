@@ -66,7 +66,9 @@ Use this guidance when creating protocols that systematically achieve purpose ob
 
 ### 6. Tools and Scripts Documentation
 
-**Excellent:** All tools explicitly listed with path, when to use, what they do, and command syntax; tools integrated into phase steps
+The Tools section is where you **provision your assistant's operational capabilities**. In Claude Code, the assistant can execute any local scripts, CLI tools, or commands - but it needs to know what's available, when to use each tool, and how to invoke them correctly.
+
+**Excellent:** All tools explicitly listed with path, when to use, what they do, and command syntax; tools integrated into phase steps; clear error handling guidance
 **Good:** Tools mentioned but missing some details (path, usage, or timing)
 **Needs Improvement:** Tools referenced in workflow but not documented, or no tools listed when workflow implies automation
 
@@ -77,6 +79,13 @@ Use this guidance when creating protocols that systematically achieve purpose ob
 - Command syntax with parameters shown
 - Tools referenced by name in phase steps match Tools section
 - Grouped by category (verification, analysis, generation, etc.)
+- Error cases addressed (what to do when a tool fails)
+
+**Thinking About Tool Provisioning:**
+- **What tools exist in your workspace?** List scripts, CLI tools, build commands, test runners, linters, etc.
+- **When should each tool be used?** Map tools to phases and triggers
+- **How is each tool invoked?** Provide exact command syntax with example parameters
+- **What does success/failure look like?** Help the assistant interpret output
 
 ### 7. Purpose Alignment
 
@@ -113,14 +122,20 @@ Use this guidance when creating protocols that systematically achieve purpose ob
 - Output quality checks (check deliverables)
 
 ### Tools and Scripts
-- List ALL tools/scripts referenced in phase steps
+
+This section provisions your assistant's capabilities. Think of it as telling the assistant "here are the tools you can use."
+
+- List ALL tools/scripts the assistant is authorized to use
 - For each tool, specify:
   - Full invocation path (e.g., `python scripts/verify_template_based.py <file> --templates templates`)
   - When to use (which phase, what triggers it)
   - What it does (purpose and expected output)
   - Command syntax with parameters
+  - What success looks like (expected output patterns)
+  - What failure looks like (error patterns, exit codes)
 - Group by category (verification, compilation, analysis, assurance, etc.)
 - Ensure tools mentioned in phases match Tools section
+- Consider: build tools, test runners, linters, formatters, deployment scripts, custom scripts
 
 ### Consistent Principles
 - List 3-5 behaviors that apply throughout

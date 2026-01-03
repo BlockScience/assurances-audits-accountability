@@ -184,6 +184,7 @@
   },
   "active": "d8fe634073ae7dce",
   "lastOpenFiles": [
+    "PERSONALIZATION-GUIDE.md",
     "HOWTO-CREATE-DOCUMENT-TYPE.md",
     "scripts/__pycache__/audit_assurance_chart.cpython-311.pyc",
     "scripts/__pycache__/verify_structure.cpython-311.pyc",
@@ -229,7 +230,6 @@
     "00_vertices/spec-for-incose-paper-section.md",
     "Untitled.md",
     "README.md",
-    "01_edges/validation-incose-paper-2026:guidance-incose-paper.md",
     "Untitled.canvas"
   ]
 }
