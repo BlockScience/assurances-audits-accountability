@@ -212,7 +212,7 @@ flowchart TB
 - [[spec-for-architecture]] - Structural requirements (4 layers, V-model table)
 - [[guidance-for-architecture]] - Quality criteria (layer coherence, testability)
 - **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
-- **Generate validation:** Ask LLM to evaluate against guidance criteria, then create validation edge in `01_edges/`
+- **Generate validation:** Ask LLM to evaluate against guidance criteria; review, approve, and sign the validation edge in `01_edges/`
 - **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
@@ -264,7 +264,7 @@ flowchart TB
 - [[spec-for-lifecycle]] - Structural requirements (phases, flowchart, gates)
 - [[guidance-for-lifecycle]] - Quality criteria (clarity, completeness)
 - **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
-- **Generate validation:** Ask LLM to evaluate against guidance criteria, then create validation edge in `01_edges/`
+- **Generate validation:** Ask LLM to evaluate against guidance criteria; review, approve, and sign the validation edge in `01_edges/`
 - **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
@@ -349,7 +349,7 @@ flowchart TB
 - [[spec-for-program-plan]] - Structural requirements (10 required sections)
 - [[guidance-for-program-plan]] - Quality criteria (realism, traceability)
 - **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
-- **Generate validation:** Ask LLM to evaluate against guidance criteria, then create validation edge in `01_edges/`
+- **Generate validation:** Ask LLM to evaluate against guidance criteria; review, approve, and sign the validation edge in `01_edges/`
 - **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
@@ -415,7 +415,7 @@ flowchart TB
 - [[spec-for-program-memo]] - Structural requirements (6 required sections)
 - [[guidance-for-program-memo]] - Quality criteria (synthesis, accessibility)
 - **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
-- **Generate validation:** Ask LLM to evaluate against guidance criteria, then create validation edge in `01_edges/`
+- **Generate validation:** Ask LLM to evaluate against guidance criteria; review, approve, and sign the validation edge in `01_edges/`
 - **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
