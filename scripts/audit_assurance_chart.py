@@ -30,6 +30,13 @@ list along with the generator's understanding of face structure.
 
 Usage:
     python scripts/audit_assurance_chart.py charts/chart-types-audit/chart-types-audit.md
+    python scripts/audit_assurance_chart.py chart.md --search-dir /path/to/assurance/dir
+
+Options:
+    --search-dir DIR    Additional directory to search for faces/edges/vertices.
+                        Can be specified multiple times. These directories are
+                        searched in addition to the standard 00_vertices/,
+                        01_edges/, 02_faces/ locations.
 
 Output:
     - PASS/FAIL status
@@ -40,6 +47,7 @@ Output:
 import sys
 import json
 import yaml
+import argparse
 from pathlib import Path
 from collections import defaultdict
 
@@ -83,49 +91,80 @@ def load_chart(chart_path: Path) -> dict:
     }
 
 
-def load_element(element_id: str, base_dir: Path) -> dict:
-    """Load an element (vertex, edge, or face) by ID."""
+def load_element(element_id: str, base_dir: Path, search_dirs: list = None) -> dict:
+    """Load an element (vertex, edge, or face) by ID.
+
+    Args:
+        element_id: The element ID (e.g., 'v:spec:chart', 'f:assurance:field-survey-wqm')
+        base_dir: Base directory containing 00_vertices/, 01_edges/, 02_faces/
+        search_dirs: Additional directories to search for elements (flat search)
+    """
+    if search_dirs is None:
+        search_dirs = []
+
     # Try to find the file by globbing since naming conventions vary
     element_path = None
 
+    # Determine which subdirectory and patterns to use based on element type
     if element_id.startswith('v:') or element_id.startswith('b0:'):
-        subdir = base_dir / '00_vertices'
+        subdir_name = '00_vertices'
         # Try different patterns
         patterns = [
             f"*{element_id.split(':')[-1]}*.md",
             f"{element_id.replace(':', '-')}.md",
             "b0-root.md" if element_id == 'b0:root' else None
         ]
-        for pattern in patterns:
-            if pattern:
-                matches = list(subdir.glob(pattern))
-                if matches:
-                    element_path = matches[0]
-                    break
-
     elif element_id.startswith('e:') or element_id.startswith('b1:'):
-        subdir = base_dir / '01_edges'
+        subdir_name = '01_edges'
         # For edges, the filename usually drops the prefix
         patterns = [
             f"{element_id.replace('e:', '').replace(':', '-')}.md",
             f"{element_id.replace('b1:', 'b1-').replace(':', '-')}.md"
         ]
-        for pattern in patterns:
-            if (subdir / pattern).exists():
-                element_path = subdir / pattern
-                break
-
     elif element_id.startswith('f:') or element_id.startswith('b2:'):
-        subdir = base_dir / '02_faces'
+        subdir_name = '02_faces'
         # For faces, pattern is usually assurance-{type}.md or b2-{type}.md
         patterns = [
             f"{element_id.replace('f:assurance:', 'assurance-').replace('b2:', 'b2-').replace(':', '-')}.md",
             f"{element_id.replace('f:', '').replace('b2:', 'b2-').replace(':', '-')}.md"
         ]
-        for pattern in patterns:
-            test_path = subdir / pattern
-            if test_path.exists():
-                element_path = test_path
+    else:
+        return None
+
+    # First, search in the standard subdirectory
+    subdir = base_dir / subdir_name
+    for pattern in patterns:
+        if pattern:
+            if '*' in pattern:
+                matches = list(subdir.glob(pattern))
+                if matches:
+                    element_path = matches[0]
+                    break
+            else:
+                test_path = subdir / pattern
+                if test_path.exists():
+                    element_path = test_path
+                    break
+
+    # If not found in standard location, search in additional directories (flat search)
+    if not element_path:
+        for search_dir in search_dirs:
+            search_path = Path(search_dir)
+            if not search_path.exists():
+                continue
+            for pattern in patterns:
+                if pattern:
+                    if '*' in pattern:
+                        matches = list(search_path.glob(pattern))
+                        if matches:
+                            element_path = matches[0]
+                            break
+                    else:
+                        test_path = search_path / pattern
+                        if test_path.exists():
+                            element_path = test_path
+                            break
+            if element_path:
                 break
 
     if not element_path or not element_path.exists():
@@ -195,15 +234,20 @@ def infer_face_target(face_id: str) -> str:
     return None
 
 
-def get_face_target(face_id: str, base_dir: Path) -> str:
+def get_face_target(face_id: str, base_dir: Path, search_dirs: list = None) -> str:
     """
     Get the target vertex for a face, preferring explicit metadata over inference.
 
     First tries to load the face file and read its 'target' field.
     Falls back to infer_face_target() if file not found or no target field.
+
+    Args:
+        face_id: The face ID (e.g., 'f:assurance:field-survey-wqm')
+        base_dir: Base directory containing 00_vertices/, 01_edges/, 02_faces/
+        search_dirs: Additional directories to search for face files
     """
     # Try to load face file and read explicit target
-    face_data = load_element(face_id, base_dir)
+    face_data = load_element(face_id, base_dir, search_dirs)
     if face_data and face_data.get('metadata'):
         explicit_target = face_data['metadata'].get('target')
         if explicit_target:
@@ -213,13 +257,18 @@ def get_face_target(face_id: str, base_dir: Path) -> str:
     return infer_face_target(face_id)
 
 
-def build_assurance_network_from_frontmatter(chart_data: dict, base_dir: Path = None) -> dict:
+def build_assurance_network_from_frontmatter(chart_data: dict, base_dir: Path = None, search_dirs: list = None) -> dict:
     """
     Build assurance network directly from chart frontmatter.
 
     Uses the F = V - 1 invariant: every vertex except root has exactly
     one face that assures it. Face-to-vertex mapping is read from face
     metadata (preferred) or inferred from face ID naming convention (fallback).
+
+    Args:
+        chart_data: Parsed chart data with metadata
+        base_dir: Base directory containing 00_vertices/, 01_edges/, 02_faces/
+        search_dirs: Additional directories to search for face files
 
     Returns:
         {
@@ -229,6 +278,9 @@ def build_assurance_network_from_frontmatter(chart_data: dict, base_dir: Path = 
             'root': 'b0:root' or None
         }
     """
+    if search_dirs is None:
+        search_dirs = []
+
     elements = chart_data['metadata'].get('elements', {})
 
     vertices = elements.get('vertices', [])
@@ -247,7 +299,7 @@ def build_assurance_network_from_frontmatter(chart_data: dict, base_dir: Path = 
     assured_vertices = {}
 
     for face_id in faces:
-        target = get_face_target(face_id, base_dir)
+        target = get_face_target(face_id, base_dir, search_dirs)
         if target:
             assured_vertices[target] = face_id
 
@@ -289,7 +341,7 @@ def is_document_vertex(vertex_id: str) -> bool:
     return vertex_id.startswith(document_prefixes)
 
 
-def check_invariant(network: dict) -> tuple:
+def check_invariant(network: dict, audit_targets: list = None) -> tuple:
     """
     Check the Assurances ≥ Documents invariant.
 
@@ -301,10 +353,20 @@ def check_invariant(network: dict) -> tuple:
     v:doc:*, c:*) rather than negatively excluded, which preserves
     compositionality under complex composition.
 
+    Args:
+        network: The assurance network dict
+        audit_targets: If provided, only count these vertices for the invariant.
+                      This is useful for instance-level audits where referenced
+                      type vertices are assured elsewhere.
+
     Returns (passes, message)
     """
     # Count document vertices using positive identification
-    doc_vertices = [v for v in network['vertices'] if is_document_vertex(v)]
+    if audit_targets:
+        # Only consider audit targets for the invariant
+        doc_vertices = [v for v in audit_targets if is_document_vertex(v)]
+    else:
+        doc_vertices = [v for v in network['vertices'] if is_document_vertex(v)]
     doc_count = len(doc_vertices)
 
     # Count assurance faces (f:assurance:* and b2:*)
@@ -384,9 +446,13 @@ def check_boundary_anchoring(network: dict) -> dict:
     }
 
 
-def audit_assurance_chart(chart_path: Path) -> dict:
+def audit_assurance_chart(chart_path: Path, search_dirs: list = None) -> dict:
     """
     Audit an assurance_audit chart for complete coverage.
+
+    Args:
+        chart_path: Path to the assurance audit chart markdown file
+        search_dirs: Additional directories to search for faces/edges/vertices
 
     Returns:
         {
@@ -401,6 +467,9 @@ def audit_assurance_chart(chart_path: Path) -> dict:
             'issues': [diagnostic messages]
         }
     """
+    if search_dirs is None:
+        search_dirs = []
+
     # Load chart
     chart_data = load_chart(chart_path)
     chart_id = chart_data['metadata'].get('id', 'unknown')
@@ -415,7 +484,7 @@ def audit_assurance_chart(chart_path: Path) -> dict:
         }
 
     # Build assurance network from frontmatter
-    network = build_assurance_network_from_frontmatter(chart_data)
+    network = build_assurance_network_from_frontmatter(chart_data, search_dirs=search_dirs)
 
     # Determine audit targets
     assurance_reqs = chart_data['metadata'].get('assurance_requirements', {})
@@ -425,8 +494,8 @@ def audit_assurance_chart(chart_path: Path) -> dict:
         # Audit all vertices except root
         audit_targets = [v for v in network['vertices'] if v != 'b0:root']
 
-    # Check invariant
-    invariant_passes, invariant_msg = check_invariant(network)
+    # Check invariant (using audit_targets if specified to scope the check)
+    invariant_passes, invariant_msg = check_invariant(network, audit_targets)
 
     # Check coverage
     coverage_result = check_assurance_coverage(network, audit_targets)
@@ -472,17 +541,22 @@ def audit_assurance_chart(chart_path: Path) -> dict:
             issues.append(f'{v}: Not assured')
             issues.append(f'{v}: No assurance faces found for {v}')
 
-    if not boundary_result['has_boundary']:
+    # Check if boundary anchoring is required (default: True for full audits)
+    # Instance-level audits that rely on type-level assurance can set this to false
+    requires_boundary = assurance_reqs.get('requires_boundary_anchoring', True)
+
+    if not boundary_result['has_boundary'] and requires_boundary:
         issues.append('No boundary faces found - assurance chain not anchored to root')
 
     # Determine status
     # PASS requires:
-    # 1. Invariant holds (F = V - 1)
+    # 1. Invariant holds (Assurances >= Documents)
     # 2. All audit targets are covered
-    # 3. Boundary faces exist
+    # 3. Boundary faces exist (unless requires_boundary_anchoring is false)
+    boundary_ok = boundary_result['has_boundary'] or not requires_boundary
     status = 'PASS' if (invariant_passes and
                         len(coverage_result['uncovered']) == 0 and
-                        boundary_result['has_boundary']) else 'FAIL'
+                        boundary_ok) else 'FAIL'
 
     return {
         'status': status,
@@ -540,21 +614,41 @@ def format_audit_trail(audit_result: dict) -> str:
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python scripts/audit_assurance_chart.py charts/<chart-name>.md")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description='Audit an assurance_audit chart for complete assurance coverage.',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog='''
+Examples:
+    python scripts/audit_assurance_chart.py charts/chart-types-audit/chart-types-audit.md
+    python scripts/audit_assurance_chart.py chart.md --search-dir /path/to/assurance/dir
+    python scripts/audit_assurance_chart.py chart.md --search-dir dir1 --search-dir dir2
+        '''
+    )
+    parser.add_argument('chart', type=Path, help='Path to the assurance audit chart markdown file')
+    parser.add_argument(
+        '--search-dir', '-s',
+        action='append',
+        dest='search_dirs',
+        metavar='DIR',
+        help='Additional directory to search for faces/edges/vertices. Can be specified multiple times.'
+    )
 
-    chart_path = Path(sys.argv[1])
+    args = parser.parse_args()
+
+    chart_path = args.chart
+    search_dirs = args.search_dirs or []
 
     if not chart_path.exists():
         print(f"Error: Chart file not found: {chart_path}")
         sys.exit(1)
 
     print(f"Auditing: {chart_path.name}")
+    if search_dirs:
+        print(f"Search dirs: {', '.join(search_dirs)}")
     print("")
 
     # Run audit
-    result = audit_assurance_chart(chart_path)
+    result = audit_assurance_chart(chart_path, search_dirs=search_dirs)
 
     # Print summary
     print(f"Status: {result['status']}")

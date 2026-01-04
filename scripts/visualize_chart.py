@@ -129,9 +129,32 @@ def create_visualization(chart_data: dict) -> go.Figure:
                 short_name = 'GC'
             elif v_id == 'v:guidance:assurance_audit':
                 short_name = 'GAA'
+            elif v_id.startswith('v:doc:'):
+                # For document vertices, extract the document type from the ID
+                # e.g., v:doc:field-survey-water-quality-monitoring -> "Field Survey"
+                doc_id = v_id.replace('v:doc:', '')
+                # Common document type prefixes
+                doc_types = ['field-survey', 'architecture', 'lifecycle', 'program-plan', 'program-memo']
+                short_name = doc_id
+                for dt in doc_types:
+                    if doc_id.startswith(dt):
+                        short_name = dt.replace('-', ' ').title()
+                        break
+            elif v_id.startswith('v:spec:'):
+                # For spec vertices, use "S:" prefix with the type
+                spec_type = v_id.replace('v:spec:', '').replace('-', ' ').title()
+                short_name = f"S:{spec_type}"
+            elif v_id.startswith('v:guidance:'):
+                # For guidance vertices, use "G:" prefix with the type
+                guidance_type = v_id.replace('v:guidance:', '').replace('-', ' ').title()
+                short_name = f"G:{guidance_type}"
             else:
-                # Fallback: use last part of name
-                short_name = vertex['name'].split()[-1] if ' ' in vertex['name'] else vertex['name']
+                # Fallback: use the full name but truncate if too long
+                name = vertex['name']
+                if len(name) > 20:
+                    short_name = name[:17] + '...'
+                else:
+                    short_name = name
             vertex_text.append(short_name)
 
             # Color by type

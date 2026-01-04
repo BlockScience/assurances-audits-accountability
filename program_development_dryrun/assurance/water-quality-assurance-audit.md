@@ -25,6 +25,15 @@ assurance_requirements:
   all_vertices_assured: true
   assurance_method: standard
   minimum_assurance_level: ASSURED
+  # Instance-level audit - boundary anchoring via type-level assurance in main complex
+  requires_boundary_anchoring: false
+  # Only audit the 5 instance documents; specs/guidances have assurance in main complex
+  audit_targets:
+    - v:doc:field-survey-water-quality-monitoring
+    - v:doc:architecture-water-quality-monitoring
+    - v:doc:lifecycle-water-quality-monitoring
+    - v:doc:program-plan-water-quality-monitoring
+    - v:doc:program-memo-water-quality-monitoring
 
 # Elements comprising this chart
 elements:
@@ -48,6 +57,15 @@ elements:
     - v:guidance:program-plan
     - v:guidance:program-memo
   edges:
+    # Dependency edges (document flow - in assurance/)
+    - e:dependency:architecture-wqm:field-survey-wqm
+    - e:dependency:lifecycle-wqm:architecture-wqm
+    - e:dependency:program-plan-wqm:architecture-wqm
+    - e:dependency:program-plan-wqm:lifecycle-wqm
+    - e:dependency:program-memo-wqm:field-survey-wqm
+    - e:dependency:program-memo-wqm:architecture-wqm
+    - e:dependency:program-memo-wqm:lifecycle-wqm
+    - e:dependency:program-memo-wqm:program-plan-wqm
     # Coupling edges (5 - in 01_edges/, shared across all instances)
     - e:coupling:field-survey
     - e:coupling:architecture
