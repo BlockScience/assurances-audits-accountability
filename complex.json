@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-04T18:39:58.637944+00:00",
+  "generated": "2026-01-04T19:13:44.544920+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -458,15 +458,23 @@
         "extends": "doc",
         "id": "v:guidance:lifecycle",
         "name": "Guidance for Lifecycle Documents",
-        "description": "Quality criteria and best practices for creating excellent engineering lifecycle documentation",
+        "description": "Quality criteria and best practices for creating excellent engineering lifecycle documentation aligned with the V-model",
         "tags": [
           "vertex",
           "doc",
           "guidance"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T18:00:00+00:00",
-        "modified": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-01-04T20:00:00+00:00",
+        "criteria": [
+          "v-model-alignment",
+          "architecture-traceability",
+          "phase-completeness",
+          "operations-coverage",
+          "decommissioning-readiness",
+          "gate-rigor"
+        ],
         "dependencies": [
           "v:guidance:architecture"
         ]
@@ -822,12 +830,6 @@
           "program memo document"
         ],
         "estimated_duration": "2-4 weeks",
-        "parallel_steps": [
-          [
-            "Step 2",
-            "Step 3"
-          ]
-        ],
         "prerequisites": [
           "access to knowledge complex repository",
           "familiarity with spec/guidance document pairs",
@@ -1135,15 +1137,15 @@
         "extends": "doc",
         "id": "v:spec:lifecycle",
         "name": "Specification for Lifecycle Documents",
-        "description": "Defines structural requirements for engineering lifecycle process documents describing assured document development workflows",
+        "description": "Defines structural requirements for engineering lifecycle documents that stage the process to deliver a system from architecture through operations",
         "tags": [
           "vertex",
           "doc",
           "spec"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T18:00:00+00:00",
-        "modified": "2025-12-30T18:00:00+00:00",
+        "modified": "2025-01-04T20:00:00+00:00",
         "dependencies": [
           "v:spec:architecture"
         ]
