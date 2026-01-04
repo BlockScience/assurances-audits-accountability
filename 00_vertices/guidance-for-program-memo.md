@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - guidance
-version: 1.0.0
+version: 1.1.0
 created: 2025-01-04T14:00:00Z
-modified: 2025-01-04T14:00:00Z
+modified: 2025-01-04T22:30:00Z
 dependencies:
   - v:guidance:architecture
   - v:guidance:lifecycle
@@ -244,26 +244,27 @@ This guidance supports authors in creating memos that:
 
 ### How We're Building It
 
-**Purpose:** Synthesize lifecycle into accessible process overview
+**Purpose:** Synthesize V-model lifecycle into accessible process overview
 
 **Tips:**
 
-- Phase table should fit on half a page maximum
+- Use V-model phase groups: Design, Implementation, Evaluation, Operations
+- Phase table should fit on half a page maximum (4 rows for phase groups)
 - Durations should be approximate (weeks/months, not days)
-- Quality assurance summary should build confidence without detail
+- Quality assurance summary should distinguish verification (automated) from validation (human approval)
 - Reference lifecycle document for process details
 
 **Anti-patterns:**
 
 - ❌ Including detailed process steps
-- ❌ Listing all gates and checkpoints
+- ❌ Listing all 8+ V-model phases individually
 - ❌ Technical V&V terminology without explanation
-- ❌ Phase table with 10+ phases
+- ❌ Not distinguishing verification gates from validation gates
 
 **Preferred:**
 
-- ✅ 4-6 phases maximum in summary table
-- ✅ "We verify quality through [brief approach]"
+- ✅ 4 phase groups: Design, Implementation, Evaluation, Operations
+- ✅ "We verify quality through automated gates per phase, with human validation at acceptance"
 
 ### Execution Summary
 

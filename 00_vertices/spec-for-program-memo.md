@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - spec
-version: 1.0.0
+version: 1.1.0
 created: 2025-01-04T14:00:00Z
-modified: 2025-01-04T14:00:00Z
+modified: 2025-01-04T22:30:00Z
 dependencies:
   - v:spec:architecture
   - v:spec:lifecycle
@@ -137,7 +137,7 @@ A distilled summary of the architecture document's key elements.
 
 ### 3. How We're Building It
 
-A distilled summary of the lifecycle document's key phases.
+A distilled summary of the V-model lifecycle document's key phases.
 
 **Format:**
 ```markdown
@@ -145,29 +145,31 @@ A distilled summary of the lifecycle document's key phases.
 
 ### Development Approach
 
-[1-2 paragraphs describing the overall approach from lifecycle document]
+[1-2 paragraphs describing the V-model approach from lifecycle document, noting design-evaluation symmetry]
 
 ### Key Phases
 
-| Phase | Purpose | Duration |
-|-------|---------|----------|
-| [Phase 1] | [brief purpose] | [duration] |
-| [Phase 2] | [brief purpose] | [duration] |
-| ... | ... | ... |
+| Phase Group | Purpose | Duration |
+|-------------|---------|----------|
+| Design | [requirements through physical design] | [duration] |
+| Implementation | [build working system] | [duration] |
+| Evaluation | [test from unit through acceptance] | [duration] |
+| Operations | [deploy, monitor, maintain] | [duration] |
 
 ### Quality Assurance
 
-[1-2 sentences on verification and validation approach]
+[1-2 sentences distinguishing verification (automated, per-phase gates) from validation (human approval, acceptance)]
 
 > **Details:** See [[lifecycle-document]] for complete lifecycle documentation.
 ```
 
 **Requirements:**
-- MUST summarize development approach from lifecycle document
-- MUST list key phases with purpose and approximate duration
-- MUST mention quality assurance approach (verification/validation)
+- MUST summarize V-model development approach from lifecycle document
+- MUST list key phase groups with purpose and approximate duration
+- MUST distinguish verification (automated gates) from validation (human approval)
 - MUST include reference to full lifecycle document
 - MUST NOT duplicate detailed process steps (those belong in the lifecycle)
+- SHOULD use phase groups (Design, Implementation, Evaluation, Operations) for executive brevity
 
 ### 4. Execution Summary
 
@@ -344,7 +346,7 @@ The memo draws content from these sources as follows:
 |--------------|----------------|---------------|
 | Program Overview | Program Plan, Architecture | Problem statement, sponsor, recipient, timeline, budget |
 | What We're Building | Architecture | Conceptual layer, logical layer (summary), acceptance criteria |
-| How We're Building It | Lifecycle | Phase overview, V&V approach |
+| How We're Building It | Lifecycle | V-model phase groups, verification/validation distinction |
 | Execution Summary | Program Plan | Milestones, resources, top risks |
 
 ## Coupling Requirement
