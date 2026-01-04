@@ -160,6 +160,53 @@ The paper references three figures generated from this repository:
 | Figure 2 | Boundary Complex | [figures/figure3-final.png](figures/figure3-final.png) |
 | Figure 3 | Audit Chart | [figures/figure2-final.png](figures/figure2-final.png) |
 
+## Runbooks
+
+Step-by-step workflows for common tasks in the knowledge complex:
+
+| Runbook | Purpose | Steps |
+|---------|---------|-------|
+| [[runbook-program-development]] | Create program documentation (memo, plan, architecture, lifecycle, field survey) | 7 |
+| [[runbook-assurance-audit-chart]] | Build assurance audit charts with full V&V coverage | 6 |
+| [[runbook-document-type-creation]] | Create new document types (spec, guidance, coupling) | 10 |
+| [[runbook-llm-specialization]] | Create specialized LLM configurations using PPP framework | 8 |
+
+**Direct links:**
+- [runbook-program-development.md](00_vertices/runbook-program-development.md)
+- [runbook-assurance-audit-chart.md](00_vertices/runbook-assurance-audit-chart.md)
+- [runbook-document-type-creation.md](00_vertices/runbook-document-type-creation.md)
+- [runbook-llm-specialization.md](00_vertices/runbook-llm-specialization.md)
+
+## Example Programs
+
+Two complete program development examples demonstrating the framework in practice:
+
+### Bus Electrification Program
+
+A municipal transit electrification program demonstrating the full V-model lifecycle:
+
+| Document | Type | Description |
+|----------|------|-------------|
+| [program-memo-bus-electrification.md](program_development_dryrun/program-memo-bus-electrification.md) | Program Memo | Stakeholder authorization and scope |
+| [program-plan-bus-electrification.md](program_development_dryrun/program-plan-bus-electrification.md) | Program Plan | Phased implementation strategy |
+| [architecture-bus-electrification.md](program_development_dryrun/architecture-bus-electrification.md) | Architecture | Technical system design |
+| [lifecycle-bus-electrification.md](program_development_dryrun/lifecycle-bus-electrification.md) | Lifecycle | 25-year operational model |
+| [field-survey-bus-electrification.md](program_development_dryrun/field-survey-bus-electrification.md) | Field Survey | Site assessments and infrastructure |
+| [bus-electrification-assurance-audit.md](program_development_dryrun/assurance-bus-electrification/bus-electrification-assurance-audit.md) | Audit Chart | Full assurance coverage with V-F=1 |
+
+### Water Quality Monitoring Program
+
+An IoT-based environmental monitoring program for water quality:
+
+| Document | Type | Description |
+|----------|------|-------------|
+| [program-memo-water-quality-monitoring.md](program_development_dryrun/program-memo-water-quality-monitoring.md) | Program Memo | Stakeholder authorization and scope |
+| [program-plan-water-quality-monitoring.md](program_development_dryrun/program-plan-water-quality-monitoring.md) | Program Plan | Deployment and integration strategy |
+| [architecture-water-quality-monitoring.md](program_development_dryrun/architecture-water-quality-monitoring.md) | Architecture | Sensor network and data pipeline |
+| [lifecycle-water-quality-monitoring.md](program_development_dryrun/lifecycle-water-quality-monitoring.md) | Lifecycle | 10-year operational model |
+| [field-survey-water-quality-monitoring.md](program_development_dryrun/field-survey-water-quality-monitoring.md) | Field Survey | Site assessments and sensor placement |
+| [water-quality-assurance-audit.md](program_development_dryrun/assurance/water-quality-assurance-audit.md) | Audit Chart | Full assurance coverage with V-F=1 |
+
 ## Scripts Reference
 
 | Script | Purpose |
