@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-04T19:49:09.895273+00:00",
+  "generated": "2026-01-04T19:58:07.842401+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -552,9 +552,9 @@
           "doc",
           "guidance"
         ],
-        "version": "1.0.0",
+        "version": "1.1.0",
         "created": "2025-01-04T14:00:00+00:00",
-        "modified": "2025-01-04T14:00:00+00:00",
+        "modified": "2025-01-04T22:30:00+00:00",
         "dependencies": [
           "v:guidance:architecture",
           "v:guidance:lifecycle",
@@ -1216,9 +1216,9 @@
           "doc",
           "spec"
         ],
-        "version": "1.0.0",
+        "version": "1.1.0",
         "created": "2025-01-04T14:00:00+00:00",
-        "modified": "2025-01-04T14:00:00+00:00",
+        "modified": "2025-01-04T22:30:00+00:00",
         "dependencies": [
           "v:spec:architecture",
           "v:spec:lifecycle",
@@ -3871,9 +3871,9 @@
           "edge",
           "validation"
         ],
-        "version": "1.0.0",
+        "version": "1.1.0",
         "created": "2025-01-04T15:00:00+00:00",
-        "modified": "2025-01-04T15:00:00+00:00"
+        "modified": "2025-01-04T22:30:00+00:00"
       },
       "e:validation:program-memo-spec:guidance-spec": {
         "file": "01_edges/validation-program-memo-spec:guidance-spec.md",
@@ -3894,9 +3894,9 @@
           "edge",
           "validation"
         ],
-        "version": "1.0.0",
+        "version": "1.1.0",
         "created": "2025-01-04T15:00:00+00:00",
-        "modified": "2025-01-04T15:00:00+00:00"
+        "modified": "2025-01-04T22:30:00+00:00"
       },
       "e:validation:program-plan-guidance:guidance-guidance": {
         "file": "01_edges/validation-program-plan-guidance:guidance-guidance.md",
@@ -4980,9 +4980,9 @@
           "edge",
           "verification"
         ],
-        "version": "1.0.0",
+        "version": "1.1.0",
         "created": "2025-01-04T15:00:00+00:00",
-        "modified": "2025-01-04T15:00:00+00:00"
+        "modified": "2025-01-04T22:30:00+00:00"
       },
       "e:verification:program-memo-spec:spec-spec": {
         "file": "01_edges/verification-program-memo-spec:spec-spec.md",
@@ -5003,9 +5003,9 @@
           "edge",
           "verification"
         ],
-        "version": "1.0.0",
+        "version": "1.1.0",
         "created": "2025-01-04T15:00:00+00:00",
-        "modified": "2025-01-04T15:00:00+00:00"
+        "modified": "2025-01-04T22:30:00+00:00"
       },
       "e:verification:program-plan-guidance:spec-guidance": {
         "file": "01_edges/verification-program-plan-guidance:spec-guidance.md",
