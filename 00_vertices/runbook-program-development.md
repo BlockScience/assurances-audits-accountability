@@ -436,18 +436,19 @@ flowchart TB
 
 ## Decision Points
 
-### Decision: Plan Level (Strategic vs. Tactical)
+### Decision: Plan Level
 
 **When:** At the start of Step 3 (Program Plan)
 
 **Options:**
 
-| Option | When to Choose | Implications |
-|--------|----------------|--------------|
-| Strategic | Multi-year programs, portfolio-level planning, high-level resource allocation | Activities at milestone/phase level, teams/organizations (not individuals), quarterly milestones |
-| Tactical | Project-level execution, detailed scheduling, specific team assignments | Activities at task level, individual assignments, weekly/bi-weekly milestones |
+| Option | Duration | When to Choose | Implications |
+|--------|----------|----------------|--------------|
+| Multi-year | 2+ years | Large complex programs composed of multiple strategic programs | Activities at program/initiative level, organizational units, annual/semi-annual milestones |
+| Strategic | 6-18 months | Mid-range programs with defined scope and team structure | Activities at milestone/phase level, teams/organizations, quarterly milestones |
+| Tactical | 6-12 weeks | Focused projects with specific deliverables and assigned team | Activities at task level, individual assignments, weekly/bi-weekly milestones |
 
-**Default:** Start with strategic unless the program is a single focused project with defined team.
+**Default:** Start with strategic for most programs; use multi-year for portfolio-level initiatives; use tactical for well-scoped projects with defined teams.
 
 ### Decision: Parallel Execution of Steps 2 and 3
 
