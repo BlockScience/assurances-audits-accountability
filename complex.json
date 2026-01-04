@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-04T19:13:44.544920+00:00",
+  "generated": "2026-01-04T19:35:22.518079+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -3590,9 +3590,9 @@
           "edge",
           "validation"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T19:00:00+00:00",
-        "modified": "2025-12-30T19:00:00+00:00"
+        "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:validation:lifecycle-incose:guidance-lifecycle": {
         "file": "01_edges/validation-lifecycle-incose:guidance-lifecycle.md",
@@ -3636,9 +3636,9 @@
           "edge",
           "validation"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T19:00:00+00:00",
-        "modified": "2025-12-30T19:00:00+00:00"
+        "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:validation:literature-review-guidance:guidance-guidance": {
         "file": "01_edges/validation-literature-review-guidance:guidance-guidance.md",
@@ -4670,9 +4670,9 @@
           "edge",
           "verification"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T19:00:00+00:00",
-        "modified": "2025-12-30T19:00:00+00:00"
+        "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:verification:lifecycle-incose:spec-lifecycle": {
         "file": "01_edges/verification-lifecycle-incose:spec-lifecycle.md",
@@ -4716,9 +4716,9 @@
           "edge",
           "verification"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T19:00:00+00:00",
-        "modified": "2025-12-30T19:00:00+00:00"
+        "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:verification:literature-review-guidance:spec-guidance": {
         "file": "01_edges/verification-literature-review-guidance:spec-guidance.md",
