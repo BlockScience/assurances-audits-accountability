@@ -460,9 +460,9 @@ Summary of traceability across the lifecycle.
 
 | Architecture Layer | Design Phase | Implementation | Evaluation Phase |
 |--------------------|--------------|----------------|------------------|
-| Conceptual (ConOps) | ConOps → Functional | - | Acceptance Testing |
-| Functional | Functional → Logical | - | System Testing |
-| Logical | Logical → Physical | - | Integration Testing |
+| Conceptual (ConOps) | ConOps → Functional | Stakeholder Requirements Document | Acceptance Testing |
+| Functional | Functional → Logical | System-Level Functional Requirements | System Testing |
+| Logical | Logical → Physical | Component-level Specifications | Integration Testing |
 | Physical | Physical → Implementation | Implementation | Unit Testing |
 ```
 
