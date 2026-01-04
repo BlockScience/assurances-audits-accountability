@@ -50,12 +50,12 @@ This assurance face represents the complete quality assurance pattern for [[prog
    - Ensures they address the same document type (program memo documents)
    - Type: `edge/coupling`
 
-2. **Verification Edge**: [[verification-program-memo-wqm:spec-program-memo]]
+2. **Verification Edge**: [[verification-program-memo-wqm-spec-program-memo]]
    - program-memo-water-quality-monitoring verifies against spec-for-program-memo
    - Deterministic structural checking via verify_spec.py
    - Type: `edge/verification`
 
-3. **Validation Edge**: [[validation-program-memo-wqm:guidance-program-memo]]
+3. **Validation Edge**: [[validation-program-memo-wqm-guidance-program-memo]]
    - program-memo-water-quality-monitoring validates against guidance-for-program-memo
    - Qualitative quality assessment
    - Type: `edge/validation`
@@ -138,8 +138,8 @@ This assurance assessment was generated with assistance from claude-opus-4-5-202
 | Specification | [[spec-for-program-memo]] (v:spec:program-memo) |
 | Guidance | [[guidance-for-program-memo]] (v:guidance:program-memo) |
 | Coupling Edge | [[coupling-program-memo]] (e:coupling:program-memo) |
-| Verification Edge | [[verification-program-memo-wqm:spec-program-memo]] |
-| Validation Edge | [[validation-program-memo-wqm:guidance-program-memo]] |
+| Verification Edge | [[verification-program-memo-wqm-spec-program-memo]] |
+| Validation Edge | [[validation-program-memo-wqm-guidance-program-memo]] |
 | Assurance Method | llm-assisted |
 | Assurer | claude-opus-4-5-20251101 |
 | Human Approver | mzargham |

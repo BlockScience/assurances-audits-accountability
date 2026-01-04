@@ -50,12 +50,12 @@ This assurance face represents the complete quality assurance pattern for [[prog
    - Ensures they address the same document type (program plan documents)
    - Type: `edge/coupling`
 
-2. **Verification Edge**: [[verification-program-plan-wqm:spec-program-plan]]
+2. **Verification Edge**: [[verification-program-plan-wqm-spec-program-plan]]
    - program-plan-water-quality-monitoring verifies against spec-for-program-plan
    - Deterministic structural checking via verify_spec.py
    - Type: `edge/verification`
 
-3. **Validation Edge**: [[validation-program-plan-wqm:guidance-program-plan]]
+3. **Validation Edge**: [[validation-program-plan-wqm-guidance-program-plan]]
    - program-plan-water-quality-monitoring validates against guidance-for-program-plan
    - Qualitative quality assessment
    - Type: `edge/validation`
@@ -138,8 +138,8 @@ This assurance assessment was generated with assistance from claude-opus-4-5-202
 | Specification | [[spec-for-program-plan]] (v:spec:program-plan) |
 | Guidance | [[guidance-for-program-plan]] (v:guidance:program-plan) |
 | Coupling Edge | [[coupling-program-plan]] (e:coupling:program-plan) |
-| Verification Edge | [[verification-program-plan-wqm:spec-program-plan]] |
-| Validation Edge | [[validation-program-plan-wqm:guidance-program-plan]] |
+| Verification Edge | [[verification-program-plan-wqm-spec-program-plan]] |
+| Validation Edge | [[validation-program-plan-wqm-guidance-program-plan]] |
 | Assurance Method | llm-assisted |
 | Assurer | claude-opus-4-5-20251101 |
 | Human Approver | mzargham |

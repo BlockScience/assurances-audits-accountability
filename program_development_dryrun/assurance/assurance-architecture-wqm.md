@@ -50,12 +50,12 @@ This assurance face represents the complete quality assurance pattern for [[arch
    - Ensures they address the same document type (architecture documents)
    - Type: `edge/coupling`
 
-2. **Verification Edge**: [[verification-architecture-wqm:spec-architecture]]
+2. **Verification Edge**: [[verification-architecture-wqm-spec-architecture]]
    - architecture-water-quality-monitoring verifies against spec-for-architecture
    - Deterministic structural checking via verify_spec.py
    - Type: `edge/verification`
 
-3. **Validation Edge**: [[validation-architecture-wqm:guidance-architecture]]
+3. **Validation Edge**: [[validation-architecture-wqm-guidance-architecture]]
    - architecture-water-quality-monitoring validates against guidance-for-architecture
    - Qualitative quality assessment
    - Type: `edge/validation`
@@ -138,8 +138,8 @@ This assurance assessment was generated with assistance from claude-opus-4-5-202
 | Specification | [[spec-for-architecture]] (v:spec:architecture) |
 | Guidance | [[guidance-for-architecture]] (v:guidance:architecture) |
 | Coupling Edge | [[coupling-architecture]] (e:coupling:architecture) |
-| Verification Edge | [[verification-architecture-wqm:spec-architecture]] |
-| Validation Edge | [[validation-architecture-wqm:guidance-architecture]] |
+| Verification Edge | [[verification-architecture-wqm-spec-architecture]] |
+| Validation Edge | [[validation-architecture-wqm-guidance-architecture]] |
 | Assurance Method | llm-assisted |
 | Assurer | claude-opus-4-5-20251101 |
 | Human Approver | mzargham |
