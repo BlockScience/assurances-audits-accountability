@@ -71,8 +71,7 @@ This workflow produces a four-document package representing progressive refineme
 - Maintaining consistency across documents
 
 **Out of Scope:**
-- Creating assurance edges and faces (separate workflow)
-- Actual program execution (this produces planning documents)
+- Actual program execution (this workflow produces planning documents)
 - Stakeholder approval processes (organization-specific)
 
 ### Who: Roles and Skills
@@ -137,7 +136,8 @@ flowchart TB
 
     S1 --> S2
     S1 --> S3
-    S2 -.-> S3
+    S2 --> S3
+    S1 --> S4
     S2 --> S4
     S3 --> S4
 
@@ -166,7 +166,7 @@ flowchart TB
 |------|----------|--------|--------|------------|
 | 1 | Create Architecture Document | Program idea, stakeholder needs | Architecture document | - |
 | 2 | Create Lifecycle Document | Architecture document | Lifecycle document | Step 1 |
-| 3 | Create Program Plan Document | Architecture, Lifecycle (if available) | Program plan document | Step 1 (Step 2 recommended) |
+| 3 | Create Program Plan Document | Architecture, Lifecycle (if available) | Program plan document | Steps 1 and 2 |
 | 4 | Create Program Memo Document | Architecture, Lifecycle, Program Plan | Program memo document | Steps 1, 2, 3 |
 
 ## Step 1: Create Architecture Document
@@ -208,9 +208,12 @@ flowchart TB
 6. **Verify against spec-for-architecture**
 
 **Tools and References:**
-- [[spec-for-architecture]] - Use for structural requirements (4 layers, V-model table)
-- [[guidance-for-architecture]] - Use for quality criteria (layer coherence, testability)
-- `python scripts/verify_template_based.py 00_vertices/<architecture-file>.md --templates templates`
+
+- [[spec-for-architecture]] - Structural requirements (4 layers, V-model table)
+- [[guidance-for-architecture]] - Quality criteria (layer coherence, testability)
+- **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
+- **Generate validation:** Ask LLM to evaluate against guidance criteria, then create validation edge in `01_edges/`
+- **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
 - Architecture document (verified against spec)
@@ -257,9 +260,12 @@ flowchart TB
 6. **Verify against spec-for-lifecycle**
 
 **Tools and References:**
-- [[spec-for-lifecycle]] - Use for structural requirements (phases, flowchart, gates)
-- [[guidance-for-lifecycle]] - Use for quality criteria (clarity, completeness)
-- `python scripts/verify_template_based.py 00_vertices/<lifecycle-file>.md --templates templates`
+
+- [[spec-for-lifecycle]] - Structural requirements (phases, flowchart, gates)
+- [[guidance-for-lifecycle]] - Quality criteria (clarity, completeness)
+- **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
+- **Generate validation:** Ask LLM to evaluate against guidance criteria, then create validation edge in `01_edges/`
+- **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
 - Lifecycle document (verified against spec)
@@ -339,9 +345,12 @@ flowchart TB
 11. **Verify against spec-for-program-plan**
 
 **Tools and References:**
-- [[spec-for-program-plan]] - Use for structural requirements (10 required sections)
-- [[guidance-for-program-plan]] - Use for quality criteria (realism, traceability)
-- `python scripts/verify_template_based.py 00_vertices/<program-plan-file>.md --templates templates`
+
+- [[spec-for-program-plan]] - Structural requirements (10 required sections)
+- [[guidance-for-program-plan]] - Quality criteria (realism, traceability)
+- **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
+- **Generate validation:** Ask LLM to evaluate against guidance criteria, then create validation edge in `01_edges/`
+- **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
 - Program plan document (verified against spec)
@@ -402,9 +411,12 @@ flowchart TB
 7. **Verify against spec-for-program-memo**
 
 **Tools and References:**
-- [[spec-for-program-memo]] - Use for structural requirements (6 required sections)
-- [[guidance-for-program-memo]] - Use for quality criteria (synthesis, accessibility)
-- `python scripts/verify_template_based.py 00_vertices/<program-memo-file>.md --templates templates`
+
+- [[spec-for-program-memo]] - Structural requirements (6 required sections)
+- [[guidance-for-program-memo]] - Quality criteria (synthesis, accessibility)
+- **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
+- **Generate validation:** Ask LLM to evaluate against guidance criteria, then create validation edge in `01_edges/`
+- **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
 - Program memo document (verified against spec)
