@@ -349,16 +349,20 @@ This guidance applies to both strategic and tactical plans, with differences in 
 **Purpose:** Specify what's needed to execute
 
 **Tips:**
+
 - Personnel by role, not just headcount
 - Budget breakdown enables trade-off discussions
 - Confidence levels should vary (some estimates are better than others)
 - Infrastructure needs often forgotten—include early
+- Escape dollar signs with backslash (`\$`) to avoid LaTeX rendering conflicts in markdown readers that support mathematical notation
 
 **Anti-patterns:**
+
 - ❌ Single-number budget with no breakdown
 - ❌ All estimates "high confidence" (red flag)
 - ❌ Personnel without skills specified
 - ❌ No basis for estimates
+- ❌ Unescaped `$` symbols that render as LaTeX math delimiters
 
 ### Risks and Mitigations
 
@@ -520,6 +524,7 @@ This guidance applies to both strategic and tactical plans, with differences in 
 8. **Update Living Documents** - Plans should evolve; establish update cadence
 9. **Respect Stakeholder Time** - Executive summary should fit on one page
 10. **Connect to Lifecycle Gates** - Program milestones should align with lifecycle verification gates (per design phase) and validation gates (acceptance, operations handoff)
+11. **Escape Currency Symbols** - Use `\$` for dollar amounts to prevent LaTeX rendering conflicts in markdown readers
 
 ## Validation vs. Verification
 

@@ -58,6 +58,7 @@ All program memo documents MUST include the following YAML frontmatter:
 | Field | Type | Requirement | Description |
 |-------|------|-------------|-------------|
 | `program_name` | string | REQUIRED | Name of the program being summarized |
+| `field_survey_ref` | string | REQUIRED | Reference to field survey document (id or path) |
 | `architecture_ref` | string | REQUIRED | Reference to architecture document (id or path) |
 | `lifecycle_ref` | string | REQUIRED | Reference to lifecycle document (id or path) |
 | `program_plan_ref` | string | REQUIRED | Reference to program plan document (id or path) |
@@ -103,7 +104,8 @@ A brief, accessible introduction to the program suitable for any stakeholder.
 - MUST identify sponsor and recipient
 - MUST state target completion and budget range
 - MUST NOT require reading other documents to understand
-- Content MUST be drawn from architecture (problem statement) and program plan (sponsor, timeline, budget)
+- MUST include reference to field survey document for context
+- Content MUST be drawn from field survey (context), architecture (problem statement), and program plan (sponsor, timeline, budget)
 
 ### 2. What We're Building
 
@@ -225,6 +227,7 @@ This memo summarizes the following documentation package:
 
 | Document | Purpose | When to Consult |
 |----------|---------|-----------------|
+| [[field-survey-ref]] | Establishes context | Stakeholder details, resource inventory, scope boundaries |
 | [[architecture-ref]] | Defines what we're building | Technical details, component design, interfaces |
 | [[lifecycle-ref]] | Defines how we build it | Process details, phase gates, verification procedures |
 | [[program-plan-ref]] | Defines execution plan | Schedules, budgets, team assignments, full risk register |
@@ -234,6 +237,7 @@ This memo summarizes the following documentation package:
 
 | Document | Version | Last Updated |
 |----------|---------|--------------|
+| Field Survey | [version] | [date] |
 | Architecture | [version] | [date] |
 | Lifecycle | [version] | [date] |
 | Program Plan | [version] | [date] |
@@ -241,7 +245,8 @@ This memo summarizes the following documentation package:
 ```
 
 **Requirements:**
-- MUST list all three source documents with links
+
+- MUST list all four source documents with links (field survey, architecture, lifecycle, program plan)
 - MUST describe when to consult each document
 - MUST include version and last-updated information for all documents
 - MUST enable readers to navigate to detailed information
@@ -335,7 +340,9 @@ Quick reference for different stakeholder groups.
 
 ## Source Document Requirements
 
-A program memo MUST NOT be created until all three source documents exist:
+A program memo MUST NOT be created until all four source documents exist:
+
+- Field survey document (verified and validated)
 - Architecture document (verified and validated)
 - Lifecycle document (verified and validated)
 - Program plan document (verified and validated)
@@ -344,7 +351,7 @@ The memo draws content from these sources as follows:
 
 | Memo Section | Primary Source | Content Drawn |
 |--------------|----------------|---------------|
-| Program Overview | Program Plan, Architecture | Problem statement, sponsor, recipient, timeline, budget |
+| Program Overview | Field Survey, Program Plan, Architecture | Context, problem statement, sponsor, recipient, timeline, budget |
 | What We're Building | Architecture | Conceptual layer, logical layer (summary), acceptance criteria |
 | How We're Building It | Lifecycle | V-model phase groups, verification/validation distinction |
 | Execution Summary | Program Plan | Milestones, resources, top risks |
@@ -374,6 +381,7 @@ version: <semver>
 created: <ISO8601>
 modified: <ISO8601>
 program_name: <string>
+field_survey_ref: <string>
 architecture_ref: <string>
 lifecycle_ref: <string>
 program_plan_ref: <string>
@@ -390,6 +398,7 @@ distribution: [<strings>]
 ## Program Overview
   - Problem and capability summary
   - Key attributes table (sponsor, recipient, timeline, budget)
+  > Reference to field survey
 ## What We're Building
   ### Goal State
   ### Key Components

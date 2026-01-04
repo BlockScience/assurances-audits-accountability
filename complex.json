@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-04T20:01:39.982123+00:00",
+  "generated": "2026-01-04T22:01:18.733210+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -314,6 +314,31 @@
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00",
         "dependencies": []
+      },
+      "v:guidance:field-survey": {
+        "file": "00_vertices/guidance-for-field-survey.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:field-survey",
+        "name": "Guidance for Field Survey Documents",
+        "description": "Quality criteria and best practices for creating effective field surveys that map stakeholders, resources, and relationships before architecture work",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "scope-clarity",
+          "actor-completeness",
+          "resource-completeness",
+          "relationship-accuracy",
+          "boundary-precision",
+          "executive-accessibility"
+        ]
       },
       "v:guidance:guidance": {
         "file": "00_vertices/guidance-for-guidance.md",
@@ -806,9 +831,9 @@
           "doc",
           "runbook"
         ],
-        "version": "1.1.0",
+        "version": "1.2.0",
         "created": "2025-01-04T18:00:00+00:00",
-        "modified": "2025-01-04T22:30:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00",
         "workflow_name": "Program Development",
         "target_roles": [
           "systems engineer",
@@ -822,8 +847,9 @@
           "risk management",
           "project planning"
         ],
-        "step_count": 4,
+        "step_count": 5,
         "artifacts_produced": [
+          "field survey document",
           "architecture document",
           "lifecycle document",
           "program plan document",
@@ -886,10 +912,12 @@
           "doc",
           "spec"
         ],
-        "version": "1.0.0",
+        "version": "1.1.0",
         "created": "2025-12-30T12:00:00+00:00",
-        "modified": "2025-12-30T12:00:00+00:00",
-        "dependencies": []
+        "modified": "2025-01-04T23:00:00+00:00",
+        "dependencies": [
+          "v:spec:field-survey"
+        ]
       },
       "v:spec:assurance_audit": {
         "file": "00_vertices/spec-for-assurance-audits.md",
@@ -973,6 +1001,23 @@
         "version": "1.0.0",
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:field-survey": {
+        "file": "00_vertices/spec-for-field-survey.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:field-survey",
+        "name": "Specification for Field Survey Documents",
+        "description": "Defines structural requirements for field survey documents that map stakeholders, resources, and their relationships before architecture work",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00",
         "dependencies": []
       },
       "v:spec:guidance": {
@@ -1759,6 +1804,25 @@
         "version": "1.0.0",
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00"
+      },
+      "e:coupling:field-survey": {
+        "file": "01_edges/coupling-field-survey.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:field-survey",
+        "name": "Coupling - Spec-for-Field-Survey and Guidance-for-Field-Survey",
+        "source": "v:spec:field-survey",
+        "target": "v:guidance:field-survey",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00"
       },
       "e:coupling:guidance": {
         "file": "01_edges/coupling-guidance.md",
@@ -3291,6 +3355,52 @@
         "created": "2025-12-27T23:15:00+00:00",
         "modified": "2025-12-27T23:15:00+00:00"
       },
+      "e:validation:field-survey-guidance:guidance-guidance": {
+        "file": "01_edges/validation-field-survey-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:field-survey-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-field-survey against guidance-for-guidance",
+        "source": "v:guidance:field-survey",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00"
+      },
+      "e:validation:field-survey-spec:guidance-spec": {
+        "file": "01_edges/validation-field-survey-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:field-survey-spec:guidance-spec",
+        "name": "Validation - spec-for-field-survey against guidance-for-spec",
+        "source": "v:spec:field-survey",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00"
+      },
       "e:validation:framework-architecture-section:guidance": {
         "file": "01_edges/validation-framework-architecture-section:guidance.md",
         "type": "edge/validation",
@@ -4518,6 +4628,52 @@
         "created": "2025-12-27T23:10:00+00:00",
         "modified": "2025-12-27T23:10:00+00:00"
       },
+      "e:verification:field-survey-guidance:spec-guidance": {
+        "file": "01_edges/verification-field-survey-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:field-survey-guidance:spec-guidance",
+        "name": "Verification - guidance-for-field-survey against spec-for-guidance",
+        "source": "v:guidance:field-survey",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00"
+      },
+      "e:verification:field-survey-spec:spec-spec": {
+        "file": "01_edges/verification-field-survey-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:field-survey-spec:spec-spec",
+        "name": "Verification - spec-for-field-survey against spec-for-spec",
+        "source": "v:spec:field-survey",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00"
+      },
       "e:verification:guidance-guidance:spec-guidance": {
         "file": "01_edges/verification-guidance-guidance.md",
         "type": "edge/verification",
@@ -5611,6 +5767,78 @@
         "created": "2025-12-27T23:20:00+00:00",
         "modified": "2025-12-27T23:20:00+00:00"
       },
+      "f:assurance:field-survey-guidance": {
+        "file": "02_faces/assurance-field-survey-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:field-survey-guidance",
+        "name": "Assurance Face - guidance-for-field-survey",
+        "description": "Complete assurance pattern for the field survey guidance",
+        "edges": [
+          "e:coupling:field-survey",
+          "e:verification:field-survey-guidance:spec-guidance",
+          "e:validation:field-survey-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:field-survey",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:field-survey",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:field-survey",
+        "verification_edge": "e:verification:field-survey-guidance:spec-guidance",
+        "validation_edge": "e:validation:field-survey-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T22:00:00+00:00",
+        "modified": "2026-01-04T22:00:00+00:00"
+      },
+      "f:assurance:field-survey-spec": {
+        "file": "02_faces/assurance-field-survey-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:field-survey-spec",
+        "name": "Assurance Face - spec-for-field-survey",
+        "description": "Complete assurance pattern for the field survey specification",
+        "edges": [
+          "e:coupling:field-survey",
+          "e:verification:field-survey-spec:spec-spec",
+          "e:validation:field-survey-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:field-survey",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:field-survey",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:field-survey",
+        "verification_edge": "e:verification:field-survey-spec:spec-spec",
+        "validation_edge": "e:validation:field-survey-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T22:00:00+00:00",
+        "modified": "2026-01-04T22:00:00+00:00"
+      },
       "f:assurance:guidance-guidance": {
         "file": "02_faces/assurance-guidance-guidance.md",
         "type": "face/assurance",
@@ -6409,6 +6637,78 @@
         "version": "1.0.0",
         "created": "2025-01-04T15:00:00+00:00",
         "modified": "2025-01-04T15:00:00+00:00"
+      },
+      "f:assurance:program-plan-guidance": {
+        "file": "02_faces/assurance-program-plan-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:program-plan-guidance",
+        "name": "Assurance Face - guidance-for-program-plan",
+        "description": "Complete assurance pattern for the program plan guidance",
+        "edges": [
+          "e:coupling:program-plan",
+          "e:verification:program-plan-guidance:spec-guidance",
+          "e:validation:program-plan-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:program-plan",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:program-plan",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:program-plan",
+        "verification_edge": "e:verification:program-plan-guidance:spec-guidance",
+        "validation_edge": "e:validation:program-plan-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T22:00:00+00:00",
+        "modified": "2026-01-04T22:00:00+00:00"
+      },
+      "f:assurance:program-plan-spec": {
+        "file": "02_faces/assurance-program-plan-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:program-plan-spec",
+        "name": "Assurance Face - spec-for-program-plan",
+        "description": "Complete assurance pattern for the program plan specification",
+        "edges": [
+          "e:coupling:program-plan",
+          "e:verification:program-plan-spec:spec-spec",
+          "e:validation:program-plan-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:program-plan",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:program-plan",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:program-plan",
+        "verification_edge": "e:verification:program-plan-spec:spec-spec",
+        "validation_edge": "e:validation:program-plan-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T22:00:00+00:00",
+        "modified": "2026-01-04T22:00:00+00:00"
       },
       "f:assurance:protocol-claude": {
         "file": "02_faces/assurance-protocol-claude.md",
@@ -8041,10 +8341,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 71,
-    "edge_count": 171,
-    "face_count": 69,
+    "vertex_count": 73,
+    "edge_count": 176,
+    "face_count": 73,
     "chart_count": 3,
-    "euler_characteristic": -31
+    "euler_characteristic": -30
   }
 }

@@ -8,10 +8,11 @@ tags:
   - vertex
   - doc
   - spec
-version: 1.0.0
+version: 1.1.0
 created: 2025-12-30T12:00:00Z
-modified: 2025-12-30T12:00:00Z
-dependencies: []
+modified: 2025-01-04T23:00:00Z
+dependencies:
+  - v:spec:field-survey
 ---
 
 # Specification for Architecture Documents
@@ -50,14 +51,15 @@ All architecture documents MUST include the following YAML frontmatter:
 |-------|------|-------------|-------------|
 | `system_name` | string | REQUIRED | Name of the system being architected |
 | `scope` | string | REQUIRED | Brief scope statement (1-2 sentences) |
+| `field_survey_ref` | string | REQUIRED | Reference to field survey document (id or path) |
 | `stakeholders` | array[string] | RECOMMENDED | List of stakeholder categories |
 
 ### Optional Metadata
 
-| Field | Type | Requirement | Description |
-|-------|------|-------------|-------------|
-| `description` | string | RECOMMENDED | Brief description of architecture purpose |
-| `dependencies` | array[string] | OPTIONAL | Related architecture documents |
+| Field          | Type          | Requirement | Description                               |
+|----------------|---------------|-------------|-------------------------------------------|
+| `description`  | string        | RECOMMENDED | Brief description of architecture purpose |
+| `dependencies` | array[string] | OPTIONAL    | Related architecture documents            |
 
 ## Required Body Sections
 
@@ -277,6 +279,20 @@ Identifies architectural risks.
 4. **Traceability:** Content SHOULD be traceable across layers (needs → functions → components → implementations)
 5. **Technology Independence:** Logical layer MUST be describable without reference to specific technologies
 
+## Prerequisites
+
+Architecture documents MUST be preceded by a field survey document that establishes context:
+
+| Prerequisite | Purpose                                                          | Requirement |
+|--------------|------------------------------------------------------------------|-------------|
+| Field Survey | Documents actors, resources, and relationships before architecture | REQUIRED    |
+
+Architecture documents:
+
+- MUST reference the field survey via `field_survey_ref` in frontmatter
+- Stakeholders in architecture SHOULD align with actors from field survey
+- Scope statement SHOULD be consistent with field survey scope boundaries
+
 ## Coupling Requirement
 
 Every architecture document SHOULD be verified against this spec and validated against the corresponding `guidance-for-architecture` document via appropriate edges. The guidance defines how to evaluate quality and fitness-for-purpose for architecture documents.
@@ -300,6 +316,7 @@ created: <ISO8601>
 modified: <ISO8601>
 system_name: <string>
 scope: <string>
+field_survey_ref: <string>
 
 # Recommended frontmatter
 stakeholders: [<stakeholder-categories>]

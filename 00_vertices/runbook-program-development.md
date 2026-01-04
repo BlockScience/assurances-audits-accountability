@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - runbook
-version: 1.1.0
+version: 1.2.0
 created: 2025-01-04T18:00:00Z
-modified: 2025-01-04T22:30:00Z
+modified: 2025-01-04T23:00:00Z
 workflow_name: Program Development
 target_roles:
   - systems engineer
@@ -22,8 +22,9 @@ required_skills:
   - stakeholder analysis
   - risk management
   - project planning
-step_count: 4
+step_count: 5
 artifacts_produced:
+  - field survey document
   - architecture document
   - lifecycle document
   - program plan document
@@ -37,7 +38,7 @@ prerequisites:
 
 # Runbook - Program Development Workflow
 
-This runbook guides practitioners through the complete program development workflow, transforming an idea into a fully documented, communicable program with architecture, lifecycle, program plan, and program memo documents.
+This runbook guides practitioners through the complete program development workflow, transforming an idea into a fully documented, communicable program with field survey, architecture, lifecycle, program plan, and program memo documents.
 
 ## Context
 
@@ -53,17 +54,18 @@ Organizations need to transform program ideas into actionable, communicable plan
 
 ### What: Scope and Artifacts
 
-This workflow produces a four-document package representing progressive refinement from architecture through execution communication.
+This workflow produces a five-document package representing progressive refinement from context mapping through execution communication.
 
 | Artifact | Type | Description |
 |----------|------|-------------|
+| Field Survey Document | `vertex/doc` (field-survey) | Bipartite graph of actors and resources establishing context and scope boundaries |
 | Architecture Document | `vertex/doc` (architecture) | Four-layer system description (Conceptual, Functional, Logical, Physical) with V-model alignment |
 | Lifecycle Document | `vertex/doc` (lifecycle) | Process algorithm for developing assured artifacts with phases, gates, and verification/validation |
 | Program Plan Document | `vertex/doc` (program-plan) | Execution plan with teams, timelines, resources, milestones, and risk management |
-| Program Memo Document | `vertex/doc` (program-memo) | Executive summary synthesizing all three documents for stakeholder communication |
+| Program Memo Document | `vertex/doc` (program-memo) | Executive summary synthesizing all documents for stakeholder communication |
 
 **In Scope:**
-- Creating all four documents from scratch
+- Creating all five documents from scratch
 - Verifying each document against its spec
 - Validating each document against its guidance
 - Maintaining consistency across documents
@@ -80,7 +82,7 @@ This workflow produces a four-document package representing progressive refineme
 | Program Manager | Program plan authoring, resource and risk management | Project planning, risk management, budgeting |
 | Technical Lead | Review and integration, technical decision-making | Technical leadership, cross-document consistency |
 
-**Estimated Time:** 2-4 weeks for a medium-complexity program (can be compressed with parallel execution)
+**Estimated Time:** 2-4 weeks for a medium-complexity program
 
 ## Prerequisites
 
@@ -96,7 +98,7 @@ This workflow produces a four-document package representing progressive refineme
 - **Knowledge Complex Repository**: Access to specs and guidances for all document types
 - **Markdown Editor**: For authoring documents (Obsidian recommended for wiki-links)
 - **Mermaid Renderer**: For visualizing diagrams (built into many editors)
-- **Verification Scripts**: `verify_template_based.py` for structural checking
+- **Verification Script**: `python scripts/verify_spec.py <doc>.md <spec>.md` — deterministic structural checking
 
 ### Required Access
 
@@ -119,6 +121,10 @@ This workflow produces a four-document package representing progressive refineme
 
 ```mermaid
 flowchart TB
+    subgraph Phase0[Phase 0: Context]
+        S0[Step 0: Field Survey]
+    end
+
     subgraph Phase1[Phase 1: Foundation]
         S1[Step 1: Architecture]
     end
@@ -135,10 +141,12 @@ flowchart TB
         S4[Step 4: Program Memo]
     end
 
+    S0 --> S1
     S1 --> S2
     S2 --> S3
     S3 --> S4
 
+    style S0 fill:#fce4ec
     style S1 fill:#e1f5fe
     style S2 fill:#fff3e0
     style S3 fill:#e8f5e9
@@ -146,29 +154,95 @@ flowchart TB
 ```
 
 **Legend:**
+- Pink: Context (what exists)
 - Blue: Foundation (what we're building)
 - Orange: Process (how we build it)
 - Green: Planning (who, when, with what resources)
 - Purple: Communication (executive summary)
 
-**Note:** This workflow is strictly sequential. The Program Plan enriches the Lifecycle with accountability, staffing, resourcing, and risk management—it cannot be developed until the Lifecycle phases are defined.
+**Note:** This workflow is strictly sequential. The Field Survey establishes context before Architecture. The Program Plan enriches the Lifecycle with accountability, staffing, resourcing, and risk management—it cannot be developed until the Lifecycle phases are defined.
 
 ### Workflow Summary
 
 | Step | Activity | Inputs | Output | Depends On |
 |------|----------|--------|--------|------------|
-| 1 | Create Architecture Document | Program idea, stakeholder needs | Architecture document | - |
+| 0 | Create Field Survey Document | Program idea, stakeholder context | Field survey document | - |
+| 1 | Create Architecture Document | Field survey, stakeholder needs | Architecture document | Step 0 |
 | 2 | Create Lifecycle Document | Architecture document | Lifecycle document | Step 1 |
 | 3 | Create Program Plan Document | Architecture, Lifecycle | Program plan document | Step 2 |
-| 4 | Create Program Memo Document | Architecture, Lifecycle, Program Plan | Program memo document | Step 3 |
+| 4 | Create Program Memo Document | Field Survey, Architecture, Lifecycle, Program Plan | Program memo document | Step 3 |
+
+## Step 0: Create Field Survey Document
+
+**Goal:** Map actors (stakeholders), resources, and their relationships to establish context and scope before architecture work.
+
+**Inputs:**
+- Program idea or initiative description
+- Knowledge of stakeholder landscape
+- Understanding of existing technologies and resources
+- Geographical, jurisdictional, or functional scope constraints
+
+**Activities:**
+
+1. **Define Animating Purpose**
+   - Explain why this survey is being conducted
+   - Write clear scope statement (1-2 sentences)
+   - List key questions to answer (minimum 3)
+
+2. **Inventory Actors (Stakeholders)**
+   - Identify all relevant stakeholder classes (minimum 2)
+   - Classify by type: Organization, Role, User Class, External Party
+   - Write clear descriptions and accountabilities
+   - Use consistent ID format (A1, A2, etc.)
+
+3. **Inventory Resources**
+   - Identify technologies, data, infrastructure, services, capital (minimum 2)
+   - Classify by type: Technology, Data, Infrastructure, Service, Capital, Process
+   - Document current status: Active, Planned, Legacy, Deprecated
+   - Use consistent ID format (R1, R2, etc.)
+
+4. **Map Relationships (Bipartite Graph)**
+   - For each actor, identify resource connections (minimum 3 total)
+   - Use relationship types: Produces, Consumes, Maintains, Depends On, Governs, Funds
+   - Don't force connections—sparse graph is expected
+   - Create Mermaid diagram (recommended)
+   - Identify key dependencies
+
+5. **Define Scope Boundaries**
+   - List in-scope items explicitly (minimum 3)
+   - List out-of-scope items explicitly (minimum 2)
+   - Write boundary rationale
+
+6. **Synthesize Key Findings**
+   - Write summary observations (minimum 3)
+   - Identify gaps and tensions
+   - Document implications for architecture
+
+7. **Verify against spec-for-field-survey**
+
+**Tools and References:**
+
+- [[spec-for-field-survey]] - Structural requirements (actors, resources, relationships)
+- [[guidance-for-field-survey]] - Quality criteria (completeness, accuracy, accessibility)
+- **Verify structure** (deterministic script): `python scripts/verify_spec.py <doc>.md <spec>.md` — automated structural checks
+- **Generate validation** (LLM-assisted + human approval): Ask LLM to evaluate against guidance criteria; human reviews, approves, and signs the validation edge in `01_edges/`
+- **Log assurance** (manual): Create assurance face document in `02_faces/` linking coupling edge + verification edge + validation edge
+
+**Outputs:**
+- Field survey document (verified against spec)
+- Clear understanding of actors and resources in scope
+- Bipartite graph of relationships
+- Explicit scope boundaries for architecture work
+
+**Checkpoint:** Field survey document passes verification. Minimum counts met (≥2 actors, ≥2 resources, ≥3 relationships). Scope boundaries are explicit. Key findings inform architecture.
 
 ## Step 1: Create Architecture Document
 
 **Goal:** Define what the system will be across four abstraction layers with corresponding evaluation criteria.
 
 **Inputs:**
-- Program idea or initiative description
-- Stakeholder needs and operational context
+- Field survey document (from Step 0)
+- Stakeholder needs and operational context (informed by field survey actors)
 - Technical constraints and assumptions
 - Prior art or reference architectures (if any)
 
@@ -204,14 +278,19 @@ flowchart TB
 
 - [[spec-for-architecture]] - Structural requirements (4 layers, V-model table)
 - [[guidance-for-architecture]] - Quality criteria (layer coherence, testability)
-- **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
-- **Generate validation:** Ask LLM to evaluate against guidance criteria; review, approve, and sign the validation edge in `01_edges/`
-- **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
+- **Verify structure** (deterministic script): `python scripts/verify_spec.py <doc>.md <spec>.md` — automated structural checks
+- **Generate validation** (LLM-assisted + human approval): Ask LLM to evaluate against guidance criteria; human reviews, approves, and signs the validation edge in `01_edges/`
+- **Log assurance** (manual): Create assurance face document in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
 - Architecture document (verified against spec)
 - Clear understanding of what is being built
 - Testability criteria at each layer
+
+**Consistency Checks:**
+- [ ] Stakeholders in architecture align with actors from field survey
+- [ ] Scope statement is consistent with field survey scope boundaries
+- [ ] Architecture `field_survey_ref` references the field survey document
 
 **Checkpoint:** Architecture document passes verification. All four layers are substantive with minimum required elements. V-model table is complete.
 
@@ -256,9 +335,9 @@ flowchart TB
 
 - [[spec-for-lifecycle]] - Structural requirements (phases, flowchart, gates)
 - [[guidance-for-lifecycle]] - Quality criteria (clarity, completeness)
-- **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
-- **Generate validation:** Ask LLM to evaluate against guidance criteria; review, approve, and sign the validation edge in `01_edges/`
-- **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
+- **Verify structure** (deterministic script): `python scripts/verify_spec.py <doc>.md <spec>.md` — automated structural checks
+- **Generate validation** (LLM-assisted + human approval): Ask LLM to evaluate against guidance criteria; human reviews, approves, and signs the validation edge in `01_edges/`
+- **Log assurance** (manual): Create assurance face document in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
 - Lifecycle document (verified against spec)
@@ -342,9 +421,9 @@ flowchart TB
 
 - [[spec-for-program-plan]] - Structural requirements (10 required sections)
 - [[guidance-for-program-plan]] - Quality criteria (realism, traceability)
-- **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
-- **Generate validation:** Ask LLM to evaluate against guidance criteria; review, approve, and sign the validation edge in `01_edges/`
-- **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
+- **Verify structure** (deterministic script): `python scripts/verify_spec.py <doc>.md <spec>.md` — automated structural checks
+- **Generate validation** (LLM-assisted + human approval): Ask LLM to evaluate against guidance criteria; human reviews, approves, and signs the validation edge in `01_edges/`
+- **Log assurance** (manual): Create assurance face document in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
 - Program plan document (verified against spec)
@@ -409,9 +488,9 @@ flowchart TB
 
 - [[spec-for-program-memo]] - Structural requirements (6 required sections)
 - [[guidance-for-program-memo]] - Quality criteria (synthesis, accessibility)
-- **Verify structure:** `python scripts/verify_spec.py 00_vertices/<file>.md` — checks against spec
-- **Generate validation:** Ask LLM to evaluate against guidance criteria; review, approve, and sign the validation edge in `01_edges/`
-- **Log assurance:** Create assurance face in `02_faces/` linking coupling edge + verification edge + validation edge
+- **Verify structure** (deterministic script): `python scripts/verify_spec.py <doc>.md <spec>.md` — automated structural checks
+- **Generate validation** (LLM-assisted + human approval): Ask LLM to evaluate against guidance criteria; human reviews, approves, and signs the validation edge in `01_edges/`
+- **Log assurance** (manual): Create assurance face document in `02_faces/` linking coupling edge + verification edge + validation edge
 
 **Outputs:**
 - Program memo document (verified against spec)
@@ -446,21 +525,75 @@ flowchart TB
 
 **Default:** Start with strategic for most programs; use multi-year for portfolio-level initiatives; use tactical for well-scoped projects with defined teams.
 
+## Cross-Document Consistency Review
+
+After completing all five documents, perform this final consistency review to catch discrepancies before finalizing the package.
+
+### Numeric Consistency
+
+| Check | Documents | What to Verify |
+|-------|-----------|----------------|
+| Budget figures | Program Plan, Program Memo | Total capital, operating costs, and budget range match exactly |
+| Timeline dates | Program Plan, Program Memo | Target completion, milestone dates are identical |
+| Counts | All documents | Actor/resource counts, sensor counts, team counts are consistent |
+| Durations | Lifecycle, Program Plan, Program Memo | Phase durations sum correctly; memo matches plan |
+
+### Reference Consistency
+
+| Check | Documents | What to Verify |
+|-------|-----------|----------------|
+| Sponsor/Recipient | Field Survey (actors), Program Plan, Program Memo | Same organizations named consistently |
+| Stakeholders | Field Survey (actors), Architecture, Lifecycle, Program Plan | Stakeholder lists align; no actors missing from architecture |
+| System name | Architecture, Lifecycle, Program Plan, Program Memo | Identical system name throughout |
+| Document references | All documents | All `_ref` fields point to correct document IDs |
+
+### Content Consistency
+
+| Check | Documents | What to Verify |
+|-------|-----------|----------------|
+| Acceptance criteria | Architecture, Lifecycle, Program Plan | AC1-ACn identical; lifecycle gates trace to ACs |
+| Objectives | Architecture (needs), Program Plan (objectives) | Plan objectives trace to architecture needs |
+| Risks | Architecture, Program Plan, Program Memo | Memo risks are subset of plan; plan addresses architecture risks |
+| Components | Architecture (logical), Program Memo | Memo component list matches architecture |
+| Phase structure | Lifecycle, Program Plan, Program Memo | V-model phases align across all three |
+
+### How to Perform the Review
+
+1. **Extract key values:** Create a simple table listing budget, timeline, counts from each document
+2. **Compare side-by-side:** Any discrepancy indicates an update was made without propagating
+3. **Resolve from source of truth:**
+   - Field Survey is source for actors/resources
+   - Architecture is source for system name, acceptance criteria, components
+   - Program Plan is source for budget, timeline, teams, risks
+   - Memo synthesizes from these sources
+4. **Update and re-verify:** After fixing discrepancies, re-run verification on changed documents
+
+**Common Discrepancies:**
+
+- Executive summary states different budget than detailed budget section
+- Memo timeline doesn't reflect latest program plan updates
+- Operating costs stated differently in different sections
+- Milestone dates rounded or approximated inconsistently
+
 ## Completion Criteria
 
 ### Exit Checklist
 
+- [ ] Field survey document exists and passes verification against spec-for-field-survey
 - [ ] Architecture document exists and passes verification against spec-for-architecture
 - [ ] Lifecycle document exists and passes verification against spec-for-lifecycle
 - [ ] Program plan document exists and passes verification against spec-for-program-plan
 - [ ] Program memo document exists and passes verification against spec-for-program-memo
 - [ ] All documents reference each other correctly (wiki-links or explicit references)
-- [ ] Consistency checks pass across all documents
+- [ ] Cross-document consistency review completed (see previous section)
+- [ ] Numeric consistency verified (budget, timeline, counts match)
+- [ ] Reference consistency verified (sponsor, recipient, stakeholders align)
+- [ ] Content consistency verified (acceptance criteria, objectives, risks align)
 - [ ] Document currency table in program memo is accurate
 
 ### Success Indicators
 
-- All four documents pass template verification on first or second attempt
+- All five documents pass template verification on first or second attempt
 - Cross-document references resolve correctly
 - Non-technical stakeholders can understand program from memo alone
 - Technical stakeholders can navigate to details as needed
@@ -491,7 +624,9 @@ flowchart TB
 
 | Trigger | Affected Artifacts | Action Required |
 |---------|-------------------|-----------------|
+| New stakeholders discovered | Field Survey, Architecture | Update field survey actors; check architecture stakeholders align |
 | Stakeholder requirements change | Architecture (first), then cascade | Update architecture; propagate to lifecycle, plan, memo |
+| Resource landscape changes | Field Survey | Update field survey resources and relationships |
 | Budget or timeline changes | Program Plan, Program Memo | Update plan; update memo execution summary |
 | Technology decisions change | Architecture (physical layer) | Update architecture; verify no impact on logical layer |
 | Team composition changes | Program Plan | Update teams section, RACI; check milestone feasibility |
@@ -503,6 +638,7 @@ When earlier documents change, updates may need to propagate forward:
 
 | If Changed | Then Review | Propagation Steps |
 |------------|-------------|-------------------|
+| Field Survey | Architecture | 1. Check architecture stakeholders align with actors; 2. Verify scope consistency |
 | Architecture | Lifecycle, Program Plan, Program Memo | 1. Check lifecycle target artifact still valid; 2. Verify plan objectives still trace; 3. Update memo "What We're Building" |
 | Lifecycle | Program Plan, Program Memo | 1. Verify plan phases align with lifecycle; 2. Update memo "How We're Building It" |
 | Program Plan | Program Memo | 1. Update memo execution summary; 2. Verify timeline and risks current |
@@ -511,10 +647,10 @@ When earlier documents change, updates may need to propagate forward:
 
 After changes, verify consistency using specs and guidance:
 
-1. **Re-verify changed document:** `python scripts/verify_template_based.py <changed-file>.md --templates templates`
+1. **Re-verify changed document** (deterministic): `python scripts/verify_spec.py <changed-file>.md <spec>.md`
 2. **Check downstream documents:** Run verification on all dependent documents
 3. **Cross-document consistency:** Manually review consistency checks for changed sections
-4. **Validate quality:** Review changed document against its guidance criteria
+4. **Validate quality** (LLM-assisted): Review changed document against its guidance criteria
 
 ### Re-Assurance Protocol
 
@@ -530,6 +666,7 @@ When documents are updated, re-assurance may be required:
 
 | Artifact | Current Version | Last Verified | Owner |
 |----------|-----------------|---------------|-------|
+| Field Survey | [version] | [date] | [who] |
 | Architecture | [version] | [date] | [who] |
 | Lifecycle | [version] | [date] | [who] |
 | Program Plan | [version] | [date] | [who] |
@@ -537,19 +674,120 @@ When documents are updated, re-assurance may be required:
 
 ## Quick Reference
 
-| Step | Command/Action | Verify With |
+| Step | Command/Action | Verify With (deterministic) |
 |------|----------------|-------------|
-| 1 | Create architecture with 4 layers + V-model table | `verify_template_based.py` against spec-for-architecture |
-| 2 | Create lifecycle with phases + flowchart + gates | `verify_template_based.py` against spec-for-lifecycle |
-| 3 | Create program plan with 10 sections + visuals | `verify_template_based.py` against spec-for-program-plan |
-| 4 | Create program memo synthesizing all three | `verify_template_based.py` against spec-for-program-memo |
+| 0 | Create field survey with actors, resources, relationships | `python scripts/verify_spec.py <doc>.md 00_vertices/spec-for-field-survey.md` |
+| 1 | Create architecture with 4 layers + V-model table | `python scripts/verify_spec.py <doc>.md 00_vertices/spec-for-architecture.md` |
+| 2 | Create lifecycle with phases + flowchart + gates | `python scripts/verify_spec.py <doc>.md 00_vertices/spec-for-lifecycle.md` |
+| 3 | Create program plan with 10 sections + visuals | `python scripts/verify_spec.py <doc>.md 00_vertices/spec-for-program-plan.md` |
+| 4 | Create program memo synthesizing all documents | `python scripts/verify_spec.py <doc>.md 00_vertices/spec-for-program-memo.md` |
+
+**Operation Types:**
+
+- **Verify structure** — Deterministic script; pass/fail based on spec requirements
+- **Generate validation** — LLM-assisted evaluation against guidance; requires human review and approval
+- **Log assurance** — Manual creation of assurance face document linking coupling + verification + validation edges
+
+## Examples
+
+Two complete example packages demonstrate this workflow applied to different domains. Each example includes all five documents produced by following this runbook.
+
+### Example 1: Municipal Water Quality Monitoring
+
+A public utilities program deploying real-time water quality sensors across a municipal distribution network.
+
+**Domain:** Public infrastructure, IoT/SCADA integration, regulatory compliance
+
+**Key Characteristics:**
+
+- 9-month tactical program with $780K capital budget
+- 25 sensor stations with cloud-based analytics
+- Integration with existing Wonderware SCADA system
+- State EPA compliance reporting requirements
+
+**Documents:**
+
+- [[field-survey-water-quality-monitoring]] - 5 actors, 5 resources, regulatory and operational context
+- [[architecture-water-quality-monitoring]] - Sensor network, data platform, analytics, alerting
+- [[lifecycle-water-quality-monitoring]] - V-model with SCADA integration emphasis
+- [[program-plan-water-quality-monitoring]] - Detailed WBS, RACI, risk register
+- [[program-memo-water-quality-monitoring]] - Executive summary for Water Authority board
+
+### Example 2: Regional Bus Fleet Electrification
+
+A transit authority program transitioning diesel buses to battery-electric with depot charging infrastructure.
+
+**Domain:** Transportation, fleet management, utility coordination, workforce development
+
+**Key Characteristics:**
+
+- 36-month strategic program with $44M capital budget
+- 60 electric buses across two depot facilities
+- Infrastructure-first sequencing (utility upgrades precede bus delivery)
+- State zero-emission mandate compliance (50% by 2032)
+
+**Documents:**
+
+- [[field-survey-bus-electrification]] - Transit authority stakeholders, infrastructure, regulatory context
+- [[architecture-bus-electrification]] - Electric buses, charging infrastructure, fleet management integration
+- [[lifecycle-bus-electrification]] - V-model addressing infrastructure/vehicle sequencing challenge
+- [[program-plan-bus-electrification]] - Multi-year timeline, grant funding structure, workforce training
+- [[program-memo-bus-electrification]] - Executive summary for MRTA Board and State DOT
+
+### What the Examples Demonstrate
+
+| Aspect               | Water Quality              | Bus Electrification              |
+|----------------------|----------------------------|----------------------------------|
+| Program scale        | Tactical (9 months)        | Strategic (36 months)            |
+| Budget magnitude     | $780K                      | $44M                             |
+| Technical complexity | Software/integration focus | Hardware/infrastructure focus    |
+| Stakeholder breadth  | Internal + regulator       | Multi-agency + utility + union   |
+| V-model emphasis     | Testing/validation         | Infrastructure sequencing        |
+
+Both examples pass verification and demonstrate cross-document consistency as required by this runbook.
 
 ## Related Workflows
 
-- [[runbook-document-type-creation]] - For creating new spec/guidance pairs
-- [[runbook-assurance-workflow]] - For creating verification edges, validation edges, and assurance faces
-- [[HOWTO-CREATE-DOCUMENT-TYPE]] - Reference for document type creation pattern
+- [ ] [[runbook-LLM-agent-prompt]] - For creating custom system_promps to tailor LLM assistent behavior
+- [ ] [[runbook-document-type-creation]] - For creating new spec/guidance pairs
+- [ ] [[runbook-assurance-workflow]] - For creating verification edges, validation edges, and assurance faces
+
+## Beyond Individual Documents: Charts and Assurance Audits
+
+This runbook produces individual documents with per-document verification. For formal assurance of the complete documentation package, the knowledge complex provides chart and assurance audit capabilities.
+
+### Charts
+
+A **chart** is a named collection of vertices, edges, and faces forming a coherent subcomplex. You can construct a chart containing all five program documents plus their coupling, verification, and validation edges.
+
+| Resource                                                          | Purpose                                              |
+| ----------------------------------------------------------------- | ---------------------------------------------------- |
+| [[spec-for-charts]]                                               | Structural requirements for chart documents          |
+| [[guidance-for-charts]]                                           | Quality criteria for well-formed charts              |
+| `python scripts/verify_chart.py <chart>.md`                       | Verify chart structure                               |
+| `python scripts/topology.py <chart>`                              | Verify topological properties (Euler characteristic) |
+| `python scripts/export_chart_direct.py <chart>.md <output>.json`  | Export chart to JSON                                 |
+| `python scripts/visualize_chart.py <chart>.json`                  | Generate HTML visualization                          |
+
+### Assurance Audits
+
+An **assurance audit** is a special chart that validates assurance status across all vertices. For a program documentation package, this verifies that every document has valid coupling edge, verification edge, validation edge, and assurance face.
+
+| Resource                                              | Purpose                                            |
+| ----------------------------------------------------- | -------------------------------------------------- |
+| [[spec-for-assurance-audits]]                         | Structural requirements for assurance audit charts |
+| [[guidance-for-assurance-audits]]                     | Quality criteria for valid assurance audits        |
+| `python scripts/audit_assurance_chart.py <chart>.md`  | Verify all vertices in chart are assured           |
+| `python scripts/generate_assurance_audit_elements.py` | Generate assurance audit boilerplate               |
+
+### When to Use Charts and Audits
+
+- **Individual verification** (this runbook): Sufficient for draft documents, iterative development, and informal review
+- **Chart construction**: When you need to define a coherent subcomplex for export, visualization, or composition
+- **Assurance audit**: When you need formal attestation that a complete package meets assurance requirements—typically before major approvals, handoffs, or publication
+
+Chart and assurance audit workflows are out of scope for this runbook but available when formal package assurance is required.
 
 ---
 
-**Note:** This runbook produces the core documentation package for a program. After completing this workflow, consider running the assurance workflow to create verification edges, validation edges, and assurance faces for each document.
+**Note:** This runbook produces the core documentation package for a program. After completing this workflow, consider running the assurance workflow to create verification edges, validation edges, and assurance faces for each document. For formal package assurance, construct a chart and run an assurance audit.
