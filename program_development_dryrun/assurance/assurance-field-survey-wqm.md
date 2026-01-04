@@ -50,12 +50,12 @@ This assurance face represents the complete quality assurance pattern for [[fiel
    - Ensures they address the same document type (field survey documents)
    - Type: `edge/coupling`
 
-2. **Verification Edge**: [[verification-field-survey-wqm:spec-field-survey]]
+2. **Verification Edge**: [[verification-field-survey-wqm-spec-field-survey]]
    - field-survey-water-quality-monitoring verifies against spec-for-field-survey
    - Deterministic structural checking via verify_spec.py
    - Type: `edge/verification`
 
-3. **Validation Edge**: [[validation-field-survey-wqm:guidance-field-survey]]
+3. **Validation Edge**: [[validation-field-survey-wqm-guidance-field-survey]]
    - field-survey-water-quality-monitoring validates against guidance-for-field-survey
    - Qualitative quality assessment
    - Type: `edge/validation`
@@ -138,8 +138,8 @@ This assurance assessment was generated with assistance from claude-opus-4-5-202
 | Specification | [[spec-for-field-survey]] (v:spec:field-survey) |
 | Guidance | [[guidance-for-field-survey]] (v:guidance:field-survey) |
 | Coupling Edge | [[coupling-field-survey]] (e:coupling:field-survey) |
-| Verification Edge | [[verification-field-survey-wqm:spec-field-survey]] |
-| Validation Edge | [[validation-field-survey-wqm:guidance-field-survey]] |
+| Verification Edge | [[verification-field-survey-wqm-spec-field-survey]] |
+| Validation Edge | [[validation-field-survey-wqm-guidance-field-survey]] |
 | Assurance Method | llm-assisted |
 | Assurer | claude-opus-4-5-20251101 |
 | Human Approver | mzargham |

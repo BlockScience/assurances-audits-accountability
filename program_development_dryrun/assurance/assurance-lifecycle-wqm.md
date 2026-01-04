@@ -50,12 +50,12 @@ This assurance face represents the complete quality assurance pattern for [[life
    - Ensures they address the same document type (lifecycle documents)
    - Type: `edge/coupling`
 
-2. **Verification Edge**: [[verification-lifecycle-wqm:spec-lifecycle]]
+2. **Verification Edge**: [[verification-lifecycle-wqm-spec-lifecycle]]
    - lifecycle-water-quality-monitoring verifies against spec-for-lifecycle
    - Deterministic structural checking via verify_spec.py
    - Type: `edge/verification`
 
-3. **Validation Edge**: [[validation-lifecycle-wqm:guidance-lifecycle]]
+3. **Validation Edge**: [[validation-lifecycle-wqm-guidance-lifecycle]]
    - lifecycle-water-quality-monitoring validates against guidance-for-lifecycle
    - Qualitative quality assessment
    - Type: `edge/validation`
@@ -138,8 +138,8 @@ This assurance assessment was generated with assistance from claude-opus-4-5-202
 | Specification | [[spec-for-lifecycle]] (v:spec:lifecycle) |
 | Guidance | [[guidance-for-lifecycle]] (v:guidance:lifecycle) |
 | Coupling Edge | [[coupling-lifecycle]] (e:coupling:lifecycle) |
-| Verification Edge | [[verification-lifecycle-wqm:spec-lifecycle]] |
-| Validation Edge | [[validation-lifecycle-wqm:guidance-lifecycle]] |
+| Verification Edge | [[verification-lifecycle-wqm-spec-lifecycle]] |
+| Validation Edge | [[validation-lifecycle-wqm-guidance-lifecycle]] |
 | Assurance Method | llm-assisted |
 | Assurer | claude-opus-4-5-20251101 |
 | Human Approver | mzargham |
