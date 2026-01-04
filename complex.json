@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-02T21:27:36.841274+00:00",
+  "generated": "2026-01-04T18:34:01.445693+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -467,7 +467,9 @@
         "version": "1.0.0",
         "created": "2025-12-30T18:00:00+00:00",
         "modified": "2025-12-30T18:00:00+00:00",
-        "dependencies": []
+        "dependencies": [
+          "v:guidance:architecture"
+        ]
       },
       "v:guidance:novel-contributions": {
         "file": "00_vertices/guidance-for-novel-contributions.md",
@@ -529,6 +531,63 @@
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00",
         "dependencies": []
+      },
+      "v:guidance:program-memo": {
+        "file": "00_vertices/guidance-for-program-memo.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:program-memo",
+        "name": "Guidance for Program Memo Documents",
+        "description": "Quality criteria and best practices for creating effective program memos that synthesize documentation packages for executive audiences",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T14:00:00+00:00",
+        "modified": "2025-01-04T14:00:00+00:00",
+        "dependencies": [
+          "v:guidance:architecture",
+          "v:guidance:lifecycle",
+          "v:guidance:program-plan"
+        ],
+        "criteria": [
+          "executive-accessibility",
+          "synthesis-quality",
+          "traceability",
+          "navigation-clarity",
+          "currency",
+          "appropriate-brevity"
+        ]
+      },
+      "v:guidance:program-plan": {
+        "file": "00_vertices/guidance-for-program-plan.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:program-plan",
+        "name": "Guidance for Program Plan Documents",
+        "description": "Quality criteria and best practices for creating effective program plans that secure stakeholder confidence in delivery",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T12:00:00+00:00",
+        "modified": "2025-01-04T12:00:00+00:00",
+        "dependencies": [
+          "v:guidance:architecture",
+          "v:guidance:lifecycle"
+        ],
+        "criteria": [
+          "stakeholder-confidence",
+          "traceability",
+          "realism",
+          "risk-awareness",
+          "accountability-clarity",
+          "operational-readiness"
+        ]
       },
       "v:guidance:property": {
         "file": "00_vertices/guidance-for-property.md",
@@ -605,6 +664,31 @@
           "maintainability"
         ],
         "rubric": "validation-assessment"
+      },
+      "v:guidance:runbook": {
+        "file": "00_vertices/guidance-for-runbook.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:runbook",
+        "name": "Guidance for Runbook Documents",
+        "description": "Quality criteria and best practices for creating effective runbooks that guide humans through multi-step workflows",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T16:00:00+00:00",
+        "modified": "2025-01-04T16:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "context-clarity",
+          "dependency-accuracy",
+          "actionability",
+          "consistency-checking",
+          "maintenance-completeness",
+          "troubleshooting-utility"
+        ]
       },
       "v:guidance:skill": {
         "file": "00_vertices/guidance-for-skill.md",
@@ -1012,7 +1096,9 @@
         "version": "1.0.0",
         "created": "2025-12-30T18:00:00+00:00",
         "modified": "2025-12-30T18:00:00+00:00",
-        "dependencies": []
+        "dependencies": [
+          "v:spec:architecture"
+        ]
       },
       "v:spec:novel-contributions": {
         "file": "00_vertices/spec-for-novel-contributions.md",
@@ -1067,6 +1153,47 @@
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00",
         "dependencies": []
+      },
+      "v:spec:program-memo": {
+        "file": "00_vertices/spec-for-program-memo.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:program-memo",
+        "name": "Specification for Program Memo Documents",
+        "description": "Defines structural requirements for program memo documents that provide executive-level summaries of architecture, lifecycle, and program plan documentation packages",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T14:00:00+00:00",
+        "modified": "2025-01-04T14:00:00+00:00",
+        "dependencies": [
+          "v:spec:architecture",
+          "v:spec:lifecycle",
+          "v:spec:program-plan"
+        ]
+      },
+      "v:spec:program-plan": {
+        "file": "00_vertices/spec-for-program-plan.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:program-plan",
+        "name": "Specification for Program Plan Documents",
+        "description": "Defines structural requirements for program plan documents that operationalize architectures through lifecycles with teams, timelines, resources, and risk management",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T12:00:00+00:00",
+        "modified": "2025-01-04T12:00:00+00:00",
+        "dependencies": [
+          "v:spec:architecture",
+          "v:spec:lifecycle"
+        ]
       },
       "v:spec:property": {
         "file": "00_vertices/spec-for-property.md",
@@ -1151,6 +1278,23 @@
         "version": "1.0.0",
         "created": "2026-01-02T12:00:00+00:00",
         "modified": "2026-01-02T12:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:runbook": {
+        "file": "00_vertices/spec-for-runbook.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:runbook",
+        "name": "Specification for Runbook Documents",
+        "description": "Defines structural requirements for runbook documents that guide humans through multi-step workflows producing artifacts",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T16:00:00+00:00",
+        "modified": "2025-01-04T16:00:00+00:00",
         "dependencies": []
       },
       "v:spec:signature": {
@@ -1719,6 +1863,25 @@
         "created": "2025-12-27T23:30:00+00:00",
         "modified": "2025-12-27T23:30:00+00:00"
       },
+      "e:coupling:program-memo": {
+        "file": "01_edges/coupling-program-memo.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:program-memo",
+        "name": "Coupling - Spec-for-Program-Memo and Guidance-for-Program-Memo",
+        "source": "v:spec:program-memo",
+        "target": "v:guidance:program-memo",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T15:00:00+00:00"
+      },
       "e:coupling:protocol": {
         "file": "01_edges/coupling-protocol.md",
         "type": "edge/coupling",
@@ -1775,6 +1938,25 @@
         "version": "1.0.0",
         "created": "2026-01-02T12:00:00+00:00",
         "modified": "2026-01-02T12:00:00+00:00"
+      },
+      "e:coupling:runbook": {
+        "file": "01_edges/coupling-runbook.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:runbook",
+        "name": "Coupling - Spec-for-Runbook and Guidance-for-Runbook",
+        "source": "v:spec:runbook",
+        "target": "v:guidance:runbook",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T16:00:00+00:00",
+        "modified": "2025-01-04T16:00:00+00:00"
       },
       "e:coupling:spec-guidance:guidance-spec": {
         "file": "01_edges/coupling-spec-guidance-guidance-spec.md",
@@ -3620,6 +3802,52 @@
         "created": "2025-12-27T23:50:00+00:00",
         "modified": "2025-12-27T23:50:00+00:00"
       },
+      "e:validation:program-memo-guidance:guidance-guidance": {
+        "file": "01_edges/validation-program-memo-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:program-memo-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-program-memo against guidance-for-guidance",
+        "source": "v:guidance:program-memo",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T15:00:00+00:00"
+      },
+      "e:validation:program-memo-spec:guidance-spec": {
+        "file": "01_edges/validation-program-memo-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:program-memo-spec:guidance-spec",
+        "name": "Validation - spec-for-program-memo against guidance-for-spec",
+        "source": "v:spec:program-memo",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T15:00:00+00:00"
+      },
       "e:validation:protocol-claude:guidance": {
         "file": "01_edges/validation-protocol-claude:guidance.md",
         "type": "edge/validation",
@@ -3768,6 +3996,29 @@
         "created": "2025-12-27T23:50:00+00:00",
         "modified": "2025-12-27T23:50:00+00:00"
       },
+      "e:validation:repository-policy-aaa:guidance-repository-policy": {
+        "file": "01_edges/validation-repository-policy-aaa:guidance-repository-policy.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:repository-policy-aaa:guidance-repository-policy",
+        "name": "Validation - Repository Policy for AAA validates against Guidance-for-Repository-Policy",
+        "source": "v:repository-policy:assurances-audits-accountability",
+        "target": "v:guidance:repository-policy",
+        "source_type": "vertex/repository-policy",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-assistant",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-02T19:00:00+00:00",
+        "modified": "2026-01-02T19:00:00+00:00"
+      },
       "e:validation:repository-policy-guidance:guidance-guidance": {
         "file": "01_edges/validation-repository-policy-guidance:guidance-guidance.md",
         "type": "edge/validation",
@@ -3813,6 +4064,52 @@
         "version": "1.0.0",
         "created": "2026-01-02T18:00:00+00:00",
         "modified": "2026-01-02T18:00:00+00:00"
+      },
+      "e:validation:runbook-guidance:guidance-guidance": {
+        "file": "01_edges/validation-runbook-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:runbook-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-runbook against guidance-for-guidance",
+        "source": "v:guidance:runbook",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
+      },
+      "e:validation:runbook-spec:guidance-spec": {
+        "file": "01_edges/validation-runbook-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:runbook-spec:guidance-spec",
+        "name": "Validation - spec-for-runbook against guidance-for-spec",
+        "source": "v:spec:runbook",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
       },
       "e:validation:spec-guidance:guidance-spec": {
         "file": "01_edges/validation-spec-guidance.md",
@@ -4568,6 +4865,52 @@
         "created": "2025-12-27T23:45:00+00:00",
         "modified": "2025-12-27T23:45:00+00:00"
       },
+      "e:verification:program-memo-guidance:spec-guidance": {
+        "file": "01_edges/verification-program-memo-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:program-memo-guidance:spec-guidance",
+        "name": "Verification - guidance-for-program-memo against spec-for-guidance",
+        "source": "v:guidance:program-memo",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T15:00:00+00:00"
+      },
+      "e:verification:program-memo-spec:spec-spec": {
+        "file": "01_edges/verification-program-memo-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:program-memo-spec:spec-spec",
+        "name": "Verification - spec-for-program-memo against spec-for-spec",
+        "source": "v:spec:program-memo",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T15:00:00+00:00"
+      },
       "e:verification:protocol-claude:spec": {
         "file": "01_edges/verification-protocol-claude:spec.md",
         "type": "edge/verification",
@@ -4697,6 +5040,52 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:45:00+00:00",
         "modified": "2025-12-27T23:45:00+00:00"
+      },
+      "e:verification:runbook-guidance:spec-guidance": {
+        "file": "01_edges/verification-runbook-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:runbook-guidance:spec-guidance",
+        "name": "Verification - guidance-for-runbook against spec-for-guidance",
+        "source": "v:guidance:runbook",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
+      },
+      "e:verification:runbook-spec:spec-spec": {
+        "file": "01_edges/verification-runbook-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:runbook-spec:spec-spec",
+        "name": "Verification - spec-for-runbook against spec-for-spec",
+        "source": "v:spec:runbook",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
       },
       "e:verification:spec-guidance:spec-spec": {
         "file": "01_edges/verification-spec-guidance.md",
@@ -5807,6 +6196,78 @@
         "created": "2025-12-27T23:59:00+00:00",
         "modified": "2025-12-27T23:59:00+00:00"
       },
+      "f:assurance:program-memo-guidance": {
+        "file": "02_faces/assurance-program-memo-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:program-memo-guidance",
+        "name": "Assurance Face - guidance-for-program-memo",
+        "description": "Complete assurance pattern for the program memo guidance",
+        "edges": [
+          "e:coupling:program-memo",
+          "e:verification:program-memo-guidance:spec-guidance",
+          "e:validation:program-memo-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:program-memo",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:program-memo",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:program-memo",
+        "verification_edge": "e:verification:program-memo-guidance:spec-guidance",
+        "validation_edge": "e:validation:program-memo-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T15:00:00+00:00"
+      },
+      "f:assurance:program-memo-spec": {
+        "file": "02_faces/assurance-program-memo-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:program-memo-spec",
+        "name": "Assurance Face - spec-for-program-memo",
+        "description": "Complete assurance pattern for the program memo specification",
+        "edges": [
+          "e:coupling:program-memo",
+          "e:verification:program-memo-spec:spec-spec",
+          "e:validation:program-memo-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:program-memo",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:program-memo",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:program-memo",
+        "verification_edge": "e:verification:program-memo-spec:spec-spec",
+        "validation_edge": "e:validation:program-memo-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T15:00:00+00:00"
+      },
       "f:assurance:protocol-claude": {
         "file": "02_faces/assurance-protocol-claude.md",
         "type": "face/assurance",
@@ -6020,6 +6481,78 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:59:00+00:00",
         "modified": "2025-12-27T23:59:00+00:00"
+      },
+      "f:assurance:runbook-guidance": {
+        "file": "02_faces/assurance-runbook-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:runbook-guidance",
+        "name": "Assurance Face - guidance-for-runbook",
+        "description": "Complete assurance pattern for the runbook guidance",
+        "edges": [
+          "e:coupling:runbook",
+          "e:verification:runbook-guidance:spec-guidance",
+          "e:validation:runbook-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:runbook",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:runbook",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:runbook",
+        "verification_edge": "e:verification:runbook-guidance:spec-guidance",
+        "validation_edge": "e:validation:runbook-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
+      },
+      "f:assurance:runbook-spec": {
+        "file": "02_faces/assurance-runbook-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:runbook-spec",
+        "name": "Assurance Face - spec-for-runbook",
+        "description": "Complete assurance pattern for the runbook specification",
+        "edges": [
+          "e:coupling:runbook",
+          "e:verification:runbook-spec:spec-spec",
+          "e:validation:runbook-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:runbook",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:runbook",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:runbook",
+        "verification_edge": "e:verification:runbook-spec:spec-spec",
+        "validation_edge": "e:validation:runbook-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
       },
       "f:assurance:spec-guidance": {
         "file": "02_faces/assurance-spec-guidance.md",
@@ -7366,10 +7899,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 64,
-    "edge_count": 156,
-    "face_count": 65,
+    "vertex_count": 70,
+    "edge_count": 167,
+    "face_count": 69,
     "chart_count": 3,
-    "euler_characteristic": -27
+    "euler_characteristic": -28
   }
 }
