@@ -840,7 +840,7 @@ A simpler assurance audit without boundary anchoring for internal review.
 
 - [[runbook-program-development]] - For creating the source documents to be assured
 - [[runbook-document-type-creation]] - For creating new spec/guidance pairs
-- [[runbook-LLM-agent-prompt]] - For configuring LLM assistants to help with validation
+- [[runbook-llm-specialization]] - For creating specialized LLM configurations using PPP framework
 
 ---
 
