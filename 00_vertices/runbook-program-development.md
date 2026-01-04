@@ -749,8 +749,8 @@ Both examples pass verification and demonstrate cross-document consistency as re
 ## Related Workflows
 
 - [[runbook-assurance-audit-chart]] - For creating assurance audit charts after completing program documents
-- [ ] [[runbook-LLM-agent-prompt]] - For creating custom system_prompts to tailor LLM assistant behavior
-- [ ] [[runbook-document-type-creation]] - For creating new spec/guidance pairs
+- [[runbook-llm-specialization]] - For creating specialized LLM configurations using PPP framework
+- [[runbook-document-type-creation]] - For creating new spec/guidance pairs
 
 ## Beyond Individual Documents: Charts and Assurance Audits
 

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-04T23:20:38.960680+00:00",
+  "generated": "2026-01-04T23:35:12.676785+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -910,6 +910,62 @@
         "related_runbooks": [
           "v:doc:runbook-assurance-audit-chart",
           "v:doc:runbook-program-development"
+        ]
+      },
+      "v:doc:runbook-llm-specialization": {
+        "file": "00_vertices/runbook-llm-specialization.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:runbook-llm-specialization",
+        "name": "Runbook for LLM Specialization",
+        "description": "Guides practitioners through creating specialized LLM system prompts using the PPP (Purpose-Persona-Protocol) framework with full verification and validation",
+        "tags": [
+          "vertex",
+          "doc",
+          "runbook"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00",
+        "workflow_name": "LLM Specialization",
+        "target_roles": [
+          "prompt engineer",
+          "systems engineer",
+          "knowledge engineer"
+        ],
+        "required_skills": [
+          "PPP framework understanding",
+          "YAML frontmatter syntax",
+          "verification and validation concepts",
+          "LLM system prompt authoring"
+        ],
+        "step_count": 8,
+        "artifacts_produced": [
+          "purpose document",
+          "persona document",
+          "protocol document",
+          "system prompt document",
+          "dependency edges (3)",
+          "verification edges (4)",
+          "validation edges (4)",
+          "assurance faces (4)",
+          "deployed CLAUDE.md"
+        ],
+        "estimated_duration": "4-8 hours",
+        "parallel_steps": [
+          [
+            "Step 5",
+            "Step 6"
+          ]
+        ],
+        "prerequisites": [
+          "access to knowledge complex repository",
+          "Python environment with verification scripts",
+          "understanding of target domain/use case"
+        ],
+        "related_runbooks": [
+          "v:doc:runbook-document-type-creation",
+          "v:doc:runbook-assurance-audit-chart"
         ]
       },
       "v:doc:runbook-program-development": {
@@ -4406,6 +4462,29 @@
         "created": "2025-01-04T17:00:00+00:00",
         "modified": "2025-01-04T17:00:00+00:00"
       },
+      "e:validation:runbook-llm-specialization:guidance": {
+        "file": "01_edges/validation-runbook-llm-specialization:guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:runbook-llm-specialization:guidance",
+        "name": "Validation - Runbook LLM Specialization against Guidance for Runbook",
+        "source": "v:doc:runbook-llm-specialization",
+        "target": "v:guidance:runbook",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:30:00+00:00",
+        "modified": "2025-01-04T23:30:00+00:00",
+        "validation_method": "llm-assisted",
+        "validator": "claude-opus-4-5-20251101",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham"
+      },
       "e:validation:runbook-spec:guidance-spec": {
         "file": "01_edges/validation-runbook-spec:guidance-spec.md",
         "type": "edge/validation",
@@ -5473,6 +5552,27 @@
         "version": "1.0.0",
         "created": "2025-01-04T17:00:00+00:00",
         "modified": "2025-01-04T17:00:00+00:00"
+      },
+      "e:verification:runbook-llm-specialization:spec": {
+        "file": "01_edges/verification-runbook-llm-specialization:spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:runbook-llm-specialization:spec",
+        "name": "Verification - Runbook LLM Specialization against Spec for Runbook",
+        "source": "v:doc:runbook-llm-specialization",
+        "target": "v:spec:runbook",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:30:00+00:00",
+        "modified": "2025-01-04T23:30:00+00:00",
+        "verification_method": "deterministic",
+        "verification_tool": "verify_template_based.py"
       },
       "e:verification:runbook-spec:spec-spec": {
         "file": "01_edges/verification-runbook-spec:spec-spec.md",
@@ -8453,10 +8553,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 75,
-    "edge_count": 177,
+    "vertex_count": 76,
+    "edge_count": 179,
     "face_count": 73,
     "chart_count": 3,
-    "euler_characteristic": -29
+    "euler_characteristic": -30
   }
 }
