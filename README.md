@@ -4,7 +4,7 @@ This repository contains the implementation and demonstration of a typed simplic
 
 ![Accountability Complex](docs/images/assurance_complex.png)
 
-**Element Counts:** 56 vertices | 148 edges | 65 faces | χ = -27
+**Element Counts:** 76 vertices | 179 edges | 73 faces | χ = -30
 
 ## The Paper
 
@@ -152,17 +152,7 @@ In a valid assurance complex:
 
 **Boundary Condition:** The framework bootstraps through four foundational vertices—spec-for-spec (SS), spec-for-guidance (SG), guidance-for-spec (GS), guidance-for-guidance (GG)—mutually assured in a self-referential pattern. Two form valid triangles (SG, GS), while two rely on self-reference (SS via self-verification, GG via self-validation), creating degenerate faces.
 
-**Boundary Complex:** A fifth vertex, *root* (b0), is introduced as an axiomatic element (not a document requiring assurance). The degenerate self-loops are rewired to connect through the root, eliminating degeneracy and providing a valid simplicial complex foundation. The root provides assurance but doesn't need it—this is what makes V - F = 1 work.
-
-## Figures
-
-The paper references three figures generated from this repository:
-
-| Figure | Description | Source |
-|--------|-------------|--------|
-| Figure 1 | Assurance Triangle | [figures/figure1-final.png](figures/figure1-final.png) |
-| Figure 2 | Boundary Complex | [figures/figure3-final.png](figures/figure3-final.png) |
-| Figure 3 | Audit Chart | [figures/figure2-final.png](figures/figure2-final.png) |
+**Boundary Complex:** A fifth vertex, *root* (b0), is introduced as an axiomatic element (not a document requiring assurance). The self-loops are rewired to connect through the root, eliminating degeneracy faces and providing a valid simplicial complex foundation. The root provides assurance but doesn't need it—this is what makes V - F = 1 work.
 
 ## Runbooks
 
