@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - guidance
-version: 1.0.0
+version: 1.1.0
 created: 2025-01-04T12:00:00Z
-modified: 2025-01-04T12:00:00Z
+modified: 2025-01-04T22:00:00Z
 dependencies:
   - v:guidance:architecture
   - v:guidance:lifecycle
@@ -244,18 +244,29 @@ This guidance applies to both strategic and tactical plans, with differences in 
 
 ### Execution Approach
 
-**Purpose:** Show how lifecycle translates to this program
+**Purpose:** Show how V-model lifecycle translates to this program
 
 **Tips:**
+
 - Reference lifecycle document—don't duplicate
-- Summarize phases with expected durations
-- V&V strategy should connect to lifecycle gates
-- This section bridges lifecycle (generic) to program plan (specific)
+- Summarize V-model phases: Design (3 phases), Implementation, Evaluation (4 phases), Operations
+- Phase Overview table should include Gate Type column (Verification vs Validation)
+- V&V strategy MUST distinguish verification gates (automated, per phase) from validation gates (human approval)
+- This section bridges lifecycle (V-model structure) to program plan (schedule and resources)
+- Strategic plans: show phase groups; tactical plans: show individual phases
 
 **Anti-patterns:**
+
 - ❌ Copy-pasting lifecycle content
 - ❌ No reference to lifecycle document
-- ❌ V&V mentioned but not connected to lifecycle
+- ❌ V&V mentioned but not distinguished (verification vs validation gates)
+- ❌ Ignoring V-model design-evaluation symmetry
+- ❌ Phase overview missing gate types
+
+**Preferred:**
+
+- ✅ "Following the V-model lifecycle, we proceed through 3 design phases, implementation, 4 evaluation phases, and operations"
+- ✅ Phase table includes Gate Type column distinguishing verification from validation
 
 ### Work Breakdown
 
@@ -495,6 +506,7 @@ This guidance applies to both strategic and tactical plans, with differences in 
 | **Missing Contingency** | Plan assumes everything works | Add time/budget contingency; create contingency plans for high risks |
 | **Stale Risk Register** | Boilerplate risks | Conduct program-specific risk workshop; update throughout execution |
 | **Governance Overhead** | Weekly exec meetings for 2-year program | Match governance intensity to plan level and program phase |
+| **V-Model Misalignment** | Phase overview doesn't reflect design-evaluation symmetry | Structure phases as Design→Implementation→Evaluation→Operations; include gate types (verification vs validation) |
 
 ## Best Practices
 
@@ -507,7 +519,7 @@ This guidance applies to both strategic and tactical plans, with differences in 
 7. **Right-Size Governance** - Match reporting and oversight to program scale and risk
 8. **Update Living Documents** - Plans should evolve; establish update cadence
 9. **Respect Stakeholder Time** - Executive summary should fit on one page
-10. **Connect to Lifecycle Gates** - Program milestones should align with lifecycle V&V gates
+10. **Connect to Lifecycle Gates** - Program milestones should align with lifecycle verification gates (per design phase) and validation gates (acceptance, operations handoff)
 
 ## Validation vs. Verification
 
@@ -543,8 +555,8 @@ This guidance document demonstrates the quality criteria it defines:
 | Property | Value |
 |----------|-------|
 | Specification | [[spec-for-program-plan]] |
-| Guidance Version | 1.0.0 |
-| Specification Version | 1.0.0 |
+| Guidance Version | 1.1.0 |
+| Specification Version | 1.1.0 |
 | Prerequisites | [[guidance-for-architecture]], [[guidance-for-lifecycle]] |
 | Target Users | Program managers, engineers creating execution plans |
 
