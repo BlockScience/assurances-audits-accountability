@@ -4,7 +4,8 @@ This repository contains the implementation and demonstration of a typed simplic
 
 ![Accountability Complex](docs/images/assurance_complex.png)
 
-**Element Counts:** 76 vertices | 179 edges | 73 faces | χ = -30
+**INCOSE Paper Assurance Complex:** 23 vertices | 91 edges | 44 faces | χ = -24
+22 documents + 1 root | 22 assurances + 22 signatures | Paper has 2 distinct assurance faces
 
 ## The Paper
 
