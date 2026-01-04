@@ -112,7 +112,11 @@ Each layer corresponds to a V-model evaluation level, creating a complete lifecy
 - Keep to 1-3 paragraphs—this is an orientation, not the full story
 
 **Anti-patterns:**
+
 - ❌ Diving into technical details before establishing context
+
+**Preferred:**
+
 - ✅ Start with stakeholder value, then narrow to technical scope
 
 ### V-Model Summary Table
@@ -126,7 +130,11 @@ Each layer corresponds to a V-model evaluation level, creating a complete lifecy
 - The table is a navigation aid; readers should be able to jump to relevant sections
 
 **Anti-patterns:**
+
 - ❌ Leaving cells empty or writing "TBD"
+
+**Preferred:**
+
 - ✅ Write brief but substantive content for each cell, even if sections need more work
 
 ### Conceptual Layer
@@ -140,7 +148,11 @@ Each layer corresponds to a V-model evaluation level, creating a complete lifecy
 - Consider: "If this system succeeds, what will be different for stakeholders?"
 
 **Anti-patterns:**
+
 - ❌ "The system needs to be fast" (vague, not stakeholder-focused)
+
+**Preferred:**
+
 - ✅ "Engineers need to verify documents in under 10 seconds to maintain workflow efficiency"
 
 ### Functional Layer
@@ -154,7 +166,11 @@ Each layer corresponds to a V-model evaluation level, creating a complete lifecy
 - Consider both happy path and error handling functions
 
 **Anti-patterns:**
+
 - ❌ Functions that describe implementation ("Parse YAML files")
+
+**Preferred:**
+
 - ✅ Functions that describe behavior ("Verify document structure against specification")
 
 ### Logical Layer
@@ -168,7 +184,11 @@ Each layer corresponds to a V-model evaluation level, creating a complete lifecy
 - This layer should survive technology changes
 
 **Anti-patterns:**
+
 - ❌ "GitHub Actions CI Pipeline" (implementation-specific)
+
+**Preferred:**
+
 - ✅ "Continuous Verification Service" (responsibility-focused)
 
 ### Physical Layer
@@ -182,7 +202,11 @@ Each layer corresponds to a V-model evaluation level, creating a complete lifecy
 - This layer is expected to change; document current state clearly
 
 **Anti-patterns:**
+
 - ❌ "Modern web framework" (too vague for physical layer)
+
+**Preferred:**
+
 - ✅ "Python 3.11 with PyYAML for YAML parsing, pytest for unit testing"
 
 ## Workflow Guidance

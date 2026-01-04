@@ -57,7 +57,8 @@ All program plan documents MUST include the following YAML frontmatter:
 | `architecture_ref` | string | REQUIRED | Reference to architecture document (id or path) |
 | `lifecycle_ref` | string | REQUIRED | Reference to lifecycle document (id or path) |
 | `target_completion` | date | REQUIRED | Target completion date (ISO 8601 date) |
-| `sponsoring_organization` | string | REQUIRED | Organization funding/sponsoring the work |
+| `sponsor` | string | REQUIRED | Organization or entity providing funding for the program |
+| `recipient` | string | REQUIRED | Organization, role, or stakeholder class who will receive and operate the delivered capabilities |
 
 ### Optional Metadata
 
@@ -486,7 +487,8 @@ program_name: <string>
 architecture_ref: <string>
 lifecycle_ref: <string>
 target_completion: <ISO8601-date>
-sponsoring_organization: <string>
+sponsor: <string>
+recipient: <string>
 
 # Optional frontmatter
 description: <string>

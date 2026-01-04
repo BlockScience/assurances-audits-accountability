@@ -11,7 +11,8 @@ tags:
 version: 1.0.0
 created: 2025-12-30T18:00:00Z
 modified: 2025-12-30T18:00:00Z
-dependencies: []
+dependencies:
+  - v:spec:architecture
 ---
 
 # Specification for Lifecycle Documents

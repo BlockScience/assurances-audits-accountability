@@ -219,6 +219,8 @@ This guidance applies to both strategic and tactical plans, with differences in 
 - ❌ Starting with technical details
 - ❌ Omitting risks (creates mistrust when discovered later)
 - ❌ "We're confident we can deliver" without basis
+  
+**Preferred:**
 - ✅ "Based on team experience and comparable projects, we assess medium-high confidence in the proposed timeline"
 
 ### Scope and Objectives
@@ -233,9 +235,12 @@ This guidance applies to both strategic and tactical plans, with differences in 
 
 **Anti-patterns:**
 - ❌ "Implement the system" (too vague)
-- ✅ "Deliver functional verification capability for 4-layer architecture documents by Q3"
 - ❌ Objectives with no success criteria
 - ❌ Missing constraints that will later block work
+
+**Preferred:**
+- ✅ "Deliver functional verification capability for 4-layer architecture documents by Q3"
+
 
 ### Execution Approach
 
@@ -322,9 +327,11 @@ This guidance applies to both strategic and tactical plans, with differences in 
 
 **Anti-patterns:**
 - ❌ Milestones without criteria ("Phase 1 complete")
-- ✅ "Architecture document verified against spec, validated by chief engineer"
 - ❌ All milestones in final month (back-loaded)
 - ❌ Schedule confidence always "high"
+
+**Preferred:**
+- ✅ "Architecture document verified against spec, validated by chief engineer"
 
 ### Resource Requirements
 
@@ -355,10 +362,12 @@ This guidance applies to both strategic and tactical plans, with differences in 
 
 **Anti-patterns:**
 - ❌ Generic risks ("requirements may change")
-- ✅ "Key SME availability limited in Q2 due to competing project"
 - ❌ Mitigations that are just restated risks
 - ❌ No contingency for high-impact risks
 - ❌ Risk owner is "the team"
+
+**Preferred:**
+- ✅ "Architecture document verified against spec, validated by chief engineer"
 
 ### Deliverables and Acceptance
 

@@ -11,7 +11,8 @@ tags:
 version: 1.0.0
 created: 2025-12-30T18:00:00Z
 modified: 2025-12-30T18:00:00Z
-dependencies: []
+dependencies:
+  - v:guidance:architecture
 ---
 
 # Guidance for Lifecycle Documents
@@ -203,9 +204,15 @@ Use this guidance when:
 - Keep to 2-3 paragraphs maximum
 
 **Anti-patterns:**
-- Starting with abstract definitions
-- Not stating what gets produced
-- Assuming reader knows the context
+
+- ❌ Starting with abstract definitions
+- ❌ Not stating what gets produced
+- ❌ Assuming reader knows the context
+
+**Preferred:**
+
+- ✅ State the target artifact type in the first paragraph
+- ✅ Connect to the assurance framework explicitly
 
 **Example opening:**
 > "This lifecycle documents the systematic process for developing assured research papers within the typed simplicial complex framework. It produces a paper document that has been verified against its specification, validated against its guidance, and closed into an assurance triangle with explicit human accountability."
@@ -221,9 +228,15 @@ Use this guidance when:
 - Reference actual document IDs where possible
 
 **Anti-patterns:**
-- Vague prerequisites ("appropriate foundation")
-- Not explaining why prerequisites matter
-- Assuming knowledge of boundary complex
+
+- ❌ Vague prerequisites ("appropriate foundation")
+- ❌ Not explaining why prerequisites matter
+- ❌ Assuming knowledge of boundary complex
+
+**Preferred:**
+
+- ✅ Use a table format listing each prerequisite with its assurance status
+- ✅ Reference actual document IDs where possible
 
 **Quality Indicators:**
 - Could a newcomer determine what's needed?
@@ -252,10 +265,16 @@ Use this guidance when:
 - Name the human role for validation gates
 
 **Anti-patterns:**
-- Vague goals ("Prepare content")
-- Missing inputs or outputs
-- Steps without failure handling
-- Gates without criteria
+
+- ❌ Vague goals ("Prepare content")
+- ❌ Missing inputs or outputs
+- ❌ Steps without failure handling
+- ❌ Gates without criteria
+
+**Preferred:**
+
+- ✅ Clear, single-sentence Goal for each phase
+- ✅ Explicit failure paths ("If verification fails → revise and re-verify")
 
 ### Flowchart Visualization
 
@@ -282,10 +301,16 @@ flowchart TB
 ```
 
 **Anti-patterns:**
-- Unlabeled decision paths
-- Missing failure loops
-- Cramming too much into one diagram
-- Inconsistent notation
+
+- ❌ Unlabeled decision paths
+- ❌ Missing failure loops
+- ❌ Cramming too much into one diagram
+- ❌ Inconsistent notation
+
+**Preferred:**
+
+- ✅ Use subgraphs to group phases with consistent color coding
+- ✅ Show PASS/FAIL paths explicitly with labeled arrows
 
 ### Narrative Walkthrough
 
@@ -299,10 +324,16 @@ flowchart TB
 - Connect to assurance concepts naturally
 
 **Anti-patterns:**
-- Just repeating the flowchart in words
-- Only procedural (no rationale)
-- Disconnected paragraphs
-- Assuming reader followed flowchart
+
+- ❌ Just repeating the flowchart in words
+- ❌ Only procedural (no rationale)
+- ❌ Disconnected paragraphs
+- ❌ Assuming reader followed flowchart
+
+**Preferred:**
+
+- ✅ Explain the "why" behind key decisions
+- ✅ Address iteration explicitly with exit conditions
 
 ### Key Properties
 
@@ -320,9 +351,15 @@ flowchart TB
 - **Explicit Traceability:** Every output traces to inputs
 
 **Anti-patterns:**
-- Generic properties ("It's systematic")
-- Too many properties (>7 becomes noise)
-- Properties without explanation
+
+- ❌ Generic properties ("It's systematic")
+- ❌ Too many properties (>7 becomes noise)
+- ❌ Properties without explanation
+
+**Preferred:**
+
+- ✅ 4-6 distinctive properties that explain why they matter
+- ✅ Properties that are memorable and referenceable (e.g., "Layered Trust", "Human-in-the-Loop")
 
 ## Workflow Guidance
 
