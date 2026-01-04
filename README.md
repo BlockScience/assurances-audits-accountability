@@ -138,13 +138,15 @@ Every assured document requires three edges forming a closed triangle:
 2. **Coupling edge** → spec is linked to corresponding guidance
 3. **Validation edge** → document assessed against guidance (requires human approver)
 
-### The V - F = 1 Invariant
+### The V - F ≤ 1 Invariant
 
-In any valid assurance audit chart:
+In a valid assurance complex:
 
-- Every vertex (except root) must have exactly one assurance face
+- Every non-root vertex must have at least one assurance face
 - Every face assures exactly one vertex
-- **V - F = 1** where root provides assurance but doesn't need it
+- **V - F = 1** when each document is assured exactly once
+- **V - F < 1** when documents have multiple assurances (e.g., dual spec-guidance pairs)
+- **V - F ≤ 1** is necessary but not sufficient for validity—useful as a quick spot-check to identify invalid complexes
 
 ### The Boundary Complex
 
