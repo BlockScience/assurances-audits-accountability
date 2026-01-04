@@ -29,8 +29,6 @@ artifacts_produced:
   - program plan document
   - program memo document
 estimated_duration: "2-4 weeks"
-parallel_steps:
-  - [Step 2, Step 3]
 prerequisites:
   - access to knowledge complex repository
   - familiarity with spec/guidance document pairs
@@ -125,40 +123,35 @@ flowchart TB
         S1[Step 1: Architecture]
     end
 
-    subgraph Phase2[Phase 2: Process & Planning]
+    subgraph Phase2[Phase 2: Process]
         S2[Step 2: Lifecycle]
+    end
+
+    subgraph Phase3[Phase 3: Planning]
         S3[Step 3: Program Plan]
     end
 
-    subgraph Phase3[Phase 3: Communication]
+    subgraph Phase4[Phase 4: Communication]
         S4[Step 4: Program Memo]
     end
 
     S1 --> S2
-    S1 --> S3
     S2 --> S3
-    S1 --> S4
-    S2 --> S4
     S3 --> S4
 
     style S1 fill:#e1f5fe
     style S2 fill:#fff3e0
-    style S3 fill:#fff3e0
-    style S4 fill:#e8f5e9
+    style S3 fill:#e8f5e9
+    style S4 fill:#f3e5f5
 ```
 
 **Legend:**
-- Solid arrows (→): Required dependency
-- Dashed arrows (-.->): Recommended but not strictly required
-- Colors: Blue=Foundation, Orange=Process & Planning, Green=Communication
+- Blue: Foundation (what we're building)
+- Orange: Process (how we build it)
+- Green: Planning (who, when, with what resources)
+- Purple: Communication (executive summary)
 
-### Parallelization Opportunities
-
-| Parallel Group | Steps | Condition |
-|----------------|-------|-----------|
-| Process & Planning | Step 2 (Lifecycle), Step 3 (Program Plan) | Can run in parallel once Architecture is complete. Lifecycle provides process structure; Program Plan provides execution details. Sync point before Program Memo. |
-
-**Note:** While Steps 2 and 3 can run in parallel, the Program Plan benefits from having the Lifecycle's phase structure available. If resources allow parallel execution, plan a sync checkpoint before starting Step 4.
+**Note:** This workflow is strictly sequential. The Program Plan enriches the Lifecycle with accountability, staffing, resourcing, and risk management—it cannot be developed until the Lifecycle phases are defined.
 
 ### Workflow Summary
 
@@ -166,8 +159,8 @@ flowchart TB
 |------|----------|--------|--------|------------|
 | 1 | Create Architecture Document | Program idea, stakeholder needs | Architecture document | - |
 | 2 | Create Lifecycle Document | Architecture document | Lifecycle document | Step 1 |
-| 3 | Create Program Plan Document | Architecture, Lifecycle (if available) | Program plan document | Steps 1 and 2 |
-| 4 | Create Program Memo Document | Architecture, Lifecycle, Program Plan | Program memo document | Steps 1, 2, 3 |
+| 3 | Create Program Plan Document | Architecture, Lifecycle | Program plan document | Step 2 |
+| 4 | Create Program Memo Document | Architecture, Lifecycle, Program Plan | Program memo document | Step 3 |
 
 ## Step 1: Create Architecture Document
 
@@ -449,19 +442,6 @@ flowchart TB
 | Tactical | 6-12 weeks | Focused projects with specific deliverables and assigned team | Activities at task level, individual assignments, weekly/bi-weekly milestones |
 
 **Default:** Start with strategic for most programs; use multi-year for portfolio-level initiatives; use tactical for well-scoped projects with defined teams.
-
-### Decision: Parallel Execution of Steps 2 and 3
-
-**When:** After completing Step 1, when planning remaining work
-
-**Options:**
-
-| Option | When to Choose | Implications |
-|--------|----------------|--------------|
-| Sequential (2 → 3) | Single author, or need tight lifecycle-plan integration | Slower but ensures plan phases align with lifecycle |
-| Parallel (2 ‖ 3) | Multiple authors available, time pressure | Faster but requires sync checkpoint before Step 4 |
-
-**Default:** Sequential for first-time users; parallel for experienced teams.
 
 ## Completion Criteria
 
