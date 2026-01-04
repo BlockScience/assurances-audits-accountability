@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - spec
-version: 1.0.0
+version: 1.1.0
 created: 2025-01-04T12:00:00Z
-modified: 2025-01-04T12:00:00Z
+modified: 2025-01-04T22:00:00Z
 dependencies:
   - v:spec:architecture
   - v:spec:lifecycle
@@ -135,7 +135,7 @@ Defines what the program will deliver, derived from the referenced architecture.
 
 ### 3. Execution Approach
 
-Summarizes how the work will be executed, derived from the referenced lifecycle.
+Summarizes how the work will be executed, derived from the referenced V-model lifecycle.
 
 **Format:**
 ```markdown
@@ -143,25 +143,32 @@ Summarizes how the work will be executed, derived from the referenced lifecycle.
 
 ### Lifecycle Summary
 
-[Brief description of the lifecycle being followed, with reference to lifecycle document]
+[Brief description of the V-model lifecycle being followed, with explicit reference to lifecycle document. MUST note the design-evaluation symmetry and gate structure.]
 
 ### Phase Overview
 
-| Phase | Duration | Key Activities | Deliverables |
-|-------|----------|----------------|--------------|
-| [Phase 1] | [duration] | [activities] | [deliverables] |
-| [Phase 2] | [duration] | [activities] | [deliverables] |
+| Phase Group | Phases | Duration | Key Activities | Gate Type |
+|-------------|--------|----------|----------------|-----------|
+| Design | [3 design phases] | [duration] | [activities] | Verification |
+| Implementation | Physical→Code | [duration] | [activities] | Verification |
+| Evaluation | [4 evaluation phases] | [duration] | [activities] | Verification/Validation |
+| Operations | Deploy/Monitor/Maintain | [duration] | [activities] | Validation |
 
 ### Verification and Validation Strategy
 
-[Description of how quality will be assured throughout execution]
+[Description distinguishing:
+- Verification gates (automated, per design/implementation phase)
+- Validation gates (human approval, acceptance testing, operations handoff)]
 ```
 
 **Requirements:**
 - MUST reference the lifecycle document explicitly
-- MUST summarize lifecycle phases with expected durations
-- MUST describe V&V strategy
+- MUST summarize V-model phases with expected durations
+- MUST describe V&V strategy distinguishing verification gates from validation gates
+- MUST reference lifecycle's architecture foundation for traceability
 - SHOULD NOT duplicate lifecycle detail (reference instead)
+- Strategic plans: phase groups (Design, Implementation, Evaluation, Operations)
+- Tactical plans: individual phases within groups
 
 ### 4. Work Breakdown
 
@@ -452,11 +459,12 @@ Detailed quality assurance approach.
 ## Content Requirements
 
 1. **Traceability:** Objectives MUST trace to architecture; execution approach MUST trace to lifecycle
-2. **Measurability:** Milestones and acceptance criteria MUST be measurable
-3. **Accountability:** All activities and risks MUST have assigned owners
-4. **Completeness:** All required sections MUST be substantive, not placeholder
-5. **Audience Awareness:** Executive summary MUST be accessible to non-technical stakeholders
-6. **Confidence:** Schedule and budget estimates MUST include confidence assessments
+2. **V-Model Alignment:** Execution approach MUST reflect lifecycle's V-model structure (design-evaluation symmetry, gate types)
+3. **Measurability:** Milestones and acceptance criteria MUST be measurable
+4. **Accountability:** All activities and risks MUST have assigned owners
+5. **Completeness:** All required sections MUST be substantive, not placeholder
+6. **Audience Awareness:** Executive summary MUST be accessible to non-technical stakeholders
+7. **Confidence:** Schedule and budget estimates MUST include confidence assessments
 
 ## Coupling Requirement
 
@@ -505,9 +513,9 @@ child_plans: [<strings>]
   ### Constraints
   ### Assumptions
 ## Execution Approach
-  ### Lifecycle Summary
-  ### Phase Overview
-  ### Verification and Validation Strategy
+  ### Lifecycle Summary (V-model reference, design-evaluation symmetry)
+  ### Phase Overview (with Gate Type column)
+  ### Verification and Validation Strategy (distinguish verification vs validation gates)
 ## Work Breakdown
   ### Activity Structure
   ### Critical Path
@@ -550,11 +558,12 @@ A document claiming to be a program plan document is compliant with this specifi
 2. `plan_level` is either `strategic` or `tactical`
 3. `architecture_ref` and `lifecycle_ref` reference valid documents
 4. All REQUIRED body sections are present with required subsections
-5. At least 3 objectives, 3 milestones, and 5 risks are documented
-6. All activities have dependencies specified
-7. All risks have probability, impact, mitigation, and owner
-8. Visual elements (Gantt chart, timeline) are present
-9. Type constraints are satisfied
+5. Execution approach reflects V-model structure with gate types distinguished
+6. At least 3 objectives, 3 milestones, and 5 risks are documented
+7. All activities have dependencies specified
+8. All risks have probability, impact, mitigation, and owner
+9. Visual elements (Gantt chart, timeline) are present
+10. Type constraints are satisfied
 
 ---
 
