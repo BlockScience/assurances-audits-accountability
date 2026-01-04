@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-04T18:35:31.456400+00:00",
+  "generated": "2026-01-04T18:39:58.637944+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -784,6 +784,54 @@
           "v:guidance:persona",
           "v:guidance:purpose",
           "v:guidance:protocol"
+        ]
+      },
+      "v:doc:runbook-program-development": {
+        "file": "00_vertices/runbook-program-development.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:runbook-program-development",
+        "name": "Runbook - Program Development Workflow",
+        "description": "Guides practitioners through creating a complete program documentation package (architecture, lifecycle, program plan, program memo)",
+        "tags": [
+          "vertex",
+          "doc",
+          "runbook"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T18:00:00+00:00",
+        "modified": "2025-01-04T18:00:00+00:00",
+        "workflow_name": "Program Development",
+        "target_roles": [
+          "systems engineer",
+          "program manager",
+          "technical lead"
+        ],
+        "required_skills": [
+          "systems engineering fundamentals",
+          "document authoring",
+          "stakeholder analysis",
+          "risk management",
+          "project planning"
+        ],
+        "step_count": 4,
+        "artifacts_produced": [
+          "architecture document",
+          "lifecycle document",
+          "program plan document",
+          "program memo document"
+        ],
+        "estimated_duration": "2-4 weeks",
+        "parallel_steps": [
+          [
+            "Step 2",
+            "Step 3"
+          ]
+        ],
+        "prerequisites": [
+          "access to knowledge complex repository",
+          "familiarity with spec/guidance document pairs",
+          "understanding of assurance framework"
         ]
       },
       "v:signer:mzargham": {
@@ -7899,10 +7947,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 70,
+    "vertex_count": 71,
     "edge_count": 167,
     "face_count": 69,
     "chart_count": 3,
-    "euler_characteristic": -28
+    "euler_characteristic": -27
   }
 }
