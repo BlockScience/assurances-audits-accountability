@@ -148,9 +148,11 @@ In a valid assurance complex:
 - **V - F < 1** when documents have multiple assurances (e.g., dual spec-guidance pairs)
 - **V - F ≤ 1** is necessary but not sufficient for validity—useful as a quick spot-check to identify invalid complexes
 
-### The Boundary Complex
+### The Boundary Condition and Boundary Complex
 
-Self-referential foundations (spec-for-spec, guidance-for-guidance) are resolved through a root vertex that anchors boundary faces, enabling computational topology methods without paradox.
+**Boundary Condition:** The framework bootstraps through four foundational vertices—spec-for-spec (SS), spec-for-guidance (SG), guidance-for-spec (GS), guidance-for-guidance (GG)—mutually assured in a self-referential pattern. Two form valid triangles (SG, GS), while two rely on self-reference (SS via self-verification, GG via self-validation), creating degenerate faces.
+
+**Boundary Complex:** A fifth vertex, *root* (b0), is introduced as an axiomatic element (not a document requiring assurance). The degenerate self-loops are rewired to connect through the root, eliminating degeneracy and providing a valid simplicial complex foundation. The root provides assurance but doesn't need it—this is what makes V - F = 1 work.
 
 ## Figures
 
