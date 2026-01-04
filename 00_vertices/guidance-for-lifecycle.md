@@ -297,23 +297,30 @@ Use this guidance when:
 
 ### Traceability Matrix
 
-**Purpose:** Summarize lifecycle-to-architecture mapping
+**Purpose:** Summarize lifecycle-to-architecture mapping with concrete artifacts
 
 **Tips:**
 
 - Four rows: Conceptual, Functional, Logical, Physical
-- Columns: Design Phase, Implementation, Evaluation Phase
-- Shows complete coverage of architecture
+- Columns: Design Phase, Implementation Artifact, Evaluation Phase
+- Implementation column shows the concrete artifact produced at each layer
+- Shows complete coverage of architecture with traceable deliverables
 
 **Anti-patterns:**
 
-- ❌ Incomplete matrix
-- ❌ Missing implementation column
+- ❌ Incomplete matrix with empty cells
+- ❌ Missing implementation column or using "-" placeholders
+- ❌ Generic descriptions instead of concrete artifacts
 
 **Preferred:**
 
-- ✅ Every architecture layer mapped to design and evaluation
-- ✅ Implementation shows where it connects (Physical layer)
+- ✅ Every architecture layer mapped to design, implementation artifact, and evaluation
+- ✅ Implementation artifacts show refinement progression:
+  - Conceptual → Stakeholder Requirements Document
+  - Functional → System-Level Functional Requirements
+  - Logical → Component-level Specifications
+  - Physical → Implementation (code, hardware, etc.)
+- ✅ Clear traceability from stakeholder needs through to unit-tested implementation
 
 ## Workflow Guidance
 
