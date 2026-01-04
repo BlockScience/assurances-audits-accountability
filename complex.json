@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-04T22:01:18.733210+00:00",
+  "generated": "2026-01-04T23:20:38.960680+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -817,6 +817,99 @@
           "v:guidance:persona",
           "v:guidance:purpose",
           "v:guidance:protocol"
+        ]
+      },
+      "v:doc:runbook-assurance-audit-chart": {
+        "file": "00_vertices/runbook-assurance-audit-chart.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:runbook-assurance-audit-chart",
+        "name": "Runbook - Assurance Audit Chart Creation",
+        "description": "Guides practitioners through creating, inspecting, and troubleshooting assurance audit charts that verify complete assurance coverage for document sets",
+        "tags": [
+          "vertex",
+          "doc",
+          "runbook"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T23:30:00+00:00",
+        "modified": "2026-01-04T23:30:00+00:00",
+        "workflow_name": "Assurance Audit Chart Creation",
+        "target_roles": [
+          "quality assurance engineer",
+          "systems engineer",
+          "documentation lead"
+        ],
+        "required_skills": [
+          "understanding of assurance triangles (coupling, verification, validation)",
+          "YAML frontmatter editing",
+          "command-line tool usage",
+          "knowledge complex navigation"
+        ],
+        "step_count": 6,
+        "artifacts_produced": [
+          "verification edges",
+          "validation edges",
+          "assurance faces",
+          "dependency edges",
+          "assurance audit chart",
+          "audit trail report"
+        ],
+        "estimated_duration": "2-4 hours per document set",
+        "prerequisites": [
+          "access to knowledge complex repository",
+          "document set already created and verified against specs",
+          "python environment with required dependencies"
+        ]
+      },
+      "v:doc:runbook-document-type-creation": {
+        "file": "00_vertices/runbook-document-type-creation.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:runbook-document-type-creation",
+        "name": "Runbook for Document Type Creation",
+        "description": "Guides practitioners through creating a new document type with spec, guidance, and coupling edge that satisfies the boundary complex",
+        "tags": [
+          "vertex",
+          "doc",
+          "runbook"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T22:00:00+00:00",
+        "modified": "2025-01-04T22:00:00+00:00",
+        "workflow_name": "Document Type Creation",
+        "target_roles": [
+          "knowledge engineer",
+          "documentation architect"
+        ],
+        "required_skills": [
+          "YAML frontmatter syntax",
+          "knowledge complex type system",
+          "verification and validation concepts",
+          "spec and guidance authoring"
+        ],
+        "step_count": 10,
+        "artifacts_produced": [
+          "spec-for-<name>.md",
+          "guidance-for-<name>.md",
+          "coupling-<name>.md",
+          "<name>-example.md (optional)"
+        ],
+        "estimated_duration": "2-4 hours",
+        "parallel_steps": [
+          [
+            "Step 4",
+            "Step 5"
+          ]
+        ],
+        "prerequisites": [
+          "Python 3.x",
+          "verification scripts (verify_template_based.py, build_cache.py)",
+          "access to knowledge complex repository"
+        ],
+        "related_runbooks": [
+          "v:doc:runbook-assurance-audit-chart",
+          "v:doc:runbook-program-development"
         ]
       },
       "v:doc:runbook-program-development": {
@@ -1995,6 +2088,25 @@
         "version": "1.0.0",
         "created": "2025-01-04T15:00:00+00:00",
         "modified": "2025-01-04T15:00:00+00:00"
+      },
+      "e:coupling:program-plan": {
+        "file": "01_edges/coupling-program-plan.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:program-plan",
+        "name": "Coupling - Spec-for-Program-Plan and Guidance-for-Program-Plan",
+        "source": "v:spec:program-plan",
+        "target": "v:guidance:program-plan",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T22:00:00+00:00",
+        "modified": "2026-01-04T22:00:00+00:00"
       },
       "e:coupling:protocol": {
         "file": "01_edges/coupling-protocol.md",
@@ -8341,10 +8453,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 73,
-    "edge_count": 176,
+    "vertex_count": 75,
+    "edge_count": 177,
     "face_count": 73,
     "chart_count": 3,
-    "euler_characteristic": -30
+    "euler_characteristic": -29
   }
 }
