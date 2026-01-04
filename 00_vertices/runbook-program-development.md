@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - runbook
-version: 1.0.0
+version: 1.1.0
 created: 2025-01-04T18:00:00Z
-modified: 2025-01-04T18:00:00Z
+modified: 2025-01-04T22:30:00Z
 workflow_name: Program Development
 target_roles:
   - systems engineer
@@ -297,8 +297,9 @@ flowchart TB
 
 3. **Document Execution Approach**
    - Reference lifecycle document explicitly
-   - Summarize phases with expected durations
-   - Describe V&V strategy
+   - Summarize V-model phases: Design (3 phases), Implementation, Evaluation (4 phases), Operations
+   - Create Phase Overview table with Gate Type column (Verification vs Validation)
+   - Describe V&V strategy distinguishing verification gates (automated, per-phase) from validation gates (human approval)
 
 4. **Create Work Breakdown**
    - List all major activities with IDs and dependencies
@@ -352,7 +353,8 @@ flowchart TB
 
 **Consistency Checks:**
 - [ ] Objectives trace to architecture elements
-- [ ] Phases align with lifecycle document
+- [ ] Phase groups align with V-model lifecycle (Design, Implementation, Evaluation, Operations)
+- [ ] Gate types correctly distinguish verification (automated) from validation (human approval)
 - [ ] Deliverables map to architecture components
 - [ ] Timeline is realistic given lifecycle phases
 - [ ] Sponsor and recipient match across documents
@@ -382,9 +384,9 @@ flowchart TB
    - Add reference to architecture document
 
 3. **Summarize "How We're Building It"**
-   - Describe development approach from lifecycle
-   - Create phases table with purpose and duration
-   - Mention quality assurance approach
+   - Describe V-model development approach from lifecycle
+   - Create phase groups table (Design, Implementation, Evaluation, Operations) with purpose and duration
+   - Summarize quality assurance distinguishing verification (automated) from validation (human approval)
    - Add reference to lifecycle document
 
 4. **Create Execution Summary**
@@ -422,7 +424,8 @@ flowchart TB
 - [ ] Timeline milestones match program plan
 - [ ] Budget range matches program plan
 - [ ] Component list matches architecture logical layer
-- [ ] Phase table matches lifecycle phases
+- [ ] Phase groups table uses 4 groups (Design, Implementation, Evaluation, Operations)
+- [ ] Quality assurance summary distinguishes verification from validation
 - [ ] Risk list is subset of program plan risks
 
 **Checkpoint:** Program memo document passes verification. All sections reference source documents. Length is appropriate (3-5 pages). Non-technical stakeholders can understand the program without consulting other documents.
