@@ -748,9 +748,9 @@ Both examples pass verification and demonstrate cross-document consistency as re
 
 ## Related Workflows
 
-- [ ] [[runbook-LLM-agent-prompt]] - For creating custom system_promps to tailor LLM assistent behavior
+- [[runbook-assurance-audit-chart]] - For creating assurance audit charts after completing program documents
+- [ ] [[runbook-LLM-agent-prompt]] - For creating custom system_prompts to tailor LLM assistant behavior
 - [ ] [[runbook-document-type-creation]] - For creating new spec/guidance pairs
-- [ ] [[runbook-assurance-workflow]] - For creating verification edges, validation edges, and assurance faces
 
 ## Beyond Individual Documents: Charts and Assurance Audits
 
@@ -786,8 +786,8 @@ An **assurance audit** is a special chart that validates assurance status across
 - **Chart construction**: When you need to define a coherent subcomplex for export, visualization, or composition
 - **Assurance audit**: When you need formal attestation that a complete package meets assurance requirements—typically before major approvals, handoffs, or publication
 
-Chart and assurance audit workflows are out of scope for this runbook but available when formal package assurance is required.
+For the complete assurance audit workflow, see [[runbook-assurance-audit-chart]].
 
 ---
 
-**Note:** This runbook produces the core documentation package for a program. After completing this workflow, consider running the assurance workflow to create verification edges, validation edges, and assurance faces for each document. For formal package assurance, construct a chart and run an assurance audit.
+**Note:** This runbook produces the core documentation package for a program. After completing this workflow, use [[runbook-assurance-audit-chart]] to create verification edges, validation edges, assurance faces, and a complete assurance audit chart with visualization.
