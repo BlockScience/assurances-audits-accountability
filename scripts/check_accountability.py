@@ -127,15 +127,17 @@ def get_modified_validation_edges() -> List[Path]:
 
 def check_validation_edge_accountability(
     file_path: Path,
+    author: str,
     committer: str,
     github_actor: str
 ) -> Tuple[bool, str]:
     """
-    Check if the committer is authorized to commit this validation edge.
+    Check if the author is authorized to commit this validation edge.
 
     Args:
         file_path: Path to validation edge file
-        committer: Git committer name/username
+        author: Git author name/username (who wrote the commit)
+        committer: Git committer name/username (who merged/applied the commit)
         github_actor: GitHub actor username (from Actions)
 
     Returns:
@@ -163,20 +165,25 @@ def check_validation_edge_accountability(
         if not accountable_party:
             return False, f"{file_path}: No accountable party found (validator or human_approver missing)"
 
-        # Check if committer matches accountable party
+        # Check if author matches accountable party
+        # The git author is who wrote the commit - this is the primary accountability check
         # Support both full names and GitHub usernames
         accountable_party_normalized = accountable_party.strip().lower()
+        author_normalized = author.strip().lower()
         committer_normalized = committer.strip().lower()
         github_actor_normalized = github_actor.strip().lower()
 
         # Match if any of these conditions are true:
-        # 1. Committer name matches accountable party
-        # 2. GitHub actor matches accountable party
-        # 3. Accountable party is contained in committer name (e.g., "Alice Smith" contains "alice")
-        # 4. Committer contains accountable party (e.g., committer "alice.smith" matches "alice")
+        # 1. Author name matches accountable party (primary check - who wrote the code)
+        # 2. Committer name matches accountable party (for direct pushes)
+        # 3. GitHub actor matches accountable party (fallback for Actions)
+        # 4. Substring matching for name variations (e.g., "mzargham" in "Michael Zargham")
 
-        if (accountable_party_normalized == committer_normalized or
+        if (accountable_party_normalized == author_normalized or
+            accountable_party_normalized == committer_normalized or
             accountable_party_normalized == github_actor_normalized or
+            accountable_party_normalized in author_normalized or
+            author_normalized in accountable_party_normalized or
             accountable_party_normalized in committer_normalized or
             committer_normalized in accountable_party_normalized or
             (github_actor_normalized and accountable_party_normalized in github_actor_normalized)):
@@ -185,9 +192,10 @@ def check_validation_edge_accountability(
             return False, (
                 f"{file_path}: ✗ Accountability violation\n"
                 f"  Accountable party: {accountable_party}\n"
+                f"  Git author: {author}\n"
                 f"  Git committer: {committer}\n"
                 f"  GitHub actor: {github_actor or '(not in GitHub Actions)'}\n"
-                f"  Only the accountable party can commit this validation edge."
+                f"  Only the accountable party can author this validation edge."
             )
 
     except Exception as e:
@@ -642,6 +650,7 @@ def check_commit_main() -> int:
     for edge_path in validation_edges:
         passed, message = check_validation_edge_accountability(
             edge_path,
+            author,
             committer,
             github_actor
         )
