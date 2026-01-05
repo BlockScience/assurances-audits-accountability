@@ -734,17 +734,42 @@ A transit authority program transitioning diesel buses to battery-electric with 
 - [[program-plan-bus-electrification]] - Multi-year timeline, grant funding structure, workforce training
 - [[program-memo-bus-electrification]] - Executive summary for MRTA Board and State DOT
 
+### Example 3: Professional Services Digital Transformation
+
+An organizational transformation program modernizing IT infrastructure, collaboration tools, and knowledge management for a 150-person consulting firm.
+
+**Domain:** Enterprise architecture, change management, IT infrastructure, organizational culture
+
+**Key Characteristics:**
+
+- 24-month strategic program with $2.5M budget
+- Microsoft 365 cloud migration from legacy on-premises systems
+- Knowledge management to capture institutional expertise before partner retirements
+- SOC 2 Type II certification for enterprise client requirements
+- Phased rollout with Change Champions network
+
+**Documents:**
+
+- [[field-survey-digital-transformation]] - 8 actors, 9 resources, pain points and readiness assessment
+- [[architecture-digital-transformation]] - Cloud collaboration, knowledge management, CRM, security
+- [[lifecycle-digital-transformation]] - V-model with 4-wave rollout strategy
+- [[program-plan-digital-transformation]] - WBS, RACI, 10-risk register, governance structure
+- [[program-memo-digital-transformation]] - Executive summary for Managing Partner Committee
+
+**Note:** This example includes dependency edges and verification edges but does not include validation edges or assurance faces. It demonstrates the documentation structure without the full assurance infrastructure.
+
 ### What the Examples Demonstrate
 
-| Aspect               | Water Quality              | Bus Electrification              |
-|----------------------|----------------------------|----------------------------------|
-| Program scale        | Tactical (9 months)        | Strategic (36 months)            |
-| Budget magnitude     | $780K                      | $44M                             |
-| Technical complexity | Software/integration focus | Hardware/infrastructure focus    |
-| Stakeholder breadth  | Internal + regulator       | Multi-agency + utility + union   |
-| V-model emphasis     | Testing/validation         | Infrastructure sequencing        |
+| Aspect               | Water Quality              | Bus Electrification              | Digital Transformation           |
+|----------------------|----------------------------|----------------------------------|----------------------------------|
+| Program scale        | Tactical (9 months)        | Strategic (36 months)            | Strategic (24 months)            |
+| Budget magnitude     | $780K                      | $44M                             | $2.5M                            |
+| Technical complexity | Software/integration focus | Hardware/infrastructure focus    | Platform/change management focus |
+| Stakeholder breadth  | Internal + regulator       | Multi-agency + utility + union   | Internal + clients + vendors     |
+| V-model emphasis     | Testing/validation         | Infrastructure sequencing        | Phased adoption/change mgmt      |
+| Assurance status     | Full assurance             | Full assurance                   | Verification only (no assurance) |
 
-Both examples pass verification and demonstrate cross-document consistency as required by this runbook.
+The water quality and bus electrification examples pass verification and demonstrate cross-document consistency with full assurance. The digital transformation example demonstrates the documentation structure with verification edges only.
 
 ## Related Workflows
 
