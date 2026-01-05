@@ -4,7 +4,8 @@ This repository contains the implementation and demonstration of a typed simplic
 
 ![Accountability Complex](docs/images/assurance_complex.png)
 
-**Element Counts:** 56 vertices | 148 edges | 65 faces | χ = -27
+**INCOSE Paper Assurance Complex:** 23 vertices | 91 edges | 44 faces | χ = -24
+21 documents + 1 root + 1 signer | 22 assurances + 22 signatures | Paper has 2 distinct assurance faces
 
 ## The Paper
 
@@ -138,27 +139,68 @@ Every assured document requires three edges forming a closed triangle:
 2. **Coupling edge** → spec is linked to corresponding guidance
 3. **Validation edge** → document assessed against guidance (requires human approver)
 
-### The V - F = 1 Invariant
+### The V - F ≤ 1 Invariant
 
-In any valid assurance audit chart:
+In a valid assurance complex:
 
-- Every vertex (except root) must have exactly one assurance face
+- Every non-root vertex must have at least one assurance face
 - Every face assures exactly one vertex
-- **V - F = 1** where root provides assurance but doesn't need it
+- **V - F = 1** when each document is assured exactly once
+- **V - F < 1** when documents have multiple assurances (e.g., dual spec-guidance pairs)
+- **V - F ≤ 1** is necessary but not sufficient for validity—useful as a quick spot-check to identify invalid complexes
 
-### The Boundary Complex
+### The Boundary Condition and Boundary Complex
 
-Self-referential foundations (spec-for-spec, guidance-for-guidance) are resolved through a root vertex that anchors boundary faces, enabling computational topology methods without paradox.
+**Boundary Condition:** The framework bootstraps through four foundational vertices—spec-for-spec (SS), spec-for-guidance (SG), guidance-for-spec (GS), guidance-for-guidance (GG)—mutually assured in a self-referential pattern. Two form valid triangles (SG, GS), while two rely on self-reference (SS via self-verification, GG via self-validation), creating degenerate faces.
 
-## Figures
+**Boundary Complex:** A fifth vertex, *root* (b0), is introduced as an axiomatic element (not a document requiring assurance). The self-loops are rewired to connect through the root, eliminating degeneracy faces and providing a valid simplicial complex foundation. The root provides assurance but doesn't need it—this is what makes V - F = 1 work.
 
-The paper references three figures generated from this repository:
+## Runbooks
 
-| Figure | Description | Source |
-|--------|-------------|--------|
-| Figure 1 | Assurance Triangle | [figures/figure1-final.png](figures/figure1-final.png) |
-| Figure 2 | Boundary Complex | [figures/figure3-final.png](figures/figure3-final.png) |
-| Figure 3 | Audit Chart | [figures/figure2-final.png](figures/figure2-final.png) |
+Step-by-step workflows for common tasks in the knowledge complex:
+
+| Runbook | Purpose | Steps |
+|---------|---------|-------|
+| [[runbook-program-development]] | Create program documentation (memo, plan, architecture, lifecycle, field survey) | 7 |
+| [[runbook-assurance-audit-chart]] | Build assurance audit charts with full V&V coverage | 6 |
+| [[runbook-document-type-creation]] | Create new document types (spec, guidance, coupling) | 10 |
+| [[runbook-llm-specialization]] | Create specialized LLM configurations using PPP framework | 8 |
+
+**Direct links:**
+- [runbook-program-development.md](00_vertices/runbook-program-development.md)
+- [runbook-assurance-audit-chart.md](00_vertices/runbook-assurance-audit-chart.md)
+- [runbook-document-type-creation.md](00_vertices/runbook-document-type-creation.md)
+- [runbook-llm-specialization.md](00_vertices/runbook-llm-specialization.md)
+
+## Example Programs
+
+Two complete program development examples demonstrating the framework in practice:
+
+### Bus Electrification Program
+
+A municipal transit electrification program demonstrating the full V-model lifecycle:
+
+| Document | Type | Description |
+|----------|------|-------------|
+| [program-memo-bus-electrification.md](program_development_dryrun/program-memo-bus-electrification.md) | Program Memo | Stakeholder authorization and scope |
+| [program-plan-bus-electrification.md](program_development_dryrun/program-plan-bus-electrification.md) | Program Plan | Phased implementation strategy |
+| [architecture-bus-electrification.md](program_development_dryrun/architecture-bus-electrification.md) | Architecture | Technical system design |
+| [lifecycle-bus-electrification.md](program_development_dryrun/lifecycle-bus-electrification.md) | Lifecycle | 25-year operational model |
+| [field-survey-bus-electrification.md](program_development_dryrun/field-survey-bus-electrification.md) | Field Survey | Site assessments and infrastructure |
+| [bus-electrification-assurance-audit.md](program_development_dryrun/assurance-bus-electrification/bus-electrification-assurance-audit.md) | Audit Chart | Full assurance coverage with V-F=1 |
+
+### Water Quality Monitoring Program
+
+An IoT-based environmental monitoring program for water quality:
+
+| Document | Type | Description |
+|----------|------|-------------|
+| [program-memo-water-quality-monitoring.md](program_development_dryrun/program-memo-water-quality-monitoring.md) | Program Memo | Stakeholder authorization and scope |
+| [program-plan-water-quality-monitoring.md](program_development_dryrun/program-plan-water-quality-monitoring.md) | Program Plan | Deployment and integration strategy |
+| [architecture-water-quality-monitoring.md](program_development_dryrun/architecture-water-quality-monitoring.md) | Architecture | Sensor network and data pipeline |
+| [lifecycle-water-quality-monitoring.md](program_development_dryrun/lifecycle-water-quality-monitoring.md) | Lifecycle | 10-year operational model |
+| [field-survey-water-quality-monitoring.md](program_development_dryrun/field-survey-water-quality-monitoring.md) | Field Survey | Site assessments and sensor placement |
+| [water-quality-assurance-audit.md](program_development_dryrun/assurance/water-quality-assurance-audit.md) | Audit Chart | Full assurance coverage with V-F=1 |
 
 ## Scripts Reference
 

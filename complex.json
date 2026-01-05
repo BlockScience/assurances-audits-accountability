@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-02T21:27:36.841274+00:00",
+  "generated": "2026-01-05T15:17:22.132582+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -315,6 +315,31 @@
         "modified": "2025-12-27T20:00:00+00:00",
         "dependencies": []
       },
+      "v:guidance:field-survey": {
+        "file": "00_vertices/guidance-for-field-survey.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:field-survey",
+        "name": "Guidance for Field Survey Documents",
+        "description": "Quality criteria and best practices for creating effective field surveys that map stakeholders, resources, and relationships before architecture work",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "scope-clarity",
+          "actor-completeness",
+          "resource-completeness",
+          "relationship-accuracy",
+          "boundary-precision",
+          "executive-accessibility"
+        ]
+      },
       "v:guidance:guidance": {
         "file": "00_vertices/guidance-for-guidance.md",
         "type": "vertex/guidance",
@@ -458,16 +483,26 @@
         "extends": "doc",
         "id": "v:guidance:lifecycle",
         "name": "Guidance for Lifecycle Documents",
-        "description": "Quality criteria and best practices for creating excellent engineering lifecycle documentation",
+        "description": "Quality criteria and best practices for creating excellent engineering lifecycle documentation aligned with the V-model",
         "tags": [
           "vertex",
           "doc",
           "guidance"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T18:00:00+00:00",
-        "modified": "2025-12-30T18:00:00+00:00",
-        "dependencies": []
+        "modified": "2025-01-04T20:00:00+00:00",
+        "criteria": [
+          "v-model-alignment",
+          "architecture-traceability",
+          "phase-completeness",
+          "operations-coverage",
+          "decommissioning-readiness",
+          "gate-rigor"
+        ],
+        "dependencies": [
+          "v:guidance:architecture"
+        ]
       },
       "v:guidance:novel-contributions": {
         "file": "00_vertices/guidance-for-novel-contributions.md",
@@ -529,6 +564,63 @@
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00",
         "dependencies": []
+      },
+      "v:guidance:program-memo": {
+        "file": "00_vertices/guidance-for-program-memo.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:program-memo",
+        "name": "Guidance for Program Memo Documents",
+        "description": "Quality criteria and best practices for creating effective program memos that synthesize documentation packages for executive audiences",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T14:00:00+00:00",
+        "modified": "2025-01-04T22:30:00+00:00",
+        "dependencies": [
+          "v:guidance:architecture",
+          "v:guidance:lifecycle",
+          "v:guidance:program-plan"
+        ],
+        "criteria": [
+          "executive-accessibility",
+          "synthesis-quality",
+          "traceability",
+          "navigation-clarity",
+          "currency",
+          "appropriate-brevity"
+        ]
+      },
+      "v:guidance:program-plan": {
+        "file": "00_vertices/guidance-for-program-plan.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:program-plan",
+        "name": "Guidance for Program Plan Documents",
+        "description": "Quality criteria and best practices for creating effective program plans that secure stakeholder confidence in delivery",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T12:00:00+00:00",
+        "modified": "2025-01-04T22:00:00+00:00",
+        "dependencies": [
+          "v:guidance:architecture",
+          "v:guidance:lifecycle"
+        ],
+        "criteria": [
+          "stakeholder-confidence",
+          "traceability",
+          "realism",
+          "risk-awareness",
+          "accountability-clarity",
+          "operational-readiness"
+        ]
       },
       "v:guidance:property": {
         "file": "00_vertices/guidance-for-property.md",
@@ -605,6 +697,31 @@
           "maintainability"
         ],
         "rubric": "validation-assessment"
+      },
+      "v:guidance:runbook": {
+        "file": "00_vertices/guidance-for-runbook.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:runbook",
+        "name": "Guidance for Runbook Documents",
+        "description": "Quality criteria and best practices for creating effective runbooks that guide humans through multi-step workflows",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T16:00:00+00:00",
+        "modified": "2025-01-04T16:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "context-clarity",
+          "dependency-accuracy",
+          "actionability",
+          "consistency-checking",
+          "maintenance-completeness",
+          "troubleshooting-utility"
+        ]
       },
       "v:guidance:skill": {
         "file": "00_vertices/guidance-for-skill.md",
@@ -702,6 +819,198 @@
           "v:guidance:protocol"
         ]
       },
+      "v:doc:runbook-assurance-audit-chart": {
+        "file": "00_vertices/runbook-assurance-audit-chart.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:runbook-assurance-audit-chart",
+        "name": "Runbook - Assurance Audit Chart Creation",
+        "description": "Guides practitioners through creating, inspecting, and troubleshooting assurance audit charts that verify complete assurance coverage for document sets",
+        "tags": [
+          "vertex",
+          "doc",
+          "runbook"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T23:30:00+00:00",
+        "modified": "2026-01-04T23:30:00+00:00",
+        "workflow_name": "Assurance Audit Chart Creation",
+        "target_roles": [
+          "quality assurance engineer",
+          "systems engineer",
+          "documentation lead"
+        ],
+        "required_skills": [
+          "understanding of assurance triangles (coupling, verification, validation)",
+          "YAML frontmatter editing",
+          "command-line tool usage",
+          "knowledge complex navigation"
+        ],
+        "step_count": 6,
+        "artifacts_produced": [
+          "verification edges",
+          "validation edges",
+          "assurance faces",
+          "dependency edges",
+          "assurance audit chart",
+          "audit trail report"
+        ],
+        "estimated_duration": "2-4 hours per document set",
+        "prerequisites": [
+          "access to knowledge complex repository",
+          "document set already created and verified against specs",
+          "python environment with required dependencies"
+        ]
+      },
+      "v:doc:runbook-document-type-creation": {
+        "file": "00_vertices/runbook-document-type-creation.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:runbook-document-type-creation",
+        "name": "Runbook for Document Type Creation",
+        "description": "Guides practitioners through creating a new document type with spec, guidance, and coupling edge that satisfies the boundary complex",
+        "tags": [
+          "vertex",
+          "doc",
+          "runbook"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T22:00:00+00:00",
+        "modified": "2025-01-04T22:00:00+00:00",
+        "workflow_name": "Document Type Creation",
+        "target_roles": [
+          "knowledge engineer",
+          "documentation architect"
+        ],
+        "required_skills": [
+          "YAML frontmatter syntax",
+          "knowledge complex type system",
+          "verification and validation concepts",
+          "spec and guidance authoring"
+        ],
+        "step_count": 10,
+        "artifacts_produced": [
+          "spec-for-<name>.md",
+          "guidance-for-<name>.md",
+          "coupling-<name>.md",
+          "<name>-example.md (optional)"
+        ],
+        "estimated_duration": "2-4 hours",
+        "parallel_steps": [
+          [
+            "Step 4",
+            "Step 5"
+          ]
+        ],
+        "prerequisites": [
+          "Python 3.x",
+          "verification scripts (verify_template_based.py, build_cache.py)",
+          "access to knowledge complex repository"
+        ],
+        "related_runbooks": [
+          "v:doc:runbook-assurance-audit-chart",
+          "v:doc:runbook-program-development"
+        ]
+      },
+      "v:doc:runbook-llm-specialization": {
+        "file": "00_vertices/runbook-llm-specialization.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:runbook-llm-specialization",
+        "name": "Runbook for LLM Specialization",
+        "description": "Guides practitioners through creating specialized LLM system prompts using the PPP (Purpose-Persona-Protocol) framework with full verification and validation",
+        "tags": [
+          "vertex",
+          "doc",
+          "runbook"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00",
+        "workflow_name": "LLM Specialization",
+        "target_roles": [
+          "prompt engineer",
+          "systems engineer",
+          "knowledge engineer"
+        ],
+        "required_skills": [
+          "PPP framework understanding",
+          "YAML frontmatter syntax",
+          "verification and validation concepts",
+          "LLM system prompt authoring"
+        ],
+        "step_count": 8,
+        "artifacts_produced": [
+          "purpose document",
+          "persona document",
+          "protocol document",
+          "system prompt document",
+          "dependency edges (3)",
+          "verification edges (4)",
+          "validation edges (4)",
+          "assurance faces (4)",
+          "deployed CLAUDE.md"
+        ],
+        "estimated_duration": "4-8 hours",
+        "parallel_steps": [
+          [
+            "Step 5",
+            "Step 6"
+          ]
+        ],
+        "prerequisites": [
+          "access to knowledge complex repository",
+          "Python environment with verification scripts",
+          "understanding of target domain/use case"
+        ],
+        "related_runbooks": [
+          "v:doc:runbook-document-type-creation",
+          "v:doc:runbook-assurance-audit-chart"
+        ]
+      },
+      "v:doc:runbook-program-development": {
+        "file": "00_vertices/runbook-program-development.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:runbook-program-development",
+        "name": "Runbook - Program Development Workflow",
+        "description": "Guides practitioners through creating a complete program documentation package (architecture, lifecycle, program plan, program memo)",
+        "tags": [
+          "vertex",
+          "doc",
+          "runbook"
+        ],
+        "version": "1.2.0",
+        "created": "2025-01-04T18:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00",
+        "workflow_name": "Program Development",
+        "target_roles": [
+          "systems engineer",
+          "program manager",
+          "technical lead"
+        ],
+        "required_skills": [
+          "systems engineering fundamentals",
+          "document authoring",
+          "stakeholder analysis",
+          "risk management",
+          "project planning"
+        ],
+        "step_count": 5,
+        "artifacts_produced": [
+          "field survey document",
+          "architecture document",
+          "lifecycle document",
+          "program plan document",
+          "program memo document"
+        ],
+        "estimated_duration": "2-4 weeks",
+        "prerequisites": [
+          "access to knowledge complex repository",
+          "familiarity with spec/guidance document pairs",
+          "understanding of assurance framework"
+        ]
+      },
       "v:signer:mzargham": {
         "file": "00_vertices/signer-mzargham.md",
         "type": "vertex/signer",
@@ -752,10 +1061,12 @@
           "doc",
           "spec"
         ],
-        "version": "1.0.0",
+        "version": "1.1.0",
         "created": "2025-12-30T12:00:00+00:00",
-        "modified": "2025-12-30T12:00:00+00:00",
-        "dependencies": []
+        "modified": "2025-01-04T23:00:00+00:00",
+        "dependencies": [
+          "v:spec:field-survey"
+        ]
       },
       "v:spec:assurance_audit": {
         "file": "00_vertices/spec-for-assurance-audits.md",
@@ -839,6 +1150,23 @@
         "version": "1.0.0",
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:field-survey": {
+        "file": "00_vertices/spec-for-field-survey.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:field-survey",
+        "name": "Specification for Field Survey Documents",
+        "description": "Defines structural requirements for field survey documents that map stakeholders, resources, and their relationships before architecture work",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00",
         "dependencies": []
       },
       "v:spec:guidance": {
@@ -1003,16 +1331,18 @@
         "extends": "doc",
         "id": "v:spec:lifecycle",
         "name": "Specification for Lifecycle Documents",
-        "description": "Defines structural requirements for engineering lifecycle process documents describing assured document development workflows",
+        "description": "Defines structural requirements for engineering lifecycle documents that stage the process to deliver a system from architecture through operations",
         "tags": [
           "vertex",
           "doc",
           "spec"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T18:00:00+00:00",
-        "modified": "2025-12-30T18:00:00+00:00",
-        "dependencies": []
+        "modified": "2025-01-04T20:00:00+00:00",
+        "dependencies": [
+          "v:spec:architecture"
+        ]
       },
       "v:spec:novel-contributions": {
         "file": "00_vertices/spec-for-novel-contributions.md",
@@ -1067,6 +1397,47 @@
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00",
         "dependencies": []
+      },
+      "v:spec:program-memo": {
+        "file": "00_vertices/spec-for-program-memo.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:program-memo",
+        "name": "Specification for Program Memo Documents",
+        "description": "Defines structural requirements for program memo documents that provide executive-level summaries of architecture, lifecycle, and program plan documentation packages",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T14:00:00+00:00",
+        "modified": "2025-01-04T22:30:00+00:00",
+        "dependencies": [
+          "v:spec:architecture",
+          "v:spec:lifecycle",
+          "v:spec:program-plan"
+        ]
+      },
+      "v:spec:program-plan": {
+        "file": "00_vertices/spec-for-program-plan.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:program-plan",
+        "name": "Specification for Program Plan Documents",
+        "description": "Defines structural requirements for program plan documents that operationalize architectures through lifecycles with teams, timelines, resources, and risk management",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T12:00:00+00:00",
+        "modified": "2025-01-04T22:00:00+00:00",
+        "dependencies": [
+          "v:spec:architecture",
+          "v:spec:lifecycle"
+        ]
       },
       "v:spec:property": {
         "file": "00_vertices/spec-for-property.md",
@@ -1151,6 +1522,23 @@
         "version": "1.0.0",
         "created": "2026-01-02T12:00:00+00:00",
         "modified": "2026-01-02T12:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:runbook": {
+        "file": "00_vertices/spec-for-runbook.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:runbook",
+        "name": "Specification for Runbook Documents",
+        "description": "Defines structural requirements for runbook documents that guide humans through multi-step workflows producing artifacts",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T16:00:00+00:00",
+        "modified": "2025-01-04T16:00:00+00:00",
         "dependencies": []
       },
       "v:spec:signature": {
@@ -1566,6 +1954,25 @@
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00"
       },
+      "e:coupling:field-survey": {
+        "file": "01_edges/coupling-field-survey.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:field-survey",
+        "name": "Coupling - Spec-for-Field-Survey and Guidance-for-Field-Survey",
+        "source": "v:spec:field-survey",
+        "target": "v:guidance:field-survey",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00"
+      },
       "e:coupling:guidance": {
         "file": "01_edges/coupling-guidance.md",
         "type": "edge/coupling",
@@ -1719,6 +2126,44 @@
         "created": "2025-12-27T23:30:00+00:00",
         "modified": "2025-12-27T23:30:00+00:00"
       },
+      "e:coupling:program-memo": {
+        "file": "01_edges/coupling-program-memo.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:program-memo",
+        "name": "Coupling - Spec-for-Program-Memo and Guidance-for-Program-Memo",
+        "source": "v:spec:program-memo",
+        "target": "v:guidance:program-memo",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T15:00:00+00:00"
+      },
+      "e:coupling:program-plan": {
+        "file": "01_edges/coupling-program-plan.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:program-plan",
+        "name": "Coupling - Spec-for-Program-Plan and Guidance-for-Program-Plan",
+        "source": "v:spec:program-plan",
+        "target": "v:guidance:program-plan",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T22:00:00+00:00",
+        "modified": "2026-01-04T22:00:00+00:00"
+      },
       "e:coupling:protocol": {
         "file": "01_edges/coupling-protocol.md",
         "type": "edge/coupling",
@@ -1775,6 +2220,25 @@
         "version": "1.0.0",
         "created": "2026-01-02T12:00:00+00:00",
         "modified": "2026-01-02T12:00:00+00:00"
+      },
+      "e:coupling:runbook": {
+        "file": "01_edges/coupling-runbook.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:runbook",
+        "name": "Coupling - Spec-for-Runbook and Guidance-for-Runbook",
+        "source": "v:spec:runbook",
+        "target": "v:guidance:runbook",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T16:00:00+00:00",
+        "modified": "2025-01-04T16:00:00+00:00"
       },
       "e:coupling:spec-guidance:guidance-spec": {
         "file": "01_edges/coupling-spec-guidance-guidance-spec.md",
@@ -1834,6 +2298,29 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:30:00+00:00",
         "modified": "2025-12-27T23:30:00+00:00"
+      },
+      "e:dependency:architecture-digital-transformation:field-survey-digital-transformation": {
+        "file": "01_edges/dependency-architecture-digital-transformation:field-survey-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:architecture-digital-transformation:field-survey-digital-transformation",
+        "name": "Dependency - Architecture requires Field Survey",
+        "description": "Architecture document depends on field survey for stakeholder and resource context",
+        "source": "v:doc:architecture-digital-transformation",
+        "target": "v:doc:field-survey-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "contextual_foundation",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:dependency:incose-self-demonstration-guidance:architecture-guidance": {
         "file": "01_edges/dependency-incose-self-demonstration-guidance:architecture-guidance.md",
@@ -2030,6 +2517,167 @@
         "version": "1.0.0",
         "created": "2025-12-30T22:00:00+00:00",
         "modified": "2025-12-30T22:00:00+00:00"
+      },
+      "e:dependency:lifecycle-digital-transformation:architecture-digital-transformation": {
+        "file": "01_edges/dependency-lifecycle-digital-transformation:architecture-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:lifecycle-digital-transformation:architecture-digital-transformation",
+        "name": "Dependency - Lifecycle requires Architecture",
+        "description": "Lifecycle document depends on architecture for system definition and V-model alignment",
+        "source": "v:doc:lifecycle-digital-transformation",
+        "target": "v:doc:architecture-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "architectural_foundation",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-memo-digital-transformation:architecture-digital-transformation": {
+        "file": "01_edges/dependency-program-memo-digital-transformation:architecture-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-memo-digital-transformation:architecture-digital-transformation",
+        "name": "Dependency - Program Memo requires Architecture",
+        "description": "Program memo depends on architecture for What We're Building section",
+        "source": "v:doc:program-memo-digital-transformation",
+        "target": "v:doc:architecture-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "technical_source",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-memo-digital-transformation:field-survey-digital-transformation": {
+        "file": "01_edges/dependency-program-memo-digital-transformation:field-survey-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-memo-digital-transformation:field-survey-digital-transformation",
+        "name": "Dependency - Program Memo requires Field Survey",
+        "description": "Program memo depends on field survey for context and stakeholder information",
+        "source": "v:doc:program-memo-digital-transformation",
+        "target": "v:doc:field-survey-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "contextual_source",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-memo-digital-transformation:lifecycle-digital-transformation": {
+        "file": "01_edges/dependency-program-memo-digital-transformation:lifecycle-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-memo-digital-transformation:lifecycle-digital-transformation",
+        "name": "Dependency - Program Memo requires Lifecycle",
+        "description": "Program memo depends on lifecycle for How We're Building It section",
+        "source": "v:doc:program-memo-digital-transformation",
+        "target": "v:doc:lifecycle-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "process_source",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-memo-digital-transformation:program-plan-digital-transformation": {
+        "file": "01_edges/dependency-program-memo-digital-transformation:program-plan-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-memo-digital-transformation:program-plan-digital-transformation",
+        "name": "Dependency - Program Memo requires Program Plan",
+        "description": "Program memo depends on program plan for Execution Summary section",
+        "source": "v:doc:program-memo-digital-transformation",
+        "target": "v:doc:program-plan-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "execution_source",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-plan-digital-transformation:architecture-digital-transformation": {
+        "file": "01_edges/dependency-program-plan-digital-transformation:architecture-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-plan-digital-transformation:architecture-digital-transformation",
+        "name": "Dependency - Program Plan requires Architecture",
+        "description": "Program plan depends on architecture for scope definition and deliverables",
+        "source": "v:doc:program-plan-digital-transformation",
+        "target": "v:doc:architecture-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "scope_definition",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-plan-digital-transformation:lifecycle-digital-transformation": {
+        "file": "01_edges/dependency-program-plan-digital-transformation:lifecycle-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-plan-digital-transformation:lifecycle-digital-transformation",
+        "name": "Dependency - Program Plan requires Lifecycle",
+        "description": "Program plan depends on lifecycle for execution phases and V&V strategy",
+        "source": "v:doc:program-plan-digital-transformation",
+        "target": "v:doc:lifecycle-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "execution_framework",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:inherits:incose-self-demonstration-guidance:incose-paper-guidance": {
         "file": "01_edges/inherits-incose-self-demonstration-guidance:incose-paper-guidance.md",
@@ -3059,6 +3707,52 @@
         "created": "2025-12-27T23:15:00+00:00",
         "modified": "2025-12-27T23:15:00+00:00"
       },
+      "e:validation:field-survey-guidance:guidance-guidance": {
+        "file": "01_edges/validation-field-survey-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:field-survey-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-field-survey against guidance-for-guidance",
+        "source": "v:guidance:field-survey",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00"
+      },
+      "e:validation:field-survey-spec:guidance-spec": {
+        "file": "01_edges/validation-field-survey-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:field-survey-spec:guidance-spec",
+        "name": "Validation - spec-for-field-survey against guidance-for-spec",
+        "source": "v:spec:field-survey",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00"
+      },
       "e:validation:framework-architecture-section:guidance": {
         "file": "01_edges/validation-framework-architecture-section:guidance.md",
         "type": "edge/validation",
@@ -3358,9 +4052,9 @@
           "edge",
           "validation"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T19:00:00+00:00",
-        "modified": "2025-12-30T19:00:00+00:00"
+        "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:validation:lifecycle-incose:guidance-lifecycle": {
         "file": "01_edges/validation-lifecycle-incose:guidance-lifecycle.md",
@@ -3404,9 +4098,9 @@
           "edge",
           "validation"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T19:00:00+00:00",
-        "modified": "2025-12-30T19:00:00+00:00"
+        "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:validation:literature-review-guidance:guidance-guidance": {
         "file": "01_edges/validation-literature-review-guidance:guidance-guidance.md",
@@ -3620,6 +4314,98 @@
         "created": "2025-12-27T23:50:00+00:00",
         "modified": "2025-12-27T23:50:00+00:00"
       },
+      "e:validation:program-memo-guidance:guidance-guidance": {
+        "file": "01_edges/validation-program-memo-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:program-memo-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-program-memo against guidance-for-guidance",
+        "source": "v:guidance:program-memo",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T22:30:00+00:00"
+      },
+      "e:validation:program-memo-spec:guidance-spec": {
+        "file": "01_edges/validation-program-memo-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:program-memo-spec:guidance-spec",
+        "name": "Validation - spec-for-program-memo against guidance-for-spec",
+        "source": "v:spec:program-memo",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T22:30:00+00:00"
+      },
+      "e:validation:program-plan-guidance:guidance-guidance": {
+        "file": "01_edges/validation-program-plan-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:program-plan-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-program-plan against guidance-for-guidance",
+        "source": "v:guidance:program-plan",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T22:00:00+00:00",
+        "modified": "2025-01-04T22:00:00+00:00"
+      },
+      "e:validation:program-plan-spec:guidance-spec": {
+        "file": "01_edges/validation-program-plan-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:program-plan-spec:guidance-spec",
+        "name": "Validation - spec-for-program-plan against guidance-for-spec",
+        "source": "v:spec:program-plan",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T22:00:00+00:00",
+        "modified": "2025-01-04T22:00:00+00:00"
+      },
       "e:validation:protocol-claude:guidance": {
         "file": "01_edges/validation-protocol-claude:guidance.md",
         "type": "edge/validation",
@@ -3768,6 +4554,29 @@
         "created": "2025-12-27T23:50:00+00:00",
         "modified": "2025-12-27T23:50:00+00:00"
       },
+      "e:validation:repository-policy-aaa:guidance-repository-policy": {
+        "file": "01_edges/validation-repository-policy-aaa:guidance-repository-policy.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:repository-policy-aaa:guidance-repository-policy",
+        "name": "Validation - Repository Policy for AAA validates against Guidance-for-Repository-Policy",
+        "source": "v:repository-policy:assurances-audits-accountability",
+        "target": "v:guidance:repository-policy",
+        "source_type": "vertex/repository-policy",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-assistant",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-02T19:00:00+00:00",
+        "modified": "2026-01-02T19:00:00+00:00"
+      },
       "e:validation:repository-policy-guidance:guidance-guidance": {
         "file": "01_edges/validation-repository-policy-guidance:guidance-guidance.md",
         "type": "edge/validation",
@@ -3813,6 +4622,75 @@
         "version": "1.0.0",
         "created": "2026-01-02T18:00:00+00:00",
         "modified": "2026-01-02T18:00:00+00:00"
+      },
+      "e:validation:runbook-guidance:guidance-guidance": {
+        "file": "01_edges/validation-runbook-guidance:guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:runbook-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-runbook against guidance-for-guidance",
+        "source": "v:guidance:runbook",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
+      },
+      "e:validation:runbook-llm-specialization:guidance": {
+        "file": "01_edges/validation-runbook-llm-specialization:guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:runbook-llm-specialization:guidance",
+        "name": "Validation - Runbook LLM Specialization against Guidance for Runbook",
+        "source": "v:doc:runbook-llm-specialization",
+        "target": "v:guidance:runbook",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:30:00+00:00",
+        "modified": "2025-01-04T23:30:00+00:00",
+        "validation_method": "llm-assisted",
+        "validator": "claude-opus-4-5-20251101",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham"
+      },
+      "e:validation:runbook-spec:guidance-spec": {
+        "file": "01_edges/validation-runbook-spec:guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:runbook-spec:guidance-spec",
+        "name": "Validation - spec-for-runbook against guidance-for-spec",
+        "source": "v:spec:runbook",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
       },
       "e:validation:spec-guidance:guidance-spec": {
         "file": "01_edges/validation-spec-guidance.md",
@@ -3952,6 +4830,29 @@
         "version": "1.0.0",
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00"
+      },
+      "e:verification:architecture-digital-transformation:spec-architecture": {
+        "file": "01_edges/verification-architecture-digital-transformation:spec-architecture.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:architecture-digital-transformation:spec-architecture",
+        "name": "Verification - Architecture Digital Transformation against spec-for-architecture",
+        "source": "v:doc:architecture-digital-transformation",
+        "target": "v:spec:architecture",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "tags": [
+          "edge",
+          "verification",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:verification:architecture-guidance:spec-guidance": {
         "file": "01_edges/verification-architecture-guidance:spec-guidance.md",
@@ -4124,6 +5025,75 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:10:00+00:00",
         "modified": "2025-12-27T23:10:00+00:00"
+      },
+      "e:verification:field-survey-digital-transformation:spec-field-survey": {
+        "file": "01_edges/verification-field-survey-digital-transformation:spec-field-survey.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:field-survey-digital-transformation:spec-field-survey",
+        "name": "Verification - Field Survey Digital Transformation against spec-for-field-survey",
+        "source": "v:doc:field-survey-digital-transformation",
+        "target": "v:spec:field-survey",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "tags": [
+          "edge",
+          "verification",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:verification:field-survey-guidance:spec-guidance": {
+        "file": "01_edges/verification-field-survey-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:field-survey-guidance:spec-guidance",
+        "name": "Verification - guidance-for-field-survey against spec-for-guidance",
+        "source": "v:guidance:field-survey",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00"
+      },
+      "e:verification:field-survey-spec:spec-spec": {
+        "file": "01_edges/verification-field-survey-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:field-survey-spec:spec-spec",
+        "name": "Verification - spec-for-field-survey against spec-for-spec",
+        "source": "v:spec:field-survey",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-04T23:00:00+00:00"
       },
       "e:verification:guidance-guidance:spec-guidance": {
         "file": "01_edges/verification-guidance-guidance.md",
@@ -4304,6 +5274,29 @@
         "created": "2025-12-30T23:55:00+00:00",
         "modified": "2025-12-30T23:55:00+00:00"
       },
+      "e:verification:lifecycle-digital-transformation:spec-lifecycle": {
+        "file": "01_edges/verification-lifecycle-digital-transformation:spec-lifecycle.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:lifecycle-digital-transformation:spec-lifecycle",
+        "name": "Verification - Lifecycle Digital Transformation against spec-for-lifecycle",
+        "source": "v:doc:lifecycle-digital-transformation",
+        "target": "v:spec:lifecycle",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "tags": [
+          "edge",
+          "verification",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
       "e:verification:lifecycle-guidance:spec-guidance": {
         "file": "01_edges/verification-lifecycle-guidance:spec-guidance.md",
         "type": "edge/verification",
@@ -4323,9 +5316,9 @@
           "edge",
           "verification"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T19:00:00+00:00",
-        "modified": "2025-12-30T19:00:00+00:00"
+        "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:verification:lifecycle-incose:spec-lifecycle": {
         "file": "01_edges/verification-lifecycle-incose:spec-lifecycle.md",
@@ -4369,9 +5362,9 @@
           "edge",
           "verification"
         ],
-        "version": "1.0.0",
+        "version": "2.0.0",
         "created": "2025-12-30T19:00:00+00:00",
-        "modified": "2025-12-30T19:00:00+00:00"
+        "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:verification:literature-review-guidance:spec-guidance": {
         "file": "01_edges/verification-literature-review-guidance:spec-guidance.md",
@@ -4568,6 +5561,144 @@
         "created": "2025-12-27T23:45:00+00:00",
         "modified": "2025-12-27T23:45:00+00:00"
       },
+      "e:verification:program-memo-digital-transformation:spec-program-memo": {
+        "file": "01_edges/verification-program-memo-digital-transformation:spec-program-memo.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:program-memo-digital-transformation:spec-program-memo",
+        "name": "Verification - Program Memo Digital Transformation against spec-for-program-memo",
+        "source": "v:doc:program-memo-digital-transformation",
+        "target": "v:spec:program-memo",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "tags": [
+          "edge",
+          "verification",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:verification:program-memo-guidance:spec-guidance": {
+        "file": "01_edges/verification-program-memo-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:program-memo-guidance:spec-guidance",
+        "name": "Verification - guidance-for-program-memo against spec-for-guidance",
+        "source": "v:guidance:program-memo",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T22:30:00+00:00"
+      },
+      "e:verification:program-memo-spec:spec-spec": {
+        "file": "01_edges/verification-program-memo-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:program-memo-spec:spec-spec",
+        "name": "Verification - spec-for-program-memo against spec-for-spec",
+        "source": "v:spec:program-memo",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T22:30:00+00:00"
+      },
+      "e:verification:program-plan-digital-transformation:spec-program-plan": {
+        "file": "01_edges/verification-program-plan-digital-transformation:spec-program-plan.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:program-plan-digital-transformation:spec-program-plan",
+        "name": "Verification - Program Plan Digital Transformation against spec-for-program-plan",
+        "source": "v:doc:program-plan-digital-transformation",
+        "target": "v:spec:program-plan",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "tags": [
+          "edge",
+          "verification",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:verification:program-plan-guidance:spec-guidance": {
+        "file": "01_edges/verification-program-plan-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:program-plan-guidance:spec-guidance",
+        "name": "Verification - guidance-for-program-plan against spec-for-guidance",
+        "source": "v:guidance:program-plan",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T22:00:00+00:00",
+        "modified": "2025-01-04T22:00:00+00:00"
+      },
+      "e:verification:program-plan-spec:spec-spec": {
+        "file": "01_edges/verification-program-plan-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:program-plan-spec:spec-spec",
+        "name": "Verification - spec-for-program-plan against spec-for-spec",
+        "source": "v:spec:program-plan",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.1.0",
+        "created": "2025-01-04T22:00:00+00:00",
+        "modified": "2025-01-04T22:00:00+00:00"
+      },
       "e:verification:protocol-claude:spec": {
         "file": "01_edges/verification-protocol-claude:spec.md",
         "type": "edge/verification",
@@ -4697,6 +5828,73 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:45:00+00:00",
         "modified": "2025-12-27T23:45:00+00:00"
+      },
+      "e:verification:runbook-guidance:spec-guidance": {
+        "file": "01_edges/verification-runbook-guidance:spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:runbook-guidance:spec-guidance",
+        "name": "Verification - guidance-for-runbook against spec-for-guidance",
+        "source": "v:guidance:runbook",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
+      },
+      "e:verification:runbook-llm-specialization:spec": {
+        "file": "01_edges/verification-runbook-llm-specialization:spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:runbook-llm-specialization:spec",
+        "name": "Verification - Runbook LLM Specialization against Spec for Runbook",
+        "source": "v:doc:runbook-llm-specialization",
+        "target": "v:spec:runbook",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T23:30:00+00:00",
+        "modified": "2025-01-04T23:30:00+00:00",
+        "verification_method": "deterministic",
+        "verification_tool": "verify_template_based.py"
+      },
+      "e:verification:runbook-spec:spec-spec": {
+        "file": "01_edges/verification-runbook-spec:spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:runbook-spec:spec-spec",
+        "name": "Verification - spec-for-runbook against spec-for-spec",
+        "source": "v:spec:runbook",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
       },
       "e:verification:spec-guidance:spec-spec": {
         "file": "01_edges/verification-spec-guidance.md",
@@ -5079,6 +6277,78 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:20:00+00:00",
         "modified": "2025-12-27T23:20:00+00:00"
+      },
+      "f:assurance:field-survey-guidance": {
+        "file": "02_faces/assurance-field-survey-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:field-survey-guidance",
+        "name": "Assurance Face - guidance-for-field-survey",
+        "description": "Complete assurance pattern for the field survey guidance",
+        "edges": [
+          "e:coupling:field-survey",
+          "e:verification:field-survey-guidance:spec-guidance",
+          "e:validation:field-survey-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:field-survey",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:field-survey",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:field-survey",
+        "verification_edge": "e:verification:field-survey-guidance:spec-guidance",
+        "validation_edge": "e:validation:field-survey-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T22:00:00+00:00",
+        "modified": "2026-01-04T22:00:00+00:00"
+      },
+      "f:assurance:field-survey-spec": {
+        "file": "02_faces/assurance-field-survey-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:field-survey-spec",
+        "name": "Assurance Face - spec-for-field-survey",
+        "description": "Complete assurance pattern for the field survey specification",
+        "edges": [
+          "e:coupling:field-survey",
+          "e:verification:field-survey-spec:spec-spec",
+          "e:validation:field-survey-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:field-survey",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:field-survey",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:field-survey",
+        "verification_edge": "e:verification:field-survey-spec:spec-spec",
+        "validation_edge": "e:validation:field-survey-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T22:00:00+00:00",
+        "modified": "2026-01-04T22:00:00+00:00"
       },
       "f:assurance:guidance-guidance": {
         "file": "02_faces/assurance-guidance-guidance.md",
@@ -5807,6 +7077,150 @@
         "created": "2025-12-27T23:59:00+00:00",
         "modified": "2025-12-27T23:59:00+00:00"
       },
+      "f:assurance:program-memo-guidance": {
+        "file": "02_faces/assurance-program-memo-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:program-memo-guidance",
+        "name": "Assurance Face - guidance-for-program-memo",
+        "description": "Complete assurance pattern for the program memo guidance",
+        "edges": [
+          "e:coupling:program-memo",
+          "e:verification:program-memo-guidance:spec-guidance",
+          "e:validation:program-memo-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:program-memo",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:program-memo",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:program-memo",
+        "verification_edge": "e:verification:program-memo-guidance:spec-guidance",
+        "validation_edge": "e:validation:program-memo-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T15:00:00+00:00"
+      },
+      "f:assurance:program-memo-spec": {
+        "file": "02_faces/assurance-program-memo-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:program-memo-spec",
+        "name": "Assurance Face - spec-for-program-memo",
+        "description": "Complete assurance pattern for the program memo specification",
+        "edges": [
+          "e:coupling:program-memo",
+          "e:verification:program-memo-spec:spec-spec",
+          "e:validation:program-memo-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:program-memo",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:program-memo",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:program-memo",
+        "verification_edge": "e:verification:program-memo-spec:spec-spec",
+        "validation_edge": "e:validation:program-memo-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T15:00:00+00:00",
+        "modified": "2025-01-04T15:00:00+00:00"
+      },
+      "f:assurance:program-plan-guidance": {
+        "file": "02_faces/assurance-program-plan-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:program-plan-guidance",
+        "name": "Assurance Face - guidance-for-program-plan",
+        "description": "Complete assurance pattern for the program plan guidance",
+        "edges": [
+          "e:coupling:program-plan",
+          "e:verification:program-plan-guidance:spec-guidance",
+          "e:validation:program-plan-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:program-plan",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:program-plan",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:program-plan",
+        "verification_edge": "e:verification:program-plan-guidance:spec-guidance",
+        "validation_edge": "e:validation:program-plan-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T22:00:00+00:00",
+        "modified": "2026-01-04T22:00:00+00:00"
+      },
+      "f:assurance:program-plan-spec": {
+        "file": "02_faces/assurance-program-plan-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:program-plan-spec",
+        "name": "Assurance Face - spec-for-program-plan",
+        "description": "Complete assurance pattern for the program plan specification",
+        "edges": [
+          "e:coupling:program-plan",
+          "e:verification:program-plan-spec:spec-spec",
+          "e:validation:program-plan-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:program-plan",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:program-plan",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:program-plan",
+        "verification_edge": "e:verification:program-plan-spec:spec-spec",
+        "validation_edge": "e:validation:program-plan-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-04T22:00:00+00:00",
+        "modified": "2026-01-04T22:00:00+00:00"
+      },
       "f:assurance:protocol-claude": {
         "file": "02_faces/assurance-protocol-claude.md",
         "type": "face/assurance",
@@ -6020,6 +7434,78 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:59:00+00:00",
         "modified": "2025-12-27T23:59:00+00:00"
+      },
+      "f:assurance:runbook-guidance": {
+        "file": "02_faces/assurance-runbook-guidance.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:runbook-guidance",
+        "name": "Assurance Face - guidance-for-runbook",
+        "description": "Complete assurance pattern for the runbook guidance",
+        "edges": [
+          "e:coupling:runbook",
+          "e:verification:runbook-guidance:spec-guidance",
+          "e:validation:runbook-guidance:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:guidance:runbook",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "target": "v:guidance:runbook",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:runbook",
+        "verification_edge": "e:verification:runbook-guidance:spec-guidance",
+        "validation_edge": "e:validation:runbook-guidance:guidance-guidance",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
+      },
+      "f:assurance:runbook-spec": {
+        "file": "02_faces/assurance-runbook-spec.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:runbook-spec",
+        "name": "Assurance Face - spec-for-runbook",
+        "description": "Complete assurance pattern for the runbook specification",
+        "edges": [
+          "e:coupling:runbook",
+          "e:verification:runbook-spec:spec-spec",
+          "e:validation:runbook-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:spec:runbook",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "target": "v:spec:runbook",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:runbook",
+        "verification_edge": "e:verification:runbook-spec:spec-spec",
+        "validation_edge": "e:validation:runbook-spec:guidance-spec",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-04T17:00:00+00:00",
+        "modified": "2025-01-04T17:00:00+00:00"
       },
       "f:assurance:spec-guidance": {
         "file": "02_faces/assurance-spec-guidance.md",
@@ -7366,10 +8852,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 64,
-    "edge_count": 156,
-    "face_count": 65,
+    "vertex_count": 76,
+    "edge_count": 192,
+    "face_count": 73,
     "chart_count": 3,
-    "euler_characteristic": -27
+    "euler_characteristic": -43
   }
 }

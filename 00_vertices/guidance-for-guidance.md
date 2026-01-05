@@ -260,8 +260,11 @@ Examples:
 - Include both positive uses and non-uses (when NOT to use)
 - Address target audience explicitly
 
-**Anti-pattern:**
+**Anti-patterns:**
 - ❌ Generic descriptions that could apply to any guidance
+
+**Preferred:**
+
 - ✅ Specific scenarios that show unique value
 
 ### Quality Criteria
@@ -281,28 +284,52 @@ Examples:
 - Make distinctions between levels meaningful (not just "more" vs. "less")
 
 **Anti-patterns:**
-- Binary criteria (that's verification, not validation)
-- All criteria about same dimension (e.g., all about formatting)
-- Levels that aren't actually distinguishable
+
+- ❌ Binary criteria (that's verification, not validation)
+- ❌ All criteria about same dimension (e.g., all about formatting)
+- ❌ Levels that aren't actually distinguishable
+
+**Preferred:**
+
+- ✅ 4-7 distinct criteria covering different quality dimensions
+- ✅ Consistent levels (Excellent/Good/Needs Improvement) with observable distinctions
 
 ### Section-by-Section Guidance
 
 **Purpose:** Help authors complete each section successfully
 
 **Tips:**
+
 - Cover every major section of the supported document type
 - For each section, provide:
   - Purpose (why it exists)
   - Tips (how to do it well)
   - Anti-patterns (common mistakes)
-  - Examples (what good looks like)
+  - Preferred patterns (what good looks like)
 - Order sections to match the supported document's structure
 - Be specific: "Include 4-8 items" not "Include several items"
 
+**Anti-pattern/Preferred Format:**
+
+Always pair anti-patterns with preferred alternatives using this structure:
+
+```markdown
+**Anti-patterns:**
+
+- ❌ Bad pattern description
+- ❌ Another bad pattern
+
+**Preferred:**
+
+- ✅ Good pattern that addresses the anti-pattern
+- ✅ Another good alternative
+```
+
 **Quality Indicators:**
+
 - Could a novice successfully complete a section using only your guidance?
-- Are anti-patterns paired with corrective actions?
-- Do examples illustrate the tips?
+- Are anti-patterns paired with preferred alternatives?
+- Do preferred patterns directly address what the anti-patterns get wrong?
 
 ### Workflow Guidance
 
@@ -361,9 +388,15 @@ Examples:
 - Explain the "why" briefly when not obvious
 
 **Anti-patterns:**
-- Platitudes ("Quality matters")
-- Contradictory practices
-- Practices requiring extensive explanation (those need their own sections)
+
+- ❌ Platitudes ("Quality matters")
+- ❌ Contradictory practices
+- ❌ Practices requiring extensive explanation (those need their own sections)
+
+**Preferred:**
+
+- ✅ Actionable imperatives: "Start simple" not "It is good to start simply"
+- ✅ 8-12 practices ordered from foundational to advanced
 
 ## Workflow Guidance
 

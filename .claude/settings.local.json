@@ -131,7 +131,9 @@
       "Bash(export PATH=\"/Library/TeX/texbin:/opt/homebrew/bin:$PATH\")",
       "Bash(detex:*)",
       "Bash(pdflatex:*)",
-      "Bash(do echo \"=== Commit $commit ===\")"
+      "Bash(do echo \"=== Commit $commit ===\")",
+      "Bash(git -C /Users/z/Documents/GitHub/assurances-audits-accountability checkout -b mzargham/personalization-guide)",
+      "Bash(git push)"
     ]
   }
 }
