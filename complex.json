@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-04T23:47:25.426143+00:00",
+  "generated": "2026-01-05T15:17:22.132582+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -2299,6 +2299,29 @@
         "created": "2025-12-27T23:30:00+00:00",
         "modified": "2025-12-27T23:30:00+00:00"
       },
+      "e:dependency:architecture-digital-transformation:field-survey-digital-transformation": {
+        "file": "01_edges/dependency-architecture-digital-transformation:field-survey-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:architecture-digital-transformation:field-survey-digital-transformation",
+        "name": "Dependency - Architecture requires Field Survey",
+        "description": "Architecture document depends on field survey for stakeholder and resource context",
+        "source": "v:doc:architecture-digital-transformation",
+        "target": "v:doc:field-survey-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "contextual_foundation",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
       "e:dependency:incose-self-demonstration-guidance:architecture-guidance": {
         "file": "01_edges/dependency-incose-self-demonstration-guidance:architecture-guidance.md",
         "type": "edge/dependency",
@@ -2494,6 +2517,167 @@
         "version": "1.0.0",
         "created": "2025-12-30T22:00:00+00:00",
         "modified": "2025-12-30T22:00:00+00:00"
+      },
+      "e:dependency:lifecycle-digital-transformation:architecture-digital-transformation": {
+        "file": "01_edges/dependency-lifecycle-digital-transformation:architecture-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:lifecycle-digital-transformation:architecture-digital-transformation",
+        "name": "Dependency - Lifecycle requires Architecture",
+        "description": "Lifecycle document depends on architecture for system definition and V-model alignment",
+        "source": "v:doc:lifecycle-digital-transformation",
+        "target": "v:doc:architecture-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "architectural_foundation",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-memo-digital-transformation:architecture-digital-transformation": {
+        "file": "01_edges/dependency-program-memo-digital-transformation:architecture-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-memo-digital-transformation:architecture-digital-transformation",
+        "name": "Dependency - Program Memo requires Architecture",
+        "description": "Program memo depends on architecture for What We're Building section",
+        "source": "v:doc:program-memo-digital-transformation",
+        "target": "v:doc:architecture-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "technical_source",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-memo-digital-transformation:field-survey-digital-transformation": {
+        "file": "01_edges/dependency-program-memo-digital-transformation:field-survey-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-memo-digital-transformation:field-survey-digital-transformation",
+        "name": "Dependency - Program Memo requires Field Survey",
+        "description": "Program memo depends on field survey for context and stakeholder information",
+        "source": "v:doc:program-memo-digital-transformation",
+        "target": "v:doc:field-survey-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "contextual_source",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-memo-digital-transformation:lifecycle-digital-transformation": {
+        "file": "01_edges/dependency-program-memo-digital-transformation:lifecycle-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-memo-digital-transformation:lifecycle-digital-transformation",
+        "name": "Dependency - Program Memo requires Lifecycle",
+        "description": "Program memo depends on lifecycle for How We're Building It section",
+        "source": "v:doc:program-memo-digital-transformation",
+        "target": "v:doc:lifecycle-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "process_source",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-memo-digital-transformation:program-plan-digital-transformation": {
+        "file": "01_edges/dependency-program-memo-digital-transformation:program-plan-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-memo-digital-transformation:program-plan-digital-transformation",
+        "name": "Dependency - Program Memo requires Program Plan",
+        "description": "Program memo depends on program plan for Execution Summary section",
+        "source": "v:doc:program-memo-digital-transformation",
+        "target": "v:doc:program-plan-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "execution_source",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-plan-digital-transformation:architecture-digital-transformation": {
+        "file": "01_edges/dependency-program-plan-digital-transformation:architecture-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-plan-digital-transformation:architecture-digital-transformation",
+        "name": "Dependency - Program Plan requires Architecture",
+        "description": "Program plan depends on architecture for scope definition and deliverables",
+        "source": "v:doc:program-plan-digital-transformation",
+        "target": "v:doc:architecture-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "scope_definition",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:dependency:program-plan-digital-transformation:lifecycle-digital-transformation": {
+        "file": "01_edges/dependency-program-plan-digital-transformation:lifecycle-digital-transformation.md",
+        "type": "edge/dependency",
+        "extends": "edge",
+        "id": "e:dependency:program-plan-digital-transformation:lifecycle-digital-transformation",
+        "name": "Dependency - Program Plan requires Lifecycle",
+        "description": "Program plan depends on lifecycle for execution phases and V&V strategy",
+        "source": "v:doc:program-plan-digital-transformation",
+        "target": "v:doc:lifecycle-digital-transformation",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/doc",
+        "orientation": "directed",
+        "dependency_type": "execution_framework",
+        "required": true,
+        "tags": [
+          "edge",
+          "dependency",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:inherits:incose-self-demonstration-guidance:incose-paper-guidance": {
         "file": "01_edges/inherits-incose-self-demonstration-guidance:incose-paper-guidance.md",
@@ -4647,6 +4831,29 @@
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00"
       },
+      "e:verification:architecture-digital-transformation:spec-architecture": {
+        "file": "01_edges/verification-architecture-digital-transformation:spec-architecture.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:architecture-digital-transformation:spec-architecture",
+        "name": "Verification - Architecture Digital Transformation against spec-for-architecture",
+        "source": "v:doc:architecture-digital-transformation",
+        "target": "v:spec:architecture",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "tags": [
+          "edge",
+          "verification",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
       "e:verification:architecture-guidance:spec-guidance": {
         "file": "01_edges/verification-architecture-guidance:spec-guidance.md",
         "type": "edge/verification",
@@ -4818,6 +5025,29 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:10:00+00:00",
         "modified": "2025-12-27T23:10:00+00:00"
+      },
+      "e:verification:field-survey-digital-transformation:spec-field-survey": {
+        "file": "01_edges/verification-field-survey-digital-transformation:spec-field-survey.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:field-survey-digital-transformation:spec-field-survey",
+        "name": "Verification - Field Survey Digital Transformation against spec-for-field-survey",
+        "source": "v:doc:field-survey-digital-transformation",
+        "target": "v:spec:field-survey",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "tags": [
+          "edge",
+          "verification",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:verification:field-survey-guidance:spec-guidance": {
         "file": "01_edges/verification-field-survey-guidance:spec-guidance.md",
@@ -5043,6 +5273,29 @@
         "version": "1.0.0",
         "created": "2025-12-30T23:55:00+00:00",
         "modified": "2025-12-30T23:55:00+00:00"
+      },
+      "e:verification:lifecycle-digital-transformation:spec-lifecycle": {
+        "file": "01_edges/verification-lifecycle-digital-transformation:spec-lifecycle.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:lifecycle-digital-transformation:spec-lifecycle",
+        "name": "Verification - Lifecycle Digital Transformation against spec-for-lifecycle",
+        "source": "v:doc:lifecycle-digital-transformation",
+        "target": "v:spec:lifecycle",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "tags": [
+          "edge",
+          "verification",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:verification:lifecycle-guidance:spec-guidance": {
         "file": "01_edges/verification-lifecycle-guidance:spec-guidance.md",
@@ -5308,6 +5561,29 @@
         "created": "2025-12-27T23:45:00+00:00",
         "modified": "2025-12-27T23:45:00+00:00"
       },
+      "e:verification:program-memo-digital-transformation:spec-program-memo": {
+        "file": "01_edges/verification-program-memo-digital-transformation:spec-program-memo.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:program-memo-digital-transformation:spec-program-memo",
+        "name": "Verification - Program Memo Digital Transformation against spec-for-program-memo",
+        "source": "v:doc:program-memo-digital-transformation",
+        "target": "v:spec:program-memo",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "tags": [
+          "edge",
+          "verification",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
+      },
       "e:verification:program-memo-guidance:spec-guidance": {
         "file": "01_edges/verification-program-memo-guidance:spec-guidance.md",
         "type": "edge/verification",
@@ -5353,6 +5629,29 @@
         "version": "1.1.0",
         "created": "2025-01-04T15:00:00+00:00",
         "modified": "2025-01-04T22:30:00+00:00"
+      },
+      "e:verification:program-plan-digital-transformation:spec-program-plan": {
+        "file": "01_edges/verification-program-plan-digital-transformation:spec-program-plan.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:program-plan-digital-transformation:spec-program-plan",
+        "name": "Verification - Program Plan Digital Transformation against spec-for-program-plan",
+        "source": "v:doc:program-plan-digital-transformation",
+        "target": "v:spec:program-plan",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "claude-opus-4-5-20251101",
+        "verification_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "tags": [
+          "edge",
+          "verification",
+          "program-development"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-05T12:00:00+00:00",
+        "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:verification:program-plan-guidance:spec-guidance": {
         "file": "01_edges/verification-program-plan-guidance:spec-guidance.md",
@@ -8554,9 +8853,9 @@
   },
   "statistics": {
     "vertex_count": 76,
-    "edge_count": 179,
+    "edge_count": 192,
     "face_count": 73,
     "chart_count": 3,
-    "euler_characteristic": -30
+    "euler_characteristic": -43
   }
 }
