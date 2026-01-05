@@ -1,0 +1,388 @@
+{
+  "chart_id": "c:water-quality-assurance-audit",
+  "name": "Water Quality Monitoring Program Assurance Audit",
+  "description": "Complete assurance network for the water quality monitoring program documentation package",
+  "type": "chart/assurance_audit",
+  "constructed_by": "claude-opus-4-5-20251101",
+  "construction_method": "llm-assisted",
+  "purpose": "Demonstrate complete assurance of a program documentation package produced by the program development runbook",
+  "scope": "5 program documents with verification, validation, and assurance faces",
+  "element_counts": {
+    "vertices": 15,
+    "edges": 23,
+    "faces": 5
+  },
+  "topology": {
+    "euler_characteristic": -3,
+    "dimension": 2
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "v:doc:field-survey-water-quality-monitoring",
+        "name": "Field Survey - Municipal Water Quality Monitoring",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:architecture-water-quality-monitoring",
+        "name": "Architecture - Municipal Water Quality Monitoring System",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:lifecycle-water-quality-monitoring",
+        "name": "Lifecycle - Water Quality Monitoring System",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:program-plan-water-quality-monitoring",
+        "name": "Program Plan - Water Quality Monitoring System",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:program-memo-water-quality-monitoring",
+        "name": "Program Memo - Water Quality Monitoring System",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:field-survey",
+        "name": "Specification for Field Survey Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:architecture",
+        "name": "Specification for Architecture Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:lifecycle",
+        "name": "Specification for Lifecycle Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:program-plan",
+        "name": "Specification for Program Plan Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:program-memo",
+        "name": "Specification for Program Memo Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:field-survey",
+        "name": "Guidance for Field Survey Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:architecture",
+        "name": "Guidance for Architecture Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:lifecycle",
+        "name": "Guidance for Lifecycle Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:program-plan",
+        "name": "Guidance for Program Plan Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:program-memo",
+        "name": "Guidance for Program Memo Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:dependency:architecture-wqm:field-survey-wqm",
+        "name": "Architecture depends on Field Survey (WQM)",
+        "type": "edge/dependency",
+        "source": "v:doc:architecture-water-quality-monitoring",
+        "target": "v:doc:field-survey-water-quality-monitoring",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:lifecycle-wqm:architecture-wqm",
+        "name": "Lifecycle depends on Architecture (WQM)",
+        "type": "edge/dependency",
+        "source": "v:doc:lifecycle-water-quality-monitoring",
+        "target": "v:doc:architecture-water-quality-monitoring",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-plan-wqm:architecture-wqm",
+        "name": "Program Plan depends on Architecture (WQM)",
+        "type": "edge/dependency",
+        "source": "v:doc:program-plan-water-quality-monitoring",
+        "target": "v:doc:architecture-water-quality-monitoring",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-plan-wqm:lifecycle-wqm",
+        "name": "Program Plan depends on Lifecycle (WQM)",
+        "type": "edge/dependency",
+        "source": "v:doc:program-plan-water-quality-monitoring",
+        "target": "v:doc:lifecycle-water-quality-monitoring",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-memo-wqm:field-survey-wqm",
+        "name": "Program Memo depends on Field Survey (WQM)",
+        "type": "edge/dependency",
+        "source": "v:doc:program-memo-water-quality-monitoring",
+        "target": "v:doc:field-survey-water-quality-monitoring",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-memo-wqm:architecture-wqm",
+        "name": "Program Memo depends on Architecture (WQM)",
+        "type": "edge/dependency",
+        "source": "v:doc:program-memo-water-quality-monitoring",
+        "target": "v:doc:architecture-water-quality-monitoring",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-memo-wqm:lifecycle-wqm",
+        "name": "Program Memo depends on Lifecycle (WQM)",
+        "type": "edge/dependency",
+        "source": "v:doc:program-memo-water-quality-monitoring",
+        "target": "v:doc:lifecycle-water-quality-monitoring",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-memo-wqm:program-plan-wqm",
+        "name": "Program Memo depends on Program Plan (WQM)",
+        "type": "edge/dependency",
+        "source": "v:doc:program-memo-water-quality-monitoring",
+        "target": "v:doc:program-plan-water-quality-monitoring",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:field-survey",
+        "name": "Coupling - Spec-for-Field-Survey and Guidance-for-Field-Survey",
+        "type": "edge/coupling",
+        "source": "v:spec:field-survey",
+        "target": "v:guidance:field-survey",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:architecture",
+        "name": "Coupling - Spec-for-Architecture and Guidance-for-Architecture",
+        "type": "edge/coupling",
+        "source": "v:spec:architecture",
+        "target": "v:guidance:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:lifecycle",
+        "name": "Coupling - Spec-for-Lifecycle and Guidance-for-Lifecycle",
+        "type": "edge/coupling",
+        "source": "v:spec:lifecycle",
+        "target": "v:guidance:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:program-plan",
+        "name": "Coupling - Spec-for-Program-Plan and Guidance-for-Program-Plan",
+        "type": "edge/coupling",
+        "source": "v:spec:program-plan",
+        "target": "v:guidance:program-plan",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:program-memo",
+        "name": "Coupling - Spec-for-Program-Memo and Guidance-for-Program-Memo",
+        "type": "edge/coupling",
+        "source": "v:spec:program-memo",
+        "target": "v:guidance:program-memo",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:field-survey-wqm:spec-field-survey",
+        "name": "Verification - field-survey-water-quality-monitoring against spec-for-field-survey",
+        "type": "edge/verification",
+        "source": "v:doc:field-survey-water-quality-monitoring",
+        "target": "v:spec:field-survey",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:architecture-wqm:spec-architecture",
+        "name": "Verification - architecture-water-quality-monitoring against spec-for-architecture",
+        "type": "edge/verification",
+        "source": "v:doc:architecture-water-quality-monitoring",
+        "target": "v:spec:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:lifecycle-wqm:spec-lifecycle",
+        "name": "Verification - lifecycle-water-quality-monitoring against spec-for-lifecycle",
+        "type": "edge/verification",
+        "source": "v:doc:lifecycle-water-quality-monitoring",
+        "target": "v:spec:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:program-plan-wqm:spec-program-plan",
+        "name": "Verification - program-plan-water-quality-monitoring against spec-for-program-plan",
+        "type": "edge/verification",
+        "source": "v:doc:program-plan-water-quality-monitoring",
+        "target": "v:spec:program-plan",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:program-memo-wqm:spec-program-memo",
+        "name": "Verification - program-memo-water-quality-monitoring against spec-for-program-memo",
+        "type": "edge/verification",
+        "source": "v:doc:program-memo-water-quality-monitoring",
+        "target": "v:spec:program-memo",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:field-survey-wqm:guidance-field-survey",
+        "name": "Validation - field-survey-water-quality-monitoring against guidance-for-field-survey",
+        "type": "edge/validation",
+        "source": "v:doc:field-survey-water-quality-monitoring",
+        "target": "v:guidance:field-survey",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:architecture-wqm:guidance-architecture",
+        "name": "Validation - architecture-water-quality-monitoring against guidance-for-architecture",
+        "type": "edge/validation",
+        "source": "v:doc:architecture-water-quality-monitoring",
+        "target": "v:guidance:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:lifecycle-wqm:guidance-lifecycle",
+        "name": "Validation - lifecycle-water-quality-monitoring against guidance-for-lifecycle",
+        "type": "edge/validation",
+        "source": "v:doc:lifecycle-water-quality-monitoring",
+        "target": "v:guidance:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:program-plan-wqm:guidance-program-plan",
+        "name": "Validation - program-plan-water-quality-monitoring against guidance-for-program-plan",
+        "type": "edge/validation",
+        "source": "v:doc:program-plan-water-quality-monitoring",
+        "target": "v:guidance:program-plan",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:program-memo-wqm:guidance-program-memo",
+        "name": "Validation - program-memo-water-quality-monitoring against guidance-for-program-memo",
+        "type": "edge/validation",
+        "source": "v:doc:program-memo-water-quality-monitoring",
+        "target": "v:guidance:program-memo",
+        "element_type": "edge"
+      }
+    ],
+    "faces": [
+      {
+        "id": "f:assurance:field-survey-wqm",
+        "name": "Assurance Face - field-survey-water-quality-monitoring",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:field-survey-water-quality-monitoring",
+          "v:spec:field-survey",
+          "v:guidance:field-survey"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:architecture-wqm",
+        "name": "Assurance Face - architecture-water-quality-monitoring",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:architecture-water-quality-monitoring",
+          "v:spec:architecture",
+          "v:guidance:architecture"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:lifecycle-wqm",
+        "name": "Assurance Face - lifecycle-water-quality-monitoring",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:lifecycle-water-quality-monitoring",
+          "v:spec:lifecycle",
+          "v:guidance:lifecycle"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:program-plan-wqm",
+        "name": "Assurance Face - program-plan-water-quality-monitoring",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:program-plan-water-quality-monitoring",
+          "v:spec:program-plan",
+          "v:guidance:program-plan"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:program-memo-wqm",
+        "name": "Assurance Face - program-memo-water-quality-monitoring",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:program-memo-water-quality-monitoring",
+          "v:spec:program-memo",
+          "v:guidance:program-memo"
+        ],
+        "element_type": "face"
+      }
+    ]
+  },
+  "metadata": {
+    "exported": "2026-01-04T17:41:26.838253",
+    "source_file": "program_development_dryrun/assurance/water-quality-assurance-audit.md"
+  },
+  "assurance_requirements": {
+    "all_vertices_assured": true,
+    "assurance_method": "standard",
+    "minimum_assurance_level": "ASSURED",
+    "requires_boundary_anchoring": false,
+    "audit_targets": [
+      "v:doc:field-survey-water-quality-monitoring",
+      "v:doc:architecture-water-quality-monitoring",
+      "v:doc:lifecycle-water-quality-monitoring",
+      "v:doc:program-plan-water-quality-monitoring",
+      "v:doc:program-memo-water-quality-monitoring"
+    ]
+  },
+  "audit_targets": [
+    "v:doc:field-survey-water-quality-monitoring",
+    "v:doc:architecture-water-quality-monitoring",
+    "v:doc:lifecycle-water-quality-monitoring",
+    "v:doc:program-plan-water-quality-monitoring",
+    "v:doc:program-memo-water-quality-monitoring"
+  ],
+  "audit_date": "2026-01-04T22:00:00+00:00",
+  "auditor": "claude-opus-4-5-20251101",
+  "audit_status": "PASS"
+}

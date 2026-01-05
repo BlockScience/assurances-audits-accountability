@@ -1,0 +1,837 @@
+{
+  "chart_id": "c:bus-electrification-assurance-audit",
+  "name": "Bus Electrification Program Assurance Audit",
+  "description": "Complete assurance network for the bus electrification program with boundary anchoring",
+  "type": "chart/assurance_audit",
+  "constructed_by": "claude-opus-4-5-20251101",
+  "construction_method": "llm-assisted",
+  "purpose": "Demonstrate complete assurance for program development documents with full boundary anchoring to root",
+  "scope": "20 vertices including boundary complex, 5 document types with specs/guidances, and 5 program documents",
+  "element_counts": {
+    "vertices": 20,
+    "edges": 56,
+    "faces": 19
+  },
+  "topology": {
+    "euler_characteristic": -17,
+    "dimension": 2
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "b0:root",
+        "name": "Root - Boundary Anchor",
+        "type": "vertex/b0",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:spec",
+        "name": "Specification for Specifications",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:guidance",
+        "name": "Specification for Guidance Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:spec",
+        "name": "Guidance for Specifications",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:guidance",
+        "name": "Guidance for Guidance Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:field-survey",
+        "name": "Specification for Field Survey Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:architecture",
+        "name": "Specification for Architecture Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:lifecycle",
+        "name": "Specification for Lifecycle Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:program-plan",
+        "name": "Specification for Program Plan Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:program-memo",
+        "name": "Specification for Program Memo Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:field-survey",
+        "name": "Guidance for Field Survey Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:architecture",
+        "name": "Guidance for Architecture Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:lifecycle",
+        "name": "Guidance for Lifecycle Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:program-plan",
+        "name": "Guidance for Program Plan Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:program-memo",
+        "name": "Guidance for Program Memo Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:field-survey-bus-electrification",
+        "name": "Field Survey - Regional Bus Fleet Electrification",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:architecture-bus-electrification",
+        "name": "Architecture - Regional Bus Fleet Electrification",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:lifecycle-bus-electrification",
+        "name": "Lifecycle - Bus Fleet Electrification",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:program-plan-bus-electrification",
+        "name": "Program Plan - Bus Fleet Electrification",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:doc:program-memo-bus-electrification",
+        "name": "Program Memo - Bus Fleet Electrification",
+        "type": "vertex/doc",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:coupling:spec",
+        "name": "Coupling - Spec-for-Spec and Guidance-for-Spec",
+        "type": "edge/coupling",
+        "source": "v:spec:spec",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:guidance",
+        "name": "Coupling - Spec-for-Guidance and Guidance-for-Guidance",
+        "type": "edge/coupling",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:spec-guidance:guidance-spec",
+        "name": "Coupling - Spec-for-Guidance and Guidance-for-Spec Cross-Domain Alignment",
+        "type": "edge/coupling",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:spec-guidance:spec-spec",
+        "name": "Verification - Spec-for-Guidance verifies against Spec-for-Spec",
+        "type": "edge/verification",
+        "source": "v:spec:guidance",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-spec:spec-guidance",
+        "name": "Verification - Guidance-for-Spec verifies against Spec-for-Guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:spec",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-guidance:spec-guidance",
+        "name": "Verification - Guidance-for-Guidance verifies against Spec-for-Guidance (Self-Verification)",
+        "type": "edge/verification",
+        "source": "v:guidance:guidance",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-spec:guidance-spec",
+        "name": "Validation - Spec-for-Spec validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:spec",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-guidance:guidance-spec",
+        "name": "Validation - Spec-for-Guidance validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:guidance-spec:guidance-guidance",
+        "name": "Validation - Guidance-for-Spec validates against Guidance-for-Guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:spec",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:self-verification",
+        "name": "Boundary Edge - Self-Verification of Spec-for-Spec",
+        "type": "edge/b1",
+        "source": "v:spec:spec",
+        "target": "b0:root",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:self-validation",
+        "name": "Boundary Edge - Self-Validation of Guidance-for-Guidance",
+        "type": "edge/b1",
+        "source": "v:guidance:guidance",
+        "target": "b0:root",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:couples-GS-root",
+        "name": "Boundary Edge - Couples Guidance-for-Spec to Root",
+        "type": "edge/b1",
+        "source": "b0:root",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:couples-SG-root",
+        "name": "Boundary Edge - Couples Spec-for-Guidance to Root",
+        "type": "edge/b1",
+        "source": "b0:root",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:field-survey",
+        "name": "Coupling - Spec-for-Field-Survey and Guidance-for-Field-Survey",
+        "type": "edge/coupling",
+        "source": "v:spec:field-survey",
+        "target": "v:guidance:field-survey",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:field-survey-spec:spec-spec",
+        "name": "Verification - spec-for-field-survey against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:field-survey",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:field-survey-spec:guidance-spec",
+        "name": "Validation - spec-for-field-survey against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:field-survey",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:field-survey-guidance:spec-guidance",
+        "name": "Verification - guidance-for-field-survey against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:field-survey",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:field-survey-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-field-survey against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:field-survey",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:architecture",
+        "name": "Coupling - Spec-for-Architecture and Guidance-for-Architecture",
+        "type": "edge/coupling",
+        "source": "v:spec:architecture",
+        "target": "v:guidance:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:architecture-spec:spec-spec",
+        "name": "Verification - spec-for-architecture against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:architecture",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:architecture-spec:guidance-spec",
+        "name": "Validation - spec-for-architecture against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:architecture",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:architecture-guidance:spec-guidance",
+        "name": "Verification - guidance-for-architecture against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:architecture",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:architecture-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-architecture against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:architecture",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:lifecycle",
+        "name": "Coupling - Spec-for-Lifecycle and Guidance-for-Lifecycle",
+        "type": "edge/coupling",
+        "source": "v:spec:lifecycle",
+        "target": "v:guidance:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:lifecycle-spec:spec-spec",
+        "name": "Verification - spec-for-lifecycle against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:lifecycle",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:lifecycle-spec:guidance-spec",
+        "name": "Validation - spec-for-lifecycle against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:lifecycle",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:lifecycle-guidance:spec-guidance",
+        "name": "Verification - guidance-for-lifecycle against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:lifecycle",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:lifecycle-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-lifecycle against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:lifecycle",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:program-plan",
+        "name": "Coupling - Spec-for-Program-Plan and Guidance-for-Program-Plan",
+        "type": "edge/coupling",
+        "source": "v:spec:program-plan",
+        "target": "v:guidance:program-plan",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:program-plan-spec:spec-spec",
+        "name": "Verification - spec-for-program-plan against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:program-plan",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:program-plan-spec:guidance-spec",
+        "name": "Validation - spec-for-program-plan against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:program-plan",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:program-plan-guidance:spec-guidance",
+        "name": "Verification - guidance-for-program-plan against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:program-plan",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:program-plan-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-program-plan against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:program-plan",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:program-memo",
+        "name": "Coupling - Spec-for-Program-Memo and Guidance-for-Program-Memo",
+        "type": "edge/coupling",
+        "source": "v:spec:program-memo",
+        "target": "v:guidance:program-memo",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:program-memo-spec:spec-spec",
+        "name": "Verification - spec-for-program-memo against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:program-memo",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:program-memo-spec:guidance-spec",
+        "name": "Validation - spec-for-program-memo against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:program-memo",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:program-memo-guidance:spec-guidance",
+        "name": "Verification - guidance-for-program-memo against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:program-memo",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:program-memo-guidance:guidance-guidance",
+        "name": "Validation - guidance-for-program-memo against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:program-memo",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:field-survey-bfe:spec-field-survey",
+        "name": "Verification - field-survey-bus-electrification against spec-for-field-survey",
+        "type": "edge/verification",
+        "source": "v:doc:field-survey-bus-electrification",
+        "target": "v:spec:field-survey",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:architecture-bfe:spec-architecture",
+        "name": "Verification - architecture-bus-electrification against spec-for-architecture",
+        "type": "edge/verification",
+        "source": "v:doc:architecture-bus-electrification",
+        "target": "v:spec:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:lifecycle-bfe:spec-lifecycle",
+        "name": "Verification - lifecycle-bus-electrification against spec-for-lifecycle",
+        "type": "edge/verification",
+        "source": "v:doc:lifecycle-bus-electrification",
+        "target": "v:spec:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:program-plan-bfe:spec-program-plan",
+        "name": "Verification - program-plan-bus-electrification against spec-for-program-plan",
+        "type": "edge/verification",
+        "source": "v:doc:program-plan-bus-electrification",
+        "target": "v:spec:program-plan",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:program-memo-bfe:spec-program-memo",
+        "name": "Verification - program-memo-bus-electrification against spec-for-program-memo",
+        "type": "edge/verification",
+        "source": "v:doc:program-memo-bus-electrification",
+        "target": "v:spec:program-memo",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:field-survey-bfe:guidance-field-survey",
+        "name": "Validation - field-survey-bus-electrification against guidance-for-field-survey",
+        "type": "edge/validation",
+        "source": "v:doc:field-survey-bus-electrification",
+        "target": "v:guidance:field-survey",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:architecture-bfe:guidance-architecture",
+        "name": "Validation - architecture-bus-electrification against guidance-for-architecture",
+        "type": "edge/validation",
+        "source": "v:doc:architecture-bus-electrification",
+        "target": "v:guidance:architecture",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:lifecycle-bfe:guidance-lifecycle",
+        "name": "Validation - lifecycle-bus-electrification against guidance-for-lifecycle",
+        "type": "edge/validation",
+        "source": "v:doc:lifecycle-bus-electrification",
+        "target": "v:guidance:lifecycle",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:program-plan-bfe:guidance-program-plan",
+        "name": "Validation - program-plan-bus-electrification against guidance-for-program-plan",
+        "type": "edge/validation",
+        "source": "v:doc:program-plan-bus-electrification",
+        "target": "v:guidance:program-plan",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:program-memo-bfe:guidance-program-memo",
+        "name": "Validation - program-memo-bus-electrification against guidance-for-program-memo",
+        "type": "edge/validation",
+        "source": "v:doc:program-memo-bus-electrification",
+        "target": "v:guidance:program-memo",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:architecture-bfe:field-survey-bfe",
+        "name": "Dependency Edge - architecture-bfe requires field-survey-bfe",
+        "type": "edge/dependency",
+        "source": "v:doc:architecture-bus-electrification",
+        "target": "v:doc:field-survey-bus-electrification",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:lifecycle-bfe:architecture-bfe",
+        "name": "Dependency Edge - lifecycle-bfe requires architecture-bfe",
+        "type": "edge/dependency",
+        "source": "v:doc:lifecycle-bus-electrification",
+        "target": "v:doc:architecture-bus-electrification",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:lifecycle-bfe:field-survey-bfe",
+        "name": "Dependency Edge - lifecycle-bfe requires field-survey-bfe",
+        "type": "edge/dependency",
+        "source": "v:doc:lifecycle-bus-electrification",
+        "target": "v:doc:field-survey-bus-electrification",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-plan-bfe:lifecycle-bfe",
+        "name": "Dependency Edge - program-plan-bfe requires lifecycle-bfe",
+        "type": "edge/dependency",
+        "source": "v:doc:program-plan-bus-electrification",
+        "target": "v:doc:lifecycle-bus-electrification",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-plan-bfe:architecture-bfe",
+        "name": "Dependency Edge - program-plan-bfe requires architecture-bfe",
+        "type": "edge/dependency",
+        "source": "v:doc:program-plan-bus-electrification",
+        "target": "v:doc:architecture-bus-electrification",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-memo-bfe:program-plan-bfe",
+        "name": "Dependency Edge - program-memo-bfe requires program-plan-bfe",
+        "type": "edge/dependency",
+        "source": "v:doc:program-memo-bus-electrification",
+        "target": "v:doc:program-plan-bus-electrification",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-memo-bfe:lifecycle-bfe",
+        "name": "Dependency Edge - program-memo-bfe requires lifecycle-bfe",
+        "type": "edge/dependency",
+        "source": "v:doc:program-memo-bus-electrification",
+        "target": "v:doc:lifecycle-bus-electrification",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:dependency:program-memo-bfe:architecture-bfe",
+        "name": "Dependency Edge - program-memo-bfe requires architecture-bfe",
+        "type": "edge/dependency",
+        "source": "v:doc:program-memo-bus-electrification",
+        "target": "v:doc:architecture-bus-electrification",
+        "element_type": "edge"
+      }
+    ],
+    "faces": [
+      {
+        "id": "b2:spec-spec",
+        "name": "Boundary Face - Spec-for-Spec Self-Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "b0:root",
+          "v:guidance:spec",
+          "v:spec:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:spec-guidance",
+        "name": "Assurance Face - Spec-for-Guidance Assurance",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:guidance",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:guidance-spec",
+        "name": "Assurance Face - Guidance-for-Spec Assurance",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:spec",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "b2:guidance-guidance",
+        "name": "Boundary Face - Guidance-for-Guidance Self-Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "b0:root",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:field-survey-spec",
+        "name": "Assurance Face - spec-for-field-survey",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:field-survey",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:field-survey-guidance",
+        "name": "Assurance Face - guidance-for-field-survey",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:field-survey",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:architecture-spec",
+        "name": "Assurance Face - spec-for-architecture",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:architecture",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:architecture-guidance",
+        "name": "Assurance Face - guidance-for-architecture",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:architecture",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:lifecycle-spec",
+        "name": "Assurance Face - spec-for-lifecycle",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:lifecycle",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:lifecycle-guidance",
+        "name": "Assurance Face - guidance-for-lifecycle",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:lifecycle",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:program-plan-spec",
+        "name": "Assurance Face - spec-for-program-plan",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:program-plan",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:program-plan-guidance",
+        "name": "Assurance Face - guidance-for-program-plan",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:program-plan",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:program-memo-spec",
+        "name": "Assurance Face - spec-for-program-memo",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:program-memo",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:program-memo-guidance",
+        "name": "Assurance Face - guidance-for-program-memo",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:program-memo",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:field-survey-bfe",
+        "name": "Assurance Face - field-survey-bus-electrification",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:field-survey-bus-electrification",
+          "v:spec:field-survey",
+          "v:guidance:field-survey"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:architecture-bfe",
+        "name": "Assurance Face - architecture-bus-electrification",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:architecture-bus-electrification",
+          "v:spec:architecture",
+          "v:guidance:architecture"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:lifecycle-bfe",
+        "name": "Assurance Face - lifecycle-bus-electrification",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:lifecycle-bus-electrification",
+          "v:spec:lifecycle",
+          "v:guidance:lifecycle"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:program-plan-bfe",
+        "name": "Assurance Face - program-plan-bus-electrification",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:program-plan-bus-electrification",
+          "v:spec:program-plan",
+          "v:guidance:program-plan"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:program-memo-bfe",
+        "name": "Assurance Face - program-memo-bus-electrification",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:doc:program-memo-bus-electrification",
+          "v:spec:program-memo",
+          "v:guidance:program-memo"
+        ],
+        "element_type": "face"
+      }
+    ]
+  },
+  "metadata": {
+    "exported": "2026-01-04T17:56:37.057081",
+    "source_file": "program_development_dryrun/assurance-bus-electrification/bus-electrification-assurance-audit.md"
+  },
+  "assurance_requirements": {
+    "all_vertices_assured": true,
+    "assurance_method": "mixed",
+    "minimum_assurance_level": "ASSURED",
+    "requires_boundary_anchoring": true
+  },
+  "audit_targets": [],
+  "audit_date": "2026-01-04T23:15:00+00:00",
+  "auditor": "claude-opus-4-5-20251101",
+  "audit_status": "PASS"
+}

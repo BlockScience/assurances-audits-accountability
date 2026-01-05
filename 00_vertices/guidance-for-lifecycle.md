@@ -3,32 +3,41 @@ type: vertex/guidance
 extends: doc
 id: v:guidance:lifecycle
 name: Guidance for Lifecycle Documents
-description: Quality criteria and best practices for creating excellent engineering lifecycle documentation
+description: Quality criteria and best practices for creating excellent engineering lifecycle documentation aligned with the V-model
 tags:
   - vertex
   - doc
   - guidance
-version: 1.0.0
+version: 2.0.0
 created: 2025-12-30T18:00:00Z
-modified: 2025-12-30T18:00:00Z
-dependencies: []
+modified: 2025-01-04T20:00:00Z
+criteria:
+  - v-model-alignment
+  - architecture-traceability
+  - phase-completeness
+  - operations-coverage
+  - decommissioning-readiness
+  - gate-rigor
+dependencies:
+  - v:guidance:architecture
 ---
 
 # Guidance for Lifecycle Documents
 
-**This guidance defines quality criteria and best practices for creating excellent engineering lifecycle documents that describe assured document development workflows.**
+**This guidance defines quality criteria and best practices for creating excellent engineering lifecycle documents that transform architectures into operational systems through the V-model.**
 
 ## Purpose
 
-While spec-for-lifecycle defines what structural elements must be present, this guidance helps authors assess **how well** a lifecycle document serves its purpose. Great lifecycle documents are clear, complete, actionable, and enable practitioners to successfully follow the process to produce assured artifacts.
+While spec-for-lifecycle defines what structural elements must be present, this guidance helps authors assess **how well** a lifecycle document serves its purpose. Great lifecycle documents clearly stage the engineering process from architecture through operations, maintain traceability across all phases, and provide actionable guidance for delivering systems that stakeholders will accept.
 
 ## Document Overview
 
 ### What This Guidance Covers
 
 This guidance supports authors creating lifecycle documents by providing:
-- Quality assessment criteria specific to process documentation
-- Best practices for describing workflows clearly
+
+- Quality assessment criteria for V-model aligned engineering processes
+- Best practices for design-to-evaluation traceability
 - Common pitfalls in lifecycle documentation
 - Section-by-section authoring recommendations
 - Workflow for creating lifecycle documents
@@ -36,384 +45,388 @@ This guidance supports authors creating lifecycle documents by providing:
 ### Best Use Cases
 
 Use this guidance when:
-- Creating a new lifecycle document for a document type
-- Reviewing existing lifecycle documentation for clarity and completeness
-- Standardizing lifecycle documentation across an organization
-- Teaching others how to document engineering processes
-- Evaluating whether a lifecycle can be successfully followed
+
+- Creating a lifecycle for a new system architecture
+- Reviewing existing lifecycle documentation for V-model alignment
+- Ensuring operations and decommissioning are adequately addressed
+- Evaluating whether a lifecycle can successfully deliver an operational system
 
 ## Quality Criteria
 
-### 1. Clarity of Flow
+### 1. V-Model Alignment
 
-**Excellent:**
-- Phases follow a logical, natural progression
-- Decision points are unambiguous (clear pass/fail criteria)
-- Iteration loops are explicitly documented with exit conditions
-- Reader can trace any path through the flowchart
-- Parallel vs. sequential phases are clearly distinguished
+**Definition:** How well does the lifecycle reflect the V-model's design-evaluation symmetry?
 
-**Good:**
-- Flow is generally understandable
-- Most decision points are clear
-- Major paths documented
-- Some ambiguity in edge cases
+| Level | Indicators |
+|-------|------------|
+| **Excellent** | Clear mapping between each design phase and its evaluation counterpart; Unit↔Physical, Integration↔Logical, System↔Functional, Acceptance↔Conceptual explicitly documented; V-model diagram shows symmetric structure |
+| **Good** | Design and evaluation phases present; mapping implied but not always explicit; V-model structure recognizable |
+| **Needs Improvement** | Design phases listed without evaluation counterparts; no V-model visualization; testing phases disconnected from design |
 
-**Needs Improvement:**
-- Confusing phase ordering
-- Decision criteria unclear or missing
-- Iteration not addressed
-- Cannot determine what happens on failure
-- Parallel/sequential relationships unclear
+### 2. Architecture Traceability
 
-### 2. Completeness
+**Definition:** How well does the lifecycle trace to and implement its referenced architecture?
 
-**Excellent:**
-- Every phase has Goal, Inputs, Process, Outputs, Gates
-- All decision paths documented (success AND failure)
-- Prerequisites explicitly stated and justified
-- No gaps between one phase's output and next phase's input
-- Edge cases and exceptions addressed
+| Level | Indicators |
+|-------|------------|
+| **Excellent** | Architecture explicitly referenced in frontmatter and introduction; all four layers summarized with evaluation mapping; key requirements identified and traced through phases; traceability matrix complete |
+| **Good** | Architecture referenced; most layers addressed; some traceability gaps |
+| **Needs Improvement** | Architecture mentioned vaguely; layers not systematically addressed; traceability unclear or missing |
 
-**Good:**
-- Major phases complete
-- Success paths documented
-- Prerequisites listed
-- Minor gaps acceptable
+### 3. Phase Completeness
 
-**Needs Improvement:**
-- Missing phase components (no inputs or no outputs)
-- Only happy path documented
-- Prerequisites assumed but not stated
-- Obvious gaps in flow
-- No exception handling
+**Definition:** Does each phase have all required elements with sufficient detail?
 
-### 3. Actionability
+| Level | Indicators |
+|-------|------------|
+| **Excellent** | Every phase has Goal, Inputs, Process, Outputs, and Gate; process steps are numbered and actionable; gates have explicit pass/fail criteria; failure paths documented |
+| **Good** | Most phases complete; some gaps in process detail or gate criteria |
+| **Needs Improvement** | Phases missing components; vague goals; no gate criteria; only happy path documented |
 
-**Excellent:**
-- Practitioner can follow lifecycle without additional guidance
-- Process steps are specific enough to execute
-- Verification commands or checks are provided
-- Time expectations realistic and stated where applicable
-- Examples reference real artifacts
+### 4. Operations Coverage
 
-**Good:**
-- Most steps executable
-- Some verification guidance
-- Generally followable
+**Definition:** How thoroughly does the lifecycle address post-acceptance operations?
 
-**Needs Improvement:**
-- Steps too vague to execute ("ensure quality")
-- No verification mechanisms documented
-- Requires extensive interpretation
-- Abstract without concrete examples
+| Level | Indicators |
+|-------|------------|
+| **Excellent** | Deployment process detailed; monitoring metrics with targets and thresholds; all four maintenance types addressed (corrective, adaptive, perfective, preventive); change management process defined |
+| **Good** | Operations addressed; monitoring mentioned; maintenance types partially covered |
+| **Needs Improvement** | Operations superficial or missing; no monitoring metrics; maintenance not addressed |
 
-### 4. Assurance Integration
+### 5. Decommissioning Readiness
 
-**Excellent:**
-- Clear distinction between verification (automated) and validation (human)
-- Human accountability explicitly required for validation gates
-- Assurance triangle formation explicitly documented
-- Connection to broader assurance framework clear
-- Edge and face creation documented
+**Definition:** Does the lifecycle address end-of-life considerations?
 
-**Good:**
-- Verification and validation distinguished
-- Human involvement noted
-- Assurance concepts referenced
+| Level | Indicators |
+|-------|------------|
+| **Excellent** | Multiple decommissioning triggers identified; process steps cover stakeholder notification, data preservation, service transition, resource cleanup, documentation archival; post-decommissioning state defined |
+| **Good** | Decommissioning triggers listed; basic process documented |
+| **Needs Improvement** | Decommissioning absent or perfunctory; no triggers; no preservation considerations |
 
-**Needs Improvement:**
-- Verification/validation conflated
-- Human accountability unclear
-- No connection to assurance framework
-- Unclear when assurance is achieved
+### 6. Gate Rigor
 
-### 5. Visual Quality
+**Definition:** Are verification and validation gates well-defined and actionable?
 
-**Excellent:**
-- Flowchart is readable and well-organized
-- Color coding meaningful and consistent
-- Subgraphs logically group related elements
-- Decision diamonds clearly labeled
-- All paths visible and traceable
-- Legend provided if using non-obvious notation
-
-**Good:**
-- Flowchart understandable
-- Some organization
-- Major elements visible
-
-**Needs Improvement:**
-- Flowchart cluttered or unreadable
-- No logical grouping
-- Decision points unclear
-- Paths difficult to trace
-- Inconsistent notation
-
-### 6. Narrative Coherence
-
-**Excellent:**
-- Prose walkthrough tells a coherent story
-- Explains "why" behind key decisions
-- Connects phases to outcomes
-- Addresses common questions proactively
-- Suitable for both reference and learning
-
-**Good:**
-- Narrative understandable
-- Major decisions explained
-- Generally coherent
-
-**Needs Improvement:**
-- Disconnected descriptions
-- No explanation of rationale
-- Only procedural (no "why")
-- Assumes too much context
-
-### 7. Traceability
-
-**Excellent:**
-- Every output can be traced to its inputs
-- Prerequisites trace to foundation documents
-- Artifacts produced are explicitly named
-- Lifecycle connects to specific document types (specs, guidance)
-- References to actual documents in repository
-
-**Good:**
-- Major artifacts traceable
-- Prerequisites referenced
-- General document types mentioned
-
-**Needs Improvement:**
-- Outputs appear from nowhere
-- Prerequisites vague ("some foundation")
-- Artifacts unnamed or generic
-- No connection to actual documents
+| Level | Indicators |
+|-------|------------|
+| **Excellent** | Clear distinction between verification (automated) and validation (human); explicit pass/fail criteria for every gate; acceptance testing requires named stakeholder sign-off; failure paths lead to specific remediation |
+| **Good** | Gates present with criteria; verification/validation mostly distinguished |
+| **Needs Improvement** | Gates vague ("ensure quality"); verification/validation conflated; no failure handling |
 
 ## Section-by-Section Guidance
 
 ### Introduction
 
-**Purpose:** Orient the reader and establish context
+**Purpose:** Orient reader to the system and V-model context
 
 **Tips:**
-- State the target artifact type in the first paragraph
-- Explain what problem this lifecycle solves
-- Connect to the assurance framework explicitly
-- Keep to 2-3 paragraphs maximum
+
+- Reference the architecture document in the first paragraph
+- State what system this lifecycle delivers
+- Explain the V-model alignment explicitly
+- Identify stakeholders who will perform acceptance
 
 **Anti-patterns:**
-- Starting with abstract definitions
-- Not stating what gets produced
-- Assuming reader knows the context
 
-**Example opening:**
-> "This lifecycle documents the systematic process for developing assured research papers within the typed simplicial complex framework. It produces a paper document that has been verified against its specification, validated against its guidance, and closed into an assurance triangle with explicit human accountability."
+- ❌ Generic introduction not tied to specific architecture
+- ❌ No mention of V-model or engineering process
+- ❌ Stakeholders unnamed or vague
 
-### Foundation / Prerequisites
+**Preferred:**
 
-**Purpose:** Establish what must exist before starting
+- ✅ "This lifecycle implements [[architecture-xyz]] to deliver the ABC system"
+- ✅ "Following the V-model, design phases on the left produce artifacts validated by testing phases on the right"
+
+### Architecture Foundation
+
+**Purpose:** Establish the architecture this lifecycle implements
 
 **Tips:**
-- Use a table format for clarity
-- Specify assurance status ("assumed assured")
-- Explain why each prerequisite is necessary
-- Reference actual document IDs where possible
+
+- Use the 4-layer summary table format
+- Map each layer to its evaluation counterpart
+- Extract key requirements that drive the lifecycle
+- Reference actual architecture sections
 
 **Anti-patterns:**
-- Vague prerequisites ("appropriate foundation")
-- Not explaining why prerequisites matter
-- Assuming knowledge of boundary complex
 
-**Quality Indicators:**
-- Could a newcomer determine what's needed?
-- Are all referenced documents findable?
+- ❌ Summarizing architecture without layer structure
+- ❌ Missing the layer-to-evaluation mapping
+- ❌ Vague requirements ("meet user needs")
 
-### Phase Definitions
+**Preferred:**
 
-**Purpose:** Define what happens in each phase
+- ✅ Four-row table with Conceptual/Functional/Logical/Physical
+- ✅ Each row shows layer description AND evaluation phase
+- ✅ Key requirements are specific and traceable
+
+### V-Model Overview
+
+**Purpose:** Visualize the complete lifecycle structure
 
 **Tips:**
-- Start each phase with a clear, single-sentence Goal
-- List Inputs as bullet points
-- Number Process steps sequentially
-- List Outputs explicitly
-- Include Gates for phases involving assurance
 
-**For Process Steps:**
-- Use imperative voice ("Draft the specification")
-- Be specific ("Run `verify_template_based.py`" not "Verify")
-- Include failure paths ("If verification fails → revise and re-verify")
-- Number steps for reference
-
-**For Gates:**
-- Distinguish verification (automated, deterministic) from validation (human, qualitative)
-- State what constitutes PASS vs FAIL
-- Name the human role for validation gates
+- Use Mermaid flowchart with subgraphs for Design, Implementation, Evaluation, Operations
+- Show the flow from ConOps through Decommissioning
+- Color-code phases by type (design, implementation, evaluation, operations)
+- Keep readable—not too many nodes
 
 **Anti-patterns:**
-- Vague goals ("Prepare content")
-- Missing inputs or outputs
-- Steps without failure handling
-- Gates without criteria
 
-### Flowchart Visualization
+- ❌ Linear flowchart without V-model structure
+- ❌ Missing operations/decommissioning phases
+- ❌ No visual distinction between phase types
 
-**Purpose:** Provide visual overview of the lifecycle
+**Preferred:**
+
+- ✅ Four subgraphs: Design (left), Implementation (bottom), Evaluation (right), Operations (post-acceptance)
+- ✅ Color coding: design phases, implementation, evaluation phases, operations phases
+
+### Design Phases
+
+**Purpose:** Define the left side of the V (requirements → design)
 
 **Tips:**
-- Use subgraphs to group phases
-- Color-code by phase type (foundation, development, assurance, delivery)
-- Use decision diamonds (`{}`) for gates
-- Show PASS/FAIL paths explicitly
-- Label arrows with transition conditions
-- Keep readable—split complex charts if needed
 
-**Mermaid Best Practices:**
-```mermaid
-flowchart TB
-    subgraph Phase1["Phase 1: Name"]
-        A[Step] --> B{Gate}
-        B -->|PASS| C[Next]
-        B -->|FAIL| A
-    end
-
-    style Phase1 fill:#e8f5e9,stroke:#2e7d32
-```
+- Three phases: ConOps→Functional, Functional→Logical, Logical→Physical
+- Each phase transforms one architecture layer to the next
+- Maintain traceability artifacts (function-to-need, component-to-function, etc.)
+- Verification gates check design completeness
 
 **Anti-patterns:**
-- Unlabeled decision paths
-- Missing failure loops
-- Cramming too much into one diagram
-- Inconsistent notation
 
-### Narrative Walkthrough
+- ❌ Combining multiple transitions in one phase
+- ❌ No traceability artifacts
+- ❌ Skipping directly from ConOps to Physical
 
-**Purpose:** Tell the story of the lifecycle in prose
+**Preferred:**
+
+- ✅ Each phase has explicit transformation goal
+- ✅ Outputs include traceability artifacts
+- ✅ Gates verify layer completeness before proceeding
+
+### Implementation Phase
+
+**Purpose:** Define the transition from design to realized system
 
 **Tips:**
-- Structure around major steps (not necessarily 1:1 with phases)
-- Explain the "why" behind decisions
-- Use concrete examples where possible
-- Address iteration explicitly
-- Connect to assurance concepts naturally
+
+- Takes physical architecture as input
+- Produces implemented components ready for testing
+- Include implementation standards and practices
+- Verification gate ensures implementation matches specs
 
 **Anti-patterns:**
-- Just repeating the flowchart in words
-- Only procedural (no rationale)
-- Disconnected paragraphs
-- Assuming reader followed flowchart
 
-### Key Properties
+- ❌ Vague implementation ("build the system")
+- ❌ No verification of implementation correctness
 
-**Purpose:** Highlight important characteristics
+**Preferred:**
+
+- ✅ Specific implementation activities
+- ✅ Clear criteria for implementation completeness
+
+### Evaluation Phases
+
+**Purpose:** Define the right side of the V (testing → acceptance)
 
 **Tips:**
-- Choose 4-6 distinctive properties
-- Each property should explain why it matters
-- Consider: trust, parallelism, iteration, human involvement, traceability
-- Make properties memorable and referenceable
 
-**Example properties:**
-- **Layered Trust:** Instance → Type → Foundation
-- **Human-in-the-Loop:** Validation requires named human
-- **Explicit Traceability:** Every output traces to inputs
+- Four phases: Unit, Integration, System, Acceptance
+- Each phase validates against its corresponding architecture layer
+- Unit→Physical, Integration→Logical, System→Functional, Acceptance→Conceptual
+- Acceptance requires stakeholder sign-off (human validation)
 
 **Anti-patterns:**
-- Generic properties ("It's systematic")
-- Too many properties (>7 becomes noise)
-- Properties without explanation
+
+- ❌ Testing phases not mapped to architecture layers
+- ❌ Acceptance testing without stakeholder involvement
+- ❌ No distinction between verification and validation
+
+**Preferred:**
+
+- ✅ Each test phase explicitly references its architecture layer
+- ✅ Acceptance includes "Stakeholder sign-off" as output
+- ✅ Acceptance gate is a Validation Gate (human), others are Verification Gates
+
+### Operations Phase
+
+**Purpose:** Define post-acceptance system operations
+
+**Tips:**
+
+- Deployment: specific steps to go live
+- Monitoring: metrics, targets, thresholds, alert handling
+- Maintenance: all four types with triggers and processes
+- Change management: how changes flow back through V-model
+
+**Anti-patterns:**
+
+- ❌ "Deploy to production" without details
+- ❌ Monitoring without metrics
+- ❌ Only corrective maintenance addressed
+
+**Preferred:**
+
+- ✅ Deployment checklist or process
+- ✅ Monitoring table with specific metrics and thresholds
+- ✅ Four maintenance types: corrective, adaptive, perfective, preventive
+- ✅ Change management references V-model phases
+
+### Decommissioning
+
+**Purpose:** Define when and how the system ends
+
+**Tips:**
+
+- Multiple triggers (technology obsolescence, business change, replacement system, etc.)
+- Process covers all aspects: notification, data, transition, cleanup, archive
+- Post-decommissioning state is clear
+
+**Anti-patterns:**
+
+- ❌ Single trigger ("when no longer needed")
+- ❌ No data preservation consideration
+- ❌ Missing stakeholder communication
+
+**Preferred:**
+
+- ✅ 3-5 specific decommissioning triggers
+- ✅ 5-step process covering all aspects
+- ✅ Clear post-decommissioning documentation location
+
+### Traceability Matrix
+
+**Purpose:** Summarize lifecycle-to-architecture mapping with concrete artifacts
+
+**Tips:**
+
+- Four rows: Conceptual, Functional, Logical, Physical
+- Columns: Design Phase, Implementation Artifact, Evaluation Phase
+- Implementation column shows the concrete artifact produced at each layer
+- Shows complete coverage of architecture with traceable deliverables
+
+**Anti-patterns:**
+
+- ❌ Incomplete matrix with empty cells
+- ❌ Missing implementation column or using "-" placeholders
+- ❌ Generic descriptions instead of concrete artifacts
+
+**Preferred:**
+
+- ✅ Every architecture layer mapped to design, implementation artifact, and evaluation
+- ✅ Implementation artifacts show refinement progression:
+  - Conceptual → Stakeholder Requirements Document
+  - Functional → System-Level Functional Requirements
+  - Logical → Component-level Specifications
+  - Physical → Implementation (code, hardware, etc.)
+- ✅ Clear traceability from stakeholder needs through to unit-tested implementation
 
 ## Workflow Guidance
 
 ### Recommended Authoring Sequence
 
-1. **Understand the Target** (15-30 min)
-   - What artifact does this lifecycle produce?
-   - What foundation does it require?
-   - Who will follow this lifecycle?
+1. **Review Architecture** (30-45 min)
+   - Read the referenced architecture document
+   - Identify the four layers and key requirements
+   - Note stakeholders for acceptance
 
-2. **Draft Phases** (45-60 min)
-   - Identify major phases (aim for 3-6)
-   - For each phase: Goal, Inputs, Process, Outputs
-   - Identify which phases involve assurance gates
+2. **Draft V-Model Overview** (30 min)
+   - Create the Mermaid diagram first
+   - Establish the phase structure
+   - Validate completeness (design, implementation, evaluation, operations, decommissioning)
 
-3. **Create Flowchart** (30-45 min)
-   - Draw the flow in Mermaid
-   - Add decision points and failure paths
-   - Group into subgraphs
-   - Apply color coding
+3. **Write Architecture Foundation** (20-30 min)
+   - Summarize each layer
+   - Map to evaluation phases
+   - Extract key requirements
 
-4. **Write Narrative** (30-45 min)
-   - Walk through the flow in prose
-   - Add rationale for key decisions
-   - Address iteration and exceptions
+4. **Define Design Phases** (45-60 min)
+   - Three phases with full structure
+   - Include traceability outputs
+   - Define verification gates
 
-5. **Identify Key Properties** (15-20 min)
-   - What makes this lifecycle distinctive?
-   - What principles does it embody?
+5. **Define Implementation Phase** (20-30 min)
+   - Implementation process
+   - Verification gate
 
-6. **Add Supporting Sections** (20-30 min)
-   - V-Model relationship (if applicable)
-   - Accountability statement
-   - Examples
+6. **Define Evaluation Phases** (45-60 min)
+   - Four phases with full structure
+   - Map each to architecture layer
+   - Acceptance testing includes stakeholder sign-off
 
-7. **Review for Quality** (20-30 min)
-   - Check against this guidance's criteria
-   - Verify flowchart matches narrative
-   - Ensure actionability
+7. **Define Operations Phase** (30-45 min)
+   - Deployment process
+   - Monitoring metrics
+   - Four maintenance types
+   - Change management
 
-**Total estimated time:** 3-4 hours for a comprehensive lifecycle document
+8. **Define Decommissioning** (20-30 min)
+   - Triggers
+   - Process
+   - Post-decommissioning state
+
+9. **Complete Traceability Matrix** (15 min)
+   - Verify complete coverage
+
+10. **Review for Quality** (30 min)
+    - Check against this guidance's criteria
+    - Verify V-model diagram matches content
+
+**Total estimated time:** 5-7 hours for a comprehensive lifecycle document
 
 ### Quality Checkpoints
 
-- **After step 2:** Can you trace a complete path from start to assured artifact?
-- **After step 3:** Does the flowchart show all decision paths including failures?
-- **After step 4:** Does the narrative explain "why" for key decisions?
-- **After step 7:** Could a newcomer follow this lifecycle successfully?
+- **After step 2:** Does the V-model diagram show symmetric design-evaluation structure?
+- **After step 4:** Are all three design transitions covered with traceability?
+- **After step 6:** Does each evaluation phase map to its architecture layer?
+- **After step 7:** Are all four maintenance types addressed?
+- **After step 9:** Is the traceability matrix complete?
 
 ## Common Issues and Solutions
 
 | Issue | Problem | Solution |
 |-------|---------|----------|
-| **Vague Gates** | "Verify the document" without criteria | Specify: "Run `verify_template_based.py doc.md`; PASS if exit code 0" |
-| **Missing Failure Paths** | Only happy path documented | Add explicit failure handling: "If FAIL → revise and return to step 2" |
-| **Conflated V&V** | "Verify and validate the document" | Separate: verification (automated structural checks) then validation (human quality assessment) |
-| **Abstract Phases** | "Prepare the content" | Be specific: "Draft document using architecture as reference, repository as evidence" |
-| **Unconnected Prerequisites** | "Assume foundation exists" | Name them: "Requires assured `spec-for-X` and `guidance-for-X`" |
-| **Cluttered Flowchart** | 50+ nodes in one diagram | Split into overview + detailed phase diagrams |
-| **No Iteration** | Linear flow only | Add iteration loops with exit conditions |
-| **Missing Human** | Validation without approver | "Human approver named in validation edge" |
+| **Missing V-model structure** | Lifecycle is linear without design-evaluation mapping | Restructure with explicit left side (design) and right side (evaluation) phases |
+| **Disconnected testing** | Test phases don't reference architecture layers | Add explicit "validates against [layer]" to each test phase |
+| **No operations content** | Lifecycle ends at acceptance | Add Operations section with deployment, monitoring, maintenance |
+| **Perfunctory decommissioning** | "Decommission when obsolete" | Expand with specific triggers, process steps, data considerations |
+| **Vague gates** | "Verify the design" | Specify criteria: "All functions trace to needs; coverage ≥95%" |
+| **Missing stakeholder sign-off** | Acceptance without human approval | Add "Stakeholder sign-off" as required output with named approver |
+| **No traceability artifacts** | Phases don't produce traceability | Add outputs like "function-to-need traceability matrix" |
+| **Architecture not referenced** | Lifecycle floats without foundation | Add architecture_ref to frontmatter; summarize in Architecture Foundation |
 
 ## Best Practices
 
-1. **Start with the End** - Know what artifact you're producing before designing the process
-2. **Design for Failure** - Every gate should have an explicit failure path
-3. **Separate V from V** - Verification is automated; validation requires human judgment
-4. **Name Your Humans** - Validation requires a named human approver, not "someone"
-5. **Be Specific** - "Run this command" beats "verify the document"
-6. **Show Iteration** - Real processes iterate; document the loops and exit conditions
-7. **Connect to Framework** - Reference actual specs, guidance, and assurance concepts
-8. **Test Your Flowchart** - Can you trace every path from start to end?
-9. **Tell the Story** - Narrative should explain "why", not just repeat "what"
-10. **Keep It Maintainable** - Lifecycle docs need updates; structure for easy modification
+1. **Start with the Architecture** - Read and understand the architecture before designing the lifecycle
+2. **Visualize First** - Create the V-model diagram early to establish structure
+3. **Trace Everything** - Every evaluation phase should reference its corresponding design phase
+4. **Name Your Stakeholders** - Acceptance testing requires named human approvers
+5. **Think Beyond Acceptance** - Operations and decommissioning are part of the lifecycle
+6. **Define Metrics** - Monitoring needs specific metrics, not just "monitor the system"
+7. **Plan for Change** - Change management should reference how changes flow through V-model
+8. **Consider End-of-Life** - Multiple decommissioning triggers show mature thinking
+9. **Gate with Criteria** - Every gate needs explicit pass/fail criteria
+10. **Maintain Symmetry** - The V-model's power is in design-evaluation correspondence
 
 ## Validation vs. Verification
 
 **Verification** (deterministic, against spec-for-lifecycle):
+
 - Are all required sections present?
-- Are all phases defined with Goal, Inputs, Process, Outputs?
-- Is there a Mermaid flowchart?
-- Are at least 2 phases defined?
+- Is the architecture reference in frontmatter?
+- Are three design phases and four evaluation phases defined?
+- Is there a V-model diagram?
+- Are operations and decommissioning sections present?
 
 **Validation** (qualitative, against this guidance):
-- Is the flow clear and followable?
-- Are decision criteria unambiguous?
-- Is it complete (all paths documented)?
-- Is it actionable (steps executable)?
-- Is assurance properly integrated?
-- Is the visualization high quality?
-- Is the narrative coherent?
+
+- Is V-model alignment clear and correct?
+- Is architecture traceability complete?
+- Are phases comprehensive with actionable content?
+- Is operations coverage thorough?
+- Is decommissioning realistic?
+- Are gates rigorous with explicit criteria?
 
 This guidance document supports **validation** - assessing fitness-for-purpose.
 
@@ -421,46 +434,23 @@ This guidance document supports **validation** - assessing fitness-for-purpose.
 
 This guidance document demonstrates the quality criteria it defines:
 
-- **Clarity of Flow:** Criteria presented in logical order from structure to quality
-- **Completeness:** All spec sections have corresponding guidance
-- **Actionability:** Specific tips, anti-patterns, examples provided
-- **Assurance Integration:** Clear distinction between verification and validation
-- **Visual Quality:** Tables used effectively for scannability
-- **Narrative Coherence:** Purpose and context established throughout
-- **Traceability:** References spec-for-lifecycle explicitly
-
-## Examples
-
-| Lifecycle Document | Target Artifact | Key Phases |
-|--------------------|-----------------|------------|
-| `lifecycle-incose-paper` | INCOSE IS 2026 paper | Type Definition → Architecture → Content Development → Post-Processing |
-
-## Tooling Support
-
-### Verification Commands
-
-```bash
-# Verify lifecycle document structure against spec-for-lifecycle
-python scripts/verify_template_based.py 00_vertices/lifecycle-*.md --templates templates
-
-# Verify complete chart including lifecycle
-python scripts/verify_chart.py charts/my-chart.md
-```
-
-### Validation Support
-
-Human review using this guidance document.
+- **V-Model Alignment:** Criteria map to lifecycle phases (design, evaluation, operations)
+- **Architecture Traceability:** References spec-for-lifecycle explicitly
+- **Phase Completeness:** Each section has purpose, tips, anti-patterns, preferred
+- **Operations Coverage:** Workflow includes quality checkpoints and maintenance guidance
+- **Decommissioning Readiness:** Addresses common issues including end-of-life
+- **Gate Rigor:** Clear distinction between verification and validation criteria
 
 ## Document Metadata
 
 | Property | Value |
 |----------|-------|
 | Specification | [[spec-for-lifecycle]] |
-| Guidance Version | 1.0.0 |
-| Specification Version | 1.0.0 |
+| Guidance Version | 2.0.0 |
+| Specification Version | 2.0.0 |
 | Terminology | VERIFICATION = structural compliance; VALIDATION = quality assessment |
-| Target Users | Engineers documenting development processes |
+| Target Users | Systems engineers creating engineering lifecycle documentation |
 
 ---
 
-**Note:** This guidance is coupled with [[spec-for-lifecycle]] via a coupling edge, supporting the assurance of engineering lifecycle documentation.
+**Note:** This guidance is coupled with [[spec-for-lifecycle]] via a coupling edge, supporting the assurance of engineering lifecycle documentation that delivers systems from architecture through operations.
