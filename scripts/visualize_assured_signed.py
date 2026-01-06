@@ -62,7 +62,7 @@ LAYER_Z = {
 
 def load_chart_json(json_path: Path) -> dict:
     """Load chart JSON data."""
-    with open(json_path, 'r') as f:
+    with open(json_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
@@ -645,7 +645,7 @@ def create_visualization(chart_data: dict) -> go.Figure:
 
 def add_legends_to_html(html_path: Path):
     """Add interactive legends to the HTML file."""
-    with open(html_path, 'r') as f:
+    with open(html_path, 'r', encoding='utf-8') as f:
         html_content = f.read()
 
     # Add all legends before closing body tag
@@ -657,7 +657,7 @@ def add_legends_to_html(html_path: Path):
     legends = f'{edge_legend}{face_legend}{vertex_legend}{layer_legend}'
     html_content = html_content.replace('</body>', f'{legends}</body>')
 
-    with open(html_path, 'w') as f:
+    with open(html_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
 
 

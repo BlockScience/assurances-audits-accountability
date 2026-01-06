@@ -45,7 +45,7 @@ def create_test_fixture(fixture_dir: Path, name: str, chart_md: str, vertices: d
 
     # Write chart
     chart_path = charts_dir / f'{name}.md'
-    chart_path.write_text(chart_md)
+    chart_path.write_text(chart_md, encoding='utf-8')
 
     # Write vertices
     if vertices:
@@ -53,19 +53,19 @@ def create_test_fixture(fixture_dir: Path, name: str, chart_md: str, vertices: d
             filename = vertex_id.replace(':', '-') + '.md'
             if vertex_id == 'b0:root':
                 filename = 'b0-root.md'
-            (vertices_dir / filename).write_text(content)
+            (vertices_dir / filename).write_text(content, encoding='utf-8')
 
     # Write edges
     if edges:
         for edge_id, content in edges.items():
             filename = edge_id.replace('e:', '').replace('b1:', 'b1-').replace(':', '-') + '.md'
-            (edges_dir / filename).write_text(content)
+            (edges_dir / filename).write_text(content, encoding='utf-8')
 
     # Write faces
     if faces:
         for face_id, content in faces.items():
             filename = face_id.replace('f:assurance:', 'assurance-').replace('b2:', 'b2-').replace(':', '-') + '.md'
-            (faces_dir / filename).write_text(content)
+            (faces_dir / filename).write_text(content, encoding='utf-8')
 
     return chart_path
 

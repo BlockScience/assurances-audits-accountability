@@ -43,7 +43,7 @@ def build_element_index(base_path: Path, search_dirs: List[Path] = None) -> Dict
     if vertices_dir.exists():
         for md_file in vertices_dir.glob('*.md'):
             try:
-                content = md_file.read_text()
+                content = md_file.read_text(encoding='utf-8')
                 fm = parse_frontmatter(content)
                 if 'id' in fm:
                     index[fm['id']] = md_file
@@ -55,7 +55,7 @@ def build_element_index(base_path: Path, search_dirs: List[Path] = None) -> Dict
     if edges_dir.exists():
         for md_file in edges_dir.glob('*.md'):
             try:
-                content = md_file.read_text()
+                content = md_file.read_text(encoding='utf-8')
                 fm = parse_frontmatter(content)
                 if 'id' in fm:
                     index[fm['id']] = md_file
@@ -67,7 +67,7 @@ def build_element_index(base_path: Path, search_dirs: List[Path] = None) -> Dict
     if faces_dir.exists():
         for md_file in faces_dir.glob('*.md'):
             try:
-                content = md_file.read_text()
+                content = md_file.read_text(encoding='utf-8')
                 fm = parse_frontmatter(content)
                 if 'id' in fm:
                     index[fm['id']] = md_file
@@ -79,7 +79,7 @@ def build_element_index(base_path: Path, search_dirs: List[Path] = None) -> Dict
         if search_dir.exists():
             for md_file in search_dir.glob('*.md'):
                 try:
-                    content = md_file.read_text()
+                    content = md_file.read_text(encoding='utf-8')
                     fm = parse_frontmatter(content)
                     if 'id' in fm and fm['id'] not in index:
                         index[fm['id']] = md_file
@@ -96,7 +96,7 @@ def read_element(element_id: str, element_index: Dict[str, Path]) -> Dict[str, A
     if not element_path:
         return None
 
-    with open(element_path, 'r') as f:
+    with open(element_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
     fm = parse_frontmatter(content)
@@ -147,7 +147,7 @@ def export_chart(chart_path: Path, search_dirs: List[Path] = None) -> Dict[str, 
     element_index = build_element_index(base_path, search_dirs)
 
     # Read chart
-    with open(chart_path, 'r') as f:
+    with open(chart_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
     fm = parse_frontmatter(content)
@@ -276,7 +276,7 @@ Examples:
     data = export_chart(chart_path, search_dirs)
 
     # Write JSON
-    with open(output_path, 'w') as f:
+    with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2)
 
     print(f"✓ Exported to: {output_path.name}")

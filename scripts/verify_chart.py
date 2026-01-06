@@ -43,7 +43,7 @@ def load_cache(root_path: Path) -> Dict[str, Any]:
         )
 
     try:
-        return json.loads(cache_path.read_text())
+        return json.loads(cache_path.read_text(encoding='utf-8'))
     except json.JSONDecodeError as e:
         raise VerificationError(f"Invalid JSON in cache: {e}")
 
