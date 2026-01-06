@@ -19,7 +19,7 @@ def load_cache(root_path: Path) -> Dict[str, Any]:
     cache_path = root_path / 'complex.json'
     if not cache_path.exists():
         raise FileNotFoundError(f"Cache not found: {cache_path}")
-    return json.loads(cache_path.read_text())
+    return json.loads(cache_path.read_text(encoding='utf-8'))
 
 
 def get_edge_boundary(edge: Dict[str, Any]) -> Tuple[str, str]:

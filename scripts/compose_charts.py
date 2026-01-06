@@ -19,7 +19,7 @@ from typing import Dict, List, Set, Any
 
 def load_chart(json_path: Path) -> Dict[str, Any]:
     """Load a chart from JSON file."""
-    with open(json_path, 'r') as f:
+    with open(json_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
@@ -181,7 +181,7 @@ def compose_charts(chart1_path: Path, chart2_path: Path, cache_path: Path,
 
     # Write output
     print(f"\nWriting composed chart to {output_path}...")
-    with open(output_path, 'w') as f:
+    with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(composed, f, indent=2)
 
     print(f"✓ Composition complete")

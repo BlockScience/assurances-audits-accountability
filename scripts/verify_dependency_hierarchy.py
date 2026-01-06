@@ -22,7 +22,7 @@ def load_cache(cache_path: Path) -> Dict:
     if not cache_path.exists():
         raise FileNotFoundError(f"Cache not found: {cache_path}")
 
-    with open(cache_path, 'r') as f:
+    with open(cache_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 

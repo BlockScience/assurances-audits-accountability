@@ -39,7 +39,7 @@ class TestEdgeTemplateRequiredFields:
         for template_file in edge_templates:
             if template_file.name in self.SPECIAL_TEMPLATES:
                 continue
-            content = template_file.read_text()
+            content = template_file.read_text(encoding='utf-8')
             assert 'source_type:' in content, \
                 f"Edge template {template_file.name} missing source_type field"
 
@@ -53,7 +53,7 @@ class TestEdgeTemplateRequiredFields:
         for template_file in edge_templates:
             if template_file.name in self.SPECIAL_TEMPLATES:
                 continue
-            content = template_file.read_text()
+            content = template_file.read_text(encoding='utf-8')
             assert 'target_type:' in content, \
                 f"Edge template {template_file.name} missing target_type field"
 
@@ -67,7 +67,7 @@ class TestEdgeTemplateRequiredFields:
         for template_file in edge_templates:
             if template_file.name in self.SPECIAL_TEMPLATES:
                 continue
-            content = template_file.read_text()
+            content = template_file.read_text(encoding='utf-8')
             assert 'orientation:' in content, \
                 f"Edge template {template_file.name} missing orientation field"
 
@@ -89,7 +89,7 @@ tags:
 version: 1.0.0
 ---
 Test edge content
-""")
+""", encoding='utf-8')
 
         # Should parse without error
         edge = parse_edge(edge_file)
@@ -114,7 +114,7 @@ class TestFaceTemplateRequiredFields:
         for template_file in face_templates:
             if template_file.name in self.SPECIAL_TEMPLATES:
                 continue
-            content = template_file.read_text()
+            content = template_file.read_text(encoding='utf-8')
             assert 'edges:' in content, \
                 f"Face template {template_file.name} missing edges field"
 
@@ -128,7 +128,7 @@ class TestFaceTemplateRequiredFields:
         for template_file in face_templates:
             if template_file.name in self.SPECIAL_TEMPLATES:
                 continue
-            content = template_file.read_text()
+            content = template_file.read_text(encoding='utf-8')
             assert 'orientation:' in content, \
                 f"Face template {template_file.name} missing orientation field"
 
@@ -154,7 +154,7 @@ tags:
 version: 1.0.0
 ---
 Test face content
-""")
+""", encoding='utf-8')
 
         # Should parse without error
         face = parse_face(face_file)
@@ -180,7 +180,7 @@ tags:
 version: 1.0.0
 ---
 Missing source_type, target_type, orientation
-""")
+""", encoding='utf-8')
 
         # Create a good edge file
         good_edge = tmp_path / "good-edge.md"
@@ -198,7 +198,7 @@ tags:
 version: 1.0.0
 ---
 Good edge
-""")
+""", encoding='utf-8')
 
         # Parse directory (takes string type, not parser function)
         elements = parse_directory(tmp_path, 'edge')
@@ -219,7 +219,7 @@ type: edge
   malformed: yaml: structure
 ---
 Bad YAML
-""")
+""", encoding='utf-8')
 
         elements = parse_directory(tmp_path, 'edge')
 
@@ -247,7 +247,7 @@ tags:
 version: 1.0.0
 ---
 Good edge
-""")
+""", encoding='utf-8')
 
         elements = parse_directory(tmp_path, 'edge')
 
@@ -267,7 +267,7 @@ class TestLearningJourneyEdgeTemplates:
         template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'has-skill.md'
         assert template.exists(), "has-skill template not found"
 
-        content = template.read_text()
+        content = template.read_text(encoding='utf-8')
         assert 'source_type: vertex/student' in content
         assert 'target_type: vertex/skill' in content
         assert 'orientation: directed' in content
@@ -277,7 +277,7 @@ class TestLearningJourneyEdgeTemplates:
         template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'requires-skill.md'
         assert template.exists(), "requires-skill template not found"
 
-        content = template.read_text()
+        content = template.read_text(encoding='utf-8')
         assert 'source_type: vertex/learning-module' in content
         assert 'target_type: vertex/skill' in content
         assert 'orientation: directed' in content
@@ -287,7 +287,7 @@ class TestLearningJourneyEdgeTemplates:
         template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'develops-skill.md'
         assert template.exists(), "develops-skill template not found"
 
-        content = template.read_text()
+        content = template.read_text(encoding='utf-8')
         assert 'source_type: vertex/learning-module' in content
         assert 'target_type: vertex/skill' in content
         assert 'orientation: directed' in content
@@ -297,7 +297,7 @@ class TestLearningJourneyEdgeTemplates:
         template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'studies.md'
         assert template.exists(), "studies template not found"
 
-        content = template.read_text()
+        content = template.read_text(encoding='utf-8')
         assert 'source_type: vertex/student' in content
         assert 'target_type: vertex/learning-module' in content
         assert 'orientation: directed' in content
@@ -307,7 +307,7 @@ class TestLearningJourneyEdgeTemplates:
         template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'transitions-to.md'
         assert template.exists(), "transitions-to template not found"
 
-        content = template.read_text()
+        content = template.read_text(encoding='utf-8')
         assert 'source_type: vertex/student' in content
         assert 'target_type: vertex/student' in content
         assert 'orientation: directed' in content
@@ -317,7 +317,7 @@ class TestLearningJourneyEdgeTemplates:
         template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'advances.md'
         assert template.exists(), "advances template not found"
 
-        content = template.read_text()
+        content = template.read_text(encoding='utf-8')
         assert 'source_type: vertex/learning-module' in content
         assert 'target_type: vertex/student' in content
         assert 'orientation: directed' in content
@@ -331,7 +331,7 @@ class TestLearningJourneyFaceTemplates:
         template = Path(__file__).parent.parent / 'templates' / '02_faces' / 'prerequisite.md'
         assert template.exists(), "prerequisite template not found"
 
-        content = template.read_text()
+        content = template.read_text(encoding='utf-8')
         assert 'edges:' in content
         assert 'orientation: oriented' in content
         # Should have 3 edges in boundary
@@ -344,7 +344,7 @@ class TestLearningJourneyFaceTemplates:
         template = Path(__file__).parent.parent / 'templates' / '02_faces' / 'completion.md'
         assert template.exists(), "completion template not found"
 
-        content = template.read_text()
+        content = template.read_text(encoding='utf-8')
         assert 'edges:' in content
         assert 'orientation: oriented' in content
         # Should have 3 edges in boundary (studies, transitions-to, advances)
@@ -357,7 +357,7 @@ class TestLearningJourneyFaceTemplates:
         template = Path(__file__).parent.parent / 'templates' / '02_faces' / 'skill-gain.md'
         assert template.exists(), "skill-gain template not found"
 
-        content = template.read_text()
+        content = template.read_text(encoding='utf-8')
         assert 'edges:' in content
         assert 'orientation: oriented' in content
         # Should have 3 edges in boundary (advances, has-skill, develops-skill)

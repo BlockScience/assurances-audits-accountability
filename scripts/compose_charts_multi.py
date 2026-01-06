@@ -182,7 +182,7 @@ def compose_charts_multi(chart_paths: List[Path], output_path: Path,
         print(f"\n{'='*60}")
         print(f"Writing final composed chart to {output_path}...")
 
-    with open(output_path, 'w') as f:
+    with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(current, f, indent=2)
 
     if verbose:
