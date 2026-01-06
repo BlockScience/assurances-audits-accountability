@@ -693,7 +693,7 @@ class HodgeAnalyzer:
 
 def load_chart_json(json_path: Path) -> ChartData:
     """Load chart from JSON file."""
-    with open(json_path, 'r') as f:
+    with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     return ChartData(data)
 

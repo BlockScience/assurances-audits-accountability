@@ -37,7 +37,7 @@ def load_chart_elements(chart_path: Path) -> dict:
             'metadata': chart_metadata
         }
     """
-    with open(chart_path, 'r') as f:
+    with open(chart_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
     # Split frontmatter
