@@ -711,21 +711,21 @@ def main():
     # Figure 1: Assurance Triangle
     fig1_path = output_dir / 'figure1-assurance-triangle.svg'
     fig1_svg = generate_figure1_assurance_triangle()
-    with open(fig1_path, 'w') as f:
+    with open(fig1_path, 'w', encoding='utf-8') as f:
         f.write(fig1_svg)
     print(f"✓ Figure 1: {fig1_path}")
 
     # Figure 2: Audit Chart
     fig2_path = output_dir / 'figure2-audit-chart.svg'
     fig2_svg = generate_figure2_audit_chart()
-    with open(fig2_path, 'w') as f:
+    with open(fig2_path, 'w', encoding='utf-8') as f:
         f.write(fig2_svg)
     print(f"✓ Figure 2: {fig2_path}")
 
     # Figure 3: Boundary Complex
     fig3_path = output_dir / 'figure3-boundary-complex.svg'
     fig3_svg = generate_figure3_boundary_complex()
-    with open(fig3_path, 'w') as f:
+    with open(fig3_path, 'w', encoding='utf-8') as f:
         f.write(fig3_svg)
     print(f"✓ Figure 3: {fig3_path}")
 

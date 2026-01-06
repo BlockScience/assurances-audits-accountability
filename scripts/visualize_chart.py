@@ -18,7 +18,7 @@ import networkx as nx
 
 def load_chart_json(json_path: Path) -> dict:
     """Load chart JSON data."""
-    with open(json_path, 'r') as f:
+    with open(json_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 

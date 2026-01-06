@@ -83,16 +83,68 @@ def get_github_actor() -> str:
     return os.getenv('GITHUB_ACTOR', '')
 
 
-def get_modified_validation_edges() -> List[Path]:
+def get_file_author_from_blame(file_path: str) -> str:
     """
-    Get list of validation edges modified in this commit/PR.
+    Get the author who actually created/modified a file using git blame.
 
-    Returns paths to validation edge markdown files that were added or modified.
+    For validation edges, we care about who authored the frontmatter
+    (specifically the accountability fields). This uses git blame to
+    find the actual author of the file content.
+
+    Returns the author name, or empty string if unable to determine.
     """
     try:
-        # Get files changed in HEAD commit
+        # Use git log to find who last modified this file
+        # This is more reliable than blame for newly added files
         result = subprocess.run(
-            ['git', 'diff', '--name-only', 'HEAD~1', 'HEAD'],
+            ['git', 'log', '-1', '--format=%an', '--follow', '--', file_path],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout.strip()
+    except subprocess.CalledProcessError:
+        return ""
+
+
+def get_file_author_in_commit(file_path: str, commit: str = 'HEAD') -> str:
+    """
+    Get the author who actually modified a specific file in a commit.
+
+    Uses git log to find who authored the changes to this file.
+    For merge commits or PRs, this checks if the file was actually
+    modified by the commit author.
+
+    Returns empty string if file wasn't modified by the commit author.
+    """
+    try:
+        # Check if this file was actually added or modified in this commit
+        result = subprocess.run(
+            ['git', 'log', '-1', '--format=%an', '--diff-filter=AM', '--', file_path],
+            capture_output=True,
+            text=True,
+            check=True,
+            cwd=str(Path(file_path).parent) if Path(file_path).exists() else None
+        )
+        return result.stdout.strip()
+    except subprocess.CalledProcessError:
+        return ""
+
+
+def get_modified_validation_edges() -> List[Tuple[Path, str]]:
+    """
+    Get list of validation edges modified in this commit/PR with their authors.
+
+    Returns list of (path, author) tuples for validation edge markdown files
+    that were added or modified. Uses git blame/log to find the actual author
+    of each file, not just the commit author. This ensures that when user A
+    pushes a branch containing user B's validation edges, the check correctly
+    attributes those edges to user B.
+    """
+    try:
+        # Get files changed in HEAD commit (Added or Modified only)
+        result = subprocess.run(
+            ['git', 'diff', '--name-only', '--diff-filter=AM', 'HEAD~1', 'HEAD'],
             capture_output=True,
             text=True,
             check=True
@@ -114,7 +166,9 @@ def get_modified_validation_edges() -> List[Path]:
                         content = path.read_text(encoding='utf-8')
                         frontmatter, _ = extract_frontmatter(content)
                         if frontmatter and frontmatter.get('type') == 'edge/validation':
-                            validation_edges.append(path)
+                            # Get who actually authored this file (using git log --follow)
+                            file_author = get_file_author_from_blame(file_path)
+                            validation_edges.append((path, file_author))
                     except Exception as e:
                         print(f"Warning: Could not parse {path}: {e}")
 
@@ -631,7 +685,7 @@ def check_commit_main() -> int:
         print(f"GitHub actor: {github_actor}")
     print()
 
-    # Get modified validation edges
+    # Get modified validation edges (returns tuples of (path, file_author))
     validation_edges = get_modified_validation_edges()
 
     if not validation_edges:
@@ -641,16 +695,18 @@ def check_commit_main() -> int:
         return 0
 
     print(f"Found {len(validation_edges)} validation edge(s) to check:")
-    for edge in validation_edges:
-        print(f"  - {edge}")
+    for edge_path, file_author in validation_edges:
+        print(f"  - {edge_path} (author: {file_author or 'unknown'})")
     print()
 
     # Check accountability for each validation edge
     all_passed = True
-    for edge_path in validation_edges:
+    for edge_path, file_author in validation_edges:
+        # Use file-specific author if available, otherwise fall back to commit author
+        effective_author = file_author if file_author else author
         passed, message = check_validation_edge_accountability(
             edge_path,
-            author,
+            effective_author,
             committer,
             github_actor
         )

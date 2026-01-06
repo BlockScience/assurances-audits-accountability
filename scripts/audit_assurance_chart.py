@@ -67,7 +67,7 @@ except ImportError:
 
 def load_chart(chart_path: Path) -> dict:
     """Load chart markdown and extract frontmatter."""
-    with open(chart_path, 'r') as f:
+    with open(chart_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
     # Split frontmatter from content
@@ -170,7 +170,7 @@ def load_element(element_id: str, base_dir: Path, search_dirs: list = None) -> d
     if not element_path or not element_path.exists():
         return None
 
-    with open(element_path, 'r') as f:
+    with open(element_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
     # Split frontmatter from content
@@ -683,7 +683,7 @@ Examples:
     # Generate audit trail markdown
     trail = format_audit_trail(result)
     trail_path = chart_path.parent / f"{chart_path.stem}-audit-trail.md"
-    with open(trail_path, 'w') as f:
+    with open(trail_path, 'w', encoding='utf-8') as f:
         f.write(trail)
 
     print(f"✓ Audit trail written to: {trail_path.name}")

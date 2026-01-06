@@ -59,7 +59,7 @@ def parse_citations(markdown_path: Path) -> list[Citation]:
 
     Extracts YAML blocks that define citations.
     """
-    with open(markdown_path, 'r') as f:
+    with open(markdown_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
     # Find all YAML code blocks

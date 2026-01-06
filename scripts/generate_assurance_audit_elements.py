@@ -277,7 +277,7 @@ def main():
 
     # Output
     if output_file:
-        with open(output_file, 'w') as f:
+        with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(result, f, indent=2)
         print(f"✓ Generated elements for {len(target_vertices)} target vertices")
         print(f"✓ Written to: {output_file}")
