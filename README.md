@@ -1,6 +1,6 @@
 # Assurances, Audits & Accountability
 
-This repository contains the implementation and demonstration of a typed simplicial complex framework for document verification, validation, and assurance of AI Generated Content with explicit human accountability.
+This repository contains the implementation and demonstration of a typed simplicial complex framework for document verification, validation, and assurance of AI Generated Content with explicit human accountability. 
 
 ![Accountability Complex](docs/images/assurance_complex.png)
 
