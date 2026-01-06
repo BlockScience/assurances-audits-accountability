@@ -251,6 +251,355 @@ class TestSharedValidationEdgeConsistency:
         assert all_passed, "All signature faces should pass accountability consistency"
 
 
+class TestPerFileAuthorTracking:
+    """
+    Test per-file author tracking for accountability checks.
+
+    This tests the fix for the issue where user A pushing a branch containing
+    user B's validation edges would fail because the check used the commit author
+    (A) instead of the actual file author (B).
+
+    The fix uses git log --follow to determine who actually authored each
+    validation edge file, ensuring proper accountability attribution.
+    """
+
+    def test_get_file_author_from_blame_returns_author(self):
+        """
+        POSITIVE TEST: get_file_author_from_blame returns the actual author of a file.
+
+        When a validation edge file exists and has git history, the function
+        should return the name of the person who last modified that file.
+        """
+        from check_accountability import get_file_author_from_blame
+
+        repo_root = Path(__file__).parent.parent
+        edge_path = repo_root / '01_edges' / 'validation-spec-spec.md'
+
+        if not edge_path.exists():
+            pytest.skip("validation-spec-spec.md not found")
+
+        author = get_file_author_from_blame(str(edge_path))
+
+        # Should return a non-empty author name
+        assert author, "Should return non-empty author for existing file"
+        assert isinstance(author, str), "Author should be a string"
+        print(f"✓ get_file_author_from_blame returns author: {author}")
+
+    def test_get_file_author_from_blame_nonexistent_file(self):
+        """
+        NEGATIVE TEST: get_file_author_from_blame returns empty string for non-existent file.
+
+        When a file doesn't exist or has no git history, the function should
+        gracefully return an empty string rather than raising an error.
+        """
+        from check_accountability import get_file_author_from_blame
+
+        author = get_file_author_from_blame('/nonexistent/path/to/file.md')
+
+        # Should return empty string, not raise an error
+        assert author == "", "Should return empty string for non-existent file"
+        print("✓ get_file_author_from_blame handles non-existent files gracefully")
+
+    def test_modified_validation_edges_returns_tuples(self):
+        """
+        POSITIVE TEST: get_modified_validation_edges returns (path, author) tuples.
+
+        The function should return a list of tuples where each tuple contains
+        the file path and the author who actually wrote that file.
+        """
+        from check_accountability import get_modified_validation_edges
+
+        # This tests the return type, even if no edges are modified
+        edges = get_modified_validation_edges()
+
+        assert isinstance(edges, list), "Should return a list"
+
+        # If there are edges, verify tuple structure
+        for item in edges:
+            assert isinstance(item, tuple), f"Each item should be a tuple, got {type(item)}"
+            assert len(item) == 2, f"Each tuple should have 2 elements, got {len(item)}"
+            path, author = item
+            assert isinstance(path, Path), f"First element should be Path, got {type(path)}"
+            assert isinstance(author, str), f"Second element should be str, got {type(author)}"
+
+        print(f"✓ get_modified_validation_edges returns correct tuple structure ({len(edges)} edges)")
+
+    def test_cross_user_push_scenario_correct_attribution(self, tmp_path):
+        """
+        POSITIVE TEST: When user A pushes user B's validation edge, accountability
+        check uses B (the file author), not A (the pusher).
+
+        This is the core scenario the fix addresses:
+        - mzargham creates validation edges (accountable party = mzargham)
+        - davidfsol5 makes other changes and pushes
+        - CI should check mzargham's edges against mzargham, not davidfsol5
+
+        We simulate this by creating a validation edge with mzargham as approver,
+        then checking accountability with mzargham as the file author.
+        """
+        from check_accountability import check_validation_edge_accountability
+
+        # Create a test validation edge with mzargham as accountable party
+        edge_file = tmp_path / "validation-test.md"
+        edge_file.write_text("""---
+type: edge/validation
+id: e:validation:test:spec
+name: Test Validation Edge
+source: v:doc:test
+target: v:spec:spec
+source_type: vertex/doc
+target_type: vertex/spec
+orientation: directed
+validation_method: llm-assisted
+human_approver: mzargham
+llm_model: claude-opus-4
+tags:
+  - validation
+version: 1.0.0
+---
+Test validation edge for cross-user push scenario.
+""", encoding='utf-8')
+
+        # Scenario: davidfsol5 is the commit author (pusher),
+        # but mzargham is the actual file author
+        # The check should use mzargham (file author) and PASS
+
+        # When effective_author = mzargham (from get_file_author_from_blame)
+        passed, message = check_validation_edge_accountability(
+            edge_file,
+            author='mzargham',       # Effective author = file author
+            committer='davidfsol5',  # Commit committer = different person
+            github_actor='davidfsol5'  # GitHub actor = pusher
+        )
+
+        assert passed, f"Should PASS when file author matches accountable party: {message}"
+        print("✓ Cross-user push correctly uses file author for accountability")
+
+    def test_cross_user_push_scenario_wrong_attribution_fails(self, tmp_path):
+        """
+        NEGATIVE TEST: If we incorrectly use the pusher (not file author) as
+        author, the check should fail when pusher != accountable party.
+
+        This demonstrates what the OLD behavior was (which we fixed):
+        - File has mzargham as accountable party
+        - If we incorrectly use davidfsol5 (the pusher) as author
+        - The check should FAIL
+
+        This test verifies that the accountability check correctly rejects
+        when the wrong person is attributed as author.
+        """
+        from check_accountability import check_validation_edge_accountability
+
+        # Create a test validation edge with mzargham as accountable party
+        edge_file = tmp_path / "validation-test.md"
+        edge_file.write_text("""---
+type: edge/validation
+id: e:validation:test:spec
+name: Test Validation Edge
+source: v:doc:test
+target: v:spec:spec
+source_type: vertex/doc
+target_type: vertex/spec
+orientation: directed
+validation_method: llm-assisted
+human_approver: mzargham
+llm_model: claude-opus-4
+tags:
+  - validation
+version: 1.0.0
+---
+Test validation edge for wrong attribution scenario.
+""", encoding='utf-8')
+
+        # If we incorrectly used commit author instead of file author,
+        # davidfsol5 would be checked against mzargham and FAIL
+        passed, message = check_validation_edge_accountability(
+            edge_file,
+            author='davidfsol5',     # Wrong! This is pusher, not file author
+            committer='davidfsol5',
+            github_actor='davidfsol5'
+        )
+
+        assert not passed, f"Should FAIL when pusher != accountable party: {message}"
+        assert 'Accountability violation' in message
+        print("✓ Accountability check correctly rejects when wrong person attributed")
+
+    def test_effective_author_fallback_to_commit_author(self, tmp_path):
+        """
+        POSITIVE TEST: When file author is empty/unknown, falls back to commit author.
+
+        The check_commit_main function uses this logic:
+            effective_author = file_author if file_author else author
+
+        This ensures graceful fallback when git blame can't determine file author.
+        """
+        from check_accountability import check_validation_edge_accountability
+
+        # Create a test validation edge
+        edge_file = tmp_path / "validation-test.md"
+        edge_file.write_text("""---
+type: edge/validation
+id: e:validation:test:spec
+name: Test Validation Edge
+source: v:doc:test
+target: v:spec:spec
+source_type: vertex/doc
+target_type: vertex/spec
+orientation: directed
+validation_method: manual
+validator: mzargham
+tags:
+  - validation
+version: 1.0.0
+---
+Test validation edge for fallback scenario.
+""", encoding='utf-8')
+
+        # Simulate fallback: if file_author is empty, use commit author
+        file_author = ""  # Empty = couldn't determine
+        commit_author = "mzargham"
+        effective_author = file_author if file_author else commit_author
+
+        passed, message = check_validation_edge_accountability(
+            edge_file,
+            author=effective_author,
+            committer=commit_author,
+            github_actor='mzargham'
+        )
+
+        assert passed, f"Should PASS with fallback to commit author: {message}"
+        print("✓ Fallback to commit author works correctly")
+
+    def test_multiple_users_different_files(self, tmp_path):
+        """
+        POSITIVE TEST: Multiple validation edges from different authors should
+        each be checked against their respective file authors.
+
+        Scenario:
+        - edge1 by mzargham (accountable = mzargham)
+        - edge2 by davidfsol5 (accountable = davidfsol5)
+        Both should PASS when checked with correct file authors.
+        """
+        from check_accountability import check_validation_edge_accountability
+
+        # Edge 1: authored by mzargham
+        edge1 = tmp_path / "validation-edge1.md"
+        edge1.write_text("""---
+type: edge/validation
+id: e:validation:edge1:spec
+name: Edge 1 by mzargham
+source: v:doc:test1
+target: v:spec:spec
+source_type: vertex/doc
+target_type: vertex/spec
+orientation: directed
+validation_method: manual
+validator: mzargham
+tags:
+  - validation
+version: 1.0.0
+---
+Edge 1 content.
+""", encoding='utf-8')
+
+        # Edge 2: authored by davidfsol5
+        edge2 = tmp_path / "validation-edge2.md"
+        edge2.write_text("""---
+type: edge/validation
+id: e:validation:edge2:spec
+name: Edge 2 by davidfsol5
+source: v:doc:test2
+target: v:spec:spec
+source_type: vertex/doc
+target_type: vertex/spec
+orientation: directed
+validation_method: manual
+validator: davidfsol5
+tags:
+  - validation
+version: 1.0.0
+---
+Edge 2 content.
+""", encoding='utf-8')
+
+        # Check edge1 with mzargham as file author
+        passed1, msg1 = check_validation_edge_accountability(
+            edge1, author='mzargham', committer='mzargham', github_actor=''
+        )
+        assert passed1, f"Edge 1 should PASS with mzargham: {msg1}"
+
+        # Check edge2 with davidfsol5 as file author
+        passed2, msg2 = check_validation_edge_accountability(
+            edge2, author='davidfsol5', committer='davidfsol5', github_actor=''
+        )
+        assert passed2, f"Edge 2 should PASS with davidfsol5: {msg2}"
+
+        print("✓ Multiple edges from different authors correctly validated")
+
+    def test_multiple_users_wrong_attribution_fails(self, tmp_path):
+        """
+        NEGATIVE TEST: If we swap the authors (check edge1 with edge2's author),
+        both should FAIL.
+
+        This verifies that per-file attribution is essential for correctness.
+        """
+        from check_accountability import check_validation_edge_accountability
+
+        # Edge 1: authored by mzargham
+        edge1 = tmp_path / "validation-edge1.md"
+        edge1.write_text("""---
+type: edge/validation
+id: e:validation:edge1:spec
+name: Edge 1 by mzargham
+source: v:doc:test1
+target: v:spec:spec
+source_type: vertex/doc
+target_type: vertex/spec
+orientation: directed
+validation_method: manual
+validator: mzargham
+tags:
+  - validation
+version: 1.0.0
+---
+Edge 1 content.
+""", encoding='utf-8')
+
+        # Edge 2: authored by davidfsol5
+        edge2 = tmp_path / "validation-edge2.md"
+        edge2.write_text("""---
+type: edge/validation
+id: e:validation:edge2:spec
+name: Edge 2 by davidfsol5
+source: v:doc:test2
+target: v:spec:spec
+source_type: vertex/doc
+target_type: vertex/spec
+orientation: directed
+validation_method: manual
+validator: davidfsol5
+tags:
+  - validation
+version: 1.0.0
+---
+Edge 2 content.
+""", encoding='utf-8')
+
+        # WRONG: Check edge1 with davidfsol5 as author
+        passed1, msg1 = check_validation_edge_accountability(
+            edge1, author='davidfsol5', committer='davidfsol5', github_actor=''
+        )
+        assert not passed1, f"Edge 1 should FAIL with wrong author: {msg1}"
+
+        # WRONG: Check edge2 with mzargham as author
+        passed2, msg2 = check_validation_edge_accountability(
+            edge2, author='mzargham', committer='mzargham', github_actor=''
+        )
+        assert not passed2, f"Edge 2 should FAIL with wrong author: {msg2}"
+
+        print("✓ Swapped authors correctly cause failures")
+
+
 def run_all_tests():
     """Run all tests."""
     tests = [
