@@ -18,11 +18,15 @@ import re
 from pathlib import Path
 from typing import List, Tuple
 
-# Ensure UTF-8 encoding for Windows console
-if sys.platform == 'win32':
-    import io
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+# Ensure UTF-8 encoding for Windows console (only when running standalone, not under pytest)
+if sys.platform == 'win32' and 'pytest' not in sys.modules:
+    try:
+        import io
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+    except (AttributeError, ValueError):
+        # Already wrapped or can't wrap (e.g., under pytest)
+        pass
 
 # Allowed acronyms (can be mixed case if properly separated)
 ALLOWED_ACRONYMS = {
