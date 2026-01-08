@@ -43,7 +43,7 @@ An acronym must be:
 
 **Current allowed acronyms:** GS, SG, XML, HTML, JSON, CSV, PDF, API, CLI, GUI, SQL, HTTP, HTTPS, URL, URI, UUID, ISO, ANSI, IEEE, INCOSE, SaaS, PaaS, IaaS
 
-To add new acronyms, edit `ALLOWED_ACRONYMS` in [scripts/validate_filenames.py](scripts/validate_filenames.py).
+To add new acronyms, edit `ALLOWED_ACRONYMS` in [scripts/verify_filenames.py](scripts/verify_filenames.py).
 
 ### 4. Human-Readable Naming
 
@@ -92,28 +92,28 @@ finalReport.md                   # CamelCase not allowed
 
 ### Automated Validation Script
 
-Use the validation script to check filename compliance:
+Use the verification script to check filename compliance:
 
 ```bash
 # Check all git-tracked files
-python scripts/validate_filenames.py
+python scripts/verify_filenames.py
 
 # Check all files (including untracked)
-python scripts/validate_filenames.py --all
+python scripts/verify_filenames.py --all
 
 # Check a single file
-python scripts/validate_filenames.py --file path/to/file.md
+python scripts/verify_filenames.py --file path/to/file.md
 ```
 
 ### Pre-commit Hook (Optional)
 
-To automatically validate filenames before commits, add to `.git/hooks/pre-commit`:
+To automatically verify filenames before commits, add to `.git/hooks/pre-commit`:
 
 ```bash
 #!/bin/sh
-python scripts/validate_filenames.py
+python scripts/verify_filenames.py
 if [ $? -ne 0 ]; then
-    echo "❌ Filename validation failed. Please fix violations before committing."
+    echo "❌ Filename verification failed. Please fix violations before committing."
     exit 1
 fi
 ```
@@ -142,7 +142,7 @@ fi
 
 For existing files that don't comply:
 
-1. **Identify violations**: Run `python scripts/validate_filenames.py`
+1. **Identify violations**: Run `python scripts/verify_filenames.py`
 2. **Rename files**: Use `git mv old-name new-name` to preserve history
 3. **Update references**: Search for and update any links/imports to renamed files
 4. **Test thoroughly**: Ensure scripts, documentation links, and imports still work

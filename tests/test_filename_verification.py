@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Tests for filename validation functionality.
+Tests for filename verification functionality.
 
 Tests filename naming conventions for cross-platform compatibility:
 - Case consistency (all lowercase or all uppercase, not mixed)
@@ -17,7 +17,7 @@ import pytest
 # Add scripts to path
 sys.path.insert(0, str(Path(__file__).parent.parent / 'scripts'))
 
-from validate_filenames import (
+from verify_filenames import (
     validate_filename,
     validate_filename_case,
     validate_repository,
