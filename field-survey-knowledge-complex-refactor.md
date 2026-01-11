@@ -14,7 +14,7 @@ modified: 2025-01-11T00:00:00Z
 survey_scope: BlockScience knowledge complex repository and its intended user communities
 actor_count: 6
 resource_count: 15
-relationship_count: 26
+relationship_count: 28
 ---
 
 # Field Survey for Knowledge Complex Repository Refactor
@@ -57,23 +57,23 @@ The following stakeholder categories have been identified. Note: "Internal" mean
 
 #### A1: Regulators
 
-External authorities—government agencies, industry bodies, standards organizations, or contractual counterparties—who establish rules and requirements that organizations must follow. Regulators do not use the knowledge complex directly; they consume its outputs (audit reports, compliance evidence) to verify adherence. Their requirements drive the structure of workflows and the rigor of assurance processes.
+External authorities—government agencies, industry bodies, standards organizations, or contractual counterparties—who establish rules and requirements that organizations must follow. Regulators do not use the knowledge complex directly; they consume its outputs (audit reports, compliance evidence) to verify adherence. Their requirements drive the structure of workflows and the rigor of assurance processes. (Compliance evidence consumer)
 
 #### A2: Compliance Officers
 
-Internal stakeholders responsible for ensuring organizational workflows demonstrably meet regulatory requirements. They use audit reports, traceability features, and assurance charts to prepare compliance evidence. They need to understand what the system produces and how to interpret its outputs, but may not build or configure workflows themselves.
+Internal stakeholders responsible for ensuring organizational workflows demonstrably meet regulatory requirements. They use audit reports, traceability features, and assurance charts to prepare compliance evidence. They need to understand what the system produces and how to interpret its outputs, but may not build or configure workflows themselves. (Compliance evidence producer)
 
 #### A3: Operators
 
-The hands-on users who perform day-to-day activities within defined workflows. They produce and consume documents, follow runbooks, and execute procedures. Operators need intuitive interfaces (IDE, Obsidian, LLM assistance) and clear guidance. They should not need to understand the underlying mathematics—the system should be transparent to them.
+The hands-on users who perform day-to-day activities within defined workflows. They produce and consume documents, follow runbooks, and execute procedures. Operators need intuitive interfaces (IDE, Obsidian, LLM assistance) and clear guidance. They should not need to understand the underlying mathematics—the system should be transparent to them. (responsible for effective & compliant performance)
 
 #### A4: Approvers
 
-Domain experts who formally attest to the quality and correctness of specific work products. They sign off on validation edges and assurance faces, accepting accountability for deliverables. Approvers need to efficiently review documents, understand what they're signing, and trust that the verification infrastructure has done its job before their approval is requested.
+Domain experts who formally attest to the quality and correctness of specific work products. They sign off on validation edges and assurance faces, accepting accountability for deliverables. Approvers need to efficiently review documents, understand what they're signing, and trust that the verification infrastructure has done its job before their approval is requested. (accountable for demonstrably effective & compliant performance)
 
 #### A5: Workflow & Knowledge Builders
 
-The configurers and maintainers of domain-specific knowledge complexes. They use the core framework (provided by Infrastructure Builders) to configure document types, define templates, write runbooks, and maintain ontologies for specific organizational contexts. They may be internal to the client organization or provided as a professional service by BlockScience. They consume the Python package, APIs, and registry infrastructure to build workflows that operators can follow and approvers can sign off on. They need to understand the framework's concepts but not necessarily its mathematical foundations.
+The configurers and maintainers of domain-specific knowledge complexes. They use the core framework (provided by Infrastructure Builders) to configure document types, define templates, write runbooks, and maintain ontologies for specific organizational contexts. They may be internal to the client organization or provided as a professional service by BlockScience. They consume the Python package, APIs, and registry infrastructure to build workflows that operators can follow and approvers can sign off on. They need to understand the framework's concepts but not necessarily its mathematical foundations. (responsible for faithfully implementing organizational ontologies and policies which comply with regulatory requirements)
 
 #### A6: Infrastructure Builders
 
@@ -83,33 +83,35 @@ BlockScience and open-source contributors who develop and maintain the core know
 
 The following resources describe the target state of the knowledge complex framework—what the refactored system will provide.
 
-| ID | Name | Type | Description | Status |
-|----|------|------|-------------|--------|
-| R1 | Python Package (core) | Technology | Abstracts mathematics of typed simplicial complexes for non-mathematicians | Target |
-| R2 | Verification Tooling | Technology | Template-based verification ensuring documents conform to specs | Target |
-| R3 | Validation Tooling | Technology | Support for validation edges with human accountability | Target |
-| R4 | Assurance Tooling | Technology | Assurance audit, triangle closure, V-F invariant checking | Target |
-| R5 | Chart Construction & Topology | Technology | Chart building, Euler characteristic, topological analysis | Target |
-| R6 | Audit Reports & Remediation | Technology | Charts for auditing, compliance reports, remediation support | Target |
-| R7 | Runbooks | Process | Step-by-step workflows for developing workflows | Target |
-| R8 | Requirements Traceability | Technology | Trace documents produced by workflows to requirements | Target |
-| R9 | APIs & CLI Tools | Technology | Programmatic and command-line access to all features | Target |
-| R10 | Public Registry | Service | Package-manager-like registry for document types and runbooks | Target |
-| R11 | Private Registry Support | Service | Tools for access-controlled, version-controlled registries via git | Target |
-| R12 | IDE Integration | Technology | VS Code layer for document construction | Target |
-| R13 | LLM Facilitator | Technology | Claude Code as intelligent assistant for knowledge complex work | Target |
-| R14 | Knowledge Complex Explorer | Technology | Obsidian for navigation, reading, reviewing, light editing | Target |
-| R15 | Auditor Interface | Technology | Analytics via scientific Python, contextual views for auditors | Target |
+| ID  | Name                          | Type       | Description                                                                     | Status |
+| --- | ----------------------------- | ---------- | ------------------------------------------------------------------------------- | ------ |
+| R1  | Python Package (core)         | Technology | Abstracts mathematics of typed simplicial complexes for non-mathematicians      | Target |
+| R2  | Verification Tooling          | Technology | Template-based verification ensuring documents conform to specs                 | Target |
+| R3  | Validation Tooling            | Technology | Support for validation edges with human accountability                          | Target |
+| R4  | Assurance Tooling             | Technology | Assurance audit, triangle closure                                               | Target |
+| R5  | Chart Construction & Topology | Technology | Chart building, topological analysis                                            | Target |
+| R6  | Audit Reports & Remediation   | Technology | Charts for auditing, compliance reports, remediation support                    | Target |
+| R7  | Runbooks                      | Process    | Step-by-step workflows with embedded performance metrics for effectiveness      | Target |
+| R8  | Requirements Traceability     | Technology | Trace documents produced by workflows to requirements                           | Target |
+| R9  | APIs & CLI Tools              | Technology | Programmatic and command-line access to all features                            | Target |
+| R10 | Public Registry               | Service    | Package-manager-like registry for document types and runbooks                   | Target |
+| R11 | Private Registry Support      | Service    | Tools for access-controlled, version-controlled registries via git              | Target |
+| R12 | IDE Integration               | Technology | VS Code`*` layer for document construction                                      | Target |
+| R13 | LLM Facilitator               | Technology | Claude Code`*` as intelligent assistant for knowledge complex work              | Target |
+| R14 | Knowledge Complex Explorer    | Technology | Obsidian`*` for navigation, reading, reviewing, light editing                   | Target |
+| R15 | Auditor Interface             | Technology | Analytics via scientific Python, contextual views for auditors                  | Target |
+
+> `*` VS Code, Claude Code and Obsidian are examples of integration with user interfaces; our design must be able to integrate with the user-organization's existing platforms and procured tools. VS Code, Claude Code and Obsidian are used for "out-of-box" interface functionality
 
 ### Resource Definitions
 
 #### R1: Python Package (core)
 
-An installable Python package that abstracts the mathematics of typed simplicial complexes. Users get the benefits of rigorous knowledge management—type safety, topological invariants, compositional structures—without needing to understand the underlying mathematics. The package provides the foundation on which all other tooling is built.
+An installable Python package that abstracts the mathematics of typed simplicial complexes. Users get the benefits of rigorous knowledge management—type safety, topological invariants, compositional structures—without needing to understand the underlying mathematics. The package provides the foundation on which all other tooling is built. (APIs and CLIs which serve as legible logical interface for access to various tool kits: authoring, verification, validation, assurances, traceability, charts, analysis, etc)
 
 #### R2: Verification Tooling
 
-Template-based verification that checks documents against their type specifications. Deterministic, automated checking ensures structural compliance: required fields present, correct types, valid references. Currently implemented as scripts; target state packages these as library functions with CLI and API access.
+Spec-based verification that checks documents against their type specifications. Deterministic, automated checking ensures structural compliance: required fields present, correct types, valid references. Currently implemented as scripts; target state packages these as library functions with CLI and API access.
 
 #### R3: Validation Tooling
 
@@ -117,7 +119,7 @@ Support for creating and managing validation edges—the qualitative assessment 
 
 #### R4: Assurance Tooling
 
-Infrastructure for creating assurance triangles (2-simplices) that close the spec-guidance-document loop. Includes the V-F≥1 invariant check ensuring every vertex has at least as many incident faces as its in-degree. Provides audit capabilities to verify complete assurance coverage.
+Infrastructure for creating assurance triangles (2-simplices) that close the spec-guidance-document loop. Includes the audit chart construction and reporting ensuring every vertex has at least as many incident faces as its in-degree. Provides audit capabilities to verify complete assurance coverage.
 
 #### R5: Chart Construction & Topology
 
@@ -125,15 +127,15 @@ Tools for building charts (subcomplexes), computing requirements traceability ch
 
 #### R6: Audit Reports & Remediation
 
-Generation of audit-ready reports from assurance charts and requirements traceability charts. Includes compliance summaries, gap analysis, and remediation tracking. Outputs should be consumable by an organizations leaders as well regulators and compliance officers without requiring knowledge complex expertise.
+Generation of audit-ready reports from assurance charts and requirements traceability charts. Includes compliance summaries, gap analysis, and remediation tracking. Reports demonstrate that policies were followed (compliance). Outputs should be consumable by an organization's leaders as well as regulators and compliance officers without requiring knowledge complex expertise.
 
 #### R7: Runbooks
 
-Step-by-step procedural guides that operators follow to produce compliant work products. Runbooks encode best practices and ensure consistent execution. The system should include runbooks for developing new runbooks. These runbooks leverage document types and knowledge complexes containing structured organizational knowledge. Runbooks are designed for use by accountable human operators and approvers with LLM support. 
+Step-by-step procedural guides that operators follow to produce work products. Runbooks encode best practices and ensure consistent execution. Critically, runbooks include embedded performance metrics that define what "effective" means for each workflow—enabling approvers to attest not just to compliance (the process was followed) but to effectiveness (outcomes met expectations). The system should include runbooks for developing new runbooks. These runbooks leverage document types and knowledge complexes containing structured organizational knowledge. There must be runbooks for ingesting and conforming existing organizational knowledge and policies. Runbooks may support identification, documentation and assurance of insights gleaned during operations to inform future operations. Runbooks are designed for use by accountable human operators and approvers with LLM support.
 
 #### R8: Requirements Traceability
 
-Ability to trace any document produced by a workflow back to its originating requirements. This supports compliance demonstration by showing how regulatory requirements flow through workflows to produce verifiable outputs.
+Ability to trace any document produced by a workflow back to its originating requirements. This supports compliance demonstration by showing how regulatory requirements flow through workflows to produce verifiable outputs. Must be able to identify and remediate traceability gaps.
 
 #### R9: APIs & CLI Tools
 
@@ -157,7 +159,7 @@ Claude Code (or similar LLM tools) configured to assist with knowledge complex w
 
 #### R14: Knowledge Complex Explorer
 
-Obsidian (or similar tool) configured for navigating, reading, reviewing, and light editing of knowledge complexes. Provides graph visualization, backlink navigation, and a reading-optimized interface. Supports review workflows for approvers.
+Obsidian (or organization specific document and workflow interface platform) configured for navigating, reading, reviewing, and light editing of knowledge complexes. Provides graph visualization, backlink navigation, and a reading-optimized interface. Supports review workflows for approvers.
 
 #### R15: Auditor Interface
 
@@ -182,6 +184,8 @@ The following relationships form a bipartite graph connecting actors to resource
 | A4 | R4 | Consumes | Reviews assurance status before signing |
 | A4 | R6 | Consumes | Reviews audit reports to understand scope |
 | A4 | R14 | Consumes | Uses Obsidian to review documents for sign-off |
+| A4 | R8 | Consumes | Reviews traceability to understand requirements context |
+| A4 | R7 | Consumes | Reviews runbook performance metrics to attest to effectiveness |
 | A5 | R1 | Consumes | Uses Python package to build domain workflows |
 | A5 | R2 | Configures | Configures verification templates for domain |
 | A5 | R3 | Configures | Configures validation workflows for domain |
@@ -200,7 +204,7 @@ The following relationships form a bipartite graph connecting actors to resource
 ### Relationship Diagram
 
 ```mermaid
-graph TB
+graph LR
     subgraph "Platform Layer (A6: Infrastructure Builders)"
         A6[A6: BlockScience]
         R1[R1: Python Package]
@@ -257,22 +261,20 @@ graph TB
     A3 -->|consumes| R14
     A4 -->|consumes| R2
     A4 -->|consumes| R4
+    A4 -->|consumes| R7
+    A4 -->|consumes| R8
     A4 -->|consumes| R14
 ```
 
 ### Key Dependencies
 
-1. **Regulators depend on Audit Reports (A1 → R6)**: The entire framework exists to produce outputs that satisfy regulatory requirements. Without consumable audit reports, the framework fails its primary purpose.
-
+1. **Regulators depend on Audit Reports (A1 → R6)**: The framework exists to produce outputs that satisfy regulatory requirements. Without consumable audit reports, the framework fails its primary purpose.
 2. **Workflow Builders depend on Infrastructure Builders (A5 → A6)**: Workflow Builders consume the Python package, APIs, and public registry that Infrastructure Builders produce. This is the platform/customer relationship.
-
 3. **Operators depend on Interfaces (A3 → R12, R13, R14)**: Operators interact with the system through interfaces, not directly with the underlying tooling. Poor interface design blocks operator adoption.
-
-4. **Approvers depend on Verification (A4 → R2)**: Approvers must trust that verification has been done before they sign. If verification tooling is unreliable, approver confidence erodes.
-
-5. **Compliance Officers bridge internal work and external requirements (A2 → R4, R5, R6, R8)**: They consume the most diverse set of resources because they must translate internal work into external evidence.
-
-6. **Three-layer architecture**: Infrastructure Builders (A6) enable Workflow Builders (A5) who enable End Users (A1-A4). Each layer depends on the one above it.
+4. **Approvers depend on Verification and Traceability (A4 → R2, R8)**: Approvers must trust that verification has been done and understand the requirements context before they sign. If verification tooling is unreliable or traceability is unclear, approver confidence erodes.
+5. **Approvers depend on runbooks for effectiveness criteria (A4 → R7)**: Approvers depend on operators to perform their functions effectively in addition to complying with relevant policies. Runbooks embed performance metrics that define effectiveness, enabling approvers to attest not just to compliance but to outcomes meeting expectations.
+6. **Compliance Officers bridge internal work and external requirements (A2 → R4, R5, R6, R8)**: They consume the most diverse set of resources because they must translate internal work into external evidence. User Interfaces tailored to the Compliance Officer role are critical to reduce friction and framework-specfic expertise needed for the compliance officers to fulfill their role. Noteably their interfaces must provide: reports demonstrating compliance and tools for identifying gaps and associated accountable parties, as well as actionable feedback for remediation.
+7. **Three-layer architecture**: Infrastructure Builders (A6) enable Workflow Builders (A5) who enable End Users (A1-A4). Each layer depends on the one above it.
 
 ## Scope Boundaries
 
@@ -280,6 +282,7 @@ graph TB
 
 - Six stakeholder categories across three layers: Platform (Infrastructure Builders), Configuration (Workflow Builders), and Execution (Regulators, Compliance Officers, Operators, Approvers)
 - The knowledge complex framework as a product serving organizations with compliance needs
+- Protocols, schemas, data standards and API specifications
 - Python package, tooling, registries, and interfaces as resources
 - Target state architecture for the refactored system
 - Actor-resource relationships that drive design decisions
@@ -310,22 +313,26 @@ This survey establishes who the framework serves and what it must provide. The s
 
 4. **Operators need complete abstraction**: A3 (Operators) interact only with interfaces (R12, R13, R14) and runbooks (R7). They should never encounter typed simplicial complexes directly. The refactor must ensure complete abstraction at the operator layer.
 
-5. **Regulators are pure consumers**: A1 interacts with exactly one resource (R6: Audit Reports). The entire framework exists to produce outputs regulators can consume. This is the ultimate measure of success.
+5. **Regulators are pure consumers**: A1 interacts with exactly one resource (R6: Audit Reports). The framework exists to produce outputs regulators can consume. This is necessary but not sufficient for success.
 
 6. **Workflow Builders as the key adoption bottleneck**: If Workflow Builders cannot easily configure domain instances, organizations cannot adopt the framework. The platform must make A5's job tractable—good APIs, clear documentation, reusable components from the public registry.
 
+7. **Effectiveness is distinct from compliance**: Demonstrating that operators followed policies (compliance) is necessary but not sufficient. Approvers must also attest that outcomes were effective—that performance met expectations. Runbooks (R7) embed performance metrics that define effectiveness; audit reports (R6) focus on compliance. This dual accountability (compliance + effectiveness) flows through the entire system.
+   
+8. **Human Accountability is explicit throughout**: Validation with named signatures attesting to fitness-for-purpose are required for all documents produced, including automatically generated reports assessing effectiveness, in addition compliance with policy.
+
 ### Gaps and Tensions
 
-| Gap/Tension | Description | Implication |
-|-------------|-------------|-------------|
-| Python Package Gap | Core tooling exists as scripts but not as an installable, documented package | Workflow builders cannot easily install, extend, or integrate the framework |
-| API Gap | No programmatic API exists; CLI-only access | Integration with external systems requires shell calls; no library usage |
-| Registry Gap | No public or private registry infrastructure | Cannot share document types and runbooks across organizations |
-| Auditor Interface Gap | No dedicated analytics/reporting layer for regulators | Audit reports require manual construction; no automated compliance dashboards |
-| Requirements Traceability Gap | Not yet implemented | Cannot automatically trace documents to requirements for compliance |
-| Mathematical Abstraction Tension | Framework is mathematically rigorous but requires simplicial complex knowledge | Operators and approvers may struggle; workflow builders are bottlenecked |
-| Power vs. Simplicity Tension | Full verification infrastructure is powerful but complex to configure | Steep learning curve limits adoption |
-| Internal vs. External User Tension | Current docs assume deep familiarity | External users (clients, collaborators) need onboarding materials |
+| Gap/Tension                        | Description                                                                     | Implication                                                                      |
+| ---------------------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Python Package Gap                 | Core tooling exists as scripts but not as an installable, documented package    | Workflow builders cannot easily install, extend, or integrate the framework      |
+| API Gap                            | No programmatic API exists; CLI-only access                                     | Integration with external systems requires shell calls; no library usage         |
+| Registry Gap                       | No public or private registry infrastructure                                    | Cannot share document types and runbooks across organizations                    |
+| Auditor Interface Gap              | No dedicated analytics/reporting layer for regulators                           | Audit reports require manual construction; no automated compliance dashboards    |
+| Requirements Traceability Gap      | Runbooks leverage document types with explicit record of input and output docs. | Have not yet automated methods to trace documents to requirements for compliance |
+| Mathematical Abstraction Tension   | Framework is mathematically rigorous but requires simplicial complex knowledge  | Operators and approvers may struggle; workflow builders are bottlenecked         |
+| Power vs. Simplicity Tension       | Full verification infrastructure is powerful but complex to configure           | Steep learning curve limits adoption                                             |
+| Internal vs. External User Tension | Current docs assume deep familiarity                                            | External users (clients, collaborators) need onboarding materials                |
 
 ### Implications for Architecture
 
