@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - guidance
-version: 2.0.0
+version: 2.1.0
 created: 2025-12-30T18:00:00Z
-modified: 2025-01-04T20:00:00Z
+modified: 2025-01-11T00:00:00Z
 criteria:
   - v-model-alignment
   - architecture-traceability
@@ -51,6 +51,81 @@ Use this guidance when:
 - Ensuring operations and decommissioning are adequately addressed
 - Evaluating whether a lifecycle can successfully deliver an operational system
 
+## Choosing Lifecycle Mode
+
+Lifecycle documents can operate in two modes based on whether the architecture uses extended documents. Choose the appropriate mode to match your architecture approach.
+
+### When to Use Standard Mode
+
+Use standard mode when:
+
+- **Architecture uses inline layers**: The architecture document contains all four layers inline
+- **Simpler programs**: Detailed traceability matrices are not required
+- **Rapid development**: Speed matters more than exhaustive documentation
+- **Single-document reference**: Only one architecture document needs to be referenced
+
+In standard mode, the lifecycle references the architecture via `architecture_ref` only.
+
+### When to Use Extended Architecture Mode
+
+Use extended architecture mode when:
+
+- **Architecture uses extended documents**: Separate conceptual, functional, logical, and physical architecture documents exist
+- **Complex programs**: Detailed traceability from stakeholders to implementation is required
+- **Formal assurance requirements**: Phase-to-matrix mapping is needed for audits
+- **Multi-team projects**: Different teams own different architecture layers
+
+Extended mode enables the lifecycle to leverage bipartite relationship matrices from extended architecture documents:
+
+```text
+field-survey (actors, resources)
+    │
+    ▼
+conceptual-architecture (Stakeholder × Acceptance Criteria matrix)
+    │
+    ▼
+functional-architecture (Function × Acceptance Criteria matrix)
+    │
+    ▼
+logical-architecture (Component × Function matrix)
+    │
+    ▼
+physical-architecture (Element × Component matrix)
+    │
+    ▼
+architecture (V-Model synthesis referencing all four)
+    │
+    ▼
+lifecycle (references summary + all four extended docs)
+```
+
+### Phase-to-Matrix Mapping
+
+In extended architecture mode, lifecycle phases can reference specific matrices for enhanced traceability:
+
+| Design Phase | Extended Doc | Matrix Used |
+|--------------|--------------|-------------|
+| ConOps → Functional | conceptual-architecture | Stakeholder-Criterion |
+| Functional → Logical | functional-architecture | Function-Criterion |
+| Logical → Physical | logical-architecture | Component-Function |
+
+| Evaluation Phase | Extended Doc | Matrix Validated |
+|------------------|--------------|------------------|
+| Unit Testing | physical-architecture | Element-Component |
+| Integration Testing | logical-architecture | Component-Function |
+| System Testing | functional-architecture | Function-Criterion |
+| Acceptance Testing | conceptual-architecture | Stakeholder-Criterion |
+
+### Mode Comparison
+
+| Aspect | Standard Mode | Extended Architecture Mode |
+|--------|---------------|---------------------------|
+| Architecture references | 1 (summary only) | 5 (summary + 4 extended) |
+| Matrix leverage | None | Full matrix access |
+| Traceability | Implicit through layers | Explicit via matrices |
+| Authoring time | Faster | More thorough |
+| Best for | Simple-medium programs | Complex, assurance-critical programs |
+
 ## Quality Criteria
 
 ### 1. V-Model Alignment
@@ -69,9 +144,9 @@ Use this guidance when:
 
 | Level | Indicators |
 |-------|------------|
-| **Excellent** | Architecture explicitly referenced in frontmatter and introduction; all four layers summarized with evaluation mapping; key requirements identified and traced through phases; traceability matrix complete |
-| **Good** | Architecture referenced; most layers addressed; some traceability gaps |
-| **Needs Improvement** | Architecture mentioned vaguely; layers not systematically addressed; traceability unclear or missing |
+| **Excellent** | Architecture explicitly referenced in frontmatter and introduction; all four layers summarized with evaluation mapping; key requirements identified and traced through phases; traceability matrix complete; in extended mode, all four extended docs referenced with matrices leveraged |
+| **Good** | Architecture referenced; most layers addressed; some traceability gaps; in extended mode, extended docs referenced but matrices not fully leveraged |
+| **Needs Improvement** | Architecture mentioned vaguely; layers not systematically addressed; traceability unclear or missing; in extended mode, extended docs missing or inconsistent |
 
 ### 3. Phase Completeness
 
@@ -147,18 +222,22 @@ Use this guidance when:
 - Map each layer to its evaluation counterpart
 - Extract key requirements that drive the lifecycle
 - Reference actual architecture sections
+- In extended mode, reference extended architecture documents for detailed layer content
+- In extended mode, note which matrices are available for phase traceability
 
 **Anti-patterns:**
 
 - ❌ Summarizing architecture without layer structure
 - ❌ Missing the layer-to-evaluation mapping
 - ❌ Vague requirements ("meet user needs")
+- ❌ (Extended mode) Referencing extended docs without noting matrices
 
 **Preferred:**
 
 - ✅ Four-row table with Conceptual/Functional/Logical/Physical
 - ✅ Each row shows layer description AND evaluation phase
 - ✅ Key requirements are specific and traceable
+- ✅ (Extended mode) References to all four extended docs with matrix identification
 
 ### V-Model Overview
 
@@ -305,12 +384,15 @@ Use this guidance when:
 - Columns: Design Phase, Implementation Artifact, Evaluation Phase
 - Implementation column shows the concrete artifact produced at each layer
 - Shows complete coverage of architecture with traceable deliverables
+- In extended mode, add Extended Doc column referencing specific architecture documents
+- In extended mode, add Matrix column identifying which bipartite matrix applies
 
 **Anti-patterns:**
 
 - ❌ Incomplete matrix with empty cells
 - ❌ Missing implementation column or using "-" placeholders
 - ❌ Generic descriptions instead of concrete artifacts
+- ❌ (Extended mode) Not leveraging available matrices
 
 **Preferred:**
 
@@ -321,6 +403,16 @@ Use this guidance when:
   - Logical → Component-level Specifications
   - Physical → Implementation (code, hardware, etc.)
 - ✅ Clear traceability from stakeholder needs through to unit-tested implementation
+- ✅ (Extended mode) Enhanced matrix format:
+
+**Extended Mode Traceability Matrix Format:**
+
+| Architecture Layer | Extended Doc | Design Phase | Matrix Used | Evaluation Phase |
+|--------------------|--------------|--------------|-------------|------------------|
+| Conceptual | conceptual-architecture | ConOps → Functional | Stakeholder-Criterion | Acceptance Testing |
+| Functional | functional-architecture | Functional → Logical | Function-Criterion | System Testing |
+| Logical | logical-architecture | Logical → Physical | Component-Function | Integration Testing |
+| Physical | physical-architecture | Implementation | Element-Component | Unit Testing |
 
 ## Workflow Guidance
 
@@ -446,8 +538,8 @@ This guidance document demonstrates the quality criteria it defines:
 | Property | Value |
 |----------|-------|
 | Specification | [[spec-for-lifecycle]] |
-| Guidance Version | 2.0.0 |
-| Specification Version | 2.0.0 |
+| Guidance Version | 2.1.0 |
+| Specification Version | 2.1.0 |
 | Terminology | VERIFICATION = structural compliance; VALIDATION = quality assessment |
 | Target Users | Systems engineers creating engineering lifecycle documentation |
 

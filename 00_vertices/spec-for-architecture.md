@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - spec
-version: 1.1.0
+version: 1.2.0
 created: 2025-12-30T12:00:00Z
-modified: 2025-01-04T23:00:00Z
+modified: 2025-01-11T00:00:00Z
 dependencies:
   - v:spec:field-survey
 ---
@@ -53,6 +53,19 @@ All architecture documents MUST include the following YAML frontmatter:
 | `scope` | string | REQUIRED | Brief scope statement (1-2 sentences) |
 | `field_survey_ref` | string | REQUIRED | Reference to field survey document (id or path) |
 | `stakeholders` | array[string] | RECOMMENDED | List of stakeholder categories |
+
+### Extended Architecture References (Optional)
+
+When using extended mode (see Architecture Modes below), these fields reference the detailed extended architecture documents:
+
+| Field | Type | Requirement | Description |
+|-------|------|-------------|-------------|
+| `conceptual_architecture_ref` | string | OPTIONAL | Reference to conceptual-architecture document |
+| `functional_architecture_ref` | string | OPTIONAL | Reference to functional-architecture document |
+| `logical_architecture_ref` | string | OPTIONAL | Reference to logical-architecture document |
+| `physical_architecture_ref` | string | OPTIONAL | Reference to physical-architecture document |
+
+**Note:** In extended mode, all four references MUST be present. In standard mode, these fields are omitted.
 
 ### Optional Metadata
 
@@ -217,6 +230,51 @@ Describes specific implementation choices.
 - MUST specify concrete technologies or tools
 - MUST include unit testing criteria
 
+## Architecture Modes
+
+Architecture documents can be authored in two modes:
+
+### Standard Mode (Inline Layers)
+
+All four layers are fully documented inline within the architecture document. Each layer section contains:
+- Detailed content (needs, functions, components, elements)
+- Corresponding testing criteria
+- Minimum element counts (3+ per layer)
+
+This mode is appropriate for:
+- Smaller systems
+- Rapid prototyping
+- When detailed traceability matrices are not required
+
+**Requirements:** All layer sections MUST be substantive with minimum required elements as specified above.
+
+### Extended Mode (Reference Synthesis)
+
+The four layers are documented in separate extended architecture documents, and the summary architecture references them. The architecture document contains:
+- V-Model Summary table (required)
+- Layer sections with references to extended documents
+- Synthesis of key content (not duplication)
+
+Extended mode requires all four frontmatter references:
+- `conceptual_architecture_ref` pointing to a valid conceptual-architecture document
+- `functional_architecture_ref` pointing to a valid functional-architecture document
+- `logical_architecture_ref` pointing to a valid logical-architecture document
+- `physical_architecture_ref` pointing to a valid physical-architecture document
+
+**Requirements:** Layer sections in extended mode MUST reference their extended documents and MAY contain abbreviated synthesis content rather than full inline detail. The minimum element counts (3+ per layer) are satisfied by the referenced extended documents, not the summary architecture.
+
+This mode is appropriate for:
+- Complex systems requiring detailed traceability
+- Programs needing stakeholder-criterion, function-criterion, component-function, and element-component matrices
+- Formal assurance requirements
+- Multi-team projects where each architecture layer may be owned separately
+
+### Mode Detection
+
+The mode is determined by presence of extended architecture references:
+- If `conceptual_architecture_ref`, `functional_architecture_ref`, `logical_architecture_ref`, and `physical_architecture_ref` are ALL present → Extended Mode
+- Otherwise → Standard Mode
+
 ## Optional Body Sections
 
 ### Traceability Matrix
@@ -273,11 +331,13 @@ Identifies architectural risks.
 
 ## Content Requirements
 
-1. **Layer Completeness:** All four layers MUST be present and substantive
+1. **Layer Completeness:** All four layers MUST be present. In standard mode, layers MUST be substantive with minimum required elements. In extended mode, layers MUST reference their extended documents and MAY contain abbreviated synthesis content.
 2. **V-Model Alignment:** Each layer MUST have both idealized (left) and realized (right) aspects
-3. **Testability:** Each layer MUST include testability criteria
+3. **Testability:** Each layer MUST include testability criteria (in standard mode) or reference to testing strategy (in extended mode)
 4. **Traceability:** Content SHOULD be traceable across layers (needs → functions → components → implementations)
 5. **Technology Independence:** Logical layer MUST be describable without reference to specific technologies
+6. **Extended Mode Consistency:** In extended mode, all four extended architecture references MUST be present and MUST reference valid documents
+7. **Extended Mode References:** In extended mode, layer sections MUST include explicit references to their corresponding extended documents
 
 ## Prerequisites
 
@@ -325,6 +385,12 @@ description: <string>
 # Optional frontmatter
 dependencies: [<related-architectures>]
 
+# Extended mode frontmatter (all four required for extended mode)
+conceptual_architecture_ref: <string>   # Reference to conceptual-architecture doc
+functional_architecture_ref: <string>   # Reference to functional-architecture doc
+logical_architecture_ref: <string>      # Reference to logical-architecture doc
+physical_architecture_ref: <string>     # Reference to physical-architecture doc
+
 # Required body sections (markdown)
 ## Overview
 ## V-Model Summary (table with 4 layers)
@@ -347,17 +413,31 @@ dependencies: [<related-architectures>]
 ## Risks and Mitigations
 ```
 
+**Note:** In extended mode, layer sections may contain abbreviated content with explicit references to extended documents rather than full inline detail.
+
 ## Compliance
 
 A document claiming to be an architecture document is compliant with this specification if and only if:
 
+### Standard Mode Compliance
+
 1. All REQUIRED frontmatter fields are present and correctly typed
 2. All REQUIRED body sections are present with required subsections
 3. V-Model Summary table includes all four layers with both sides
-4. Each layer section includes at least the minimum required elements
+4. Each layer section includes at least the minimum required elements (3+ per layer)
 5. Type constraints are satisfied
 6. Logical layer content is technology-agnostic
 
+### Extended Mode Compliance
+
+1. All REQUIRED frontmatter fields are present and correctly typed
+2. All four extended architecture references are present (`conceptual_architecture_ref`, `functional_architecture_ref`, `logical_architecture_ref`, `physical_architecture_ref`)
+3. All REQUIRED body sections are present (may contain abbreviated content with references)
+4. V-Model Summary table includes all four layers with both sides
+5. Each layer section includes explicit reference to its extended document
+6. Type constraints are satisfied
+7. Referenced extended documents exist and are valid
+
 ---
 
-**Note:** This specification follows the INCOSE SE Handbook patterns for architecture description and aligns with the V-model lifecycle for verification and validation.
+**Note:** This specification follows the INCOSE SE Handbook patterns for architecture description and aligns with the V-model lifecycle for verification and validation. Extended mode enables detailed traceability through bipartite relationship matrices in the extended architecture documents.
