@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - spec
-version: 2.0.0
+version: 2.1.0
 created: 2025-12-30T18:00:00Z
-modified: 2025-01-04T20:00:00Z
+modified: 2025-01-11T00:00:00Z
 dependencies:
   - v:spec:architecture
 ---
@@ -61,12 +61,77 @@ All lifecycle documents MUST include the following YAML frontmatter:
 | `architecture_ref` | string | REQUIRED | Reference to the architecture document this lifecycle implements |
 | `target_system` | string | REQUIRED | Name of the system this lifecycle delivers |
 
+### Extended Architecture References (Optional)
+
+When the architecture uses extended mode (separate conceptual, functional, logical, physical documents), the lifecycle can reference these extended documents directly for enhanced traceability.
+
+| Field | Type | Requirement | Description |
+|-------|------|-------------|-------------|
+| `conceptual_architecture_ref` | string | OPTIONAL | Reference to conceptual-architecture document |
+| `functional_architecture_ref` | string | OPTIONAL | Reference to functional-architecture document |
+| `logical_architecture_ref` | string | OPTIONAL | Reference to logical-architecture document |
+| `physical_architecture_ref` | string | OPTIONAL | Reference to physical-architecture document |
+
+**Note:** In extended architecture mode, all four references MUST be present. In standard mode, these fields are omitted and only `architecture_ref` is used.
+
 ### Optional Metadata
 
 | Field | Type | Requirement | Description |
 |-------|------|-------------|-------------|
 | `description` | string | RECOMMENDED | Brief description of lifecycle purpose |
 | `stakeholders` | array[string] | RECOMMENDED | Stakeholder categories involved in acceptance |
+
+## Lifecycle Modes
+
+Lifecycle documents can operate in two modes based on whether the architecture uses extended documents.
+
+### Standard Mode
+
+In standard mode, the lifecycle references a single architecture document via `architecture_ref`. The architecture contains inline layers (Conceptual, Functional, Logical, Physical), and the lifecycle maps phases to these inline layers.
+
+This mode is appropriate for:
+
+- Simpler programs using inline architecture layers
+- Rapid development where detailed traceability matrices are not required
+- Single-document architecture references
+
+### Extended Architecture Mode
+
+In extended architecture mode, the lifecycle references both the summary architecture AND the four extended architecture documents. This enables the lifecycle to leverage the bipartite relationship matrices from extended documents.
+
+This mode is appropriate for:
+
+- Complex programs using extended architecture documents
+- Programs requiring detailed traceability from stakeholders to implementation
+- Formal assurance requirements where phase-to-matrix mapping is needed
+
+**Extended mode requirements:**
+
+- All four extended architecture references MUST be present (`conceptual_architecture_ref`, `functional_architecture_ref`, `logical_architecture_ref`, `physical_architecture_ref`)
+- `architecture_ref` MUST still reference the summary architecture document
+- Architecture Foundation section SHOULD reference extended documents
+- Design and Evaluation phases MAY reference specific matrices from extended documents
+
+### Mode Detection
+
+The mode is determined by presence of extended architecture references:
+
+- If all four `*_architecture_ref` fields are present → Extended Architecture Mode
+- Otherwise → Standard Mode
+
+### Phase-to-Matrix Mapping (Extended Mode)
+
+When using extended architecture mode, phases can leverage architecture matrices:
+
+| Phase | Extended Architecture Doc | Matrix Available |
+|-------|--------------------------|------------------|
+| ConOps → Functional | conceptual-architecture | Stakeholder-Criterion |
+| Functional → Logical | functional-architecture | Function-Criterion |
+| Logical → Physical | logical-architecture | Component-Function |
+| Unit Testing | physical-architecture | Element-Component |
+| Integration Testing | logical-architecture | Component-Function |
+| System Testing | functional-architecture | Function-Criterion |
+| Acceptance Testing | conceptual-architecture | Stakeholder-Criterion |
 
 ## Required Body Sections
 
@@ -118,10 +183,12 @@ This lifecycle implements [[architecture-ref]].
 ```
 
 **Requirements:**
+
 - MUST reference the architecture document
 - MUST summarize all four architecture layers
 - MUST map layers to their evaluation counterparts
 - MUST identify key requirements driving the lifecycle
+- In extended architecture mode, MAY reference extended architecture documents for detailed layer content
 
 ### 3. V-Model Overview
 
@@ -525,6 +592,8 @@ Documents who is responsible for the lifecycle documentation.
 6. **Human-Aware:** Acceptance testing MUST require stakeholder validation
 7. **Operations-Inclusive:** MUST address deployment, monitoring, and maintenance
 8. **End-of-Life Aware:** MUST specify decommissioning criteria and process
+9. **Extended Mode Consistency:** In extended architecture mode, all four extended architecture references MUST be present
+10. **Extended Mode References:** In extended architecture mode, phases MAY reference specific matrices from extended documents for enhanced traceability
 
 ## Schema Summary
 
@@ -545,6 +614,12 @@ target_system: <string>
 # Optional frontmatter
 description: <string>
 stakeholders: [<strings>]
+
+# Extended architecture mode frontmatter (all four required for extended mode)
+conceptual_architecture_ref: <string>   # Reference to conceptual-architecture doc
+functional_architecture_ref: <string>   # Reference to functional-architecture doc
+logical_architecture_ref: <string>      # Reference to logical-architecture doc
+physical_architecture_ref: <string>     # Reference to physical-architecture doc
 
 # Required body sections
 ## Introduction
@@ -581,6 +656,8 @@ stakeholders: [<strings>]
 
 A document claiming to be a lifecycle document is compliant with this specification if and only if:
 
+### Standard Mode Compliance
+
 1. All REQUIRED frontmatter fields are present and correctly typed
 2. `architecture_ref` references a valid architecture document
 3. V-Model Overview diagram is present showing design and evaluation alignment
@@ -592,6 +669,15 @@ A document claiming to be a lifecycle document is compliant with this specificat
 9. Traceability matrix shows architecture-to-lifecycle mapping
 10. Type constraints are satisfied
 
+### Extended Architecture Mode Compliance
+
+In addition to standard mode requirements:
+
+1. All four extended architecture references are present (`conceptual_architecture_ref`, `functional_architecture_ref`, `logical_architecture_ref`, `physical_architecture_ref`)
+2. All referenced extended architecture documents exist and are valid
+3. `architecture_ref` still references a valid summary architecture document
+4. Extended architecture references are consistent with the architecture document's extended references
+
 ---
 
-**Note:** This specification establishes lifecycle as an engineering process document that transforms an architecture into an operational system. It aligns with the V-model, covering the full engineering lifecycle from requirements through decommissioning.
+**Note:** This specification establishes lifecycle as an engineering process document that transforms an architecture into an operational system. It aligns with the V-model, covering the full engineering lifecycle from requirements through decommissioning. Extended architecture mode enables enhanced traceability through direct references to architecture matrices.

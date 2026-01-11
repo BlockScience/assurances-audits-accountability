@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - runbook
-version: 1.2.0
+version: 1.4.0
 created: 2025-01-04T18:00:00Z
-modified: 2025-01-04T23:00:00Z
+modified: 2025-01-11T00:00:00Z
 workflow_name: Program Development
 target_roles:
   - systems engineer
@@ -126,6 +126,7 @@ flowchart TB
     end
 
     subgraph Phase1[Phase 1: Foundation]
+        S1a[Step 1a: Extended Docs\n- Optional -]
         S1[Step 1: Architecture]
     end
 
@@ -141,12 +142,15 @@ flowchart TB
         S4[Step 4: Program Memo]
     end
 
+    S0 --> S1a
     S0 --> S1
+    S1a -.-> S1
     S1 --> S2
     S2 --> S3
     S3 --> S4
 
     style S0 fill:#fce4ec
+    style S1a fill:#e1f5fe,stroke-dasharray: 5 5
     style S1 fill:#e1f5fe
     style S2 fill:#fff3e0
     style S3 fill:#e8f5e9
@@ -156,21 +160,25 @@ flowchart TB
 **Legend:**
 - Pink: Context (what exists)
 - Blue: Foundation (what we're building)
+- Blue dashed: Optional extended architecture path
 - Orange: Process (how we build it)
 - Green: Planning (who, when, with what resources)
 - Purple: Communication (executive summary)
 
-**Note:** This workflow is strictly sequential. The Field Survey establishes context before Architecture. The Program Plan enriches the Lifecycle with accountability, staffing, resourcing, and risk management—it cannot be developed until the Lifecycle phases are defined.
+**Note:** This workflow is mostly sequential. Step 1a is optional—choose standard mode (skip 1a) or extended mode (complete 1a first). The Program Plan enriches the Lifecycle with accountability, staffing, resourcing, and risk management—it cannot be developed until the Lifecycle phases are defined.
 
 ### Workflow Summary
 
 | Step | Activity | Inputs | Output | Depends On |
 |------|----------|--------|--------|------------|
 | 0 | Create Field Survey Document | Program idea, stakeholder context | Field survey document | - |
-| 1 | Create Architecture Document | Field survey, stakeholder needs | Architecture document | Step 0 |
+| 1a | Create Extended Architecture Documents (Optional) | Field survey | 4 extended architecture documents | Step 0 |
+| 1 | Create Architecture Document | Field survey (or extended docs from 1a) | Architecture document | Step 0 (or 1a) |
 | 2 | Create Lifecycle Document | Architecture document | Lifecycle document | Step 1 |
 | 3 | Create Program Plan Document | Architecture, Lifecycle | Program plan document | Step 2 |
 | 4 | Create Program Memo Document | Field Survey, Architecture, Lifecycle, Program Plan | Program memo document | Step 3 |
+
+**Note:** Step 1a is optional. Choose between standard mode (skip 1a, proceed directly to Step 1) or extended mode (complete 1a, then Step 1 synthesizes references). See "Decision: Architecture Depth" below.
 
 ## Step 0: Create Field Survey Document
 
@@ -236,17 +244,117 @@ flowchart TB
 
 **Checkpoint:** Field survey document passes verification. Minimum counts met (≥2 actors, ≥2 resources, ≥3 relationships). Scope boundaries are explicit. Key findings inform architecture.
 
-## Step 1: Create Architecture Document
+### Decision: Architecture Depth
 
-**Goal:** Define what the system will be across four abstraction layers with corresponding evaluation criteria.
+**When:** After completing Step 0 (Field Survey), before starting architecture work
+
+**Question:** How detailed should the architecture documentation be?
+
+**Options:**
+
+| Option | Documents Created | When to Choose | Implications |
+|--------|-------------------|----------------|--------------|
+| Standard (Inline) | 1 architecture doc with inline layers | Simpler programs, rapid development, informal documentation | Single document captures all layers; faster to produce (2-4 hours) |
+| Extended (Rigorous) | 4 extended docs + 1 summary architecture | Complex programs, formal assurance needs, multi-team ownership | Full traceability matrices; more thorough (1-2 days) |
+
+**Default:** Start with standard for most programs. Use extended when:
+
+- Stakeholder analysis requires detailed acceptance criteria mapping
+- Formal traceability from needs to implementation is required
+- The program will undergo formal assurance audits
+- Multiple teams will own different architecture layers
+- Compliance requirements mandate explicit traceability
+
+**Decision Path:**
+
+- **Standard Mode:** Skip Step 1a, proceed directly to Step 1
+- **Extended Mode:** Complete Step 1a first, then proceed to Step 1 (which becomes a synthesis document)
+
+## Step 1a: Create Extended Architecture Documents (Optional - Rigorous Path)
+
+**When to Use:** Choose this path when detailed traceability matrices are required. Skip to Step 1 for standard inline architecture.
+
+**Goal:** Create four detailed architecture documents with bipartite relationship matrices enabling full traceability from stakeholders to implementation.
 
 **Inputs:**
+- Field survey document (from Step 0)
+- Technical requirements and constraints
+- Prior art or reference architectures (if any)
+
+**Activities:**
+
+### 1a.1 Create Conceptual Architecture
+
+1. Reference field survey actors as stakeholders
+2. Define acceptance criteria (minimum 3)
+3. Build Stakeholder-Criterion Matrix showing which stakeholders care about which criteria
+4. Define acceptance testing strategy per criterion
+5. Verify against spec-for-conceptual-architecture
+
+**Output:** Conceptual architecture with stakeholder-criterion matrix
+
+**Tools:** [[spec-for-conceptual-architecture]], [[guidance-for-conceptual-architecture]]
+
+### 1a.2 Create Functional Architecture
+
+1. Reference conceptual architecture acceptance criteria
+2. Define functions (minimum 3) with inputs/outputs
+3. Build Function-Criterion Matrix showing which functions address which acceptance criteria
+4. Define system testing strategy per function
+5. Verify against spec-for-functional-architecture
+
+**Output:** Functional architecture with function-criterion matrix
+
+**Tools:** [[spec-for-functional-architecture]], [[guidance-for-functional-architecture]]
+
+### 1a.3 Create Logical Architecture
+
+1. Reference functional architecture functions
+2. Define components (minimum 3) - technology-agnostic
+3. Build Component-Function Matrix showing which components realize which functions
+4. Define integration testing strategy per component interface
+5. Verify against spec-for-logical-architecture
+
+**Output:** Logical architecture with component-function matrix
+
+**Tools:** [[spec-for-logical-architecture]], [[guidance-for-logical-architecture]]
+
+### 1a.4 Create Physical Architecture
+
+1. Reference logical architecture components
+2. Define elements with specific technologies and versions
+3. Build Element-Component Matrix showing which elements implement which components
+4. Define unit testing strategy per element
+5. Verify against spec-for-physical-architecture
+
+**Output:** Physical architecture with element-component matrix
+
+**Tools:** [[spec-for-physical-architecture]], [[guidance-for-physical-architecture]]
+
+**Checkpoint:** All four extended documents pass verification. Each bipartite matrix is complete. Full traceability chain exists from stakeholders through elements.
+
+**Next:** Proceed to Step 1 to create the summary architecture document referencing these extended documents.
+
+## Step 1: Create Architecture Document
+
+**Goal:** Define what the system will be across four abstraction layers with corresponding evaluation criteria. In extended mode, this document synthesizes references to the four extended architecture documents created in Step 1a.
+
+**Inputs:**
+
+Standard Mode:
 - Field survey document (from Step 0)
 - Stakeholder needs and operational context (informed by field survey actors)
 - Technical constraints and assumptions
 - Prior art or reference architectures (if any)
 
-**Activities:**
+Extended Mode (additional):
+
+- Conceptual architecture document (from Step 1a.1)
+- Functional architecture document (from Step 1a.2)
+- Logical architecture document (from Step 1a.3)
+- Physical architecture document (from Step 1a.4)
+
+### Standard Mode Activities
 
 1. **Define Conceptual Layer (ConOps)**
    - Identify stakeholder needs (minimum 3)
@@ -274,10 +382,36 @@ flowchart TB
 
 6. **Verify against spec-for-architecture**
 
+### Extended Mode Activities
+
+If you completed Step 1a (extended architecture documents), use these activities instead:
+
+1. **Add Extended Architecture References to Frontmatter**
+   - `conceptual_architecture_ref`: reference to conceptual architecture doc
+   - `functional_architecture_ref`: reference to functional architecture doc
+   - `logical_architecture_ref`: reference to logical architecture doc
+   - `physical_architecture_ref`: reference to physical architecture doc
+
+2. **Create Layer Sections with References**
+   - Each layer section references its extended document
+   - Include synthesis/summary rather than duplicating full content
+   - Highlight key elements from each layer (3-5 per layer)
+
+3. **Create V-Model Summary Table**
+   - Map each layer to its evaluation counterpart
+   - Include references to testing strategies in extended docs
+   - Document current status of each layer
+
+4. **Verify Cross-References**
+   - All four references resolve to valid documents
+   - Extended documents form complete chain (field survey → conceptual → functional → logical → physical)
+
+5. **Verify against spec-for-architecture**
+
 **Tools and References:**
 
-- [[spec-for-architecture]] - Structural requirements (4 layers, V-model table)
-- [[guidance-for-architecture]] - Quality criteria (layer coherence, testability)
+- [[spec-for-architecture]] - Structural requirements (4 layers, V-model table, extended mode)
+- [[guidance-for-architecture]] - Quality criteria (layer coherence, testability, mode selection)
 - **Verify structure** (deterministic script): `python scripts/verify_spec.py <doc>.md <spec>.md` — automated structural checks
 - **Generate validation** (LLM-assisted + human approval): Ask LLM to evaluate against guidance criteria; human reviews, approves, and signs the validation edge in `01_edges/`
 - **Log assurance** (manual): Create assurance face document in `02_faces/` linking coupling edge + verification edge + validation edge
@@ -285,23 +419,51 @@ flowchart TB
 **Outputs:**
 - Architecture document (verified against spec)
 - Clear understanding of what is being built
-- Testability criteria at each layer
+- Testability criteria at each layer (inline or via references)
 
 **Consistency Checks:**
+
 - [ ] Stakeholders in architecture align with actors from field survey
 - [ ] Scope statement is consistent with field survey scope boundaries
 - [ ] Architecture `field_survey_ref` references the field survey document
+- [ ] (Extended mode) All four extended architecture references are present and valid
+- [ ] (Extended mode) Extended documents form complete prerequisite chain
 
-**Checkpoint:** Architecture document passes verification. All four layers are substantive with minimum required elements. V-model table is complete.
+**Checkpoint:** Architecture document passes verification. In standard mode, all four layers are substantive with minimum required elements. In extended mode, all layer references are valid and V-model table is complete.
 
 ## Step 2: Create Lifecycle Document
 
 **Goal:** Define how the system will be built through a phased process with verification/validation gates.
 
 **Inputs:**
+
 - Architecture document (from Step 1)
 - Organizational process constraints
 - Quality assurance requirements
+- (Extended mode) Extended architecture documents (from Step 1a)
+
+### Decision: Lifecycle Architecture Mode
+
+**When:** At the start of Step 2, based on architecture mode decision from Step 1
+
+**Question:** Should the lifecycle reference extended architecture documents?
+
+**Rule:** The lifecycle mode should match the architecture mode:
+
+- If architecture uses **standard mode** (inline layers) → Lifecycle uses standard mode (reference `architecture_ref` only)
+- If architecture uses **extended mode** (separate docs) → Lifecycle uses extended architecture mode (reference all five documents)
+
+| Architecture Mode | Lifecycle Mode | Lifecycle References |
+|-------------------|----------------|----------------------|
+| Standard (inline) | Standard | `architecture_ref` only |
+| Extended (separate docs) | Extended Architecture | `architecture_ref` + 4 extended refs |
+
+**Extended Architecture Mode Benefits:**
+
+- Lifecycle phases can reference specific bipartite matrices
+- Design phases leverage Stakeholder-Criterion, Function-Criterion, Component-Function matrices
+- Evaluation phases validate against Element-Component, Component-Function, Function-Criterion, Stakeholder-Criterion matrices
+- Full traceability from stakeholder needs through implementation testing
 
 **Activities:**
 
@@ -331,10 +493,40 @@ flowchart TB
 
 6. **Verify against spec-for-lifecycle**
 
+### Extended Architecture Mode Activities
+
+If the architecture uses extended mode (Step 1a completed), add these activities:
+
+1. **Add Extended Architecture References to Frontmatter**
+   - `conceptual_architecture_ref`: reference to conceptual architecture doc
+   - `functional_architecture_ref`: reference to functional architecture doc
+   - `logical_architecture_ref`: reference to logical architecture doc
+   - `physical_architecture_ref`: reference to physical architecture doc
+
+2. **Enhance Architecture Foundation Section**
+   - Reference extended documents for each layer
+   - Note which matrices are available for phase traceability
+   - Summarize key relationships from matrices
+
+3. **Enhance Design Phases with Matrix References**
+   - Phase 1 (ConOps → Functional): Reference Stakeholder-Criterion matrix
+   - Phase 2 (Functional → Logical): Reference Function-Criterion matrix
+   - Phase 3 (Logical → Physical): Reference Component-Function matrix
+
+4. **Enhance Evaluation Phases with Matrix Validation**
+   - Phase 4 (Unit Testing): Validate against Element-Component matrix
+   - Phase 5 (Integration Testing): Validate against Component-Function matrix
+   - Phase 6 (System Testing): Validate against Function-Criterion matrix
+   - Phase 7 (Acceptance Testing): Validate against Stakeholder-Criterion matrix
+
+5. **Create Enhanced Traceability Matrix**
+   - Add Extended Doc column referencing specific architecture documents
+   - Add Matrix column identifying which bipartite matrix applies
+
 **Tools and References:**
 
-- [[spec-for-lifecycle]] - Structural requirements (phases, flowchart, gates)
-- [[guidance-for-lifecycle]] - Quality criteria (clarity, completeness)
+- [[spec-for-lifecycle]] - Structural requirements (phases, flowchart, gates, extended mode)
+- [[guidance-for-lifecycle]] - Quality criteria (clarity, completeness, mode selection)
 - **Verify structure** (deterministic script): `python scripts/verify_spec.py <doc>.md <spec>.md` — automated structural checks
 - **Generate validation** (LLM-assisted + human approval): Ask LLM to evaluate against guidance criteria; human reviews, approves, and signs the validation edge in `01_edges/`
 - **Log assurance** (manual): Create assurance face document in `02_faces/` linking coupling edge + verification edge + validation edge
@@ -345,11 +537,15 @@ flowchart TB
 - Defined verification/validation gates
 
 **Consistency Checks:**
+
 - [ ] Lifecycle target artifact aligns with architecture's system
 - [ ] Lifecycle phases map to architecture layers appropriately
 - [ ] Prerequisites reference architecture elements correctly
+- [ ] (Extended mode) All four extended architecture references are present and valid
+- [ ] (Extended mode) Extended references match architecture document's extended references
+- [ ] (Extended mode) Traceability matrix includes Extended Doc and Matrix columns
 
-**Checkpoint:** Lifecycle document passes verification. Flowchart shows complete process with gates. Phases have all required elements.
+**Checkpoint:** Lifecycle document passes verification. Flowchart shows complete process with gates. Phases have all required elements. In extended mode, all five architecture references are valid and phase-to-matrix mappings are documented.
 
 ## Step 3: Create Program Plan Document
 

@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - guidance
-version: 1.0.0
+version: 1.1.0
 created: 2025-12-30T12:00:00Z
-modified: 2025-12-30T12:00:00Z
+modified: 2025-01-11T00:00:00Z
 dependencies: []
 criteria:
   - layer-completeness
@@ -48,6 +48,78 @@ Each layer corresponds to a V-model evaluation level, creating a complete lifecy
 3. **Stakeholder Communication**: Explaining system structure to diverse audiences
 4. **Verification Planning**: Defining test criteria at each abstraction level
 5. **Self-Demonstrating Projects**: Projects that are instances of what they describe (like this framework)
+
+## Choosing Architecture Mode
+
+Architecture documents can be authored in two modes. Choose the appropriate mode based on your program's complexity and traceability requirements.
+
+### When to Use Standard Mode (Inline Layers)
+
+Use standard mode when:
+
+- **Simple to medium complexity systems** where 3-5 items per layer is sufficient
+- **Rapid prototyping** where speed matters more than detailed traceability
+- **Internal documentation** where formal matrices aren't required
+- **Single-person or small team** authorship
+- **Shorter programs** with limited formal assurance requirements
+
+Standard mode produces a single architecture document with all four layers documented inline. This is faster to produce and easier to maintain for smaller systems.
+
+### When to Use Extended Mode (Reference Synthesis)
+
+Use extended mode when:
+
+- **Complex systems** requiring detailed stakeholder analysis
+- **Formal programs** requiring acceptance criteria traceability
+- **Multi-team projects** where each architecture layer may be owned separately
+- **Assurance-critical work** requiring bipartite relationship matrices
+- **Evolving designs** where layers change at different rates
+- **Compliance requirements** requiring explicit traceability from stakeholder needs to implementation
+
+Extended mode produces four separate extended architecture documents plus a summary architecture:
+
+```text
+field-survey (actors, resources)
+    │
+    ▼
+conceptual-architecture (Stakeholder × Acceptance Criteria matrix)
+    │
+    ▼
+functional-architecture (Function × Acceptance Criteria matrix)
+    │
+    ▼
+logical-architecture (Component × Function matrix)
+    │
+    ▼
+physical-architecture (Element × Component matrix)
+    │
+    ▼
+architecture (V-Model synthesis referencing all four)
+```
+
+Each extended document contains a bipartite relationship matrix enabling full traceability from stakeholder needs through to implementation elements.
+
+### Mode Comparison
+
+| Aspect | Standard Mode | Extended Mode |
+|--------|---------------|---------------|
+| Documents produced | 1 architecture document | 4 extended + 1 summary |
+| Traceability | Implicit through structure | Explicit via matrices |
+| Authoring time | Faster (2-4 hours) | More thorough (1-2 days) |
+| Layer ownership | Single owner | Can be distributed |
+| Formal assurance | Basic verification | Full assurance with matrices |
+| Best for | Small-medium systems | Complex, compliance-critical systems |
+
+### Transitioning Between Modes
+
+It is possible to start with standard mode and upgrade to extended mode later:
+
+1. Extract each inline layer into its own extended architecture document
+2. Build the bipartite relationship matrices
+3. Update the summary architecture to reference the extended documents
+4. Add the four `*_architecture_ref` frontmatter fields
+
+However, starting in extended mode when rigorous traceability is expected will produce better results than retrofitting.
 
 ## Quality Criteria
 
