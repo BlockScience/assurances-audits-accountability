@@ -226,19 +226,25 @@ def parse_directory(directory: Path, element_type: str) -> List[Dict[str, Any]]:
     else:
         md_files = sorted(directory.glob('*.md'))
 
+    # Common non-element files to skip silently
+    SKIP_FILES = {'README.md', 'TEACHING-GUIDE.md', 'CHANGELOG.md', 'LICENSE.md'}
+
     parse_errors = []
     for md_file in md_files:
+        # Silently skip known non-element files
+        if md_file.name in SKIP_FILES:
+            continue
+
         try:
             element = parser(md_file)
             elements.append(element)
         except ParseError as e:
             # Skip files without frontmatter or that don't match expected structure
-            # This includes README.md, TEACHING-GUIDE.md, and any other documentation files
-            # But track errors for debugging
+            # Track errors for debugging (excluding known skip files)
             parse_errors.append((md_file, str(e)))
             continue
 
-    # If we have parse errors, print them as warnings (don't fail the build)
+    # If we have parse errors for unexpected files, print them as warnings
     if parse_errors:
         import sys
         print(f"Warning: {len(parse_errors)} files skipped in {directory}:", file=sys.stderr)

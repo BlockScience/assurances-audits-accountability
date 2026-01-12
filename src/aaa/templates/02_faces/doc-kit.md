@@ -4,10 +4,11 @@ extends: face/assurance
 id: f:doc_kit:<type-name>
 name: Doc-Kit - <Type Name>
 description: Complete documentation kit for <type> documents including spec, guidance, and example
-boundary:
+edges:
   - <coupling-edge-id>
   - <verification-edge-id>
   - <validation-edge-id>
+orientation: oriented
 vertices:
   - <spec-vertex-id>
   - <guidance-vertex-id>
