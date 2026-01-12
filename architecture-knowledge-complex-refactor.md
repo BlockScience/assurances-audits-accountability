@@ -18,6 +18,7 @@ conceptual_architecture_ref: v:doc:conceptual-architecture-knowledge-complex-ref
 functional_architecture_ref: v:doc:functional-architecture-knowledge-complex-refactor
 logical_architecture_ref: v:doc:logical-architecture-knowledge-complex-refactor
 physical_architecture_ref: v:doc:physical-architecture-knowledge-complex-refactor
+requirements_trace_ref: v:doc:requirements-trace-knowledge-complex-refactor
 stakeholders:
   - A3 Operators
   - A4 Approvers
@@ -355,14 +356,17 @@ The following are deferred for future scaling:
 | Stakeholder Need | Acceptance Criterion | Primary Functions | Components | Elements |
 |------------------|---------------------|-------------------|------------|----------|
 | Operators find templates (A3) | AC1 | F1, F3 | C3, C4 | E3, E5 |
-| Operators get verification feedback (A3) | AC2, AC3 | F5, F6, F7, F8 | C6, C7, C8 | E5, E6 |
+| Operators get verification feedback (A3) | AC2, AC3 | F5, F6, F7, F8 | C6, C7, C8 | E5, E6, E12 |
 | Operators search prior work (A3) | AC4 | F2, F10, F11 | C11, C12 | E7, E9 |
 | Approvers review efficiently (A4) | AC5 | F14, F15 | C10 | E5, E8 |
-| Approvers sign with confidence (A4) | AC6 | F16 | C14 | E5, E11 |
+| Approvers sign with confidence (A4) | AC6 | F16 | C14 | E5, E11, E12 |
 | Approvers see effectiveness (A4) | AC7, AC10 | F9, F17, F18 | C9, C13 | E5, E10 |
-| Workflow builders create types (A5) | AC8 | F19, F20, F21, F22 | C2, C3 | E1, E3, E5 |
-| Framework self-demonstrates (A6) | AC9 | F23, F24 | C14 | E5 |
+| Workflow builders create types (A5) | AC8 | F19, F20, F21, F22, F26-F28 | C2, C3, C8, C13 | E1, E3, E5 |
+| Framework self-demonstrates (A6) | AC9 | F8, F22, F23, F24 | C8, C14 | E5, E12 |
 | Client demonstration (A5, A6) | AC11 | F3, F24 | C4, C14 | E2, E5 |
+| Runbook execution support (A3, A4) | AC12 | F25, F29, F30, F31 | C10, C11, C13 | E5, E9 |
+
+For complete bidirectional traceability analysis, see [[requirements-trace-knowledge-complex-refactor]].
 
 ### Constraints Trace
 
