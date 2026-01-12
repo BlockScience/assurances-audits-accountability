@@ -48,6 +48,41 @@ The key innovation is the **base ontology** ([[ontology-base]]) which defines th
 
 This architecture uses **Extended Mode**—each layer is documented in a separate extended architecture document, with this summary synthesizing key decisions and traceability.
 
+### Status Glossary
+
+This glossary distinguishes **framework-technical terms** (records within the simplicial complex) from **meta-level terms** (status of implementations).
+
+#### Framework-Technical Terms
+
+These terms describe records that exist within the knowledge complex as typed simplices:
+
+| Term | Meaning | Record Type |
+|------|---------|-------------|
+| **Verified** (document) | A verification edge exists linking the document to its spec | `edge/verification` |
+| **Validated** (document) | A validation edge exists (from qualified signer) linking the document to its guidance | `edge/validation` |
+| **Assured** (document) | An assurance face exists recording the triple: coupling edge, verification edge, and validation edge | `face/assurance` |
+| **Signed** (document) | A signs edge exists recording the attestation event with commit reference | `edge/signs` |
+| **Qualified** (signer) | A qualifies edge exists linking signer to relevant guidance | `edge/qualifies` |
+
+#### Meta-Level Terms
+
+These terms describe the status of implementations or toolchains that documents are *about*:
+
+| Term | Meaning |
+|------|---------|
+| **Implementation Verified** | The toolchain/code passes its own automated test suite |
+| **Implementation Validated** | The toolchain meets stakeholder acceptance criteria in practice |
+| **Implementation Assured** | The system demonstrates end-to-end quality through assured documentation chain |
+
+#### Disambiguation
+
+The V-Model table in this document uses both levels:
+
+- **"Design Status: Assured"** means the *design documents themselves* have assurance faces within the framework
+- **"Implementation Status: Partial"** means the *toolchain described by those documents* is partially complete
+
+A design document can be assured (has all its edges and faces) even if what it describes is not yet fully implemented.
+
 ### Architecture Chain
 
 | Layer | Document | Key Content |
@@ -203,6 +238,27 @@ Key local rules include:
 - **Runbook DAG Requirement**: `precedes` edges form directed acyclic graph
 - **Runbook I/O Chaining**: Output type of module N = input type of module N+1
 
+#### Local Rules Index
+
+The base ontology defines 12 local rules. See [[ontology-base]] for complete definitions.
+
+| ID | Name | Description | Type | Verified By |
+|----|------|-------------|------|-------------|
+| LR1 | Module Qualification Cascade | Signer qualified for module requires qualified for all output guidances | star | TBD |
+| LR2 | Signature Requires Qualification | Signature face requires qualifies edge from signer to guidance | star | `audit_assurance_chart.py` |
+| LR3 | Module-Signature Shares Signs | `f:module-signature` must share `e:signs` with `f:signature` | face-adjacency | TBD |
+| LR4 | Signature Shares Validation | `f:signature` must share `e:validation` with `f:assurance` | face-adjacency | `audit_assurance_chart.py` |
+| LR5 | Assurance Requires B2 Anchor | `f:assurance` must trace to `f:b2` via coupling edge chain | face-adjacency | `audit_assurance_chart.py` |
+| LR6 | Output Satisfaction Type | `f:output-satisfaction` must share edges with `f:output` | face-adjacency | TBD |
+| LR7 | Input Satisfaction Type | `f:input-satisfaction` must share edges with `f:input` | face-adjacency | TBD |
+| LR8 | Edge Endpoint Compliance | Edge source/target must match declared type constraints | edge-endpoint | `verify_typed.py` |
+| LR9 | Face Boundary Closure | Face boundaries must form closed triangle on 3 vertices | face-boundary | `topology.py` |
+| LR10 | Authorization Chain | Actor authority derivation requires complete authorization face | star | TBD |
+| LR11 | Runbook DAG | `precedes` edges must form directed acyclic graph | edge-endpoint | `verify_chart.py` |
+| LR12 | Runbook I/O Chaining | Prior module output type must match subsequent input type | face-adjacency | TBD |
+
+**Euler Characteristic Verification:** This is a sanity check, not a global invariant. Each chart type defines an expected topological structure (e.g., audit charts should be contractible). The `topology.py` script verifies that a chart's computed χ matches its type's expected value, catching structural errors like disconnected components or unexpected holes.
+
 ### Logical Architecture
 
 14 components organized into 6 areas:
@@ -247,7 +303,7 @@ Key local rules include:
 | Structural truth | YAML frontmatter | Boundaries computed from YAML fields, not wikilinks |
 | Toolchain | Python-only with uv | Single language, fast environment management |
 | Human interface | Obsidian + Claude Code | Dual interface for navigation and AI-assisted authoring |
-| Accountability | GPG signatures on commits | Cryptographic verification of approvers |
+| Accountability | GitHub username + git blame | Artifact-level attribution (GPG as future upgrade) |
 | CI enforcement | GitHub Actions | Prevents invalid documents from reaching main branch |
 
 ### Physical Elements Summary
@@ -257,14 +313,14 @@ Key local rules include:
 | E1 | Ontology Files | OFM + YAML | Load-bearing type definitions |
 | E2 | Document Files | OFM + YAML | All simplices as markdown with frontmatter |
 | E3 | Template Files | OFM + placeholders | Document scaffolding |
-| E4 | Git Repository | Git 2.40+ with GPG | Version control and cryptographic accountability |
+| E4 | Git Repository | Git 2.40+ | Version control and accountability via git blame |
 | E5 | Python Package | Python 3.12+, uv | Core library implementing all logic |
 | E6 | YAML Parser | PyYAML 6.0+ | Frontmatter parsing |
 | E7 | Graph Library | NetworkX 3.2+ | In-memory graph for traversal and verification |
 | E8 | Chart Visualization | matplotlib + plotly | Visual validation of charts |
 | E9 | Obsidian | Obsidian 1.5+ | Human navigation, search, review |
 | E10 | Claude Code | Claude Code (VS Code extension) | LLM-assisted authoring |
-| E11 | GPG Signatures | GnuPG 2.x | Commit and edge signing |
+| E11 | GPG Signatures | GnuPG 2.x | Future: cryptographic commit signing |
 | E12 | GitHub Actions | GitHub Actions | CI enforcement of ontology rules + signature verification |
 
 ### Element-Component Matrix (Key Implementations)
@@ -276,7 +332,7 @@ Key local rules include:
 | E6 | C6, C14 | YAML parser extracts structural truth |
 | E7 | C8, C12 | NetworkX for boundary verification and graph traversal |
 | E9, E10 | C11, C12, C4, C13 | Dual interface for human and AI access |
-| E11, E12 | C13, C6-C8 | Cryptographic accountability + CI enforcement |
+| E11, E12 | C13, C6-C8 | Accountability enforcement via CI (E11 future capability) |
 
 ### Deployment Architecture
 
@@ -304,7 +360,7 @@ Key local rules include:
 │                       │                                              │
 │                       ▼                                              │
 │  ┌──────────────────────────────────────────────────────────────┐   │
-│  │              Git Repository (E4) + GPG (E11)                  │   │
+│  │              Git Repository (E4) + Accountability (E11)       │   │
 │  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐             │   │
 │  │  │  Ontology   │ │  Template   │ │  Document   │             │   │
 │  │  │  Files (E1) │ │  Files (E3) │ │  Files (E2) │             │   │
@@ -335,7 +391,7 @@ Key local rules include:
 │  ┌──────────────────────────────────────────────────────────────┐   │
 │  │              Branch Protection Rules                          │   │
 │  │  • Require CI pass before merge to main                      │   │
-│  │  • Require GPG-signed commits (for accountability edges)     │   │
+│  │  • Require GPG-signed commits (future; optional for now)     │   │
 │  │  • Require pull request reviews (optional)                   │   │
 │  └──────────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────────┘
@@ -374,7 +430,7 @@ For complete bidirectional traceability analysis, see [[requirements-trace-knowl
 |------------|-------------------|-----------|
 | C1 (Human-readable markdown) | Physical | OFM documents (E2), YAML frontmatter (E6) |
 | C2 (Git as truth) | Physical | Git repository (E4), GitHub Actions (E12) |
-| C3 (Human approval required) | Logical + Physical | C13 Workflow Coordinator + GPG signatures (E11) |
+| C3 (Human approval required) | Logical + Physical | C13 Workflow Coordinator + git blame accountability |
 
 ## Risks and Mitigations
 
@@ -439,26 +495,33 @@ For complete bidirectional traceability analysis, see [[requirements-trace-knowl
 - Both operate on same git repository
 - No lock-in to either tool
 
-### 6. Cryptographic Accountability (GPG)
+### 6. Accountability Model
 
-**Decision**: Use GPG signatures on git commits for accountability.
+**Decision**: Use GitHub username identity with `git blame` for artifact-level attribution.
 
-**Rationale**:
-- Verifiable attribution for validation edges
-- Tamper-evident commit history
-- Standard tooling (git + gpg)
-- Supports constraint C3 (human approval)
+**Current Implementation** (internal use):
+- GitHub username serves as signer identity (`github_username` field in signer vertices)
+- `git blame` provides artifact-level attribution for each accountability file
+- CI validates that commit author matches the accountable party in YAML frontmatter
+- Sufficient for internal trusted team use
+
+**Future Upgrade Path** (cryptographic identity):
+- GPG-signed commits for cryptographic verification
+- Content hashing for tamper detection
+- Detached signatures for artifact-level binding
+
+The framework design (signs edges, qualifies edges, signature faces) is independent of the implementation mechanism. See [[physical-architecture-knowledge-complex-refactor]] for implementation details.
 
 ### 7. CI Enforcement (GitHub Actions)
 
-**Decision**: Use GitHub Actions to enforce ontology rules and signature verification at repository level.
+**Decision**: Use GitHub Actions to enforce ontology rules and accountability at repository level.
 
 **Rationale**:
 - Prevents invalid documents from reaching main branch
 - Catches issues even if local checks bypassed
 - Maintains coherence across contributors
 - Enables branch protection integration
-- Verifies GPG signatures on accountability files (signs edges, signature faces, validation edges)
+- Validates accountability: commit author must match `github_username` or `human_approver` field
 - Checks signer qualifications were valid at signing time
 
 ---

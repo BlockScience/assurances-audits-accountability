@@ -31,7 +31,7 @@ The key architectural decisions reflect the constraints from the conceptual arch
 
 1. **File-based storage over database**: Documents remain human-readable markdown files in git repositories (constraint C1, C2)
 2. **Obsidian Flavored Markdown**: Documents use OFM syntax (CommonMark + GFM tables + wikilinks) for Obsidian compatibility
-3. **Git as truth with GPG signatures**: All simplices version-controlled in git; accountability via GPG-signed commits (constraint C2)
+3. **Git as truth with accountability**: All simplices version-controlled in git; accountability via GitHub username + `git blame` (constraint C2); GPG signatures as future upgrade path
 4. **Human-in-the-loop**: Validation edges require explicit human approval captured in YAML frontmatter (constraint C3)
 5. **Python-only toolchain**: All programmatic tooling in Python with uv for environment management
 6. **IDE-first interfaces**: Obsidian for navigation/review, Claude Code for AI-assisted authoring
@@ -70,7 +70,7 @@ The Element-Component Matrix shows how 12 physical elements combine to implement
 | E1  | Ontology Files       | OFM + YAML             | OFM 2024         | Load-bearing type definitions; stored separately, change-resistant |
 | E2  | Document Files       | OFM + YAML             | OFM 2024         | All simplices (vertices, edges, faces) as markdown with frontmatter |
 | E3  | Template Files       | OFM + placeholders     | OFM 2024         | Simple `<placeholder>` syntax for document scaffolding         |
-| E4  | Git Repository       | Git                    | 2.40+            | Version control, branching, GPG-signed commits                 |
+| E4  | Git Repository       | Git                    | 2.40+            | Version control, branching, accountability via git blame       |
 | E5  | Python Package       | Python + uv            | 3.12+            | Core library, scripts, virtual environment management          |
 | E6  | YAML Parser          | PyYAML                 | 6.0+             | Frontmatter parsing (structural truth for simplicial complex)  |
 | E7  | Graph Library        | NetworkX               | 3.2+             | In-memory graph for traversal, topology, boundary verification |
@@ -153,17 +153,17 @@ This architecture uses **Obsidian Flavored Markdown (OFM)**, a layered markdown 
 
 #### E4: Git Repository
 
-**Technology:** Git distributed version control with GPG signing
+**Technology:** Git distributed version control
 **Version:** Git 2.40+
 
-**Purpose:** Version control, branching for approval workflows, and cryptographically signed commits for accountability.
+**Purpose:** Version control, branching for approval workflows, and accountability via `git blame` attribution.
 
-**Rationale:** Git is required by constraint C2 as the source of truth. GPG-signed commits provide cryptographic accountability—signers can be verified, and commit history is tamper-evident. This supports the accountability requirements for validation edges.
+**Rationale:** Git is required by constraint C2 as the source of truth. The current implementation uses GitHub username + `git blame` for accountability (see Accountability Model section). GPG-signed commits are defined as a future upgrade path for external/adversarial audit contexts.
 
 **Configuration:**
 - `.gitignore`: Exclude `.obsidian/`, `__pycache__/`, `.venv/`, `*.pyc`
 - Branch strategy: `main` for assured documents, feature branches for drafts
-- Signing: `git config commit.gpgsign true` for automatic GPG signing
+- Signing: `git config commit.gpgsign true` (optional; future requirement)
 - Hooks: Pre-commit for verification (optional)
 
 #### E5: Python Package
@@ -205,10 +205,20 @@ This architecture uses **Obsidian Flavored Markdown (OFM)**, a layered markdown 
 **Rationale:** NetworkX is Python's standard graph library with algorithms for path finding, cycle detection, and subgraph operations. The knowledge complex graph is built from YAML frontmatter at startup—each edge document's `source` and `target` fields create graph edges.
 
 **Configuration:**
+
 - Graph type: `nx.MultiDiGraph` (directed edges with multiple edge types)
 - Node attributes: Vertex type, file path, frontmatter metadata
 - Edge attributes: Edge type, source, target, file path
 - Queries: `G.predecessors()`, `G.successors()` for traversal
+
+**Relationship to Simplicial Complex:**
+
+NetworkX represents the **1-skeleton** (vertices and edges) of the simplicial complex. Faces (2-simplices) are higher-order objects not directly representable in a graph. The implementation handles this as follows:
+
+- NetworkX stores vertices and edges with their metadata
+- Face boundaries (`boundary_edges`, `boundary_vertices` fields) are stored as YAML frontmatter
+- The boundary verifier computes face closure from YAML, not from NetworkX structure
+- Euler characteristic verification uses both NetworkX (for V, E counts) and YAML (for F count)
 
 #### E8: Chart Visualization
 
@@ -255,20 +265,60 @@ This architecture uses **Obsidian Flavored Markdown (OFM)**, a layered markdown 
 - Capabilities: Template retrieval, prior work discovery, draft generation, verification interpretation
 - Constraints: Human approval required—Claude prepares but doesn't approve validation edges
 
-#### E11: GPG Signatures
+#### E11: GPG Signatures (Future Capability)
 
 **Technology:** GnuPG (GNU Privacy Guard)
 **Version:** GnuPG 2.x
+**Status:** Future upgrade path (not currently required)
 
-**Purpose:** Cryptographic signatures for git commits and accountability edges, enabling verifiable attribution.
+**Purpose:** Cryptographic signatures for git commits, enabling cryptographically verifiable attribution.
 
-**Rationale:** GPG signatures provide cryptographic proof of authorship. Signed commits create an immutable, verifiable record of who approved what and when. This supports the accountability requirements—validation edges can reference signed commits as evidence of human approval.
+**Current State:** GPG signatures are not currently required. The framework uses GitHub username identity with `git blame` for accountability (see Accountability Model below). GPG is documented here as a planned upgrade path for external/adversarial audit contexts.
 
-**Configuration:**
+**Future Configuration** (when implemented):
+
 - Key generation: `gpg --gen-key` for each signer
 - Git integration: `git config user.signingkey <key-id>`, `git config commit.gpgsign true`
 - Verification: `git log --show-signature` to verify commit signatures
 - Key distribution: Public keys shared via keyserver or repository
+
+### Accountability Model
+
+The framework defines accountability through typed simplices (signs edges, qualifies edges, signature faces). This section describes the physical implementation that enforces these semantics.
+
+#### Current Implementation (Internal Use)
+
+**Identity Mechanism:** GitHub username serves as signer identity.
+
+- The `github_username` field in signer vertices maps to git commit authors
+- No cryptographic key infrastructure required
+- Sufficient for internal trusted team use
+
+**Attribution Mechanism:** `git blame` provides artifact-level attribution.
+
+- Each accountability file (signs edge, validation edge, signature face) can be traced to the specific commit and author that created/modified it
+- Attribution is per-artifact, not per-commit-batch
+- Git history provides audit trail
+
+**CI Enforcement:** `validate-accountability.yml` checks accountability constraints.
+
+- Validates that the git commit author matches the `github_username` in the relevant signer vertex
+- For LLM-assisted validations, validates that commit author matches `human_approver` field
+- Provides per-artifact accountability even when multiple files change in one commit
+
+**Time Authority:** `signing_date` in YAML frontmatter is the authoritative timestamp for qualification expiry checks. Committers are trusted to accurately record signing dates. For internal use with trusted team members, this is sufficient.
+
+#### Future Upgrade Path (Cryptographic Identity)
+
+When cryptographic identity verification is needed (external/adversarial audit contexts):
+
+1. **GPG-signed commits**: Add `commit.gpgsign = true` requirement for accountability files
+2. **Content hashing**: Add `content_hash` field (SHA-256 of canonical YAML + body) for tamper detection
+3. **Detached signatures**: Support `.sig` files or embedded signature field for artifact-level cryptographic binding
+4. **Key distribution**: Establish public key infrastructure for signers
+5. **Timestamp correlation**: Enforce that `signing_date` is within tolerance of commit timestamp
+
+These upgrades layer on top of the current implementation without changing the framework design (the ontology's signs/qualifies/signature types remain unchanged).
 
 #### E12: GitHub Actions
 
@@ -280,13 +330,14 @@ This architecture uses **Obsidian Flavored Markdown (OFM)**, a layered markdown 
 **Rationale:** While local verification (E5) catches issues during authoring, GitHub Actions provides a repository-level gate that prevents invalid documents from being merged to protected branches. This is essential for maintaining ontology coherence when multiple contributors are working on the same repository. CI enforcement ensures that even if local checks are bypassed, the repository remains consistent.
 
 **Configuration:**
+
 - Workflow file: `.github/workflows/verify.yml`
 - Triggers: On pull request to `main`, on push to `main`
 - Jobs:
   - `verify-documents`: Run `verify_template_based.py` on all changed documents
   - `verify-types`: Run `verify_typed.py` on all changed documents
   - `verify-boundaries`: Run boundary verification on edges and faces
-  - `verify-signatures`: Verify GPG-signed commits for accountability files (signs, signature, validation)
+  - `validate-accountability`: Check git commit author matches accountable party in YAML
   - `verify-qualifications`: Verify signs edges reference valid (non-expired) qualifies edges
   - `verify-charts`: Run chart topology verification if charts are modified
 - Branch protection: Require CI pass before merge to `main`
@@ -312,16 +363,17 @@ jobs:
       - run: uv run python scripts/verify_typed.py --all
 ```
 
-#### Signature Verification Jobs
+#### Accountability Verification Jobs
 
-The following jobs enforce cryptographic accountability for signing-related documents:
+The following CI jobs enforce accountability for signing-related documents:
 
-**verify-signatures** (triggered when accountability files are modified):
+**validate-accountability** (triggered when accountability files are modified):
 
 - Runs when PR includes changes to: `01_edges/signs-*.md`, `02_faces/signature-*.md`, `01_edges/validation-*.md`
-- Executes `git verify-commit` on commits that touch these files
-- Checks that the commit author's GPG key matches a registered signer vertex
+- For `manual` validations: checks that git commit author matches the `validator` field
+- For `llm-assisted` or `automated` validations: checks that git commit author matches the `human_approver` field
 - Maps git author to signer via the `github_username` field in signer vertices
+- Posts PR comment on failure with guidance
 
 **verify-qualifications** (triggered when signs edges are modified):
 
@@ -331,7 +383,7 @@ The following jobs enforce cryptographic accountability for signing-related docu
   2. The qualifies edge was valid (not expired) at the `signing_date`
   3. The signer's `github_username` matches the git commit author
 
-These jobs connect E11 (GPG Signatures) to E12 (GitHub Actions), enforcing the accountability requirements defined in [[spec-for-signs]] and [[spec-for-qualifies]].
+These jobs enforce the accountability requirements defined in [[spec-for-signs]] and [[spec-for-qualifies]] using the current implementation (GitHub username + git blame). When GPG signatures are implemented (E11), additional cryptographic verification will be added.
 
 ### Deployment View
 
@@ -365,7 +417,7 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 │                       │                                              │
 │                       ▼                                              │
 │  ┌──────────────────────────────────────────────────────────────┐   │
-│  │              Git Repository (E4) + GPG (E11)                  │   │
+│  │              Git Repository (E4) + Accountability (E11)       │   │
 │  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐             │   │
 │  │  │  Ontology   │ │  Template   │ │  Document   │             │   │
 │  │  │  Files (E1) │ │  Files (E3) │ │  Files (E2) │             │   │
@@ -398,7 +450,7 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 │  ┌──────────────────────────────────────────────────────────────┐   │
 │  │              Branch Protection Rules                          │   │
 │  │  • Require CI pass before merge to main                      │   │
-│  │  • Require GPG-signed commits (for accountability edges)     │   │
+│  │  • Require GPG-signed commits (future; optional for now)     │   │
 │  │  • Require pull request reviews (optional)                   │   │
 │  └──────────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────────┘
@@ -408,7 +460,7 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 
 | Environment | Configuration Notes |
 |-------------|---------------------|
-| Development | Obsidian vault pointed at repo, Claude Code configured with system prompt, Python environment via `uv venv && uv pip install -e .`, GPG key configured for signing |
+| Development | Obsidian vault pointed at repo, Claude Code configured with system prompt, Python environment via `uv venv && uv pip install -e .`, GPG key optional (future) |
 | CI (GitHub) | GitHub Actions runs verification on PR/push; branch protection requires CI pass; workflow uses `astral-sh/setup-uv` for fast Python setup |
 | Production | Same as development for internal-first deployment. GitHub serves as remote with CI enforcement |
 
@@ -447,12 +499,12 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 | E8 | C10 | Full | Visualization presents charts for human validation |
 | E9 | C11, C12 | Full | Obsidian provides search and graph navigation for humans |
 | E10 | C4, C9, C11, C13 | Partial | Claude Code assists with composition, evaluation, search, workflow |
-| E11 | C13 | Full | GPG signatures provide cryptographic accountability |
+| E11 | C13 | Future | GPG signatures (future); currently GitHub username + git blame |
 | E12 | C6, C7, C8 | Full | GitHub Actions enforces verification at repository level |
 
 ### Key Implementations
 
-1. **File-Based Storage (E1, E2, E3, E4)**: The simplicial complex is stored entirely as files in a git repository. Ontology files (E1) define types; document files (E2) store simplices; template files (E3) scaffold new documents. Git (E4) provides version control and GPG-signed commits for accountability.
+1. **File-Based Storage (E1, E2, E3, E4)**: The simplicial complex is stored entirely as files in a git repository. Ontology files (E1) define types; document files (E2) store simplices; template files (E3) scaffold new documents. Git (E4) provides version control and `git blame` attribution for accountability.
 
 2. **Python Package as Core (E5)**: The Python package implements verification (C6, C7, C8), evaluation (C9), composition (C4), construction (C14), and workflow coordination (C13). It uses PyYAML (E6) for frontmatter parsing and NetworkX (E7) for graph operations.
 
@@ -462,7 +514,7 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 
 5. **Visualization for Validation (E8)**: Chart visualization is essential for validating charts before approval. Visual inspection catches structural issues that automated checks miss.
 
-6. **Cryptographic Accountability (E11)**: GPG signatures on git commits provide verifiable attribution for validation edges and approvals.
+6. **Accountability (E11)**: Current implementation uses GitHub username + `git blame` for attribution. GPG signatures are defined as a future upgrade path for external/adversarial audit contexts (see Accountability Model section).
 
 7. **CI Enforcement (E12)**: GitHub Actions provides repository-level verification gates. Even if local checks are bypassed, CI prevents merging documents that violate ontology rules, maintaining coherence across contributors.
 
@@ -503,7 +555,7 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 | C10 Result Presenter | E5, E8 | Python formats results; visualization for charts |
 | C11 Search Index | E9, E10 | Obsidian provides search; Claude uses search |
 | C12 Graph Navigator | E7, E9 | NetworkX stores graph; Obsidian visualizes |
-| C13 Workflow Coordinator | E4, E5, E10, E11 | Git/GPG for accountability; Python for logic; Claude guides |
+| C13 Workflow Coordinator | E4, E5, E10, E11 | Git blame for accountability (GPG future); Python for logic; Claude guides |
 | C14 Simplex Constructor | E5, E6 | Python implements construction; YAML generates frontmatter |
 
 ### Coverage Analysis
@@ -512,7 +564,7 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 - **File-based foundation**: E1, E2, E3, E4 provide file-based storage (no external services)
 - **Python as hub**: E5 implements core logic for most components
 - **Dual interface**: E9 (Obsidian) and E10 (Claude Code) provide complementary access
-- **Cryptographic accountability**: E11 (GPG) enables verifiable signatures
+- **Accountability**: E11 enables identity verification (GitHub username now; GPG future)
 - **CI enforcement**: E12 (GitHub Actions) prevents invalid documents from reaching main branch
 
 ## Deferred Elements
@@ -540,7 +592,7 @@ Technology choices were guided by:
 2. **Obsidian compatibility**: OFM as primary markdown flavor
 3. **Python-only**: No TypeScript/JavaScript toolchain needed
 4. **File-based**: No external services for MVP (except GitHub for CI)
-5. **Cryptographic accountability**: GPG for verifiable signatures
+5. **Accountability**: GitHub username + git blame (GPG future upgrade)
 6. **CI enforcement**: GitHub Actions prevents invalid documents from reaching main
 
 ### What This Architecture Eliminates
@@ -561,7 +613,7 @@ Compared to the initial 16-element design, this simplified architecture eliminat
 ### Constraints
 
 - **Cst1**: All simplices stored as OFM files with YAML frontmatter (from conceptual C1)
-- **Cst2**: Git is the sole version control system with GPG signing (from conceptual C2)
+- **Cst2**: Git is the sole version control system; GPG signing optional/future (from conceptual C2)
 - **Cst3**: Validation requires human signature; cannot be fully automated (from conceptual C3)
 - **Cst4**: Python 3.12+ required; environment managed by uv
 - **Cst5**: Simplicial complex boundaries computed from YAML frontmatter, not wikilinks
@@ -572,10 +624,10 @@ Compared to the initial 16-element design, this simplified architecture eliminat
 - **Asm1**: Users have Python 3.12+ and uv installed or can install them
 - **Asm2**: Users have Obsidian 1.5+ installed
 - **Asm3**: Users have access to Claude Code for LLM assistance
-- **Asm4**: Users have GPG 2.x installed and configured
+- **Asm4**: GPG 2.x available if cryptographic signatures needed (optional for current use)
 - **Asm5**: Git 2.40+ is available on user workstations
 - **Asm6**: Repository is hosted on GitHub with Actions enabled
 
 ---
 
-**Note:** This physical architecture is version 0.2.0, with 12 elements (simplified from initial 16-element design, plus GitHub Actions for CI). It reflects lessons from prototyping: Obsidian Flavored Markdown as the data standard, simple placeholder templates, Python-only toolchain with uv, GPG signatures for accountability, and GitHub Actions for ontology enforcement. Deferred elements can be added when scaling requires them.
+**Note:** This physical architecture is version 0.2.0, with 12 elements (simplified from initial 16-element design, plus GitHub Actions for CI). It reflects lessons from prototyping: Obsidian Flavored Markdown as the data standard, simple placeholder templates, Python-only toolchain with uv, GitHub username + git blame for accountability (GPG as future upgrade), and GitHub Actions for ontology enforcement. Deferred elements can be added when scaling requires them.

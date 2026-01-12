@@ -26,7 +26,7 @@ Signs edges represent **attestation events** where a signer formally attests to 
 
 A signs edge from signer S to document D means:
 - "S attested to D at a specific point in time"
-- "S's identity is verified through the commit signature"
+- "S's identity is verified through commit attribution (git blame)"
 - "S was qualified to sign at the time of signing"
 
 ## Required Frontmatter Fields
@@ -111,7 +111,7 @@ All signs edge documents MUST include the following YAML frontmatter:
 
 I, [signer name], attest to [document name] on [date].
 
-This attestation is recorded in commit [hash] and can be verified through the Git signature.
+This attestation is recorded in commit [hash] and can be verified through git history.
 
 **Signed:** [GitHub username]
 **Date:** [signing_date]
@@ -157,7 +157,7 @@ Before a signs edge can be created:
 1. **Signer Exists:** The source signer vertex must exist
 2. **Document Exists:** The target document must exist
 3. **Qualifies Valid:** A qualifies edge from signer to relevant guidance must be valid (non-expired)
-4. **Commit Signature:** The commit creating this edge must be signed by the signer's GitHub account
+4. **Commit Attribution:** The commit creating this edge must be attributable to the signer's GitHub account (via git blame)
 
 ## Role in Signature Pattern
 
