@@ -262,9 +262,9 @@ Key local rules include:
 | E7 | Graph Library | NetworkX 3.2+ | In-memory graph for traversal and verification |
 | E8 | Chart Visualization | matplotlib + plotly | Visual validation of charts |
 | E9 | Obsidian | Obsidian 1.5+ | Human navigation, search, review |
-| E10 | Claude Code | Claude Code | LLM-assisted authoring |
+| E10 | Claude Code | Claude Code (VS Code extension) | LLM-assisted authoring |
 | E11 | GPG Signatures | GnuPG 2.x | Commit and edge signing |
-| E12 | GitHub Actions | GitHub Actions | CI enforcement of ontology rules |
+| E12 | GitHub Actions | GitHub Actions | CI enforcement of ontology rules + signature verification |
 
 ### Element-Component Matrix (Key Implementations)
 
@@ -283,11 +283,14 @@ Key local rules include:
 ┌─────────────────────────────────────────────────────────────────────┐
 │                        User Workstation                              │
 ├─────────────────────────────────────────────────────────────────────┤
-│  ┌──────────────┐              ┌──────────────┐                     │
-│  │   Obsidian   │              │  Claude Code │                     │
-│  │    (E9)      │              │    (E10)     │                     │
-│  └──────┬───────┘              └──────┬───────┘                     │
-│         └─────────────┬───────────────┘                              │
+│  ┌──────────────┐              ┌───────────────────────────────┐    │
+│  │   Obsidian   │              │         VS Code IDE            │    │
+│  │    (E9)      │              │  ┌─────────────────────────┐  │    │
+│  └──────┬───────┘              │  │     Claude Code (E10)   │  │    │
+│         │                      │  │       (extension)       │  │    │
+│         │                      │  └─────────────────────────┘  │    │
+│         │                      └──────────────┬────────────────┘    │
+│         └─────────────┬───────────────────────┘                      │
 │                       ▼                                              │
 │  ┌──────────────────────────────────────────────────────────────┐   │
 │  │                  Python Package (E5)                          │   │
@@ -321,6 +324,10 @@ Key local rules include:
 │  │  │   verify-   │ │   verify-   │ │   verify-   │             │   │
 │  │  │  documents  │ │    types    │ │  boundaries │             │   │
 │  │  └─────────────┘ └─────────────┘ └─────────────┘             │   │
+│  │  ┌─────────────┐ ┌──────────────┐                            │   │
+│  │  │   verify-   │ │    verify-   │                            │   │
+│  │  │  signatures │ │qualifications│                            │   │
+│  │  └─────────────┘ └──────────────┘                            │   │
 │  └──────────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────────┘
 ```
@@ -432,13 +439,15 @@ The following are deferred for future scaling:
 
 ### 7. CI Enforcement (GitHub Actions)
 
-**Decision**: Use GitHub Actions to enforce ontology rules at repository level.
+**Decision**: Use GitHub Actions to enforce ontology rules and signature verification at repository level.
 
 **Rationale**:
 - Prevents invalid documents from reaching main branch
 - Catches issues even if local checks bypassed
 - Maintains coherence across contributors
 - Enables branch protection integration
+- Verifies GPG signatures on accountability files (signs edges, signature faces, validation edges)
+- Checks signer qualifications were valid at signing time
 
 ---
 
