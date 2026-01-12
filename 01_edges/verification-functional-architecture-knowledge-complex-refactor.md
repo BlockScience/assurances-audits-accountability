@@ -22,6 +22,44 @@ modified: 2026-01-11T00:00:00Z
 
 This verification edge confirms that the functional architecture for the knowledge complex repository refactor meets the structural requirements defined in spec-for-functional-architecture.
 
+## Verification Output
+
+```
+Verifying: functional-architecture-knowledge-complex-refactor.md
+======================================================================
+Result: ✓ PASS
+Checks: 2/2 passed
+
+Required Fields:
+✓ type: vertex/doc
+✓ extends: doc
+✓ id: v:doc:functional-architecture-knowledge-complex-refactor
+✓ tags: [vertex, doc, functional-architecture]
+✓ system_name: Knowledge Complex Framework
+✓ scope: present
+✓ conceptual_architecture_ref: present
+✓ function_count: 24
+
+Required Body Sections:
+✓ Purpose
+✓ Overview
+✓ Conceptual Architecture Reference
+✓ Acceptance Criteria Summary
+✓ Functional Architecture
+✓ Function Table
+✓ Function Definitions
+✓ Function-Criterion Matrix
+✓ System Testing Strategy
+
+All structural requirements satisfied.
+```
+
+## Verification Status
+
+- **Status:** Pass
+- **Date:** 2026-01-11T00:00:00Z
+- **Tool:** verify_template_based.py v1.0.0
+
 ## Verification Assessment
 
 **Specification:** [[spec-for-functional-architecture]]

@@ -22,6 +22,47 @@ modified: 2026-01-11T00:00:00Z
 
 This verification edge confirms that the conceptual architecture for the knowledge complex repository refactor meets the structural requirements defined in spec-for-conceptual-architecture.
 
+## Verification Output
+
+```
+Verifying: conceptual-architecture-knowledge-complex-refactor.md
+======================================================================
+Result: ✓ PASS
+Checks: 5/5 passed
+
+Required Fields:
+✓ type: vertex/doc
+✓ extends: doc
+✓ id: v:doc:conceptual-architecture-knowledge-complex-refactor
+✓ tags: [vertex, doc, conceptual-architecture]
+✓ system_name: Knowledge Complex Framework
+✓ scope: present
+✓ field_survey_ref: present
+✓ stakeholder_count: 4
+✓ criterion_count: 11
+
+Required Body Sections:
+✓ Purpose
+✓ Overview
+✓ Field Survey Reference
+✓ Stakeholders Used
+✓ Problem Statement (ConOps)
+✓ Operational Context
+✓ Stakeholder Needs
+✓ Acceptance Criteria
+✓ Criterion Definitions
+✓ Stakeholder-Criterion Matrix
+✓ Acceptance Testing Strategy
+
+All structural requirements satisfied.
+```
+
+## Verification Status
+
+- **Status:** Pass
+- **Date:** 2026-01-11T00:00:00Z
+- **Tool:** verify_template_based.py v1.0.0
+
 ## Verification Assessment
 
 **Specification:** [[spec-for-conceptual-architecture]]
