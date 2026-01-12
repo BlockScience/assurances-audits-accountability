@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ontology Rule Demo: Face Boundary Types</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 40px; background: #f5f5f5; }
+        h1 { color: #2c3e50; }
+        h2 { color: #34495e; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .demo { background: white; margin: 20px 0; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .pass { border-left: 4px solid #27ae60; }
+        .fail { border-left: 4px solid #e74c3c; }
+        .status { font-weight: bold; font-size: 1.2em; }
+        .status.pass { color: #27ae60; }
+        .status.fail { color: #e74c3c; }
+        .description { color: #7f8c8d; font-style: italic; margin: 10px 0; }
+        .explanation { background: #ecf0f1; padding: 15px; border-radius: 4px; margin: 15px 0; }
+        .violations { background: #fdedec; padding: 15px; border-radius: 4px; margin: 15px 0; }
+        .violations h4 { color: #c0392b; margin-top: 0; }
+        .graph { margin: 20px 0; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 4px; }
+        .vertex { fill: #3498db; stroke: white; stroke-width: 2; }
+        .vertex.spec { fill: #27ae60; }
+        .vertex.guidance { fill: #f39c12; }
+        .vertex.signer { fill: #9b59b6; }
+        .edge { stroke: #95a5a6; stroke-width: 2; }
+        .edge.verification { stroke: #3498db; }
+        .edge.validation { stroke: #e74c3c; }
+        .edge.coupling { stroke: #9b59b6; stroke-dasharray: 5,5; }
+        .edge.invalid { stroke: #e74c3c; stroke-width: 3; }
+        .label { font-size: 12px; fill: #2c3e50; }
+        code { background: #ecf0f1; padding: 2px 6px; border-radius: 3px; font-family: 'Fira Code', monospace; }
+        .summary { background: #d5dbdb; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <h1>Ontology Rule Demonstration: Face Boundary Types</h1>
+
+    <div class="summary">
+        <strong>Summary:</strong> 2/2 demonstrations passed
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 1: Valid Assurance Face</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Triangle with verification + validation + coupling</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="279.1025403784439,187.00961894323342 269.7724133595217,180.84936490538902 278.4326673973661,175.84936490538902" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="279.1025403784439" y2="187.00961894323342" class="edge verification"/>
+<text x="239.55127018922195" y="108.50480947161671" class="label" text-anchor="middle" font-size="10">verification</text>
+<polygon points="120.89745962155615,187.00961894323345 121.56733260263395,175.84936490538905 130.22758664047834,180.84936490538905" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="120.89745962155615" y2="187.00961894323345" class="edge validation"/>
+<text x="160.44872981077808" y="108.50480947161672" class="label" text-anchor="middle" font-size="10">validation</text>
+<line x1="286.6025403784439" y1="200.0" x2="113.39745962155615" y2="200.00000000000003" class="edge coupling"/>
+<text x="200.00000000000003" y="190.0" class="label" text-anchor="middle" font-size="10">coupling</text>
+<circle cx="200.0" cy="50.0" r="20" class="vertex"/>
+<text x="200.0" y="55.0" class="label" text-anchor="middle">doc</text>
+<circle cx="286.6025403784439" cy="200.0" r="20" class="vertex spec"/>
+<text x="286.6025403784439" y="205.0" class="label" text-anchor="middle">spec</text>
+<circle cx="113.39745962155615" cy="200.00000000000003" r="20" class="vertex guidance"/>
+<text x="113.39745962155615" y="205.00000000000003" class="label" text-anchor="middle">guidance</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> An assurance face must have all three edge types: verification, validation, and coupling.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 0<br>
+            <strong>Actual violations:</strong> 0
+        </p>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 2: Invalid: Face Missing Validation Edge</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Triangle with verification + coupling (MISSING validation)</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="279.1025403784439,187.00961894323342 269.7724133595217,180.84936490538902 278.4326673973661,175.84936490538902" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="279.1025403784439" y2="187.00961894323342" class="edge verification"/>
+<text x="239.55127018922195" y="108.50480947161671" class="label" text-anchor="middle" font-size="10">verification</text>
+<line x1="286.6025403784439" y1="200.0" x2="113.39745962155615" y2="200.00000000000003" class="edge coupling"/>
+<text x="200.00000000000003" y="190.0" class="label" text-anchor="middle" font-size="10">coupling</text>
+<polygon points="120.89745962155615,187.00961894323345 121.56733260263395,175.84936490538905 130.22758664047834,180.84936490538905" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="120.89745962155615" y2="187.00961894323345" class="edge"/>
+<text x="160.44872981077808" y="108.50480947161672" class="label" text-anchor="middle" font-size="10">other</text>
+<circle cx="200.0" cy="50.0" r="20" class="vertex"/>
+<text x="200.0" y="55.0" class="label" text-anchor="middle">doc</text>
+<circle cx="286.6025403784439" cy="200.0" r="20" class="vertex spec"/>
+<text x="286.6025403784439" y="205.0" class="label" text-anchor="middle">spec</text>
+<circle cx="113.39745962155615" cy="200.00000000000003" r="20" class="vertex guidance"/>
+<text x="113.39745962155615" y="205.00000000000003" class="label" text-anchor="middle">guidance</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> This assurance face is missing a validation edge - human sign-off is required.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 1<br>
+            <strong>Actual violations:</strong> 1
+        </p>
+
+        <div class="violations">
+            <h4>Violations Found:</h4>
+            <ul>
+                <li><code>[ERROR] assurance_boundary_types: Missing required edge types: {'edge/validation'} (f:assurance:bad)</code></li>
+
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
