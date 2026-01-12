@@ -8,13 +8,15 @@ tags:
   - vertex
   - doc
   - logical-architecture
-version: 0.1.0
+version: 0.2.0
 created: 2026-01-11T00:00:00Z
 modified: 2026-01-11T00:00:00Z
 system_name: Knowledge Complex Framework
 scope: Internal-first deployment enabling systematic documentation with verification, validation, and assurance
 functional_architecture_ref: v:doc:functional-architecture-knowledge-complex-refactor
+ontology_ref: v:ontology:base
 component_count: 14
+interface_count: 40
 ---
 
 # Logical Architecture - Knowledge Complex Framework Refactor
@@ -98,25 +100,35 @@ The knowledge complex uses a three-level type system where each simplex dimensio
 
 **Vertex Types (0-simplices):**
 
-```
+Per [[ontology-base]], the knowledge complex defines 14 vertex types organized into 6 categories:
+
+```text
 vertex (abstract base)
+│
 ├── doc (document - content artifacts)
-│   ├── spec (structural requirements)
-│   ├── guidance (quality criteria)
-│   ├── persona, purpose, protocol (PPP documents)
-│   ├── runbook (workflow specification with typed I/O)
-│   └── field-survey, conceptual-architecture, ... (domain docs)
+│   ├── spec (structural requirements - WHAT structure)
+│   ├── guidance (quality criteria - HOW WELL)
+│   ├── ontology (type system definitions)
+│   ├── module (typed I/O transformation - law of motion)
+│   └── [domain docs: field-survey, conceptual-architecture, etc.]
 │
 ├── actor (entities that can act)
-│   └── signer (actor with verified GitHub identity)
+│   └── signer (actor with verified identity who can sign)
 │
-└── chart (collection of simplices)
-    └── assurance-audit (assured chart)
+├── role (organizational position conveying authorities)
+│
+├── authority (atomic unit of permission)
+│
+└── execution (concrete state transition - trajectory point)
 ```
+
+**Key distinction:** Modules define abstract transformation rules (reusable laws of motion), while executions record concrete applications of modules at specific times (unique trajectory points).
 
 **Edge Types (1-simplices):**
 
-```
+Per [[ontology-base]], the knowledge complex defines 18 edge types organized into 6 categories:
+
+```text
 edge (abstract base)
 │
 │  # Assurance edges (core triangle)
@@ -125,42 +137,86 @@ edge (abstract base)
 ├── coupling (spec ↔ guidance, undirected semantic alignment)
 │
 │  # Signature/accountability edges
-├── signs (signer → doc, attestation event)
-├── qualifies (signer → guidance, credential for validation authority)
+├── signs (signer → doc, attestation event with timestamp + commit hash)
+├── qualifies (signer → guidance OR module, credential for validation/execution)
+│
+│  # RBAC edges
+├── has-role (actor → role, actor holds organizational position)
+├── conveys (role → authority, role grants permission)
+├── requires-authority (vertex → authority, action requires permission)
+│
+│  # Module I/O edges (abstract type specifications)
+├── precedes (module → module, ordering in runbook)
+├── feeds (doc → module, concrete input provision)
+├── yields (module → doc, concrete output production)
 │
 │  # Document relationship edges
 ├── inherits (spec → spec, domain specialization)
-├── dependency (doc → doc, prerequisite relationship)
-├── cites (doc → doc, reference relationship)
+├── instantiates (doc → spec, document is instance of type)
 │
-│  # I/O dependency edges (for runbook steps)
-├── requires-input (runbook-step → doc-type, input requirement)
-└── produces-output (runbook-step → doc-type, output specification)
+│  # Execution edges (concrete state transitions)
+├── executes (execution → module, which law of motion was applied)
+├── follows (execution → execution, causal ordering - must form DAG)
+├── consumes (execution → doc, execution input)
+└── produces (execution → doc, execution output)
 ```
+
+**Key distinction:** Module I/O edges (`feeds`, `yields`) describe abstract type relationships, while execution edges (`consumes`, `produces`) record concrete I/O in specific executions.
 
 **Face Types (2-simplices):**
 
-```
+Per [[ontology-base]], the knowledge complex defines 11 face types organized into 4 categories:
+
+```text
 face (abstract base)
 │
-│  # Assurance faces
+│  # Assurance faces (3)
 ├── assurance (doc, spec, guidance)
 │   └── boundary: verification + validation + coupling
 │   └── local rule: must be adjacent to b2 face sharing coupling edge
+│   └── local rule: must be adjacent to signature face sharing validation edge
 │
 ├── signature (doc, guidance, signer)
-│   └── boundary: validation + signs + qualifies
+│   └── boundary: validation + qualifies + signs
 │   └── local rule: signer must have qualifies edge to guidance
-│   └── shares validation edge with assurance face
 │
-├── b2 (bootstrap boundary face)
-│   └── anchors assurance network to root vertex
+├── b2 (bootstrap boundary face - self-referential anchors)
+│   └── boundary: verification + validation + coupling (for meta-docs)
+│   └── local rule: forms boundary of assurance network (no further ancestry)
 │
-│  # I/O dependency faces (for runbook traceability)
-└── io-dependency (input-doc, runbook-step, output-doc)
-    └── boundary: requires-input + produces-output + dependency
-    └── enables requirements traceability through process chains
+│  # RBAC face (1)
+├── authorization (actor, role, authority)
+│   └── boundary: has-role + conveys + (derived: actor→authority)
+│   └── proves actor has authority through role assignment
+│
+│  # Module I/O faces (5)
+├── input (spec, guidance, module)
+│   └── boundary: coupling + (module references input spec/guidance)
+│   └── defines module input type requirements
+│
+├── output (module, spec, guidance)
+│   └── boundary: (module references output spec/guidance) + coupling
+│   └── defines module output type requirements
+│
+├── input-satisfaction (doc, spec, module)
+│   └── boundary: verification + (from f:input) + feeds
+│   └── proves concrete input satisfies module's input type
+│
+├── output-satisfaction (module, spec, doc)
+│   └── boundary: (from f:output) + verification + yields
+│   └── proves concrete output satisfies module's output type
+│
+├── module-signature (doc, module, signer)
+│   └── boundary: yields + qualifies + signs
+│   └── local rule: shares signs edge with f:signature
+│
+│  # Execution face (1)
+└── execution-step (input-doc, execution, output-doc)
+    └── boundary: consumes + produces + (derived: transforms)
+    └── proves valid state transition through module application
 ```
+
+**Exit Criteria for Modules and Runbooks:** Per [[ontology-base]], a module/runbook execution is complete when **all output documents have assurance faces**—validated by a qualified signer.
 
 **Local Rules as Qualification Constraints:**
 
@@ -183,14 +239,37 @@ These rules ensure the complex remains well-formed:
 
 ### Local Rules
 
-Local rules are constraints evaluated using **topologically adjacent simplices only**. This enables compositional verification: check locally, guarantee globally.
+Per [[ontology-base]], the knowledge complex defines **15 local rules** organized by constraint type. Local rules are constraints evaluated using **topologically adjacent simplices only**, enabling compositional verification.
 
-| Rule Type | Scope | Example |
-|-----------|-------|---------|
-| Edge endpoint rules | 1-neighborhood of edge | "verification edges must connect doc to spec" |
-| Face boundary rules | 3 edges of face boundary | "assurance face must have verification + validation + coupling edges" |
-| Face adjacency rules | Faces sharing an edge | "every assurance face must be adjacent to a b2 face sharing the coupling edge" |
-| Star rules | All simplices incident to a vertex | "every spec vertex must have at least one coupling edge" |
+**Rule Type Categories:**
+
+| Rule Type | Scope | Verification Method |
+|-----------|-------|---------------------|
+| degree | Edges incident to vertex | Count edges by type, check min..max bounds |
+| star | All simplices incident to vertex | Check required edges exist in vertex star |
+| edge-endpoint | Source and target of edge | Verify endpoint types match constraints |
+| face-boundary | 3 edges of face boundary | Verify closed triangle with correct edge types |
+| face-adjacency | Faces sharing an edge | Verify required adjacent faces exist |
+
+**Complete Local Rules from Base Ontology:**
+
+| # | Rule Name | Type | Constraint |
+|---|-----------|------|------------|
+| 1 | Vertex Degree Constraints | degree | Limits on edges per vertex (e.g., doc has 0..1 verification edges out) |
+| 2 | Module Qualification Cascade | star | `qualifies(signer, module)` requires `qualifies(signer, g)` for all output guidances |
+| 3 | Signature Face Requires Guidance Qualification | star | Signature face requires signer has qualifies edge to guidance |
+| 4 | Module-Signature Shares Edge with Signature | face-adjacency | `f:module-signature` shares `e:signs` with `f:signature` |
+| 5 | Signature Shares Edge with Assurance | face-adjacency | `f:signature` shares `e:validation` with `f:assurance` |
+| 6 | Assurance Requires B2 Anchor | face-adjacency | Every assurance face traces to b2 via coupling edge chain |
+| 7 | Output Satisfaction Requires Output Type | face-adjacency | `f:output-satisfaction` shares edges with `f:output` in module chart |
+| 8 | Input Satisfaction Requires Input Type | face-adjacency | `f:input-satisfaction` shares edges with `f:input` in module chart |
+| 9 | Edge Endpoint Type Compliance | edge-endpoint | Source/target types must match edge type constraints |
+| 10 | Face Boundary Closure | face-boundary | Face has exactly 3 edges forming closed triangle |
+| 11 | Authorization Chain Validity | star | Actor authority requires complete authorization face |
+| 12 | Runbook Module Ordering | edge-endpoint | `precedes` edges form partial order (no cycles in ordering) |
+| 13 | Runbook I/O Chaining | face-adjacency | Prior module output type = subsequent module input type |
+| 14 | Execution Trace DAG Requirement | edge-endpoint | `follows` edges MUST form DAG (causal consistency) |
+| 15 | Execution Causal Chain | face-adjacency | If B follows A, B must consume at least one output from A |
 
 **Why Local Rules Matter:**
 
@@ -198,48 +277,98 @@ Local rules are constraints evaluated using **topologically adjacent simplices o
 - **Incremental validation**: Adding a simplex only requires checking its neighborhood
 - **Domain-specific constraints**: Face types can require adjacent face types
 - **Workflow guarantees**: Properties verifiable at simplex creation time propagate to complex-wide properties
+- **Execution integrity**: DAG requirement ensures causal consistency in execution traces
 
-### Dependency Faces (Requirements Traceability)
+### Chart Types
 
-When a document Y is produced by applying a process F that has document X as input, this forms a **dependency face** (triangle):
+Per [[ontology-base]], the knowledge complex defines 4 chart types for bounded sub-complexes:
 
+| Chart Type | ID Pattern | Purpose | Key Constraints |
+|------------|------------|---------|-----------------|
+| **audit** | `c:audit:<name>` | Verification charts for assurance network inspection | All assurance faces must trace to b2 anchor |
+| **module** | `c:module:<name>` | I/O specification for typed transformation (self-referential) | Contains exactly one module vertex (self), ≥1 input face, ≥1 output face |
+| **runbook** | `c:runbook:<name>` | Abstract workflow specification (recipe) | precedes edges define partial order; output type of M_n = input type of M_{n+1} |
+| **execution-trace** | `c:execution-trace:<name>` | Concrete execution history (trajectory) | follows edges MUST form DAG (causal consistency) |
+
+**Dynamical Systems Interpretation:**
+
+- **Modules** = laws of motion (abstract, reusable transformation rules)
+- **Runbooks** = protocols/recipes (abstract workflow constraints on module ordering)
+- **Executions** = trajectory points (concrete, unique state transition events)
+- **Execution traces** = trajectories (actual causal history, forms DAG)
+
+**Key Distinction:** Runbooks describe *which* modules to apply in *what* order (abstract). Execution traces record *what actually happened* (concrete). Module I/O types need NOT form a DAG (iterative refinement allowed), but execution traces MUST form a DAG (causality is irreversible).
+
+### Module I/O Model (Requirements Traceability)
+
+Per [[ontology-base]], modules and executions form a **typed I/O system** with formal traceability:
+
+**Abstract Layer (Modules):**
+
+A module chart contains:
+- The module vertex (self-reference)
+- Input faces: `f:input:(spec, guidance, module)` — what types the module accepts
+- Output faces: `f:output:(module, spec, guidance)` — what types the module produces
+
+```text
+     spec ←──coupling──→ guidance
+       ↑                    ↑
+       │                    │
+   (references)        (references)
+       │                    │
+       └────── module ──────┘
 ```
-        X (input document)
-       / \
-      /   \
-  input    output
-    /       \
-   F -------- Y
-      applies
+
+**Concrete Layer (Executions):**
+
+An execution records a specific application of a module:
+- `executes` edge links execution to module
+- `consumes` edges link execution to input documents
+- `produces` edges link execution to output documents
+- `follows` edges link to prior executions (causal ordering)
+
+```text
+Input Doc ←─consumes─ Execution ─produces→ Output Doc
+                          │
+                      executes
+                          ↓
+                       Module
 ```
 
-**Three Face Types for Process Dependencies:**
+**I/O Satisfaction Faces:**
 
-| Face Type | Pattern | Semantics |
-|-----------|---------|-----------|
-| Prerequisite | (input, skill, process) | Validates input conditions for process |
-| Completion | (input-state, process, output-state) | Represents state transition through process |
-| Production | (output-state, process, product) | Represents outputs produced by process |
+| Face Type | Boundary | Purpose |
+|-----------|----------|---------|
+| `f:input-satisfaction` | (doc, spec, module) + feeds edge | Proves concrete input satisfies module's input type |
+| `f:output-satisfaction` | (module, spec, doc) + yields edge | Proves concrete output satisfies module's output type |
+| `f:execution-step` | (input-doc, execution, output-doc) | Proves valid state transition |
 
-**Edge Types for Dependency Triangles:**
+**Runbook I/O Chaining:**
 
-| Edge Type | Source → Target | Semantics |
-|-----------|-----------------|-----------|
-| `requires-input` | process → input-type | Process needs this input |
-| `produces-output` | process → output-type | Process produces this output |
-| `applies` | input → process | Input document feeds process |
-| `derives` | process → output | Output derives from process |
+Runbooks chain modules where output types match input types:
 
-**Multistage Runbooks as Charts:**
-
-A process F may have multiple inputs and outputs, creating multiple faces. Chained processes form complete workflows where the output of one process becomes the input to the next:
-
-```
-Input₁ → Process₁ → Intermediate → Process₂ → Output
-   ↘ face₁ ↙         ↘ face₂ ↙        ↘ face₃ ↙
+```text
+Module₁ ─precedes→ Module₂ ─precedes→ Module₃
+   │                  │                  │
+output spec      input spec = output spec    input spec
+   │                  │                  │
+   └──── must match ──┘                  │
+                      └──── must match ──┘
 ```
 
-This pattern enables **runbooks as verifiable charts** where each step's I/O dependencies are formally encoded.
+**Execution Trace as DAG:**
+
+When a runbook is executed, the execution trace records actual events:
+
+```text
+Exec₁ ─follows→ Exec₂ ─follows→ Exec₃
+  │               │               │
+produces       consumes        consumes
+  ↓               ↓               ↓
+Doc₁ ─────────→ Doc₁ ─────────→ Doc₂
+```
+
+The `follows` edges MUST form a DAG (causality requirement). If Exec₂ follows Exec₁, then Exec₂ must consume at least one document that Exec₁ produced.
 
 ## Logical Architecture
 
@@ -266,22 +395,24 @@ This pattern enables **runbooks as verifiable charts** where each step's I/O dep
 
 #### C1: Type Ontology
 
-**Responsibility:** Define and manage the simplex type hierarchy including vertex types, edge types, face types, inheritance rules, type constraints, and local rules that constrain topologically adjacent simplices.
+**Responsibility:** Define and manage the simplex type hierarchy including vertex types, edge types, face types, chart types, inheritance rules, type constraints, and local rules. **Implements [[ontology-base]]** as the foundational type system.
 
 **Interfaces:**
 - I1 (C1→C2): Provides type definitions to Schema Registry
 - I2 (C1→C6): Provides type rules for schema verification
-- I3 (C1→C8): Provides boundary rules and local rules for coherence checking
+- I3 (C1→C8): Provides boundary rules and all 15 local rules for coherence checking
 
 **Collaborations:** Foundational component that all type-aware components depend on. Defines what types exist, how they inherit, what constraints apply, and what local adjacency rules must be satisfied.
 
-**Key Responsibilities:**
-- Simplex dimension definitions (vertex=0, edge=1, face=2)
-- Type inheritance via `extends` field
-- Tag chain requirements for each type
-- Edge source/target type constraints
-- Face boundary edge requirements
-- Local rules for topological adjacency
+**Key Responsibilities (per [[ontology-base]]):**
+
+- 14 vertex types (doc, spec, guidance, ontology, module, actor, signer, role, authority, execution)
+- 18 edge types across 6 categories (assurance, signature, RBAC, module I/O, document, execution)
+- 11 face types across 4 categories (assurance, RBAC, module I/O, execution)
+- 4 chart types (audit, module, runbook, execution-trace)
+- 15 local rules (degree, star, edge-endpoint, face-boundary, face-adjacency)
+- Execution model: modules as laws of motion, executions as trajectory points
+- DAG requirement for execution traces (causal consistency)
 
 #### C2: Schema Registry
 
@@ -336,26 +467,30 @@ This pattern enables **runbooks as verifiable charts** where each step's I/O dep
 
 #### C5: Simplex Store
 
-**Responsibility:** Persist and retrieve typed simplices (vertices, edges, faces) with coherence enforcement and neighborhood query support for local rule verification.
+**Responsibility:** Persist and retrieve typed simplices (vertices, edges, faces) and charts with coherence enforcement and neighborhood query support for local rule verification. Supports execution vertices and execution-trace charts.
 
 **Interfaces:**
 - I12 (C5→C1): Validates simplex types on write
 - I13 (C5→C11): Notifies of changes for indexing
 - I14 (C5→C12): Provides simplex data for graph operations
 - I35 (C5→C8): Provides neighborhood queries for local rule verification
+- I38 (C5→C13): Provides execution-trace chart queries
 
-**Collaborations:** Validates all writes against Type Ontology (C1) rules. Notifies Search Index (C11) of changes. Provides data to Graph Navigator (C12). Supports Boundary Verifier (C8) with topological neighborhood queries.
+**Collaborations:** Validates all writes against Type Ontology (C1) rules. Notifies Search Index (C11) of changes. Provides data to Graph Navigator (C12). Supports Boundary Verifier (C8) with topological neighborhood queries. Provides Workflow Coordinator (C13) with execution-trace access.
 
 **Coherence Enforcement:**
-- Vertex: valid type, complete tag chain
-- Edge: valid type, source/target exist and have compatible types
-- Face: valid type, boundary edges exist and form closed triangle
+- Vertex: valid type, complete tag chain (includes execution vertices)
+- Edge: valid type, source/target exist and have compatible types (includes execution edges)
+- Face: valid type, boundary edges exist and form closed triangle (includes execution-step faces)
+- Chart: valid chart type, all member simplices exist and satisfy membership constraints
 
-**Neighborhood Query Support:**
+**Neighborhood Query Support (per [[ontology-base]]):**
 - Edge neighbors: Get all edges incident to a vertex
 - Face neighbors: Get all faces sharing an edge
 - Star query: Get all simplices incident to a vertex
 - Coboundary query: Get all faces containing a given edge
+- Execution trace query: Get all executions in causal order (topological sort of follows edges)
+- Chart membership query: Get all simplices belonging to a chart
 
 #### C6: Schema Verifier
 
@@ -392,14 +527,15 @@ This pattern enables **runbooks as verifiable charts** where each step's I/O dep
 
 #### C8: Boundary Verifier
 
-**Responsibility:** Verify simplicial complex rules including boundary constraints and local rules that constrain topologically adjacent simplices.
+**Responsibility:** Verify simplicial complex rules including boundary constraints and all 15 local rules from [[ontology-base]]. Includes execution DAG verification for causal consistency.
 
 **Interfaces:**
-- I20 (C8→C1): Retrieves boundary rules and local rules from Type Ontology
+- I20 (C8→C1): Retrieves boundary rules and all 15 local rules from Type Ontology
 - I21 (C8→C5): Reads simplices for boundary checking and neighborhood queries
 - I22 (C8→C10): Reports boundary and local rule verification results
+- I39 (C8→C14): Receives local rule verification requests for newly constructed simplices
 
-**Collaborations:** Gets boundary rules and local rules from Type Ontology (C1). Reads simplices and their topological neighborhoods from Simplex Store (C5). Reports results to Result Presenter (C10).
+**Collaborations:** Gets boundary rules and local rules from Type Ontology (C1). Reads simplices and their topological neighborhoods from Simplex Store (C5). Reports results to Result Presenter (C10). Validates simplices before Simplex Constructor (C14) commits them.
 
 **Boundary Checks (Global):**
 - Edge source vertex exists and has compatible type
@@ -407,12 +543,19 @@ This pattern enables **runbooks as verifiable charts** where each step's I/O dep
 - Face has exactly 3 boundary edges
 - Face boundary edges form closed triangle
 - Reference links resolve to valid targets
+- Chart membership constraints satisfied
 
-**Local Rule Checks:**
-- Edge endpoint rules: Verify edge connects vertex types allowed by its type
-- Face boundary rules: Verify face's boundary edges match required edge types
-- Face adjacency rules: Verify required adjacent faces exist sharing specified edge types
-- Star rules: Verify all simplices incident to a vertex satisfy star constraints
+**Local Rule Checks (all 15 from [[ontology-base]]):**
+- Degree rules: Vertex edge counts within bounds
+- Star rules: Required edges exist in vertex star (e.g., qualification cascade)
+- Edge-endpoint rules: Source/target types match constraints
+- Face-boundary rules: Correct edge types in boundary
+- Face-adjacency rules: Required adjacent faces exist (e.g., assurance→b2 chain)
+
+**Execution-Specific Verification:**
+- Execution DAG check: `follows` edges form directed acyclic graph (topological sort)
+- Causal chain check: If B follows A, B consumes at least one output from A
+- Module I/O type matching: Execution inputs/outputs satisfy module type specifications
 
 #### C9: Evaluation Engine
 
@@ -479,47 +622,103 @@ This pattern enables **runbooks as verifiable charts** where each step's I/O dep
 
 #### C13: Workflow Coordinator
 
-**Responsibility:** Manage approval requests and runbook execution with typed I/O dependencies between workflow steps, using dependency faces to encode step relationships.
+**Responsibility:** Manage approval requests, runbook execution, and execution-trace construction with typed I/O dependencies between workflow steps. **Implements runbook charts and execution-trace charts** per [[ontology-base]].
 
 **Interfaces:**
-- I30 (C13→C14): Triggers simplex creation on approval (including dependency faces)
+- I30 (C13→C14): Triggers simplex creation on approval (including module I/O faces)
 - I31 (C13→C10): Requests formatted results for review
-- I36 (C13→C5): Queries dependency faces to determine step prerequisites
+- I36 (C13→C5): Queries module I/O faces to determine step prerequisites
+- I38 (C5→C13): Receives execution-trace chart queries
+- I40 (C13→C14): Triggers execution vertex creation
 
-**Collaborations:** Receives formatted results from Result Presenter (C10). Triggers Simplex Constructor (C14) when approvals are granted. Queries Simplex Store (C5) for dependency face topology.
+**Collaborations:** Receives formatted results from Result Presenter (C10). Triggers Simplex Constructor (C14) when approvals are granted. Queries Simplex Store (C5) for module I/O face topology and execution-trace charts.
 
 **Workflow Capabilities:**
 - Approval request initiation and tracking
-- Runbook step sequencing with I/O dependencies
+- Runbook step sequencing with module I/O dependencies
 - Step status tracking (pending, in progress, completed)
+- Execution vertex creation for concrete workflow events
+- Execution-trace construction (DAG of executions)
 - Performance metrics collection per step
 
-**Runbooks as Charts:**
-A runbook is a chart where vertices are documents (inputs, outputs, process specifications), edges are typed relationships (requires-input, produces-output, applies, derives), and faces are dependency triangles (input × process × output).
+**Runbook Charts (per [[ontology-base]]):**
+A runbook is a `c:runbook` chart where:
+- Vertices are modules (`v:module`) defining abstract workflow steps
+- Edges include `e:precedes` (partial order) and `e:feeds`/`e:yields` (I/O chaining)
+- Faces include `f:input`, `f:output` defining module I/O contracts
+- **Exit criteria:** All output docs have assurance faces (`f:assurance`)
+
+**Execution-Trace Charts (per [[ontology-base]]):**
+An execution-trace is a `c:execution-trace` chart where:
+- Vertices are executions (`v:execution`) - concrete instantiations of modules
+- Edges include `e:follows` (causal DAG), `e:executes` (execution→module)
+- Faces include `f:execution-step` (input-doc, execution, output-doc)
+- **DAG requirement:** `e:follows` edges form a directed acyclic graph
+- **Causal chain:** If B follows A, B must consume at least one output from A
 
 #### C14: Simplex Constructor
 
-**Responsibility:** Create typed edges and faces including dependency faces for requirements traceability, ensuring coherence with simplicial complex rules and local rules.
+**Responsibility:** Create typed edges and faces including all 11 face types from [[ontology-base]], ensuring coherence with simplicial complex rules and all 15 local rules.
 
 **Interfaces:**
 - I32 (C14→C2): Retrieves schemas for edge/face types
 - I33 (C14→C5): Writes constructed simplices
 - I34 (C14→C6): Triggers verification of created simplices
 - I37 (C14→C8): Triggers local rule verification for constructed faces
+- I39 (C8→C14): Receives local rule verification requests
 
 **Collaborations:** Gets schemas from Schema Registry (C2). Writes simplices to Simplex Store (C5). Triggers Schema Verifier (C6) and Boundary Verifier (C8) to verify created simplices.
 
-**Edge Construction Capabilities:**
-- Verification edge: doc → spec with automated verifier results
-- Validation edge: doc → guidance with human approver and assessment
-- Coupling edge: spec ↔ guidance with alignment documentation
-- Dependency edges: requires-input, produces-output, applies, derives
+**Edge Construction Capabilities (per [[ontology-base]]):**
 
-**Face Construction Capabilities:**
-- Assurance face: triangle of (doc, spec, guidance) with boundary edges
-- Prerequisite face: (input, skill/condition, process)
-- Completion face: (input-state, process, output-state)
-- Production face: (output-state, process, product)
+*Assurance edges:*
+- `e:verification`: doc → spec with automated verifier results
+- `e:validation`: doc → guidance with human approver and assessment
+- `e:coupling`: spec ↔ guidance with alignment documentation
+
+*Signature edges:*
+- `e:signs`: signer → doc with cryptographic attestation
+- `e:qualifies`: signer → guidance with competency attestation
+
+*RBAC edges:*
+- `e:has-role`: actor → role assignment
+- `e:conveys`: role → authority delegation
+- `e:requires-authority`: doc → authority access control
+
+*Module I/O edges:*
+- `e:precedes`: module → module partial ordering
+- `e:feeds`: doc → module input binding
+- `e:yields`: module → doc output binding
+
+*Document edges:*
+- `e:inherits`: doc → doc type hierarchy
+- `e:instantiates`: doc → ontology type instantiation
+
+*Execution edges:*
+- `e:executes`: execution → module instantiation link
+- `e:follows`: execution → execution causal ordering
+- `e:consumes`: execution → doc input consumption
+- `e:produces`: execution → doc output production
+
+**Face Construction Capabilities (per [[ontology-base]]):**
+
+*Assurance faces:*
+- `f:assurance`: (doc, spec, guidance) with verification + validation + coupling edges
+- `f:signature`: (signer, guidance, doc) with signs + qualifies edges
+- `f:b2`: bootstrap anchor face for root-of-trust
+
+*RBAC face:*
+- `f:authorization`: (actor, role, authority) with has-role + conveys edges
+
+*Module I/O faces:*
+- `f:input`: (spec, guidance, module) defining input contract
+- `f:output`: (module, spec, guidance) defining output contract
+- `f:input-satisfaction`: (doc, spec, module) proving input met
+- `f:output-satisfaction`: (module, spec, doc) proving output produced
+- `f:module-signature`: (signer, module, guidance) with qualification cascade
+
+*Execution face:*
+- `f:execution-step`: (input-doc, execution, output-doc) causal step record
 
 ### Interface Specifications
 
@@ -560,8 +759,11 @@ A runbook is a chart where vertices are documents (inputs, outputs, process spec
 | I33 | C14 | C5 | Constructed simplex write | Write |
 | I34 | C14 | C6 | Verification trigger for created simplex | Command |
 | I35 | C5 | C8 | Neighborhood queries for local rules | Request-Response |
-| I36 | C13 | C5 | Dependency face queries for prerequisites | Request-Response |
+| I36 | C13 | C5 | Module I/O face queries for prerequisites | Request-Response |
 | I37 | C14 | C8 | Local rule verification for faces | Command |
+| I38 | C5 | C13 | Execution-trace chart queries | Request-Response |
+| I39 | C8 | C14 | Local rule verification requests | Request-Response |
+| I40 | C13 | C14 | Execution vertex creation trigger | Command |
 
 ## Component-Function Matrix
 
@@ -676,8 +878,11 @@ A runbook is a chart where vertices are documents (inputs, outputs, process spec
 | I33 (C14→C5) | Integration | Write constructed simplices | Simplices pass all coherence checks |
 | I34 (C14→C6) | Command | Trigger verification | Created simplices verified immediately |
 | I35 (C5→C8) | Integration | Query neighborhoods | Star, coboundary, adjacency queries work |
-| I36 (C13→C5) | Integration | Query dependency faces | Prerequisite faces correctly identified |
+| I36 (C13→C5) | Integration | Query module I/O faces | Input/output faces correctly identified |
 | I37 (C14→C8) | Command | Trigger local rule verification | Local rules checked before commit |
+| I38 (C5→C13) | Integration | Query execution-trace charts | Execution DAG returned in causal order |
+| I39 (C8→C14) | Contract | Request local rule verification | All 15 rules checkable |
+| I40 (C13→C14) | Command | Trigger execution vertex creation | Execution linked to module correctly |
 
 ### Coherence Test Suite
 
@@ -689,6 +894,10 @@ A runbook is a chart where vertices are documents (inputs, outputs, process spec
 | Local Rules | Create faces violating adjacency rules | Violations detected before commit |
 | Euler Characteristic | Count V - E + F across charts | χ matches expected topology |
 | Assurance Invariant | Verify "Assurances ≥ Documents" | Every doc vertex has assurance face |
+| Execution DAG | Create execution-traces with cycles | Cycles in `e:follows` edges rejected |
+| Causal Chain | Create execution B following A without consuming A's output | Missing consumption detected |
+| Module Qualification | Create module-signature without signer qualifies for outputs | Missing qualification detected |
+| Runbook Exit | Check runbook completion with unassured outputs | Incomplete runbook flagged |
 
 ## Traceability to Functional Architecture
 
@@ -739,6 +948,8 @@ A runbook is a chart where vertices are documents (inputs, outputs, process spec
 - **C5**: Simplex Store (C5) must enforce coherence atomically on write
 - **C6**: Local rules must be checkable using only topologically adjacent simplices
 - **C7**: Boundary Verifier (C8) must have access to neighborhood queries
+- **C8**: Execution traces must form DAGs (causal consistency required)
+- **C9**: Module I/O types need not form DAG (iterative refinement allowed)
 
 ### Assumptions
 
@@ -748,6 +959,7 @@ A runbook is a chart where vertices are documents (inputs, outputs, process spec
 - **A4**: User identity is authenticated before approval functions
 - **A5**: Runbooks define their step I/O types explicitly
 - **A6**: The simplicial complex is connected (no isolated components)
+- **A7**: Base ontology ([[ontology-base]]) is the foundational ontology for all type definitions
 
 ---
 
