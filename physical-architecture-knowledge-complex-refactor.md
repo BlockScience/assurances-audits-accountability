@@ -10,7 +10,7 @@ tags:
   - physical-architecture
 version: 0.2.0
 created: 2026-01-11T00:00:00Z
-modified: 2026-01-11T00:00:00Z
+modified: 2026-01-12T00:00:00Z
 system_name: Knowledge Complex Framework
 scope: Internal-first deployment using file-based storage with git version control and Python tooling
 logical_architecture_ref: v:doc:logical-architecture-knowledge-complex-refactor
@@ -286,6 +286,8 @@ This architecture uses **Obsidian Flavored Markdown (OFM)**, a layered markdown 
   - `verify-documents`: Run `verify_template_based.py` on all changed documents
   - `verify-types`: Run `verify_typed.py` on all changed documents
   - `verify-boundaries`: Run boundary verification on edges and faces
+  - `verify-signatures`: Verify GPG-signed commits for accountability files (signs, signature, validation)
+  - `verify-qualifications`: Verify signs edges reference valid (non-expired) qualifies edges
   - `verify-charts`: Run chart topology verification if charts are modified
 - Branch protection: Require CI pass before merge to `main`
 - Caching: Cache Python environment with uv for faster runs
@@ -310,6 +312,27 @@ jobs:
       - run: uv run python scripts/verify_typed.py --all
 ```
 
+#### Signature Verification Jobs
+
+The following jobs enforce cryptographic accountability for signing-related documents:
+
+**verify-signatures** (triggered when accountability files are modified):
+
+- Runs when PR includes changes to: `01_edges/signs-*.md`, `02_faces/signature-*.md`, `01_edges/validation-*.md`
+- Executes `git verify-commit` on commits that touch these files
+- Checks that the commit author's GPG key matches a registered signer vertex
+- Maps git author to signer via the `github_username` field in signer vertices
+
+**verify-qualifications** (triggered when signs edges are modified):
+
+- Runs when PR includes changes to: `01_edges/signs-*.md`
+- For each signs edge being created or modified, checks:
+  1. The referenced `qualifies_edge` exists
+  2. The qualifies edge was valid (not expired) at the `signing_date`
+  3. The signer's `github_username` matches the git commit author
+
+These jobs connect E11 (GPG Signatures) to E12 (GitHub Actions), enforcing the accountability requirements defined in [[spec-for-signs]] and [[spec-for-qualifies]].
+
 ### Deployment View
 
 The knowledge complex framework deploys as a file-based system with GitHub as the remote repository and CI enforcement layer.
@@ -321,12 +344,14 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 │                        User Workstation                              │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                      │
-│  ┌──────────────┐              ┌──────────────┐                     │
-│  │   Obsidian   │              │  Claude Code │                     │
-│  │    (E9)      │              │    (E10)     │                     │
-│  └──────┬───────┘              └──────┬───────┘                     │
-│         │                             │                              │
-│         └─────────────┬───────────────┘                              │
+│  ┌──────────────┐              ┌───────────────────────────────┐    │
+│  │   Obsidian   │              │         VS Code IDE            │    │
+│  │    (E9)      │              │  ┌─────────────────────────┐  │    │
+│  └──────┬───────┘              │  │     Claude Code (E10)   │  │    │
+│         │                      │  │       (extension)       │  │    │
+│         │                      │  └─────────────────────────┘  │    │
+│         │                      └──────────────┬────────────────┘    │
+│         └─────────────┬───────────────────────┘                      │
 │                       │                                              │
 │                       ▼                                              │
 │  ┌──────────────────────────────────────────────────────────────┐   │
@@ -363,13 +388,17 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 │  │  │   verify-   │ │   verify-   │ │   verify-   │             │   │
 │  │  │  documents  │ │    types    │ │  boundaries │             │   │
 │  │  └─────────────┘ └─────────────┘ └─────────────┘             │   │
+│  │  ┌─────────────┐ ┌──────────────┐                            │   │
+│  │  │   verify-   │ │    verify-   │                            │   │
+│  │  │  signatures │ │qualifications│                            │   │
+│  │  └─────────────┘ └──────────────┘                            │   │
 │  └──────────────────────────────────────────────────────────────┘   │
 │                       │                                              │
 │                       ▼                                              │
 │  ┌──────────────────────────────────────────────────────────────┐   │
 │  │              Branch Protection Rules                          │   │
 │  │  • Require CI pass before merge to main                      │   │
-│  │  • Require GPG-signed commits (optional)                     │   │
+│  │  • Require GPG-signed commits (for accountability edges)     │   │
 │  │  • Require pull request reviews (optional)                   │   │
 │  └──────────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────────┘
