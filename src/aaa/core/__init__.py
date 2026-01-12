@@ -75,14 +75,25 @@ from .complex import (
     TypedFace,
     build_simplicial_complex,
     build_complex_graph,  # backwards compatibility alias
+    # Topology rules
+    TopologyViolation,
+    check_edge_valid_boundary,
+    check_face_valid_boundary,
+    check_face_closure,
+    check_topology,
 )
 
 from .rules import (
     OntologyRuleEngine,
+    OntologyRule,
     RuleViolation,
     RuleType,
     Severity,
     check_ontology_rules,
+    # Local rule functions
+    check_edge_endpoint_types,
+    check_vertex_degree,
+    check_face_boundary_types,
 )
 
 # Backwards compatibility alias
@@ -139,10 +150,21 @@ __all__ = [
     'TypedFace',
     'build_simplicial_complex',
     'build_complex_graph',  # backwards compatibility alias
-    # Rules (Ontology Verification)
+    # Topology Rules
+    'TopologyViolation',
+    'check_edge_valid_boundary',
+    'check_face_valid_boundary',
+    'check_face_closure',
+    'check_topology',
+    # Ontology Rules (Type Verification)
     'OntologyRuleEngine',
+    'OntologyRule',
     'RuleViolation',
     'RuleType',
     'Severity',
     'check_ontology_rules',
+    # Local Rule Functions
+    'check_edge_endpoint_types',
+    'check_vertex_degree',
+    'check_face_boundary_types',
 ]

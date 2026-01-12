@@ -13,13 +13,27 @@ This module tests ontology verification (deterministic type checking).
 """
 
 import pytest
-from aaa.core.complex import SimplicialComplex, ComplexGraph, build_simplicial_complex
+from aaa.core.complex import (
+    SimplicialComplex,
+    ComplexGraph,
+    build_simplicial_complex,
+    TopologyViolation,
+    check_edge_valid_boundary,
+    check_face_valid_boundary,
+    check_face_closure,
+    check_topology,
+)
 from aaa.core.rules import (
     OntologyRuleEngine,
+    OntologyRule,
     RuleViolation,
     RuleType,
     Severity,
     check_ontology_rules,
+    # Local rule functions
+    check_edge_endpoint_types,
+    check_vertex_degree,
+    check_face_boundary_types,
 )
 
 
@@ -1034,3 +1048,815 @@ class TestBoundaryOperations:
         # Link edges are edges in faces that don't contain doc
         assert 'e:coupling:a' in link['edges']
         assert 'e:verification:a' not in link['edges']  # Contains doc
+
+
+# ========== Orientation Tests ==========
+
+class TestOrientationOperations:
+    """Tests for orientation-aware boundary operations."""
+
+    @pytest.fixture
+    def oriented_complex_cache(self):
+        """Cache with mixed directed/undirected edges and oriented face."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec', 'name': 'Test Spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                },
+                'edges': {
+                    'e:verification:a': {
+                        'id': 'e:verification:a',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:validation:a': {
+                        'id': 'e:validation:a',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:a': {
+                        'id': 'e:coupling:a',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                },
+                'faces': {
+                    'f:assurance:test': {
+                        'id': 'f:assurance:test',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        'edges': ['e:verification:a', 'e:validation:a', 'e:coupling:a'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    # Edge orientation tests
+
+    def test_is_edge_directed_true(self, oriented_complex_cache):
+        """Directed edge returns True."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.is_edge_directed('e:verification:a') is True
+
+    def test_is_edge_directed_false(self, oriented_complex_cache):
+        """Undirected edge returns False."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.is_edge_directed('e:coupling:a') is False
+
+    def test_is_edge_directed_not_found(self, oriented_complex_cache):
+        """Non-existent edge returns None."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.is_edge_directed('e:nonexistent') is None
+
+    def test_get_edge_boundary_ordered(self, oriented_complex_cache):
+        """Edge boundary returns ordered tuple (source, target)."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        boundary = graph.get_edge_boundary('e:verification:a')
+        # Order matters for directed edges
+        assert boundary == ('v:doc:test', 'v:spec:test')
+        assert boundary[0] == 'v:doc:test'  # Source
+        assert boundary[1] == 'v:spec:test'  # Target
+
+    def test_get_edge_boundary_set(self, oriented_complex_cache):
+        """Edge boundary set is unordered."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        boundary_set = graph.get_edge_boundary_set('e:verification:a')
+        assert boundary_set == {'v:doc:test', 'v:spec:test'}
+
+    def test_get_edge_boundary_set_not_found(self, oriented_complex_cache):
+        """Non-existent edge returns None for boundary set."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.get_edge_boundary_set('e:nonexistent') is None
+
+    def test_get_edge_boundary_with_types(self, oriented_complex_cache):
+        """Get edge boundary with vertex types."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        boundary_types = graph.get_edge_boundary_with_types('e:verification:a')
+        assert boundary_types is not None
+        (src, tgt) = boundary_types
+        assert src == ('v:doc:test', 'vertex/doc')
+        assert tgt == ('v:spec:test', 'vertex/spec')
+
+    def test_get_edge_endpoint_types(self, oriented_complex_cache):
+        """Get just the types of edge endpoints."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        types = graph.get_edge_endpoint_types('e:verification:a')
+        assert types == ('vertex/doc', 'vertex/spec')
+
+    def test_get_edge_endpoint_types_not_found(self, oriented_complex_cache):
+        """Non-existent edge returns None for endpoint types."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.get_edge_endpoint_types('e:nonexistent') is None
+
+    # Face orientation tests
+
+    def test_is_face_oriented_true(self, oriented_complex_cache):
+        """Oriented face returns True."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.is_face_oriented('f:assurance:test') is True
+
+    def test_is_face_oriented_not_found(self, oriented_complex_cache):
+        """Non-existent face returns None."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.is_face_oriented('f:nonexistent') is None
+
+    def test_get_face_boundary_ordered(self, oriented_complex_cache):
+        """Face boundary returns ordered list of edges."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        boundary = graph.get_face_boundary('f:assurance:test')
+        # Order is preserved from definition
+        assert boundary == ['e:verification:a', 'e:validation:a', 'e:coupling:a']
+
+    def test_get_face_boundary_set(self, oriented_complex_cache):
+        """Face boundary set is unordered."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        boundary_set = graph.get_face_boundary_set('f:assurance:test')
+        assert boundary_set == {'e:verification:a', 'e:validation:a', 'e:coupling:a'}
+
+    def test_get_face_boundary_set_not_found(self, oriented_complex_cache):
+        """Non-existent face returns None for boundary set."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.get_face_boundary_set('f:nonexistent') is None
+
+    def test_get_face_vertices_ordered(self, oriented_complex_cache):
+        """Face vertices returns ordered list."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        vertices = graph.get_face_vertices('f:assurance:test')
+        # Order is preserved from definition
+        assert vertices == ['v:doc:test', 'v:spec:test', 'v:guidance:test']
+
+    def test_get_face_vertices_set(self, oriented_complex_cache):
+        """Face vertices set is unordered."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        vertices_set = graph.get_face_vertices_set('f:assurance:test')
+        assert vertices_set == {'v:doc:test', 'v:spec:test', 'v:guidance:test'}
+
+    def test_get_face_vertices_set_not_found(self, oriented_complex_cache):
+        """Non-existent face returns None for vertices set."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.get_face_vertices_set('f:nonexistent') is None
+
+    def test_get_face_boundary_with_types(self, oriented_complex_cache):
+        """Get face boundary edges with their types."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        boundary_types = graph.get_face_boundary_with_types('f:assurance:test')
+        assert boundary_types is not None
+        assert len(boundary_types) == 3
+        # Order preserved with types
+        assert boundary_types[0] == ('e:verification:a', 'edge/verification')
+        assert boundary_types[1] == ('e:validation:a', 'edge/validation')
+        assert boundary_types[2] == ('e:coupling:a', 'edge/coupling')
+
+    def test_get_face_boundary_with_types_not_found(self, oriented_complex_cache):
+        """Non-existent face returns None for boundary with types."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.get_face_boundary_with_types('f:nonexistent') is None
+
+    def test_get_face_boundary_types(self, oriented_complex_cache):
+        """Get set of edge types in face boundary."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        types = graph.get_face_boundary_types('f:assurance:test')
+        assert types == {'edge/verification', 'edge/validation', 'edge/coupling'}
+
+    def test_get_face_boundary_types_not_found(self, oriented_complex_cache):
+        """Non-existent face returns None for boundary types."""
+        graph = ComplexGraph.from_cache(oriented_complex_cache)
+        assert graph.get_face_boundary_types('f:nonexistent') is None
+
+
+# ========== Topology Rule Tests ==========
+
+class TestTopologyRules:
+    """Tests for topology rules (structural simplicial complex rules)."""
+
+    @pytest.fixture
+    def valid_complex_cache(self):
+        """A valid simplicial complex with proper topology."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec', 'name': 'Test Spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                },
+                'edges': {
+                    'e:verification:a': {
+                        'id': 'e:verification:a',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:validation:a': {
+                        'id': 'e:validation:a',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:a': {
+                        'id': 'e:coupling:a',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                },
+                'faces': {
+                    'f:assurance:test': {
+                        'id': 'f:assurance:test',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        'edges': ['e:verification:a', 'e:validation:a', 'e:coupling:a'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    def test_check_topology_valid_complex(self, valid_complex_cache):
+        """Valid complex should have no topology violations."""
+        complex = ComplexGraph.from_cache(valid_complex_cache)
+        violations = check_topology(complex)
+        assert len(violations) == 0
+
+    def test_check_edge_valid_boundary_success(self, valid_complex_cache):
+        """Edge with valid boundary should pass."""
+        complex = ComplexGraph.from_cache(valid_complex_cache)
+        violation = check_edge_valid_boundary(complex, 'e:verification:a')
+        assert violation is None
+
+    def test_check_edge_missing_source_vertex(self):
+        """Edge with missing source vertex should fail."""
+        cache = {
+            'elements': {
+                'vertices': {
+                    'v:target': {'id': 'v:target', 'type': 'vertex/doc', 'name': 'Target'},
+                },
+                'edges': {
+                    'e:bad': {
+                        'id': 'e:bad',
+                        'type': 'edge/verification',
+                        'source': 'v:missing',
+                        'target': 'v:target',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {},
+            },
+            'statistics': {}
+        }
+        complex = ComplexGraph.from_cache(cache)
+        violation = check_edge_valid_boundary(complex, 'e:bad')
+        assert violation is not None
+        assert violation.rule_name == 'edge_valid_boundary'
+        assert 'v:missing' in violation.message
+        assert 'does not exist' in violation.message
+
+    def test_check_edge_missing_target_vertex(self):
+        """Edge with missing target vertex should fail."""
+        cache = {
+            'elements': {
+                'vertices': {
+                    'v:source': {'id': 'v:source', 'type': 'vertex/doc', 'name': 'Source'},
+                },
+                'edges': {
+                    'e:bad': {
+                        'id': 'e:bad',
+                        'type': 'edge/verification',
+                        'source': 'v:source',
+                        'target': 'v:missing',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {},
+            },
+            'statistics': {}
+        }
+        complex = ComplexGraph.from_cache(cache)
+        violation = check_edge_valid_boundary(complex, 'e:bad')
+        assert violation is not None
+        assert 'v:missing' in violation.message
+
+    def test_check_face_valid_boundary_success(self, valid_complex_cache):
+        """Face with valid boundary should pass."""
+        complex = ComplexGraph.from_cache(valid_complex_cache)
+        violation = check_face_valid_boundary(complex, 'f:assurance:test')
+        assert violation is None
+
+    def test_check_face_wrong_edge_count(self):
+        """Face with wrong number of edges should fail."""
+        cache = {
+            'elements': {
+                'vertices': {
+                    'v:a': {'id': 'v:a', 'type': 'vertex/doc'},
+                    'v:b': {'id': 'v:b', 'type': 'vertex/spec'},
+                },
+                'edges': {
+                    'e:1': {'id': 'e:1', 'type': 'edge/test', 'source': 'v:a', 'target': 'v:b'},
+                    'e:2': {'id': 'e:2', 'type': 'edge/test', 'source': 'v:b', 'target': 'v:a'},
+                },
+                'faces': {
+                    'f:bad': {
+                        'id': 'f:bad',
+                        'type': 'face/test',
+                        'vertices': ['v:a', 'v:b'],
+                        'edges': ['e:1', 'e:2'],  # Only 2 edges!
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {}
+        }
+        complex = ComplexGraph.from_cache(cache)
+        violation = check_face_valid_boundary(complex, 'f:bad')
+        assert violation is not None
+        assert violation.rule_name == 'face_valid_boundary'
+        assert 'exactly 3' in violation.message
+
+    def test_check_face_missing_edge(self):
+        """Face with missing boundary edge should fail."""
+        cache = {
+            'elements': {
+                'vertices': {
+                    'v:a': {'id': 'v:a', 'type': 'vertex/doc'},
+                    'v:b': {'id': 'v:b', 'type': 'vertex/spec'},
+                    'v:c': {'id': 'v:c', 'type': 'vertex/guidance'},
+                },
+                'edges': {
+                    'e:1': {'id': 'e:1', 'type': 'edge/test', 'source': 'v:a', 'target': 'v:b'},
+                    'e:2': {'id': 'e:2', 'type': 'edge/test', 'source': 'v:b', 'target': 'v:c'},
+                    # e:3 is missing!
+                },
+                'faces': {
+                    'f:bad': {
+                        'id': 'f:bad',
+                        'type': 'face/test',
+                        'vertices': ['v:a', 'v:b', 'v:c'],
+                        'edges': ['e:1', 'e:2', 'e:missing'],  # e:missing doesn't exist
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {}
+        }
+        complex = ComplexGraph.from_cache(cache)
+        violation = check_face_valid_boundary(complex, 'f:bad')
+        assert violation is not None
+        assert 'e:missing' in violation.message
+        assert 'does not exist' in violation.message
+
+    def test_check_face_closure_success(self, valid_complex_cache):
+        """Face with properly closed boundary should pass."""
+        complex = ComplexGraph.from_cache(valid_complex_cache)
+        violation = check_face_closure(complex, 'f:assurance:test')
+        assert violation is None
+
+    def test_check_face_closure_wrong_vertex_count(self):
+        """Face with wrong number of vertices should fail."""
+        cache = {
+            'elements': {
+                'vertices': {
+                    'v:a': {'id': 'v:a', 'type': 'vertex/doc'},
+                    'v:b': {'id': 'v:b', 'type': 'vertex/spec'},
+                },
+                'edges': {
+                    'e:1': {'id': 'e:1', 'type': 'edge/test', 'source': 'v:a', 'target': 'v:b'},
+                    'e:2': {'id': 'e:2', 'type': 'edge/test', 'source': 'v:b', 'target': 'v:a'},
+                    'e:3': {'id': 'e:3', 'type': 'edge/test', 'source': 'v:a', 'target': 'v:b'},
+                },
+                'faces': {
+                    'f:bad': {
+                        'id': 'f:bad',
+                        'type': 'face/test',
+                        'vertices': ['v:a', 'v:b'],  # Only 2 vertices!
+                        'edges': ['e:1', 'e:2', 'e:3'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {}
+        }
+        complex = ComplexGraph.from_cache(cache)
+        violation = check_face_closure(complex, 'f:bad')
+        assert violation is not None
+        assert violation.rule_name == 'face_closure'
+        assert 'exactly 3 vertices' in violation.message
+
+    def test_check_face_closure_edges_dont_match_vertices(self):
+        """Face where edges don't connect to declared vertices should fail."""
+        cache = {
+            'elements': {
+                'vertices': {
+                    'v:a': {'id': 'v:a', 'type': 'vertex/doc'},
+                    'v:b': {'id': 'v:b', 'type': 'vertex/spec'},
+                    'v:c': {'id': 'v:c', 'type': 'vertex/guidance'},
+                    'v:d': {'id': 'v:d', 'type': 'vertex/other'},  # Extra vertex
+                },
+                'edges': {
+                    'e:1': {'id': 'e:1', 'type': 'edge/test', 'source': 'v:a', 'target': 'v:b'},
+                    'e:2': {'id': 'e:2', 'type': 'edge/test', 'source': 'v:b', 'target': 'v:d'},  # Points to v:d!
+                    'e:3': {'id': 'e:3', 'type': 'edge/test', 'source': 'v:d', 'target': 'v:a'},  # Points to v:d!
+                },
+                'faces': {
+                    'f:bad': {
+                        'id': 'f:bad',
+                        'type': 'face/test',
+                        'vertices': ['v:a', 'v:b', 'v:c'],  # Says v:c but edges use v:d
+                        'edges': ['e:1', 'e:2', 'e:3'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {}
+        }
+        complex = ComplexGraph.from_cache(cache)
+        violation = check_face_closure(complex, 'f:bad')
+        assert violation is not None
+        assert "don't connect to face vertices" in violation.message
+
+    def test_check_topology_catches_all_violations(self):
+        """check_topology should find multiple violations."""
+        cache = {
+            'elements': {
+                'vertices': {
+                    'v:a': {'id': 'v:a', 'type': 'vertex/doc'},
+                },
+                'edges': {
+                    'e:bad': {
+                        'id': 'e:bad',
+                        'type': 'edge/test',
+                        'source': 'v:a',
+                        'target': 'v:missing',  # Missing target
+                    },
+                },
+                'faces': {
+                    'f:bad': {
+                        'id': 'f:bad',
+                        'type': 'face/test',
+                        'vertices': ['v:a'],
+                        'edges': ['e:bad', 'e:also-missing'],  # Wrong count AND missing edge
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {}
+        }
+        complex = ComplexGraph.from_cache(cache)
+        violations = check_topology(complex)
+        # Should catch: edge missing target, face wrong edge count
+        assert len(violations) >= 2
+        rule_names = {v.rule_name for v in violations}
+        assert 'edge_valid_boundary' in rule_names
+        assert 'face_valid_boundary' in rule_names
+
+
+# ========== Local Rule Functions Tests ==========
+
+
+class TestLocalRuleFunctions:
+    """Tests for the local rule functions that implement the LOCAL + UNIVERSAL pattern."""
+
+    @pytest.fixture
+    def simple_cache(self):
+        """A simple cache with one of each element."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer'},
+                },
+                'edges': {
+                    'e:verification:test': {
+                        'id': 'e:verification:test',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:test': {
+                        'id': 'e:coupling:test',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                },
+                'faces': {
+                    'f:assurance:test': {
+                        'id': 'f:assurance:test',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        'edges': ['e:verification:test', 'e:validation:test', 'e:coupling:test'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {'vertices': 4, 'edges': 3, 'faces': 1}
+        }
+
+    # ========== check_edge_endpoint_types tests ==========
+
+    def test_check_edge_endpoint_types_valid(self, simple_cache):
+        """Valid edge endpoints should pass."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # Verification edge: doc -> spec
+        result = check_edge_endpoint_types(
+            complex,
+            'e:verification:test',
+            source_types=['vertex/doc'],
+            target_types=['vertex/spec']
+        )
+        assert result is None
+
+    def test_check_edge_endpoint_types_wrong_source(self, simple_cache):
+        """Wrong source type should fail."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # Verification edge source should be doc, not signer
+        result = check_edge_endpoint_types(
+            complex,
+            'e:verification:test',
+            source_types=['vertex/signer'],  # Wrong - should be doc
+            target_types=['vertex/spec']
+        )
+        assert result is not None
+        assert result.rule_type == RuleType.EDGE_ENDPOINT
+        assert 'Source' in result.message
+
+    def test_check_edge_endpoint_types_wrong_target(self, simple_cache):
+        """Wrong target type should fail."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # Verification edge target should be spec, not guidance
+        result = check_edge_endpoint_types(
+            complex,
+            'e:verification:test',
+            source_types=['vertex/doc'],
+            target_types=['vertex/guidance']  # Wrong - should be spec
+        )
+        assert result is not None
+        assert result.rule_type == RuleType.EDGE_ENDPOINT
+        assert 'Target' in result.message
+
+    def test_check_edge_endpoint_types_subtype_match(self, simple_cache):
+        """Subtype matching should work (spec is a doc subtype)."""
+        # Add a spec with a more specific subtype
+        simple_cache['elements']['vertices']['v:spec:sub'] = {
+            'id': 'v:spec:sub',
+            'type': 'vertex/spec/custom'  # Subtype of spec
+        }
+        simple_cache['elements']['edges']['e:ver:sub'] = {
+            'id': 'e:ver:sub',
+            'type': 'edge/verification',
+            'source': 'v:doc:test',
+            'target': 'v:spec:sub',
+            'orientation': 'directed',
+        }
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # Should pass because vertex/spec/custom is a subtype of vertex/spec
+        result = check_edge_endpoint_types(
+            complex,
+            'e:ver:sub',
+            source_types=['vertex/doc'],
+            target_types=['vertex/spec']  # Should match vertex/spec/custom
+        )
+        assert result is None
+
+    def test_check_edge_endpoint_types_edge_not_found(self, simple_cache):
+        """Non-existent edge should return violation."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        result = check_edge_endpoint_types(
+            complex,
+            'e:nonexistent',
+            source_types=['vertex/doc'],
+            target_types=['vertex/spec']
+        )
+        assert result is not None
+        assert 'not found' in result.message
+
+    # ========== check_vertex_degree tests ==========
+
+    def test_check_vertex_degree_in_range(self, simple_cache):
+        """Degree within range should pass."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # doc has 1 verification edge (out), which is within 0-1
+        result = check_vertex_degree(
+            complex,
+            'v:doc:test',
+            edge_type='verification',
+            direction='out',
+            min_degree=0,
+            max_degree=1
+        )
+        assert result is None
+
+    def test_check_vertex_degree_exceeds_max(self, simple_cache):
+        """Degree exceeding max should fail."""
+        # Add a second verification edge from same doc
+        simple_cache['elements']['vertices']['v:spec:second'] = {
+            'id': 'v:spec:second',
+            'type': 'vertex/spec'
+        }
+        simple_cache['elements']['edges']['e:verification:second'] = {
+            'id': 'e:verification:second',
+            'type': 'edge/verification',
+            'source': 'v:doc:test',
+            'target': 'v:spec:second',
+            'orientation': 'directed',
+        }
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # doc now has 2 verification edges, max is 1
+        result = check_vertex_degree(
+            complex,
+            'v:doc:test',
+            edge_type='verification',
+            direction='out',
+            min_degree=0,
+            max_degree=1
+        )
+        assert result is not None
+        assert result.rule_type == RuleType.DEGREE
+        assert 'maximum is 1' in result.message
+
+    def test_check_vertex_degree_below_min(self, simple_cache):
+        """Degree below min should fail."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # doc has 0 qualifies edges, but we require at least 1
+        result = check_vertex_degree(
+            complex,
+            'v:doc:test',
+            edge_type='qualifies',
+            direction='any',
+            min_degree=1,
+            max_degree=None
+        )
+        assert result is not None
+        assert result.rule_type == RuleType.DEGREE
+        assert 'minimum is 1' in result.message
+
+    def test_check_vertex_degree_unlimited_max(self, simple_cache):
+        """Unlimited max (None) should allow any count."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # doc has 1 verification edge, no max
+        result = check_vertex_degree(
+            complex,
+            'v:doc:test',
+            edge_type='verification',
+            direction='out',
+            min_degree=0,
+            max_degree=None  # Unlimited
+        )
+        assert result is None
+
+    def test_check_vertex_degree_direction_in(self, simple_cache):
+        """Incoming edge direction should be counted correctly."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # spec has 1 incoming verification edge
+        result = check_vertex_degree(
+            complex,
+            'v:spec:test',
+            edge_type='verification',
+            direction='in',
+            min_degree=1,
+            max_degree=1
+        )
+        assert result is None
+
+    def test_check_vertex_degree_direction_any(self, simple_cache):
+        """Any direction should count both in and out."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # spec has 1 coupling edge (undirected, so counted in 'any')
+        result = check_vertex_degree(
+            complex,
+            'v:spec:test',
+            edge_type='coupling',
+            direction='any',
+            min_degree=1,
+            max_degree=1
+        )
+        assert result is None
+
+    # ========== check_face_boundary_types tests ==========
+
+    def test_check_face_boundary_types_all_present(self, simple_cache):
+        """Face with all required edge types should pass."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        result = check_face_boundary_types(
+            complex,
+            'f:assurance:test',
+            required_edge_types=['verification', 'validation', 'coupling']
+        )
+        assert result is None
+
+    def test_check_face_boundary_types_missing_type(self, simple_cache):
+        """Face missing a required edge type should fail."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # Assurance face doesn't have 'signs' edge
+        result = check_face_boundary_types(
+            complex,
+            'f:assurance:test',
+            required_edge_types=['verification', 'signs']  # 'signs' is missing
+        )
+        assert result is not None
+        assert result.rule_type == RuleType.FACE_BOUNDARY
+        assert 'Missing' in result.message
+        assert 'edge/signs' in str(result.details['missing'])
+
+    def test_check_face_boundary_types_with_prefix(self, simple_cache):
+        """Edge types with edge/ prefix should work."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        result = check_face_boundary_types(
+            complex,
+            'f:assurance:test',
+            required_edge_types=['edge/verification', 'edge/validation', 'edge/coupling']
+        )
+        assert result is None
+
+    def test_check_face_boundary_types_face_not_found(self, simple_cache):
+        """Non-existent face should return violation."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        result = check_face_boundary_types(
+            complex,
+            'f:nonexistent',
+            required_edge_types=['verification']
+        )
+        assert result is not None
+        assert 'no boundary' in result.message
+
+    # ========== OntologyRule dataclass tests ==========
+
+    def test_ontology_rule_creation(self):
+        """OntologyRule dataclass should be properly created."""
+        def dummy_check(complex, element_id):
+            return None
+
+        rule = OntologyRule(
+            name="test_rule",
+            element_type="edge/verification",
+            dimension=1,
+            check=dummy_check,
+            strict=False,
+            description="A test rule"
+        )
+        assert rule.name == "test_rule"
+        assert rule.element_type == "edge/verification"
+        assert rule.dimension == 1
+        assert rule.strict is False
+
+    def test_ontology_rule_invocation(self, simple_cache):
+        """OntologyRule check function should be invokable."""
+        complex = SimplicialComplex.from_cache(simple_cache)
+
+        # Create a rule that uses check_edge_endpoint_types
+        def verification_check(c, eid):
+            return check_edge_endpoint_types(
+                c, eid,
+                source_types=['vertex/doc'],
+                target_types=['vertex/spec']
+            )
+
+        rule = OntologyRule(
+            name="verification_endpoints",
+            element_type="edge/verification",
+            dimension=1,
+            check=verification_check,
+            description="Verification edge must go from doc to spec"
+        )
+
+        # Apply the rule
+        result = rule.check(complex, 'e:verification:test')
+        assert result is None  # Should pass
