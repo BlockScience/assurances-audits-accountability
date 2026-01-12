@@ -12,7 +12,7 @@ import sys
 import shutil
 from pathlib import Path
 
-from aaa.core import get_bundled_templates_path
+from aaa.core import get_bundled_templates_path, get_bundled_foundation_path
 
 
 # Directory structure for a new knowledge complex
@@ -21,6 +21,7 @@ DIRECTORIES = [
     '01_edges',
     '02_faces',
     'charts',
+    'design',
 ]
 
 # README content for each directory
@@ -114,6 +115,31 @@ charts/
 2. Create the main chart file using a template from `templates/charts/`
 3. Run `aaa audit charts/my-chart` to validate coverage
 """,
+    'design': """# Design
+
+This directory contains foundational design documents for the knowledge complex.
+
+## Contents
+
+- `ontology-base.md` - The base ontology defining all vertex, edge, face, and chart types
+
+## Ontology
+
+The ontology defines the type system for the knowledge complex:
+- **14 vertex types** (doc, spec, guidance, actor, signer, role, authority, module, etc.)
+- **18 edge types** (verification, validation, coupling, signs, qualifies, etc.)
+- **11 face types** (assurance, signature, authorization, input, output, etc.)
+- **4 chart types** (audit, module, runbook, execution-trace)
+
+See `ontology-base.md` for complete type definitions and local rules.
+
+## Extending the Ontology
+
+Application ontologies can extend the base ontology by:
+1. Setting `extends_ontology` to reference the base
+2. Adding new types using dotted namespaces (e.g., `brand.audience`)
+3. Adding local rules that strengthen (never weaken) base rules
+""",
 }
 
 # Root README template
@@ -129,6 +155,7 @@ A knowledge complex project using the AAA (Assurances, Audits, Accountability) f
 ├── 01_edges/       # Edge documents (verification, validation, qualification)
 ├── 02_faces/       # Face documents (assurance, signature)
 ├── charts/         # Chart documents (subcomplexes)
+├── design/         # Foundational design (ontology, architecture)
 ├── templates/      # Document templates
 └── complex.json    # Generated cache (run `aaa build`)
 ```
@@ -254,6 +281,28 @@ def init(ctx, name, minimal, force):
     except FileNotFoundError as e:
         click.echo(f"Warning: Could not copy templates: {e}", err=True)
         click.echo("You may need to copy templates manually.", err=True)
+
+    # Copy ontology
+    click.echo("")
+    click.echo("Copying ontology...")
+
+    try:
+        bundled_foundation = get_bundled_foundation_path()
+        ontology_source = bundled_foundation / 'ontology-base.md'
+        ontology_target = target_dir / 'design' / 'ontology-base.md'
+
+        if ontology_source.exists():
+            if not ontology_target.exists() or force:
+                shutil.copy2(ontology_source, ontology_target)
+                click.echo(f"  Copied ontology to design/ontology-base.md")
+            else:
+                click.echo(f"  Ontology exists, skipping (use --force to overwrite)")
+        else:
+            click.echo(f"Warning: ontology-base.md not found in bundled foundation", err=True)
+
+    except FileNotFoundError as e:
+        click.echo(f"Warning: Could not copy ontology: {e}", err=True)
+        click.echo("You may need to copy ontology-base.md manually.", err=True)
 
     # Create root README
     readme_path = target_dir / 'README.md'

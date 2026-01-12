@@ -53,6 +53,48 @@ def get_bundled_templates_path() -> Path:
     )
 
 
+def get_bundled_foundation_path() -> Path:
+    """
+    Return path to bundled foundation documents (e.g., ontology-base.md).
+
+    Returns the path to foundation documents bundled with the package.
+    For development (editable install), this returns the source foundation directory.
+    For installed packages, this returns the installed foundation location.
+
+    Returns:
+        Path to foundation directory
+
+    Raises:
+        FileNotFoundError: If foundation directory cannot be found
+    """
+    # Try importlib.resources approach for installed packages
+    try:
+        foundation_ref = files('aaa').joinpath('foundation')
+        with as_file(foundation_ref) as foundation_path:
+            if foundation_path.exists():
+                return foundation_path
+    except (TypeError, FileNotFoundError):
+        pass
+
+    # Fallback: look for foundation relative to this file's location
+    package_root = Path(__file__).parent.parent
+    foundation_path = package_root / 'foundation'
+    if foundation_path.exists():
+        return foundation_path
+
+    # Another fallback: look in repo design/ (for development without install)
+    repo_root = package_root.parent.parent
+    design_path = repo_root / 'design'
+    if (design_path / 'ontology-base.md').exists():
+        return design_path
+
+    raise FileNotFoundError(
+        "Foundation directory not found. If you installed the package, "
+        "you may need to reinstall. For development, ensure the design/ "
+        "directory exists at the repository root."
+    )
+
+
 def get_templates_path(custom_path: Optional[Path] = None) -> Path:
     """
     Get templates path, preferring custom path if provided.

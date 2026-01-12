@@ -14,6 +14,7 @@ from pathlib import Path
 from aaa.core import (
     TemplateBasedVerifier,
     get_templates_path,
+    get_bundled_foundation_path,
     check_validation_edge_accountability,
     find_holes,
 )
@@ -173,7 +174,19 @@ def ontology(ctx, templates, verbose):
         ontology_files.extend(vertices_dir.glob('ontology-*.md'))
 
     if not ontology_files:
+        # Try to fall back to bundled ontology
+        try:
+            bundled_foundation = get_bundled_foundation_path()
+            bundled_ontology = bundled_foundation / 'ontology-base.md'
+            if bundled_ontology.exists():
+                ontology_files = [bundled_ontology]
+                click.echo("  (Using bundled ontology - no local ontology found)")
+        except FileNotFoundError:
+            pass
+
+    if not ontology_files:
         click.echo("Warning: No ontology files found", err=True)
+        click.echo("Run 'aaa init --force' to copy the bundled ontology to your project.", err=True)
         sys.exit(1)
 
     all_valid = True
