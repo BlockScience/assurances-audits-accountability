@@ -11,6 +11,8 @@ import click
 import sys
 from pathlib import Path
 
+from aaa.core import TemplateBasedVerifier
+
 
 @click.command()
 @click.argument('file', required=False, type=click.Path(exists=True))
@@ -28,14 +30,8 @@ def verify(ctx, file, verify_all, templates, verbose):
     """
     repo_root = ctx.obj.get('repo_root', Path.cwd())
 
-    # Add scripts directory to path so we can import the verification logic
-    scripts_dir = repo_root / 'scripts'
-    sys.path.insert(0, str(scripts_dir))
-
-    try:
-        from verify_template_based import TemplateBasedVerifier
-    except ImportError as e:
-        click.echo(f"Error: Could not import verification module: {e}", err=True)
+    if TemplateBasedVerifier is None:
+        click.echo("Error: Could not import verification module.", err=True)
         click.echo("Make sure you're running from the repository root.", err=True)
         sys.exit(1)
 

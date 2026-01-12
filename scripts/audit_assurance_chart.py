@@ -692,4 +692,5 @@ Examples:
 
 
 if __name__ == '__main__':
+    print("Note: Direct script usage is deprecated. Use 'uv run aaa audit <chart>' instead.", file=sys.stderr)
     main()

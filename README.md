@@ -1,48 +1,64 @@
 # Assurances, Audits & Accountability
 
-This repository contains the implementation and demonstration of a typed simplicial complex framework for document verification, validation, and assurance of AI Generated Content with explicit human accountability. 
+A typed simplicial complex framework for document verification, validation, and assurance of AI-generated content with explicit human accountability.
 
-![Accountability Complex](docs/images/assurance_complex.png)
+## Quick Start
 
-**INCOSE Paper Assurance Complex:** 23 vertices | 91 edges | 44 faces | χ = -24
-21 documents + 1 root + 1 signer | 22 assurances + 22 signatures | Paper has 2 distinct assurance faces
+```bash
+# Install
+git clone https://github.com/BlockScience/assurances-audits-accountability
+cd assurances-audits-accountability
+uv sync
 
-## The Paper
+# Verify documents
+uv run aaa verify 00_vertices/spec-for-spec.md
 
-The paper **"Test-Driven Document Development: Simplicial Complexes for Verification, Validation, and Assurance with Human Accountability"** demonstrates a framework where:
+# Build the complex cache
+uv run aaa build
+
+# Audit assurance coverage
+uv run aaa audit charts/boundary-complex
+
+# Run all tests
+uv run pytest tests/ -v
+```
+
+## CLI Reference
+
+The `aaa` CLI is the primary interface for working with knowledge complexes:
+
+```bash
+aaa verify <file>              # Verify document against its template
+aaa verify --all               # Verify all documents
+aaa build                      # Build complex.json cache
+aaa build examples/incose-paper # Build cache for an example
+aaa audit <chart>              # Audit assurance coverage
+aaa check accountability <file> # Check accountability statements
+aaa check topology <chart>     # Check topological properties
+aaa check ontology             # Verify ontology integrity
+```
+
+## Overview
+
+This framework enables **test-driven document development** where:
 
 - **Documents are vertices** (0-simplices) in a typed complex
 - **Verification, validation, and coupling are edges** (1-simplices) connecting documents
 - **Assurance triangles are faces** (2-simplices) representing complete quality attestation
 - **Human accountability** is structurally required for validation judgments
 
-**The paper is its own proof.** The file [`doc-incose-paper-2026.md`](00_vertices/doc-incose-paper-2026.md) exists as a vertex in an assurance complex, verified against its specification, validated against its guidance, with all checks passing.
-
 ## Dual Interface: VS Code + Obsidian
-
-This repository is designed for **two complementary workflows**:
 
 ### VS Code + Claude Code (Construction & Verification)
 
-![VS Code Interface](docs/images/vs-code-interface.png)
-
 **Best for:** Building, verifying, and analyzing the knowledge complex
 
-- Run verification scripts directly from terminal
+- Run CLI commands from terminal
 - Edit documents with full IDE features
 - Use Claude Code for AI-assisted document development
 - Git integration for version control and accountability
 
-**Key commands:**
-```bash
-python scripts/verify_template_based.py <file> --templates templates
-python scripts/audit_assurance_chart.py charts/<chart>/<chart>.md
-python scripts/build_cache.py
-```
-
 ### Obsidian (Navigation & Exploration)
-
-![Obsidian Interface](docs/images/obsidian-interface.png)
 
 **Best for:** Exploring relationships and understanding structure
 
@@ -53,66 +69,37 @@ python scripts/build_cache.py
 
 **To use:** Open this repository as an Obsidian vault. See [[QUICKSTART]] for a 5-minute guide.
 
----
-
-## Quick Verification
-
-```bash
-# Setup
-git clone https://github.com/BlockScience/assurances-audits-accountability
-cd assurances-audits-accountability
-uv venv && source .venv/bin/activate
-uv pip install -r requirements.txt
-
-# Verify the paper
-python scripts/verify_template_based.py 00_vertices/doc-incose-paper-2026.md --templates templates
-
-# Run the assurance audit
-python scripts/audit_assurance_chart.py charts/incose-paper-assurance/incose-paper-assurance.md
-
-# Run all tests
-python -m pytest tests/ -v
-```
-
-**Expected output:**
-
-```text
-Result: ✓ PASS
-Checks: 6/6 passed
-
-Status: PASS
-Invariant: F = V - 1: 7 = 8 - 1 ✓
-Coverage: 100.0% (7/7 targets assured)
-```
-
 ## Repository Structure
 
 ```text
 assurances-audits-accountability/
-├── 00_vertices/                       # Document vertices (56 files)
-│   ├── doc-incose-paper-2026.md      # THE PAPER (also a vertex)
-│   ├── spec-for-*.md                 # Specifications (27 files)
-│   ├── guidance-for-*.md             # Guidance documents (22 files)
-│   └── doc-*.md                      # Content documents (5 files)
-├── 01_edges/                          # Relationship edges (148 files)
+├── src/aaa/                           # Python CLI package
+│   ├── cli.py                        # Main CLI entry point
+│   ├── commands/                     # CLI subcommands
+│   └── core/                         # Core library (re-exports from scripts)
+├── design/                            # Framework design documents
+│   ├── ontology-base.md              # Core type system ontology
+│   ├── *-architecture-*.md           # Architecture documents
+│   └── impl-plans/                   # Implementation plans
+├── 00_vertices/                       # Framework specification vertices
+│   ├── spec-for-*.md                 # Type specifications
+│   ├── guidance-for-*.md             # Guidance documents
+│   └── runbook-*.md                  # Procedural runbooks
+├── 01_edges/                          # Framework relationship edges
 │   ├── verification-*.md             # Verification edges
-│   ├── validation-*.md               # Validation edges (with approvers)
-│   ├── coupling-*.md                 # Spec-guidance coupling
-│   └── signs-*.md, qualifies-*.md    # Signature infrastructure
-├── 02_faces/                          # Faces (65 files)
+│   ├── validation-*.md               # Validation edges
+│   └── coupling-*.md                 # Spec-guidance coupling
+├── 02_faces/                          # Framework faces
 │   ├── assurance-*.md                # Assurance triangles
-│   ├── signature-*.md                # Signature triangles
-│   └── b2-*.md                       # Boundary faces
+│   └── signature-*.md                # Signature triangles
 ├── charts/                            # Composed subcomplexes
-│   ├── incose-paper-assurance/       # THE AUDIT CHART
-│   ├── boundary-complex/             # Foundational structure
+│   ├── boundary-complex/             # Foundational framework structure
 │   └── test-tetrahedron/             # Test fixture
-├── docs/                              # Documentation
-│   ├── concepts/                     # Core concepts explained
-│   └── images/                       # Screen captures for documentation
-├── figures/                           # Paper figures
-├── scripts/                           # CLI tools
-├── templates/                         # Type definitions
+├── examples/                          # Usage examples
+│   ├── incose-paper/                 # INCOSE paper self-demonstration
+│   └── programs/                     # Program development examples
+├── templates/                         # Type template definitions
+├── scripts/                           # Verification scripts (legacy)
 └── tests/                             # Test suite
 ```
 
@@ -172,56 +159,51 @@ Step-by-step workflows for common tasks in the knowledge complex:
 - [runbook-document-type-creation.md](00_vertices/runbook-document-type-creation.md)
 - [runbook-llm-specialization.md](00_vertices/runbook-llm-specialization.md)
 
-## Example Programs
+## Examples
 
-Two complete program development examples demonstrating the framework in practice:
+See the [examples/](examples/) directory for complete usage demonstrations:
 
-### Bus Electrification Program
+### INCOSE Paper Self-Demonstration
 
-A municipal transit electrification program demonstrating the full V-model lifecycle:
+The `examples/incose-paper/` directory contains the complete assurance complex for the paper "Test-Driven Document Development: Simplicial Complexes for Verification, Validation, and Assurance with Human Accountability". This is a working example of the framework applied to itself.
 
-| Document | Type | Description |
-|----------|------|-------------|
-| [program-memo-bus-electrification.md](program_development_dryrun/program-memo-bus-electrification.md) | Program Memo | Stakeholder authorization and scope |
-| [program-plan-bus-electrification.md](program_development_dryrun/program-plan-bus-electrification.md) | Program Plan | Phased implementation strategy |
-| [architecture-bus-electrification.md](program_development_dryrun/architecture-bus-electrification.md) | Architecture | Technical system design |
-| [lifecycle-bus-electrification.md](program_development_dryrun/lifecycle-bus-electrification.md) | Lifecycle | 25-year operational model |
-| [field-survey-bus-electrification.md](program_development_dryrun/field-survey-bus-electrification.md) | Field Survey | Site assessments and infrastructure |
-| [bus-electrification-assurance-audit.md](program_development_dryrun/assurance-bus-electrification/bus-electrification-assurance-audit.md) | Audit Chart | Full assurance coverage with V-F=1 |
+```bash
+# Build and audit the INCOSE example
+uv run aaa build examples/incose-paper
+uv run aaa audit examples/incose-paper/charts/incose-paper-assurance
+```
 
-### Water Quality Monitoring Program
+### Program Development Examples
 
-An IoT-based environmental monitoring program for water quality:
+The `examples/programs/` directory contains program development examples (bus electrification, water quality monitoring, digital transformation) demonstrating how to apply the framework to real-world programs.
 
-| Document | Type | Description |
-|----------|------|-------------|
-| [program-memo-water-quality-monitoring.md](program_development_dryrun/program-memo-water-quality-monitoring.md) | Program Memo | Stakeholder authorization and scope |
-| [program-plan-water-quality-monitoring.md](program_development_dryrun/program-plan-water-quality-monitoring.md) | Program Plan | Deployment and integration strategy |
-| [architecture-water-quality-monitoring.md](program_development_dryrun/architecture-water-quality-monitoring.md) | Architecture | Sensor network and data pipeline |
-| [lifecycle-water-quality-monitoring.md](program_development_dryrun/lifecycle-water-quality-monitoring.md) | Lifecycle | 10-year operational model |
-| [field-survey-water-quality-monitoring.md](program_development_dryrun/field-survey-water-quality-monitoring.md) | Field Survey | Site assessments and sensor placement |
-| [water-quality-assurance-audit.md](program_development_dryrun/assurance/water-quality-assurance-audit.md) | Audit Chart | Full assurance coverage with V-F=1 |
+## Scripts (Legacy)
 
-## Scripts Reference
+The `scripts/` directory contains the underlying verification tools. These are now wrapped by the `aaa` CLI and direct usage is deprecated.
 
-| Script | Purpose |
-|--------|---------|
-| `verify_template_based.py` | Verify document against its type template |
-| `audit_assurance_chart.py` | Check assurance coverage and V-F=1 invariant |
-| `topology.py` | Compute Euler characteristic |
-| `visualize_chart.py` | Generate interactive visualization |
-| `visualize_assured_signed.py` | Enhanced 3D visualization with layered architecture |
-| `build_cache.py` | Build element cache and validate all documents |
+| Script | CLI Equivalent |
+|--------|----------------|
+| `verify_template_based.py` | `aaa verify <file>` |
+| `audit_assurance_chart.py` | `aaa audit <chart>` |
+| `build_cache.py` | `aaa build` |
+| `topology.py` | `aaa check topology <chart>` |
+| `check_accountability.py` | `aaa check accountability <file>` |
 
 ## The Self-Demonstration
 
-This repository IS the evidence for the paper's claims:
+The INCOSE paper example in `examples/incose-paper/` IS the evidence for the paper's claims:
 
-1. **The paper exists** as [[doc-incose-paper-2026]] ([GitHub](00_vertices/doc-incose-paper-2026.md))
-2. **Verification passes** against [[spec-for-incose-paper]] ([GitHub](00_vertices/spec-for-incose-paper.md))
-3. **Validation recorded** in [[validation-incose-paper-2026:guidance-incose-paper]] ([GitHub](01_edges/validation-incose-paper-2026:guidance-incose-paper.md))
-4. **Assurance face closed** in [[assurance-incose-paper-2026-base]] ([GitHub](02_faces/assurance-incose-paper-2026-base.md))
-5. **Audit passes** with 100% coverage and V-F=1 verified
+1. **The paper exists** as a vertex in the example complex
+2. **Verification passes** against its specification
+3. **Validation recorded** with human accountability
+4. **Assurance faces closed** for all documents
+5. **Audit passes** with 100% coverage
+
+```bash
+# Verify the self-demonstration
+uv run aaa build examples/incose-paper
+uv run aaa audit examples/incose-paper/charts/incose-paper-assurance
+```
 
 The existence of this repository with passing audits proves the framework works.
 
