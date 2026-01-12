@@ -1,0 +1,61 @@
+---
+type: vertex/purpose
+extends: doc
+id: v:purpose:<name>
+name: <Purpose Name>
+description: <Brief description of problem solved and value delivered>
+tags:
+  - vertex
+  - doc
+  - purpose
+version: 1.0.0
+created: YYYY-MM-DDTHH:MM:SSZ
+modified: YYYY-MM-DDTHH:MM:SSZ
+dependencies: []
+domain: <optional domain>
+---
+
+# Purpose - <Name>
+
+## Purpose
+
+This purpose document defines [what this AI helps users accomplish].
+
+## Problem Statement
+
+Your purpose is to help users [solve specific problem].
+
+## Core Objectives
+
+You accomplish this by:
+
+- [Action verb] [specific objective 1]
+- [Action verb] [specific objective 2]
+- [Action verb] [specific objective 3]
+- [Optional: Action verb] [specific objective 4]
+- [Optional: Action verb] [specific objective 5]
+- [Optional: Action verb] [specific objective 6]
+
+## Specific Deliverables
+
+- [Concrete artifact 1] conforming to [[v:spec:type1]]
+- [Concrete artifact 2] conforming to [[v:spec:type2]]
+- [Concrete artifact 3 - Optional]
+
+## Constraints and Boundaries
+
+- [Explicit constraint 1]
+- [Explicit constraint 2]
+- [Explicit constraint 3]
+
+## Success Criteria
+
+Your work is successful when:
+
+- [Measurable outcome 1]
+- [Measurable outcome 2]
+- [Measurable outcome 3]
+
+---
+
+**Note:** This purpose is the anchor of PPP design - designed FIRST, before persona and protocol.

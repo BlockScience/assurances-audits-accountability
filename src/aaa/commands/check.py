@@ -11,7 +11,12 @@ import click
 import sys
 from pathlib import Path
 
-from aaa.core import TemplateBasedVerifier
+from aaa.core import (
+    TemplateBasedVerifier,
+    get_templates_path,
+    check_validation_edge_accountability,
+    find_holes,
+)
 
 
 @click.group()
@@ -44,36 +49,28 @@ def accountability(ctx, file, verbose):
     """
     repo_root = ctx.obj.get('repo_root', Path.cwd())
 
-    # Add scripts directory to path for check_accountability
-    # (not yet in core module)
-    scripts_dir = repo_root / 'scripts'
-    sys.path.insert(0, str(scripts_dir))
-
     file_path = Path(file)
     if not file_path.is_absolute():
         file_path = repo_root / file_path
 
     try:
-        from check_accountability import check_accountability as do_check
-    except ImportError as e:
-        click.echo(f"Error: Could not import accountability module: {e}", err=True)
-        sys.exit(1)
-
-    try:
         click.echo(f"Checking accountability: {file_path.name}")
 
-        result = do_check(file_path)
+        # Use the core accountability check
+        passed, message = check_validation_edge_accountability(
+            file_path,
+            author="",  # Empty for file-based check (not commit-time)
+            committer="",
+            github_actor=""
+        )
 
-        if result.get('valid', False):
-            click.echo("✓ Accountability check passed")
-            if verbose and 'details' in result:
-                for detail in result['details']:
-                    click.echo(f"  - {detail}")
+        if passed:
+            click.echo("Accountability check passed")
+            if verbose:
+                click.echo(f"  {message}")
         else:
-            click.echo("✗ Accountability check failed", err=True)
-            if 'errors' in result:
-                for error in result['errors']:
-                    click.echo(f"  - {error}", err=True)
+            click.echo("Accountability check failed", err=True)
+            click.echo(f"  {message}", err=True)
             sys.exit(1)
 
     except Exception as e:
@@ -99,10 +96,6 @@ def topology(ctx, chart, verbose):
     """
     repo_root = ctx.obj.get('repo_root', Path.cwd())
 
-    # Add scripts directory to path for topology module
-    scripts_dir = repo_root / 'scripts'
-    sys.path.insert(0, str(scripts_dir))
-
     # Resolve chart path
     chart_path = Path(chart)
     if not chart_path.is_absolute():
@@ -120,30 +113,30 @@ def topology(ctx, chart, verbose):
         sys.exit(1)
 
     try:
-        from topology import main as topology_main
-
         click.echo(f"Checking topology: {chart_path.name}")
 
-        # Run topology check
-        # The topology script outputs directly, so we just call it
-        import os
-        original_cwd = os.getcwd()
-        os.chdir(repo_root)
+        # Use the core topology module
+        analysis = find_holes(chart_path, repo_root)
 
-        try:
-            # Simulate running the script
-            sys.argv = ['topology', str(chart_path)]
-            topology_main()
-        finally:
-            os.chdir(original_cwd)
+        stats = analysis['statistics']
+        click.echo(f"\nVertices (V): {stats['vertices']}")
+        click.echo(f"Edges (E):    {stats['edges']}")
+        click.echo(f"Faces (F):    {stats['faces']}")
+        click.echo(f"\nEuler characteristic: X = V - E + F = {stats['euler_characteristic']}")
 
-    except ImportError as e:
-        click.echo(f"Error: Could not import topology module: {e}", err=True)
-        sys.exit(1)
-    except SystemExit as e:
-        # topology script may call sys.exit
-        if e.code != 0:
-            sys.exit(e.code)
+        click.echo(f"\nPotential faces (triangles): {stats['potential_faces']}")
+        click.echo(f"Actual faces:                {stats['faces']}")
+        click.echo(f"Holes (missing faces):       {stats['holes']}")
+
+        if analysis['holes']:
+            click.echo(f"\nDetected {len(analysis['holes'])} topological hole(s):")
+            for i, hole in enumerate(analysis['holes'][:5], 1):
+                click.echo(f"  {i}. Missing face: {hole}")
+            if len(analysis['holes']) > 5:
+                click.echo(f"  ... and {len(analysis['holes']) - 5} more")
+        else:
+            click.echo("\nNo holes detected - chart is a complete simplicial complex")
+
     except Exception as e:
         click.echo(f"Error: {e}", err=True)
         if verbose:
@@ -153,9 +146,10 @@ def topology(ctx, chart, verbose):
 
 
 @check.command()
+@click.option('--templates', default=None, help='Path to templates directory')
 @click.option('--verbose', '-v', is_flag=True, help='Show detailed output')
 @click.pass_context
-def ontology(ctx, verbose):
+def ontology(ctx, templates, verbose):
     """Verify ontology integrity.
 
     Checks that the ontology files are valid and consistent.
@@ -188,7 +182,22 @@ def ontology(ctx, verbose):
         click.echo("Error: Could not import verification module.", err=True)
         sys.exit(1)
 
-    templates_path = repo_root / 'templates'
+    # Resolve templates path
+    if templates:
+        templates_path = Path(templates)
+        if not templates_path.is_absolute():
+            templates_path = repo_root / templates_path
+    else:
+        local_templates = repo_root / 'templates'
+        if local_templates.exists():
+            templates_path = local_templates
+        else:
+            try:
+                templates_path = get_templates_path()
+            except FileNotFoundError as e:
+                click.echo(f"Error: {e}", err=True)
+                sys.exit(1)
+
     verifier = TemplateBasedVerifier(templates_path)
 
     for ont_file in ontology_files:
@@ -196,13 +205,13 @@ def ontology(ctx, verbose):
 
         passed = verifier.verify_element(ont_file)
         if passed:
-            click.echo(f"    ✓ Valid")
+            click.echo(f"    Valid")
         else:
-            click.echo(f"    ✗ Invalid", err=True)
+            click.echo(f"    Invalid", err=True)
             all_valid = False
 
     if all_valid:
-        click.echo(f"\n✓ All ontology files valid ({len(ontology_files)} checked)")
+        click.echo(f"\nAll ontology files valid ({len(ontology_files)} checked)")
     else:
-        click.echo(f"\n✗ Some ontology files invalid", err=True)
+        click.echo(f"\nSome ontology files invalid", err=True)
         sys.exit(1)

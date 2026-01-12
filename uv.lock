@@ -3,7 +3,7 @@ revision = 3
 requires-python = ">=3.12"
 
 [[package]]
-name = "assurances-audits-accountability"
+name = "aaa-docware"
 version = "1.0.0"
 source = { editable = "." }
 dependencies = [
