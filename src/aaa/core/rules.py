@@ -345,7 +345,11 @@ class OntologyRuleEngine:
         'signs': (['vertex/signer'], ['vertex/doc', 'vertex/spec', 'vertex/guidance']),
         'qualifies': (['vertex/signer'], ['vertex/guidance', 'vertex/module']),
         'has-role': (['vertex/actor'], ['vertex/role']),
-        'conveys': (['vertex/role'], ['vertex/authority']),
+        # conveys: role grants authority to sign validations against a guidance
+        # The target is guidance (not generic authority) because this edge participates
+        # in authorization faces which share the qualifies edge with signature faces.
+        # This creates the chain: authorization → signature → assurance
+        'conveys': (['vertex/role'], ['vertex/guidance']),
         'requires-authority': (['vertex/action'], ['vertex/authority']),
         'precedes': (['vertex/module'], ['vertex/module']),
         'feeds': (['vertex/doc'], ['vertex/module']),
@@ -407,6 +411,10 @@ class OntologyRuleEngine:
         self._check_edge_endpoint_constraints()
         self._check_degree_constraints()
         self._check_face_boundary_closure()
+
+        # Authorization rules (authorization → signature → assurance chain)
+        self._check_authorization_boundary_types()
+        self._check_signature_requires_authorization()
 
         # Signature and assurance rules
         self._check_signature_requires_qualification()
@@ -682,6 +690,110 @@ class OntologyRuleEngine:
     def _check_signature_shares_edge_with_assurance(self):
         """Backward compatibility alias - calls _check_assurance_requires_signature."""
         self._check_assurance_requires_signature()
+
+    # ========== Authorization Face Boundary Types ==========
+
+    def _check_authorization_boundary_types(self):
+        """
+        Check that authorization faces have required edge types in boundary.
+
+        Rule: f:authorization:(signer, role, guidance) must have:
+        - e:has-role: (signer → role)
+        - e:conveys: (role → guidance)
+        - e:qualifies: (signer → guidance) - SHARED with signature face
+
+        The authorization face proves WHY a signer is qualified: they hold a role
+        that conveys authority to validate against the guidance.
+        """
+        for fid in self.graph.get_faces_by_type('authorization'):
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            # Check for required edge types in boundary
+            edge_types_found = set()
+            for eid in face.edges:
+                edge = self.graph.get_edge(eid)
+                if edge:
+                    edge_type = edge.type.replace('edge/', '') if edge.type.startswith('edge/') else edge.type
+                    edge_types_found.add(edge_type)
+
+            required_types = {'has-role', 'conveys', 'qualifies'}
+            missing = required_types - edge_types_found
+
+            if missing:
+                self._add_violation(
+                    rule_name="authorization_boundary_types",
+                    rule_type=RuleType.FACE_BOUNDARY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"Authorization face missing required edge types: {missing}",
+                    details={
+                        'required': list(required_types),
+                        'found': list(edge_types_found),
+                        'missing': list(missing)
+                    }
+                )
+
+    # ========== Signature Requires Authorization (Face Adjacency) ==========
+
+    def _check_signature_requires_authorization(self):
+        """
+        Check that signature faces have an authorization face sharing their qualifies edge.
+
+        Rule: f:signature: must have f:authorization: sharing e:qualifies: edge.
+
+        This establishes the chain: authorization → signature → assurance
+
+        Key insight: Authorization faces CAN exist without signature faces (role
+        assignments pre-exist any signing activity). But signature faces CANNOT
+        exist without authorization faces - you can't sign unless you have proper
+        authority via your role.
+
+        The shared edge is 'qualifies' (signer → guidance), which appears in both:
+        - Authorization face: proves the signer has authority via their role
+        - Signature face: uses that authority to sign a validation
+        """
+        for fid in self.graph.get_faces_by_type('signature'):
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            # Find qualifies edge in boundary
+            qualifies_edge_id = face.data.get('qualifies_edge')
+            if not qualifies_edge_id:
+                # Try to find qualifies edge in boundary
+                for eid in face.edges:
+                    if self.graph._edge_matches_type(eid, 'qualifies'):
+                        qualifies_edge_id = eid
+                        break
+
+            if not qualifies_edge_id:
+                self._add_violation(
+                    rule_name="signature_requires_authorization",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message="Signature face has no qualifies edge in boundary",
+                    details={'edges': face.edges}
+                )
+                continue
+
+            # Check if any authorization face shares this qualifies edge
+            authorization_faces = self.graph.get_faces_containing_edge(qualifies_edge_id, 'authorization')
+
+            if not authorization_faces:
+                self._add_violation(
+                    rule_name="signature_requires_authorization",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"No authorization face shares qualifies edge '{qualifies_edge_id}' - signer must have role-based authority",
+                    details={'qualifies_edge': qualifies_edge_id}
+                )
 
     # ========== Assurance Requires B2 Anchor (Rule 6) ==========
 

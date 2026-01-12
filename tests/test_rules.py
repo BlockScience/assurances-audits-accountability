@@ -2279,3 +2279,504 @@ class TestLocalRuleFunctions:
         # Apply the rule
         result = rule.check(complex, 'e:verification:test')
         assert result is None  # Should pass
+
+
+# ========== Authorization Face Tests ==========
+
+class TestAuthorizationBoundaryTypes:
+    """Tests for authorization face boundary type constraints.
+
+    Authorization face represents role-based access control:
+    - Vertices: signer, role, guidance
+    - Edges: has-role (signer → role), conveys (role → guidance), qualifies (signer → guidance)
+
+    The qualifies edge is SHARED with signature faces, creating the chain:
+    authorization → signature → assurance
+    """
+
+    @pytest.fixture
+    def valid_authorization_cache(self):
+        """Complete valid authorization face.
+
+        Structure:
+        - signer has role via has-role edge
+        - role conveys authority to validate guidance via conveys edge
+        - signer is qualified for guidance via qualifies edge (shared with signature)
+        """
+        return {
+            'elements': {
+                'vertices': {
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                    'v:role:reviewer': {'id': 'v:role:reviewer', 'type': 'vertex/role', 'name': 'Reviewer'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                },
+                'edges': {
+                    'e:has-role:alice-reviewer': {
+                        'id': 'e:has-role:alice-reviewer',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:alice',
+                        'target': 'v:role:reviewer',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:reviewer-guidance': {
+                        'id': 'e:conveys:reviewer-guidance',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:reviewer',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:authorization:alice-reviewer': {
+                        'id': 'f:authorization:alice-reviewer',
+                        'type': 'face/authorization',
+                        'vertices': ['v:signer:alice', 'v:role:reviewer', 'v:guidance:test'],
+                        'edges': ['e:has-role:alice-reviewer', 'e:conveys:reviewer-guidance', 'e:qualifies:alice-guidance'],
+                        'orientation': 'oriented',
+                        'signer': 'v:signer:alice',
+                        'role': 'v:role:reviewer',
+                        'guidance': 'v:guidance:test',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    @pytest.fixture
+    def invalid_authorization_missing_conveys(self):
+        """Authorization face missing conveys edge - INVALID."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                    'v:role:reviewer': {'id': 'v:role:reviewer', 'type': 'vertex/role', 'name': 'Reviewer'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                },
+                'edges': {
+                    'e:has-role:alice-reviewer': {
+                        'id': 'e:has-role:alice-reviewer',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:alice',
+                        'target': 'v:role:reviewer',
+                        'orientation': 'directed',
+                    },
+                    # Missing conveys edge!
+                    'e:other:placeholder': {
+                        'id': 'e:other:placeholder',
+                        'type': 'edge/other',
+                        'source': 'v:role:reviewer',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:authorization:bad': {
+                        'id': 'f:authorization:bad',
+                        'type': 'face/authorization',
+                        'vertices': ['v:signer:alice', 'v:role:reviewer', 'v:guidance:test'],
+                        # Missing conveys, has 'other' instead
+                        'edges': ['e:has-role:alice-reviewer', 'e:other:placeholder', 'e:qualifies:alice-guidance'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    def test_valid_authorization_boundary(self, valid_authorization_cache):
+        """Valid authorization face with all required edge types should pass."""
+        engine = OntologyRuleEngine.from_cache(valid_authorization_cache)
+        engine._check_authorization_boundary_types()
+
+        boundary_violations = [v for v in engine.violations
+                              if v.rule_name == 'authorization_boundary_types']
+        assert len(boundary_violations) == 0
+
+    def test_invalid_authorization_missing_conveys(self, invalid_authorization_missing_conveys):
+        """Authorization face missing conveys edge should fail."""
+        engine = OntologyRuleEngine.from_cache(invalid_authorization_missing_conveys)
+        engine._check_authorization_boundary_types()
+
+        boundary_violations = [v for v in engine.violations
+                              if v.rule_name == 'authorization_boundary_types']
+        assert len(boundary_violations) == 1
+        assert 'conveys' in str(boundary_violations[0].details.get('missing', []))
+
+    def test_authorization_alone_is_valid(self, valid_authorization_cache):
+        """Authorization face can exist without signature face - role assignments pre-exist signing."""
+        engine = OntologyRuleEngine.from_cache(valid_authorization_cache)
+        violations = engine.check_all()
+
+        # Should have no authorization-specific violations
+        auth_violations = [v for v in violations
+                          if 'authorization' in v.rule_name.lower()]
+        assert len(auth_violations) == 0
+
+
+class TestSignatureRequiresAuthorization:
+    """Tests for signature face must have authorization face sharing qualifies edge.
+
+    This establishes the chain: authorization → signature → assurance
+
+    Key insight on directionality:
+    - Authorization faces CAN exist without signature faces (role assignments pre-exist signing)
+    - Signature faces CANNOT exist without authorization faces (you can't sign without authority)
+
+    The shared qualifies edge ensures:
+    - Every signature has role-based authority backing
+    - The signer's qualification comes from their role in the authorization face
+    """
+
+    @pytest.fixture
+    def valid_signature_with_authorization_cache(self):
+        """Complete valid setup with authorization and signature faces sharing qualifies edge.
+
+        Structure:
+        - Authorization face: signer -- role -- guidance (has-role, conveys, qualifies)
+        - Signature face: doc -- guidance -- signer (validation, qualifies, signs)
+        - Both faces SHARE the qualifies edge (signer → guidance)
+        """
+        return {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                    'v:role:reviewer': {'id': 'v:role:reviewer', 'type': 'vertex/role', 'name': 'Reviewer'},
+                },
+                'edges': {
+                    # Authorization edges
+                    'e:has-role:alice-reviewer': {
+                        'id': 'e:has-role:alice-reviewer',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:alice',
+                        'target': 'v:role:reviewer',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:reviewer-guidance': {
+                        'id': 'e:conveys:reviewer-guidance',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:reviewer',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    # SHARED qualifies edge
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    # Signature edges
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:signs:alice-doc': {
+                        'id': 'e:signs:alice-doc',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:authorization:alice-reviewer': {
+                        'id': 'f:authorization:alice-reviewer',
+                        'type': 'face/authorization',
+                        'vertices': ['v:signer:alice', 'v:role:reviewer', 'v:guidance:test'],
+                        # INCLUDES the shared qualifies edge
+                        'edges': ['e:has-role:alice-reviewer', 'e:conveys:reviewer-guidance', 'e:qualifies:alice-guidance'],
+                        'orientation': 'oriented',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                    'f:signature:test': {
+                        'id': 'f:signature:test',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        # SHARES qualifies edge with authorization face
+                        'edges': ['e:validation:test', 'e:qualifies:alice-guidance', 'e:signs:alice-doc'],
+                        'orientation': 'oriented',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                },
+            },
+            'statistics': {'vertices': 4, 'edges': 5, 'faces': 2}
+        }
+
+    @pytest.fixture
+    def invalid_signature_no_authorization_cache(self):
+        """Invalid setup: signature face exists but has no authorization face sharing qualifies edge.
+
+        The signature face has a qualifies edge, but there's no authorization face
+        that shares that same qualifies edge.
+        """
+        return {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                },
+                'edges': {
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:signs:alice-doc': {
+                        'id': 'e:signs:alice-doc',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    # Signature face WITHOUT corresponding authorization face
+                    'f:signature:orphan': {
+                        'id': 'f:signature:orphan',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        'edges': ['e:validation:test', 'e:qualifies:alice-guidance', 'e:signs:alice-doc'],
+                        'orientation': 'oriented',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    @pytest.fixture
+    def valid_authorization_without_signature_cache(self):
+        """Valid setup: authorization face exists alone, no signature yet.
+
+        This is VALID because authorization (role assignment) can pre-exist
+        any signing activity.
+        """
+        return {
+            'elements': {
+                'vertices': {
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                    'v:role:reviewer': {'id': 'v:role:reviewer', 'type': 'vertex/role', 'name': 'Reviewer'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                },
+                'edges': {
+                    'e:has-role:alice-reviewer': {
+                        'id': 'e:has-role:alice-reviewer',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:alice',
+                        'target': 'v:role:reviewer',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:reviewer-guidance': {
+                        'id': 'e:conveys:reviewer-guidance',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:reviewer',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    # Authorization face ALONE - no signature yet
+                    'f:authorization:alice-reviewer': {
+                        'id': 'f:authorization:alice-reviewer',
+                        'type': 'face/authorization',
+                        'vertices': ['v:signer:alice', 'v:role:reviewer', 'v:guidance:test'],
+                        'edges': ['e:has-role:alice-reviewer', 'e:conveys:reviewer-guidance', 'e:qualifies:alice-guidance'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    def test_valid_signature_with_authorization(self, valid_signature_with_authorization_cache):
+        """Signature face with authorization face sharing qualifies edge should pass."""
+        engine = OntologyRuleEngine.from_cache(valid_signature_with_authorization_cache)
+        engine._check_signature_requires_authorization()
+
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'signature_requires_authorization']
+        assert len(adjacency_violations) == 0
+
+    def test_invalid_signature_without_authorization(self, invalid_signature_no_authorization_cache):
+        """Signature face without authorization face should fail."""
+        engine = OntologyRuleEngine.from_cache(invalid_signature_no_authorization_cache)
+        engine._check_signature_requires_authorization()
+
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'signature_requires_authorization']
+        assert len(adjacency_violations) == 1
+        assert 'No authorization face shares qualifies edge' in adjacency_violations[0].message
+
+    def test_valid_authorization_without_signature(self, valid_authorization_without_signature_cache):
+        """Authorization face without signature face is VALID - role assignments can pre-exist signing."""
+        engine = OntologyRuleEngine.from_cache(valid_authorization_without_signature_cache)
+        engine._check_signature_requires_authorization()
+
+        # No violations for signature-requires-authorization because there are no signature faces
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'signature_requires_authorization']
+        assert len(adjacency_violations) == 0
+
+    def test_full_chain_authorization_signature_assurance(self):
+        """Complete chain: authorization → signature → assurance should all pass."""
+        cache = {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec', 'name': 'Test Spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                    'v:role:reviewer': {'id': 'v:role:reviewer', 'type': 'vertex/role', 'name': 'Reviewer'},
+                },
+                'edges': {
+                    # Authorization edges
+                    'e:has-role:alice-reviewer': {
+                        'id': 'e:has-role:alice-reviewer',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:alice',
+                        'target': 'v:role:reviewer',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:reviewer-guidance': {
+                        'id': 'e:conveys:reviewer-guidance',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:reviewer',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    # SHARED qualifies edge (authorization ↔ signature)
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    # Signature edges
+                    'e:signs:alice-doc': {
+                        'id': 'e:signs:alice-doc',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                    # SHARED validation edge (signature ↔ assurance)
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    # Assurance edges
+                    'e:verification:test': {
+                        'id': 'e:verification:test',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:test': {
+                        'id': 'e:coupling:test',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                },
+                'faces': {
+                    'f:authorization:alice-reviewer': {
+                        'id': 'f:authorization:alice-reviewer',
+                        'type': 'face/authorization',
+                        'vertices': ['v:signer:alice', 'v:role:reviewer', 'v:guidance:test'],
+                        'edges': ['e:has-role:alice-reviewer', 'e:conveys:reviewer-guidance', 'e:qualifies:alice-guidance'],
+                        'orientation': 'oriented',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                    'f:signature:test': {
+                        'id': 'f:signature:test',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        # SHARES qualifies with authorization, validation with assurance
+                        'edges': ['e:validation:test', 'e:qualifies:alice-guidance', 'e:signs:alice-doc'],
+                        'orientation': 'oriented',
+                        'validation_edge': 'e:validation:test',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                    'f:assurance:test': {
+                        'id': 'f:assurance:test',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        # SHARES validation with signature
+                        'edges': ['e:verification:test', 'e:validation:test', 'e:coupling:test'],
+                        'orientation': 'oriented',
+                        'validation_edge': 'e:validation:test',
+                    },
+                },
+            },
+            'statistics': {'vertices': 5, 'edges': 7, 'faces': 3}
+        }
+
+        engine = OntologyRuleEngine.from_cache(cache)
+
+        # Check authorization rules
+        engine._check_authorization_boundary_types()
+        auth_violations = [v for v in engine.violations if 'authorization' in v.rule_name]
+        assert len(auth_violations) == 0, f"Authorization violations: {auth_violations}"
+
+        # Check signature-requires-authorization
+        engine._check_signature_requires_authorization()
+        sig_auth_violations = [v for v in engine.violations if v.rule_name == 'signature_requires_authorization']
+        assert len(sig_auth_violations) == 0, f"Signature-auth violations: {sig_auth_violations}"
+
+        # Check assurance-requires-signature
+        engine._check_assurance_requires_signature()
+        assurance_violations = [v for v in engine.violations if v.rule_name == 'assurance_requires_signature']
+        assert len(assurance_violations) == 0, f"Assurance-sig violations: {assurance_violations}"
+
+    def test_full_ontology_check_includes_authorization_rules(self, valid_signature_with_authorization_cache):
+        """Full ontology check should include authorization rule enforcement."""
+        violations = check_ontology_rules(valid_signature_with_authorization_cache)
+
+        # Should not have authorization or signature-requires-authorization violations
+        auth_violations = [v for v in violations
+                          if 'authorization' in v.rule_name.lower()]
+        assert len(auth_violations) == 0

@@ -740,6 +740,343 @@ FACE_ADJACENCY_DEMOS = [
 ]
 
 
+# ============================================================
+# AUTHORIZATION CHAIN DEMOS (authorization → signature → assurance)
+# ============================================================
+
+AUTHORIZATION_CHAIN_DEMOS = [
+    RuleDemo(
+        name="Valid: Authorization Face Alone (Role Assignment Pre-exists Signing)",
+        description="Authorization face exists alone - this is VALID (role assignments can pre-exist signing activity)",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                    'v:role:reviewer': {'id': 'v:role:reviewer', 'type': 'vertex/role', 'name': 'Reviewer'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                },
+                'edges': {
+                    'e:has-role:alice-reviewer': {
+                        'id': 'e:has-role:alice-reviewer',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:alice',
+                        'target': 'v:role:reviewer',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:reviewer-guidance': {
+                        'id': 'e:conveys:reviewer-guidance',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:reviewer',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:authorization:alice-reviewer': {
+                        'id': 'f:authorization:alice-reviewer',
+                        'type': 'face/authorization',
+                        'vertices': ['v:signer:alice', 'v:role:reviewer', 'v:guidance:test'],
+                        'edges': ['e:has-role:alice-reviewer', 'e:conveys:reviewer-guidance', 'e:qualifies:alice-guidance'],
+                        'orientation': 'oriented',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                },
+            },
+        },
+        expected_violations=0,
+        rule_type="authorization_chain",
+        explanation="Authorization faces CAN exist without signature faces. They represent role-based authority that pre-exists any signing activity."
+    ),
+    RuleDemo(
+        name="Valid: Authorization + Signature (Role Backs Signing Authority)",
+        description="Authorization face with signature face sharing qualifies edge - signer has role-based authority",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                    'v:role:reviewer': {'id': 'v:role:reviewer', 'type': 'vertex/role', 'name': 'Reviewer'},
+                },
+                'edges': {
+                    # Authorization edges
+                    'e:has-role:alice-reviewer': {
+                        'id': 'e:has-role:alice-reviewer',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:alice',
+                        'target': 'v:role:reviewer',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:reviewer-guidance': {
+                        'id': 'e:conveys:reviewer-guidance',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:reviewer',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    # SHARED qualifies edge
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    # Signature edges
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:signs:alice-doc': {
+                        'id': 'e:signs:alice-doc',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:authorization:alice-reviewer': {
+                        'id': 'f:authorization:alice-reviewer',
+                        'type': 'face/authorization',
+                        'vertices': ['v:signer:alice', 'v:role:reviewer', 'v:guidance:test'],
+                        # INCLUDES the shared qualifies edge
+                        'edges': ['e:has-role:alice-reviewer', 'e:conveys:reviewer-guidance', 'e:qualifies:alice-guidance'],
+                        'orientation': 'oriented',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                    'f:signature:test': {
+                        'id': 'f:signature:test',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        # SHARES qualifies edge with authorization face
+                        'edges': ['e:validation:test', 'e:qualifies:alice-guidance', 'e:signs:alice-doc'],
+                        'orientation': 'oriented',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                },
+            },
+        },
+        expected_violations=0,
+        rule_type="authorization_chain",
+        explanation="Authorization face shares qualifies edge with signature face. The signer's authority to sign comes from their role."
+    ),
+    RuleDemo(
+        name="Valid: Complete Chain - Authorization → Signature → Assurance",
+        description="Full chain with all three faces sharing appropriate edges",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec', 'name': 'Test Spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                    'v:role:reviewer': {'id': 'v:role:reviewer', 'type': 'vertex/role', 'name': 'Reviewer'},
+                },
+                'edges': {
+                    # Authorization edges
+                    'e:has-role:alice-reviewer': {
+                        'id': 'e:has-role:alice-reviewer',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:alice',
+                        'target': 'v:role:reviewer',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:reviewer-guidance': {
+                        'id': 'e:conveys:reviewer-guidance',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:reviewer',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    # SHARED qualifies edge (authorization ↔ signature)
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    # Signature edges
+                    'e:signs:alice-doc': {
+                        'id': 'e:signs:alice-doc',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                    # SHARED validation edge (signature ↔ assurance)
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    # Assurance edges
+                    'e:verification:test': {
+                        'id': 'e:verification:test',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:test': {
+                        'id': 'e:coupling:test',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                },
+                'faces': {
+                    'f:authorization:alice-reviewer': {
+                        'id': 'f:authorization:alice-reviewer',
+                        'type': 'face/authorization',
+                        'vertices': ['v:signer:alice', 'v:role:reviewer', 'v:guidance:test'],
+                        'edges': ['e:has-role:alice-reviewer', 'e:conveys:reviewer-guidance', 'e:qualifies:alice-guidance'],
+                        'orientation': 'oriented',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                    'f:signature:test': {
+                        'id': 'f:signature:test',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        # SHARES qualifies with authorization, validation with assurance
+                        'edges': ['e:validation:test', 'e:qualifies:alice-guidance', 'e:signs:alice-doc'],
+                        'orientation': 'oriented',
+                        'validation_edge': 'e:validation:test',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                    'f:assurance:test': {
+                        'id': 'f:assurance:test',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        # SHARES validation with signature
+                        'edges': ['e:verification:test', 'e:validation:test', 'e:coupling:test'],
+                        'orientation': 'oriented',
+                        'validation_edge': 'e:validation:test',
+                    },
+                },
+            },
+        },
+        expected_violations=0,
+        rule_type="authorization_chain",
+        explanation="Complete chain: authorization → signature → assurance. The signer's role gives authority (authorization), which backs their signature, which backs the assurance."
+    ),
+    RuleDemo(
+        name="Invalid: Signature Without Authorization (No Role-Based Authority)",
+        description="Signature face exists but has no authorization face sharing qualifies edge - NOT allowed!",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                },
+                'edges': {
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:signs:alice-doc': {
+                        'id': 'e:signs:alice-doc',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    # Signature face WITHOUT corresponding authorization face
+                    'f:signature:orphan': {
+                        'id': 'f:signature:orphan',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        'edges': ['e:validation:test', 'e:qualifies:alice-guidance', 'e:signs:alice-doc'],
+                        'orientation': 'oriented',
+                        'qualifies_edge': 'e:qualifies:alice-guidance',
+                    },
+                },
+            },
+        },
+        expected_violations=1,
+        rule_type="authorization_chain",
+        explanation="VIOLATION: Signature face exists without a corresponding authorization face sharing the qualifies edge. You can't sign without role-based authority."
+    ),
+    RuleDemo(
+        name="Invalid: Authorization Missing Conveys Edge",
+        description="Authorization face missing conveys edge - required edge type missing",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                    'v:role:reviewer': {'id': 'v:role:reviewer', 'type': 'vertex/role', 'name': 'Reviewer'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                },
+                'edges': {
+                    'e:has-role:alice-reviewer': {
+                        'id': 'e:has-role:alice-reviewer',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:alice',
+                        'target': 'v:role:reviewer',
+                        'orientation': 'directed',
+                    },
+                    # Missing conveys edge! Using 'other' instead
+                    'e:other:placeholder': {
+                        'id': 'e:other:placeholder',
+                        'type': 'edge/other',
+                        'source': 'v:role:reviewer',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:authorization:bad': {
+                        'id': 'f:authorization:bad',
+                        'type': 'face/authorization',
+                        'vertices': ['v:signer:alice', 'v:role:reviewer', 'v:guidance:test'],
+                        # Missing conveys, has 'other' instead
+                        'edges': ['e:has-role:alice-reviewer', 'e:other:placeholder', 'e:qualifies:alice-guidance'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+        },
+        expected_violations=1,
+        rule_type="authorization_chain",
+        explanation="VIOLATION: Authorization face is missing the 'conveys' edge. It must have has-role, conveys, and qualifies edges."
+    ),
+]
+
+
 def run_demo(demo: RuleDemo) -> Dict[str, Any]:
     """Run a single demonstration and collect results."""
     complex = SimplicialComplex.from_cache(demo.cache)
@@ -768,6 +1105,11 @@ def run_demo(demo: RuleDemo) -> Dict[str, Any]:
         # This is a critical accountability rule - signature faces are created when users
         # approve validation edges, often pre-existing assurance faces
         engine._check_signature_shares_edge_with_assurance()
+    elif demo.rule_type == "authorization_chain":
+        # Authorization chain rules: authorization → signature → assurance
+        # This checks both authorization boundary types and signature-requires-authorization
+        engine._check_authorization_boundary_types()
+        engine._check_signature_requires_authorization()
 
     violations = engine.violations
 
@@ -1026,8 +1368,14 @@ def main():
     print(generate_text_report(adjacency_results, "Face Adjacency (Signature-Assurance)"))
     generate_html_report(adjacency_results, "Face Adjacency (Signature-Assurance)", OUTPUT_DIR / "rule_face_adjacency.html")
 
+    # Run authorization chain demos (authorization → signature → assurance)
+    print("\n=== Authorization Chain Rules ===")
+    auth_results = [run_demo(demo) for demo in AUTHORIZATION_CHAIN_DEMOS]
+    print(generate_text_report(auth_results, "Authorization Chain (authorization → signature → assurance)"))
+    generate_html_report(auth_results, "Authorization Chain (authorization → signature → assurance)", OUTPUT_DIR / "rule_authorization_chain.html")
+
     # Generate summary
-    all_results = edge_results + degree_results + face_results + adjacency_results
+    all_results = edge_results + degree_results + face_results + adjacency_results + auth_results
     total_passed = sum(1 for r in all_results if r['passed'])
 
     summary_html = f"""<!DOCTYPE html>
@@ -1087,6 +1435,12 @@ def main():
                 <td class="{'pass' if all(r['passed'] for r in adjacency_results) else 'fail'}">{sum(1 for r in adjacency_results if r['passed'])}/{len(adjacency_results)}</td>
                 <td><a href="rule_face_adjacency.html">View Details</a></td>
             </tr>
+            <tr>
+                <td>Authorization Chain (authorization → signature → assurance)</td>
+                <td>{len(auth_results)}</td>
+                <td class="{'pass' if all(r['passed'] for r in auth_results) else 'fail'}">{sum(1 for r in auth_results if r['passed'])}/{len(auth_results)}</td>
+                <td><a href="rule_authorization_chain.html">View Details</a></td>
+            </tr>
         </table>
     </div>
 
@@ -1126,6 +1480,15 @@ def main():
             <li><strong>signature-can-pre-exist:</strong> signature faces CAN exist without assurance faces (they represent pre-existing approvals)</li>
         </ul>
         <p><em>Key insight: Signature faces are created when a user approves a validation edge. They often PRE-EXIST assurance faces. Assurance faces CANNOT exist without a corresponding signature.</em></p>
+
+        <h3>Authorization Chain Rules (authorization → signature → assurance)</h3>
+        <p>These rules establish the complete chain of accountability via role-based access control:</p>
+        <ul>
+            <li><strong>authorization:</strong> face with signer, role, guidance connected by has-role, conveys, qualifies edges</li>
+            <li><strong>signature-requires-authorization:</strong> signature face must have authorization face sharing the qualifies edge</li>
+            <li><strong>authorization-can-pre-exist:</strong> authorization faces CAN exist without signature faces (role assignments pre-exist signing)</li>
+        </ul>
+        <p><em>Key insight: The chain authorization → signature → assurance establishes complete accountability. A signer's authority comes from their role (authorization), which backs their signature, which backs the assurance.</em></p>
     </div>
 </body>
 </html>

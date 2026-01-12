@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ontology Rule Demo: Authorization Chain (authorization → signature → assurance)</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 40px; background: #f5f5f5; }
+        h1 { color: #2c3e50; }
+        h2 { color: #34495e; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .demo { background: white; margin: 20px 0; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .pass { border-left: 4px solid #27ae60; }
+        .fail { border-left: 4px solid #e74c3c; }
+        .status { font-weight: bold; font-size: 1.2em; }
+        .status.pass { color: #27ae60; }
+        .status.fail { color: #e74c3c; }
+        .description { color: #7f8c8d; font-style: italic; margin: 10px 0; }
+        .explanation { background: #ecf0f1; padding: 15px; border-radius: 4px; margin: 15px 0; }
+        .violations { background: #fdedec; padding: 15px; border-radius: 4px; margin: 15px 0; }
+        .violations h4 { color: #c0392b; margin-top: 0; }
+        .graph { margin: 20px 0; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 4px; }
+        .vertex { fill: #3498db; stroke: white; stroke-width: 2; }
+        .vertex.spec { fill: #27ae60; }
+        .vertex.guidance { fill: #f39c12; }
+        .vertex.signer { fill: #9b59b6; }
+        .edge { stroke: #95a5a6; stroke-width: 2; }
+        .edge.verification { stroke: #3498db; }
+        .edge.validation { stroke: #e74c3c; }
+        .edge.coupling { stroke: #9b59b6; stroke-dasharray: 5,5; }
+        .edge.invalid { stroke: #e74c3c; stroke-width: 3; }
+        .label { font-size: 12px; fill: #2c3e50; }
+        code { background: #ecf0f1; padding: 2px 6px; border-radius: 3px; font-family: 'Fira Code', monospace; }
+        .summary { background: #d5dbdb; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <h1>Ontology Rule Demonstration: Authorization Chain (authorization → signature → assurance)</h1>
+
+    <div class="summary">
+        <strong>Summary:</strong> 5/5 demonstrations passed
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 1: Valid: Authorization Face Alone (Role Assignment Pre-exists Signing)</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Authorization face exists alone - this is VALID (role assignments can pre-exist signing activity)</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="279.1025403784439,187.00961894323342 269.7724133595217,180.84936490538902 278.4326673973661,175.84936490538902" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="279.1025403784439" y2="187.00961894323342" class="edge"/>
+<text x="239.55127018922195" y="108.50480947161671" class="label" text-anchor="middle" font-size="10">has-role</text>
+<polygon points="128.39745962155615,200.00000000000003 138.39745962155615,195.00000000000003 138.39745962155615,205.00000000000003" fill="#666"/>
+<line x1="286.6025403784439" y1="200.0" x2="128.39745962155615" y2="200.00000000000003" class="edge"/>
+<text x="207.50000000000003" y="190.0" class="label" text-anchor="middle" font-size="10">conveys</text>
+<polygon points="120.89745962155615,187.00961894323345 121.56733260263395,175.84936490538905 130.22758664047834,180.84936490538905" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="120.89745962155615" y2="187.00961894323345" class="edge"/>
+<text x="160.44872981077808" y="108.50480947161672" class="label" text-anchor="middle" font-size="10">qualifies</text>
+<circle cx="200.0" cy="50.0" r="20" class="vertex signer"/>
+<text x="200.0" y="55.0" class="label" text-anchor="middle">signer</text>
+<circle cx="286.6025403784439" cy="200.0" r="20" class="vertex"/>
+<text x="286.6025403784439" y="205.0" class="label" text-anchor="middle">role</text>
+<circle cx="113.39745962155615" cy="200.00000000000003" r="20" class="vertex guidance"/>
+<text x="113.39745962155615" y="205.00000000000003" class="label" text-anchor="middle">guidance</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> Authorization faces CAN exist without signature faces. They represent role-based authority that pre-exists any signing activity.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 0<br>
+            <strong>Actual violations:</strong> 0
+        </p>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 2: Valid: Authorization + Signature (Role Backs Signing Authority)</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Authorization face with signature face sharing qualifies edge - signer has role-based authority</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="110.60660171779821,160.6066017177982 121.21320343559643,164.14213562373095 114.14213562373095,171.21320343559643" fill="#666"/>
+<line x1="200.0" y1="250.0" x2="110.60660171779821" y2="160.6066017177982" class="edge"/>
+<text x="155.3033008588991" y="195.3033008588991" class="label" text-anchor="middle" font-size="10">has-role</text>
+<polygon points="285.0,150.0 275.0,155.0 275.0,145.0" fill="#666"/>
+<line x1="100.0" y1="150.0" x2="285.0" y2="150.0" class="edge"/>
+<text x="192.5" y="140.0" class="label" text-anchor="middle" font-size="10">conveys</text>
+<polygon points="289.3933982822018,160.6066017177982 285.85786437626905,171.21320343559643 278.78679656440363,164.14213562373095" fill="#666"/>
+<line x1="200.0" y1="250.0" x2="289.3933982822018" y2="160.6066017177982" class="edge"/>
+<text x="244.6966991411009" y="195.3033008588991" class="label" text-anchor="middle" font-size="10">qualifies</text>
+<polygon points="289.3933982822018,139.3933982822018 278.78679656440363,135.85786437626905 285.85786437626905,128.78679656440357" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="289.3933982822018" y2="139.3933982822018" class="edge validation"/>
+<text x="244.6966991411009" y="84.6966991411009" class="label" text-anchor="middle" font-size="10">validation</text>
+<polygon points="200.0,65.0 205.0,75.0 195.0,75.0" fill="#666"/>
+<line x1="200.0" y1="250.0" x2="200.0" y2="65.0" class="edge"/>
+<text x="200.0" y="147.5" class="label" text-anchor="middle" font-size="10">signs</text>
+<circle cx="200.0" cy="50.0" r="20" class="vertex"/>
+<text x="200.0" y="55.0" class="label" text-anchor="middle">doc</text>
+<circle cx="300.0" cy="150.0" r="20" class="vertex guidance"/>
+<text x="300.0" y="155.0" class="label" text-anchor="middle">guidance</text>
+<circle cx="200.0" cy="250.0" r="20" class="vertex signer"/>
+<text x="200.0" y="255.0" class="label" text-anchor="middle">signer</text>
+<circle cx="100.0" cy="150.0" r="20" class="vertex"/>
+<text x="100.0" y="155.0" class="label" text-anchor="middle">role</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> Authorization face shares qualifies edge with signature face. The signer's authority to sign comes from their role.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 0<br>
+            <strong>Actual violations:</strong> 0
+        </p>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 3: Valid: Complete Chain - Authorization → Signature → Assurance</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Full chain with all three faces sharing appropriate edges</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="109.52960328610885,133.36414830693258 117.3750558113341,141.32962849800938 107.86449064838256,144.41979844175884" fill="#666"/>
+<line x1="141.2214747707527" y1="230.90169943749476" x2="109.52960328610885" y2="133.36414830693258" class="edge"/>
+<text x="125.37553902843078" y="172.13292387221367" class="label" text-anchor="middle" font-size="10">has-role</text>
+<polygon points="246.64327031362308,222.08492065310764 235.61417410841122,220.25215310205763 241.49202663133596,212.16198315830817" fill="#666"/>
+<line x1="104.89434837048464" y1="119.09830056250527" x2="246.64327031362308" y2="222.08492065310764" class="edge"/>
+<text x="175.76880934205386" y="160.59161060780644" class="label" text-anchor="middle" font-size="10">conveys</text>
+<polygon points="243.7785252292473,230.90169943749476 233.7785252292473,235.90169943749476 233.7785252292473,225.90169943749476" fill="#666"/>
+<line x1="141.2214747707527" y1="230.90169943749476" x2="243.7785252292473" y2="230.90169943749476" class="edge"/>
+<text x="192.5" y="220.90169943749476" class="label" text-anchor="middle" font-size="10">qualifies</text>
+<polygon points="195.36474508437578,64.2658477444273 197.0298577221021,75.32149787925357 187.51929255915056,72.23132793550411" fill="#666"/>
+<line x1="141.2214747707527" y1="230.90169943749476" x2="195.36474508437578" y2="64.2658477444273" class="edge"/>
+<text x="168.29310992756425" y="137.58377359096102" class="label" text-anchor="middle" font-size="10">signs</text>
+<polygon points="254.14327031362308,216.63585169306745 246.29781778839785,208.67037150199064 255.8083829513494,205.58020155824119" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="254.14327031362308" y2="216.63585169306745" class="edge validation"/>
+<text x="227.07163515681154" y="123.31792584653374" class="label" text-anchor="middle" font-size="10">validation</text>
+<polygon points="282.97039671389115,110.28152177811816 271.9413005086793,108.44875422706818 277.81915303160406,100.35858428331869" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="282.97039671389115" y2="110.28152177811816" class="edge verification"/>
+<text x="241.48519835694557" y="70.14076088905908" class="label" text-anchor="middle" font-size="10">verification</text>
+<line x1="295.10565162951536" y1="119.09830056250526" x2="258.7785252292473" y2="230.90169943749476" class="edge coupling"/>
+<text x="276.94208842938133" y="165.0" class="label" text-anchor="middle" font-size="10">coupling</text>
+<circle cx="200.0" cy="50.0" r="20" class="vertex"/>
+<text x="200.0" y="55.0" class="label" text-anchor="middle">doc</text>
+<circle cx="295.10565162951536" cy="119.09830056250526" r="20" class="vertex spec"/>
+<text x="295.10565162951536" y="124.09830056250526" class="label" text-anchor="middle">spec</text>
+<circle cx="258.7785252292473" cy="230.90169943749476" r="20" class="vertex guidance"/>
+<text x="258.7785252292473" y="235.90169943749476" class="label" text-anchor="middle">guidance</text>
+<circle cx="141.2214747707527" cy="230.90169943749476" r="20" class="vertex signer"/>
+<text x="141.2214747707527" y="235.90169943749476" class="label" text-anchor="middle">signer</text>
+<circle cx="104.89434837048464" cy="119.09830056250527" r="20" class="vertex"/>
+<text x="104.89434837048464" y="124.09830056250527" class="label" text-anchor="middle">role</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> Complete chain: authorization → signature → assurance. The signer's role gives authority (authorization), which backs their signature, which backs the assurance.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 0<br>
+            <strong>Actual violations:</strong> 0
+        </p>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 4: Invalid: Signature Without Authorization (No Role-Based Authority)</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Signature face exists but has no authorization face sharing qualifies edge - NOT allowed!</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="279.1025403784439,187.00961894323342 269.7724133595217,180.84936490538902 278.4326673973661,175.84936490538902" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="279.1025403784439" y2="187.00961894323342" class="edge validation"/>
+<text x="239.55127018922195" y="108.50480947161671" class="label" text-anchor="middle" font-size="10">validation</text>
+<polygon points="271.6025403784439,200.0 261.6025403784439,205.0 261.6025403784439,195.0" fill="#666"/>
+<line x1="113.39745962155615" y1="200.00000000000003" x2="271.6025403784439" y2="200.0" class="edge"/>
+<text x="192.50000000000003" y="190.0" class="label" text-anchor="middle" font-size="10">qualifies</text>
+<polygon points="192.5,62.99038105676658 191.83012701892218,74.15063509461096 183.16987298107782,69.15063509461096" fill="#666"/>
+<line x1="113.39745962155615" y1="200.00000000000003" x2="192.5" y2="62.99038105676658" class="edge"/>
+<text x="152.94872981077808" y="121.49519052838332" class="label" text-anchor="middle" font-size="10">signs</text>
+<circle cx="200.0" cy="50.0" r="20" class="vertex"/>
+<text x="200.0" y="55.0" class="label" text-anchor="middle">doc</text>
+<circle cx="286.6025403784439" cy="200.0" r="20" class="vertex guidance"/>
+<text x="286.6025403784439" y="205.0" class="label" text-anchor="middle">guidance</text>
+<circle cx="113.39745962155615" cy="200.00000000000003" r="20" class="vertex signer"/>
+<text x="113.39745962155615" y="205.00000000000003" class="label" text-anchor="middle">signer</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> VIOLATION: Signature face exists without a corresponding authorization face sharing the qualifies edge. You can't sign without role-based authority.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 1<br>
+            <strong>Actual violations:</strong> 1
+        </p>
+
+        <div class="violations">
+            <h4>Violations Found:</h4>
+            <ul>
+                <li><code>[ERROR] signature_requires_authorization: No authorization face shares qualifies edge 'e:qualifies:alice-guidance' - signer must have role-based authority (f:signature:orphan)</code></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 5: Invalid: Authorization Missing Conveys Edge</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Authorization face missing conveys edge - required edge type missing</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="279.1025403784439,187.00961894323342 269.7724133595217,180.84936490538902 278.4326673973661,175.84936490538902" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="279.1025403784439" y2="187.00961894323342" class="edge"/>
+<text x="239.55127018922195" y="108.50480947161671" class="label" text-anchor="middle" font-size="10">has-role</text>
+<polygon points="128.39745962155615,200.00000000000003 138.39745962155615,195.00000000000003 138.39745962155615,205.00000000000003" fill="#666"/>
+<line x1="286.6025403784439" y1="200.0" x2="128.39745962155615" y2="200.00000000000003" class="edge"/>
+<text x="207.50000000000003" y="190.0" class="label" text-anchor="middle" font-size="10">other</text>
+<polygon points="120.89745962155615,187.00961894323345 121.56733260263395,175.84936490538905 130.22758664047834,180.84936490538905" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="120.89745962155615" y2="187.00961894323345" class="edge"/>
+<text x="160.44872981077808" y="108.50480947161672" class="label" text-anchor="middle" font-size="10">qualifies</text>
+<circle cx="200.0" cy="50.0" r="20" class="vertex signer"/>
+<text x="200.0" y="55.0" class="label" text-anchor="middle">signer</text>
+<circle cx="286.6025403784439" cy="200.0" r="20" class="vertex"/>
+<text x="286.6025403784439" y="205.0" class="label" text-anchor="middle">role</text>
+<circle cx="113.39745962155615" cy="200.00000000000003" r="20" class="vertex guidance"/>
+<text x="113.39745962155615" y="205.00000000000003" class="label" text-anchor="middle">guidance</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> VIOLATION: Authorization face is missing the 'conveys' edge. It must have has-role, conveys, and qualifies edges.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 1<br>
+            <strong>Actual violations:</strong> 1
+        </p>
+
+        <div class="violations">
+            <h4>Violations Found:</h4>
+            <ul>
+                <li><code>[ERROR] authorization_boundary_types: Authorization face missing required edge types: {'conveys'} (f:authorization:bad)</code></li>
+
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -19,7 +19,7 @@
     <h1>Ontology Rules Demonstration Summary</h1>
 
     <div class="card">
-        <h2>Overall Results: <span class="pass">19/19 passed</span></h2>
+        <h2>Overall Results: <span class="pass">24/24 passed</span></h2>
     </div>
 
     <div class="card">
@@ -54,6 +54,12 @@
                 <td>3</td>
                 <td class="pass">3/3</td>
                 <td><a href="rule_face_adjacency.html">View Details</a></td>
+            </tr>
+            <tr>
+                <td>Authorization Chain (authorization → signature → assurance)</td>
+                <td>5</td>
+                <td class="pass">5/5</td>
+                <td><a href="rule_authorization_chain.html">View Details</a></td>
             </tr>
         </table>
     </div>
@@ -94,6 +100,15 @@
             <li><strong>signature-can-pre-exist:</strong> signature faces CAN exist without assurance faces (they represent pre-existing approvals)</li>
         </ul>
         <p><em>Key insight: Signature faces are created when a user approves a validation edge. They often PRE-EXIST assurance faces. Assurance faces CANNOT exist without a corresponding signature.</em></p>
+
+        <h3>Authorization Chain Rules (authorization → signature → assurance)</h3>
+        <p>These rules establish the complete chain of accountability via role-based access control:</p>
+        <ul>
+            <li><strong>authorization:</strong> face with signer, role, guidance connected by has-role, conveys, qualifies edges</li>
+            <li><strong>signature-requires-authorization:</strong> signature face must have authorization face sharing the qualifies edge</li>
+            <li><strong>authorization-can-pre-exist:</strong> authorization faces CAN exist without signature faces (role assignments pre-exist signing)</li>
+        </ul>
+        <p><em>Key insight: The chain authorization → signature → assurance establishes complete accountability. A signer's authority comes from their role (authorization), which backs their signature, which backs the assurance.</em></p>
     </div>
 </body>
 </html>
