@@ -8,7 +8,7 @@ tags:
   - vertex
   - doc
   - architecture
-version: 1.1.0
+version: 1.2.0
 created: 2026-01-11T00:00:00Z
 modified: 2026-01-12T00:00:00Z
 system_name: Knowledge Complex Framework
@@ -52,8 +52,8 @@ This architecture uses **Extended Mode**—each layer is documented in a separat
 | Layer | Document | Key Content |
 |-------|----------|-------------|
 | Field Survey | [[field-survey-knowledge-complex-refactor]] | 6 stakeholders (A1-A6), 15 resources (R1-R15), 28 relationships |
-| Conceptual | [[conceptual-architecture-knowledge-complex-refactor]] | 4 stakeholders (A3-A6), 11 acceptance criteria (AC1-AC11), 3 constraints |
-| Functional | [[functional-architecture-knowledge-complex-refactor]] | 24 functions (F1-F24) in 5 functional areas |
+| Conceptual | [[conceptual-architecture-knowledge-complex-refactor]] | 4 stakeholders (A3-A6), 12 acceptance criteria (AC1-AC12), 3 constraints |
+| Functional | [[functional-architecture-knowledge-complex-refactor]] | 31 functions (F1-F31) in 6 functional areas |
 | Logical | [[logical-architecture-knowledge-complex-refactor]] | 14 components (C1-C14), 40 interfaces, references [[ontology-base]] |
 | Physical | [[physical-architecture-knowledge-complex-refactor]] | 12 elements (E1-E12), deployment architecture |
 
@@ -61,8 +61,8 @@ This architecture uses **Extended Mode**—each layer is documented in a separat
 
 | Layer | Left Side (Idealized) | Design Status | Right Side (Realized) | Implementation Status |
 |-------|----------------------|---------------|----------------------|----------------------|
-| **Conceptual** | ConOps: 4 stakeholders, 11 acceptance criteria defining success | Assured | Acceptance Testing: Operator/Approver workflow validation, effectiveness metrics | Partial |
-| **Functional** | Functional Architecture: 24 functions in 5 areas | Assured | System Testing: Function-by-function test criteria | Partial |
+| **Conceptual** | ConOps: 4 stakeholders, 12 acceptance criteria defining success | Assured | Acceptance Testing: Operator/Approver workflow validation, effectiveness metrics | Partial |
+| **Functional** | Functional Architecture: 31 functions in 6 areas | Assured | System Testing: Function-by-function test criteria | Partial |
 | **Logical** | Logical Architecture: 14 components, 40 interfaces, [[ontology-base]] | Assured | Integration Testing: 40 interface tests, coherence suite | In Progress |
 | **Physical** | Physical Architecture: 12 elements (OFM, Git, Python, Obsidian, Claude Code) | Assured | Unit Testing: Element-by-element test criteria | Partial |
 
@@ -113,6 +113,7 @@ BlockScience produces complex deliverables for clients—research reports, syste
 | AC9 | Self-demonstration | 100% framework docs assured | A6 |
 | AC10 | Evaluation usefulness | >90% find scores useful | A3, A4, A5, A6 |
 | AC11 | Client demonstration | ≥3 production-quality examples | A5, A6 |
+| AC12 | Runbook execution support | 100% show step/context/I/O | A3, A4, A5, A6 |
 
 ### Constraints
 
@@ -128,7 +129,7 @@ BlockScience produces complex deliverables for clients—research reports, syste
 
 ### Functional Architecture
 
-The framework provides 24 functions organized into 5 functional areas:
+The framework provides 31 functions organized into 6 functional areas:
 
 | Area | Functions | Purpose |
 |------|-----------|---------|
@@ -137,6 +138,7 @@ The framework provides 24 functions organized into 5 functional areas:
 | **Knowledge Navigation** | F10-F12 | Full-text search, graph traversal, backlink discovery |
 | **Approval & Accountability** | F13-F18 | Approval requests, status presentation, validation edge creation, runbook tracking, metrics collection |
 | **Configuration & Meta** | F19-F24 | Spec authoring, guidance authoring, template authoring, coupling/verification/assurance construction |
+| **Runbook Management** | F25-F31 | Runbook retrieval, module authoring, runbook assembly, I/O validation, execution instantiation, step context, completion |
 
 ### Function-Criterion Matrix (Key Traces)
 
@@ -146,13 +148,14 @@ The framework provides 24 functions organized into 5 functional areas:
 | AC2, AC3 (Verification) | F5, F6, F7, F8 | Four-layer verification: frontmatter, sections, counts, references |
 | AC4 (Search) | F2, F10, F11, F12 | Discovery + search + graph navigation |
 | AC5, AC6, AC10 (Approval) | F14, F15, F16 | Status presentation + evaluation scores + validation edges |
-| AC7 (Effectiveness) | F17, F18 | Runbook tracking + metrics collection |
-| AC8 (Workflow builder) | F19, F20, F21, F22 | Type configuration chain: spec → guidance → template → coupling |
+| AC7 (Effectiveness) | F17, F18, F27, F31 | Runbook tracking + metrics collection + assembly + completion |
+| AC8 (Workflow builder) | F19, F20, F21, F22, F26, F27, F28 | Type configuration + module authoring + runbook assembly + I/O validation |
 | AC9 (Self-demonstration) | F8, F22, F23, F24 | Coupling + verification edge + assurance face construction |
+| AC12 (Runbook execution) | F25, F29, F30, F31 | Runbook retrieval + execution instantiation + step context + completion |
 
 ### System Testing Criteria
 
-All 24 functions have specific test methods with measurable success indicators. Key system-level tests include:
+All 31 functions have specific test methods with measurable success indicators. Key system-level tests include:
 - End-to-end workflow completion (draft → verify → validate → assure)
 - Verification accuracy against known-good and known-bad document suites
 - Evaluation correlation with expert ratings (>80% agreement)

@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - logical-architecture
-version: 0.2.0
+version: 0.3.0
 created: 2026-01-11T00:00:00Z
-modified: 2026-01-11T00:00:00Z
+modified: 2026-01-12T00:00:00Z
 system_name: Knowledge Complex Framework
 scope: Internal-first deployment enabling systematic documentation with verification, validation, and assurance
 functional_architecture_ref: v:doc:functional-architecture-knowledge-complex-refactor
@@ -23,13 +23,13 @@ interface_count: 40
 
 ## Purpose
 
-This logical architecture defines HOW the knowledge complex framework is structured to perform its 24 functions. The document specifies 14 technology-agnostic components organized into 6 component areas, with clear responsibilities and 37 interfaces. The Component-Function Matrix traces how these components realize the functions from the functional architecture, establishing the foundation for subsequent physical architecture decisions.
+This logical architecture defines HOW the knowledge complex framework is structured to perform its 31 functions. The document specifies 14 technology-agnostic components organized into 6 component areas, with clear responsibilities and 40 interfaces. The Component-Function Matrix traces how these components realize the functions from the functional architecture, establishing the foundation for subsequent physical architecture decisions.
 
 ## Overview
 
 The knowledge complex framework is fundamentally a **typed simplicial complex** where documents are simplices with typed YAML headers, relationships are typed edges, and triangular structures (like assurance faces) are typed faces. This mathematical foundation enables expressive document types while maintaining coherence through verifiable rules.
 
-The functional architecture established 24 functions organized into 5 functional areas: Document Authoring (F1-F4), Quality Assurance (F5-F9), Knowledge Navigation (F10-F12), Approval & Accountability (F13-F18), and Configuration & Meta (F19-F24).
+The functional architecture established 31 functions organized into 6 functional areas: Document Authoring (F1-F4), Quality Assurance (F5-F9), Knowledge Navigation (F10-F12), Approval & Accountability (F13-F18), Configuration & Meta (F19-F24), and Runbook Management (F25-F31).
 
 This logical architecture translates those functions into components organized by responsibility:
 
@@ -40,7 +40,7 @@ This logical architecture translates those functions into components organized b
 5. **Knowledge Graph (C11-C12)**: Components for search and relationship navigation
 6. **Workflow & Accountability (C13-C14)**: Components for approval workflows and simplex construction
 
-Each component is specified with responsibilities, interfaces, and collaborations—without reference to implementation technology. The Component-Function Matrix shows how components combine to realize all 24 functions.
+Each component is specified with responsibilities, interfaces, and collaborations—without reference to implementation technology. The Component-Function Matrix shows how components combine to realize all 31 functions.
 
 ## Functional Architecture Reference
 
@@ -74,6 +74,13 @@ Each component is specified with responsibilities, interfaces, and collaboration
 | F22 | Coupling Edge Creation | Configuration & Meta | Create coupling edge connecting spec and guidance |
 | F23 | Verification Edge Creation | Configuration & Meta | Create verification edge recording structural compliance |
 | F24 | Assurance Face Construction | Configuration & Meta | Construct complete assurance face closing the assurance triangle |
+| F25 | Runbook Retrieval | Runbook Management | Help operators find the appropriate runbook for a given task |
+| F26 | Runbook Module Authoring | Runbook Management | Create module (step) definitions for runbooks with typed inputs and outputs |
+| F27 | Runbook Assembly | Runbook Management | Compose modules into a complete runbook with ordering and effectiveness metrics |
+| F28 | Runbook I/O Validation | Runbook Management | Validate that runbook module I/O types chain correctly |
+| F29 | Runbook Execution Instantiation | Runbook Management | Start a new execution of a runbook, creating the execution context |
+| F30 | Runbook Step Context Presentation | Runbook Management | Present the current step's requirements and context to the operator |
+| F31 | Runbook Execution Completion | Runbook Management | Mark a runbook execution as complete and record final deliverables |
 
 ## Mathematical Foundation: Typed Simplicial Complex
 
@@ -769,22 +776,22 @@ An execution-trace is a `c:execution-trace` chart where:
 
 ### Matrix View
 
-|      | F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 | F10 | F11 | F12 | F13 | F14 | F15 | F16 | F17 | F18 | F19 | F20 | F21 | F22 | F23 | F24 |
-|------|----|----|----|----|----|----|----|----|----|----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
-| C1   | S  | S  | S  | S  | S  | S  | S  | S  | S  | S  | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   |
-| C2   |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |     |     |     | X   | X   |     |     |     |     |
-| C3   | X  |    |    |    |    |    |    |    |    |    |     |     |     |     |     |     |     |     |     |     | X   |     |     |     |
-| C4   |    |    | X  | X  |    |    |    |    |    |    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| C5   | S  | S  | S  | S  | S  | S  | S  | S  | S  | S  | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   |
-| C6   |    |    |    |    | X  |    |    |    |    |    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| C7   |    |    |    |    |    | X  | X  |    |    |    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| C8   |    |    |    |    |    |    |    | X  |    |    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| C9   |    |    |    |    |    |    |    |    | X  |    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| C10  |    |    |    |    |    |    |    |    |    |    |     |     |     | X   | X   |     |     |     |     |     |     |     |     |     |
-| C11  |    | X  |    |    |    |    |    |    |    | X  |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-| C12  |    |    |    |    |    |    |    |    |    |    | X   | X   |     |     |     |     |     |     |     |     |     |     |     |     |
-| C13  |    |    |    |    |    |    |    |    |    |    |     |     | X   |     |     |     | X   | X   |     |     |     |     |     |     |
-| C14  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     | X   |     |     |     |     |     | X   | X   | X   |
+|      | F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 | F10 | F11 | F12 | F13 | F14 | F15 | F16 | F17 | F18 | F19 | F20 | F21 | F22 | F23 | F24 | F25 | F26 | F27 | F28 | F29 | F30 | F31 |
+|------|----|----|----|----|----|----|----|----|----|----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+| C1   | S  | S  | S  | S  | S  | S  | S  | S  | S  | S  | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   |
+| C2   |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     |     |     |     | X   | X   |     |     |     |     |     | S   |     |     |     |     |     |
+| C3   | X  |    |    |    |    |    |    |    |    |    |     |     |     |     |     |     |     |     |     |     | X   |     |     |     |     |     |     |     |     |     |     |
+| C4   |    |    | X  | X  |    |    |    |    |    |    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     | S   |     |     |     |     |     |
+| C5   | S  | S  | S  | S  | S  | S  | S  | S  | S  | S  | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   | S   |
+| C6   |    |    |    |    | X  |    |    |    |    |    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+| C7   |    |    |    |    |    | X  | X  |    |    |    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+| C8   |    |    |    |    |    |    |    | X  |    |    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     | X   |     |     |     |
+| C9   |    |    |    |    |    |    |    |    | X  |    |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+| C10  |    |    |    |    |    |    |    |    |    |    |     |     |     | X   | X   |     |     |     |     |     |     |     |     |     |     |     |     |     |     | X   |     |
+| C11  |    | X  |    |    |    |    |    |    |    | X  |     |     |     |     |     |     |     |     |     |     |     |     |     |     | X   |     |     |     |     |     |     |
+| C12  |    |    |    |    |    |    |    |    |    |    | X   | X   |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+| C13  |    |    |    |    |    |    |    |    |    |    |     |     | X   |     |     |     | X   | X   |     |     |     |     |     |     |     |     | X   |     | X   | S   | X   |
+| C14  |    |    |    |    |    |    |    |    |    |    |     |     |     |     |     | X   |     |     |     |     |     | X   | X   | X   |     | X   | S   |     | S   |     | S   |
 
 **Legend:** X = Primary Realizer, S = Supporting (foundation/storage)
 
@@ -818,6 +825,19 @@ An execution-trace is a `c:execution-trace` chart where:
 | C14 | F22 | Primary | Simplex Constructor creates coupling edges |
 | C14 | F23 | Primary | Simplex Constructor creates verification edges |
 | C14 | F24 | Primary | Simplex Constructor creates assurance faces |
+| C11 | F25 | Primary | Search Index finds runbooks by task type and keywords |
+| C14 | F26 | Primary | Simplex Constructor creates module documents with typed I/O |
+| C2 | F26 | Supporting | Schema Registry provides schemas for module types |
+| C4 | F26 | Supporting | Document Composer assists with module document creation |
+| C13 | F27 | Primary | Workflow Coordinator assembles modules into runbooks |
+| C14 | F27 | Supporting | Simplex Constructor creates precedes edges between modules |
+| C8 | F28 | Primary | Boundary Verifier validates I/O type chaining between modules |
+| C13 | F29 | Primary | Workflow Coordinator creates execution instances |
+| C14 | F29 | Supporting | Simplex Constructor creates execution vertices and edges |
+| C10 | F30 | Primary | Result Presenter formats step context for operator display |
+| C13 | F30 | Supporting | Workflow Coordinator provides execution state |
+| C13 | F31 | Primary | Workflow Coordinator marks executions complete |
+| C14 | F31 | Supporting | Simplex Constructor creates completion records |
 
 ### Key Allocations
 
@@ -835,7 +855,9 @@ An execution-trace is a `c:execution-trace` chart where:
 
 5. **Workflow with Typed I/O Dependencies**: C13 (Workflow Coordinator) realizes F13, F17, F18. Runbook steps have typed inputs/outputs that compose; type checking ensures compatible I/O. Local rules enable workflow-level guarantees because properties verified at simplex creation propagate to complex-wide properties.
 
-6. **Simplex Construction with Local Rule Enforcement**: C14 (Simplex Constructor) realizes F16, F22-F24. Creates edges and faces ensuring simplicial complex rules AND local rules are satisfied before committing to the complex.
+6. **Simplex Construction with Local Rule Enforcement**: C14 (Simplex Constructor) realizes F16, F22-F24, F26. Creates edges and faces ensuring simplicial complex rules AND local rules are satisfied before committing to the complex.
+
+7. **Runbook Management**: C11 (Search Index) + C13 (Workflow Coordinator) + C14 (Simplex Constructor) + C8 (Boundary Verifier) + C10 (Result Presenter) realize F25-F31. Search finds runbooks; Workflow Coordinator manages execution lifecycle; Simplex Constructor creates modules and execution records; Boundary Verifier validates I/O chaining; Result Presenter shows step context.
 
 ## Integration Testing Strategy
 
@@ -929,10 +951,17 @@ An execution-trace is a `c:execution-trace` chart where:
 | F22 Coupling Edge Creation | C14 Simplex Constructor | C2, C5, C6, C8 |
 | F23 Verification Edge Creation | C14 Simplex Constructor | C2, C5, C6, C8 |
 | F24 Assurance Face Construction | C14 Simplex Constructor | C2, C5, C6, C8 |
+| F25 Runbook Retrieval | C11 Search Index | C5 |
+| F26 Runbook Module Authoring | C14 Simplex Constructor | C2, C4, C5 |
+| F27 Runbook Assembly | C13 Workflow Coordinator | C5, C14 |
+| F28 Runbook I/O Validation | C8 Boundary Verifier | C1, C5 |
+| F29 Runbook Execution Instantiation | C13 Workflow Coordinator | C5, C14 |
+| F30 Runbook Step Context Presentation | C10 Result Presenter | C5, C13 |
+| F31 Runbook Execution Completion | C13 Workflow Coordinator | C5, C14 |
 
 ### Coverage Analysis
 
-- **Complete coverage**: All 24 functions are realized by at least one component
+- **Complete coverage**: All 31 functions are realized by at least one component
 - **Foundational support**: C1 (Type Ontology) and C5 (Simplex Store) support all functions
 - **Focused components**: Each component has 1-4 primary functions (single responsibility)
 - **Clear dependencies**: Supporting components provide infrastructure; primary components realize behavior
