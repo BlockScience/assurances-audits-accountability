@@ -67,12 +67,14 @@ from .resources import (
     get_templates_path,
 )
 
-from .graph import (
-    ComplexGraph,
+from .complex import (
+    SimplicialComplex,
+    ComplexGraph,  # backwards compatibility alias
     TypedVertex,
     TypedEdge,
     TypedFace,
-    build_complex_graph,
+    build_simplicial_complex,
+    build_complex_graph,  # backwards compatibility alias
 )
 
 from .rules import (
@@ -129,12 +131,14 @@ __all__ = [
     'get_bundled_templates_path',
     'get_bundled_foundation_path',
     'get_templates_path',
-    # Graph
-    'ComplexGraph',
+    # Simplicial Complex
+    'SimplicialComplex',
+    'ComplexGraph',  # backwards compatibility alias
     'TypedVertex',
     'TypedEdge',
     'TypedFace',
-    'build_complex_graph',
+    'build_simplicial_complex',
+    'build_complex_graph',  # backwards compatibility alias
     # Rules (Ontology Verification)
     'OntologyRuleEngine',
     'RuleViolation',

@@ -61,6 +61,7 @@ aaa audit <chart>              # Audit assurance coverage
 aaa check accountability <file> # Check accountability statements
 aaa check topology <chart>     # Check topological properties
 aaa check ontology             # Verify ontology integrity
+aaa check rules                # Verify ontology type rules
 ```
 
 ## Overview
@@ -166,6 +167,36 @@ In a valid assurance complex:
 **Boundary Condition:** The framework bootstraps through four foundational vertices—spec-for-spec (SS), spec-for-guidance (SG), guidance-for-spec (GS), guidance-for-guidance (GG)—mutually assured in a self-referential pattern. Two form valid triangles (SG, GS), while two rely on self-reference (SS via self-verification, GG via self-validation), creating degenerate faces.
 
 **Boundary Complex:** A fifth vertex, *root* (b0), is introduced as an axiomatic element (not a document requiring assurance). The self-loops are rewired to connect through the root, eliminating degeneracy faces and providing a valid simplicial complex foundation. The root provides assurance but doesn't need it—this is what makes V - F = 1 work.
+
+### Topology vs Ontology
+
+Knowledge complexes have two layers of rules:
+
+**Topology** — Structural rules of simplicial complexes (dimension-agnostic)
+
+- Faces have exactly 3 edges forming a closed boundary
+- Edges connect exactly 2 vertices
+- Charts are valid simplicial complexes
+- Euler characteristic: χ = V - E + F
+- Tools: hole detection, adjacency analysis, visualization
+
+**Ontology** — Type system layered on top of topology
+
+- Vertices, edges, and faces have types (e.g., `vertex/doc`, `edge/verification`, `face/assurance`)
+- Types define additional **local rules** that cannot weaken topological rules
+- Edge endpoint constraints: verification edges go from doc → spec
+- Degree constraints: a spec couples to exactly one guidance
+- Face adjacency requirements: signature faces must share an edge with assurance faces
+
+Topology tells you *what is a valid simplicial complex*. Ontology tells you *what types of elements can connect and how*. The `aaa check topology` command verifies structural properties; the `aaa check rules` command verifies type constraints.
+
+```bash
+# Check structural topology (holes, Euler characteristic)
+aaa check topology charts/my-chart
+
+# Check ontology type rules (endpoint types, degree constraints, adjacency)
+aaa check rules
+```
 
 ## Runbooks
 
