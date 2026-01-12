@@ -209,6 +209,81 @@ EDGE_ENDPOINT_DEMOS = [
         rule_type="edge_endpoint",
         explanation="Signs edges must originate from a SIGNER (human accountable party), not a document."
     ),
+    RuleDemo(
+        name="Valid Inherits Edge",
+        description="spec → spec (CORRECT - type hierarchy)",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:spec:parent': {'id': 'v:spec:parent', 'type': 'vertex/spec', 'name': 'Parent Spec'},
+                    'v:spec:child': {'id': 'v:spec:child', 'type': 'vertex/spec', 'name': 'Child Spec'},
+                },
+                'edges': {
+                    'e:inherits:test': {
+                        'id': 'e:inherits:test',
+                        'type': 'edge/inherits',
+                        'source': 'v:spec:child',
+                        'target': 'v:spec:parent',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {},
+            },
+        },
+        expected_violations=0,
+        rule_type="edge_endpoint",
+        explanation="Inherits edges connect a child spec to its parent spec, establishing type hierarchy."
+    ),
+    RuleDemo(
+        name="Invalid Inherits Edge - Wrong Target",
+        description="spec → guidance (WRONG: target should be spec)",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:spec:child': {'id': 'v:spec:child', 'type': 'vertex/spec', 'name': 'Child Spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                },
+                'edges': {
+                    'e:inherits:bad': {
+                        'id': 'e:inherits:bad',
+                        'type': 'edge/inherits',
+                        'source': 'v:spec:child',
+                        'target': 'v:guidance:test',  # WRONG! Should be vertex/spec
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {},
+            },
+        },
+        expected_violations=1,
+        rule_type="edge_endpoint",
+        explanation="Inherits edges must connect specs to other specs - a spec cannot inherit from guidance."
+    ),
+    RuleDemo(
+        name="Valid Instantiates Edge",
+        description="doc → spec (CORRECT - type instantiation)",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:doc:persona:test': {'id': 'v:doc:persona:test', 'type': 'vertex/doc/persona', 'name': 'Test Persona'},
+                    'v:spec:persona': {'id': 'v:spec:persona', 'type': 'vertex/spec', 'name': 'Persona Spec'},
+                },
+                'edges': {
+                    'e:instantiates:test': {
+                        'id': 'e:instantiates:test',
+                        'type': 'edge/instantiates',
+                        'source': 'v:doc:persona:test',
+                        'target': 'v:spec:persona',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {},
+            },
+        },
+        expected_violations=0,
+        rule_type="edge_endpoint",
+        explanation="Instantiates edges connect a document to the spec that defines its type."
+    ),
 ]
 
 
@@ -248,11 +323,11 @@ VERTEX_DEGREE_DEMOS = [
         },
         expected_violations=0,
         rule_type="degree",
-        explanation="A document can have at most 1 verification edge (verified against one spec). Spec is properly coupled."
+        explanation="A document with a single verification edge. Spec is properly coupled to guidance."
     ),
     RuleDemo(
-        name="Invalid: Doc with Multiple Verifications",
-        description="Doc → Spec1 ↔ G1, Doc → Spec2 ↔ G2 (VIOLATION: doc has 2 verification edges)",
+        name="Valid: Doc with Multiple Type Verifications",
+        description="Doc → Spec1 ↔ G1, Doc → Spec2 ↔ G2 (VALID: doc has multiple types)",
         cache={
             'elements': {
                 'vertices': {
@@ -295,9 +370,9 @@ VERTEX_DEGREE_DEMOS = [
                 'faces': {},
             },
         },
-        expected_violations=1,
+        expected_violations=0,
         rule_type="degree",
-        explanation="A document cannot be verified against multiple specs - max degree is 1. Both specs are properly coupled."
+        explanation="Documents can have one verification edge PER TYPE they inherit. A persona doc inherits from both 'persona' and 'doc', so it can verify against spec/persona AND spec/doc (one verification per inherited type)."
     ),
     RuleDemo(
         name="Valid: Spec with Exactly One Coupling",
@@ -480,6 +555,191 @@ FACE_BOUNDARY_DEMOS = [
 ]
 
 
+# ============================================================
+# FACE ADJACENCY RULES (Assurance Requires Signature)
+# ============================================================
+
+FACE_ADJACENCY_DEMOS = [
+    RuleDemo(
+        name="Valid: Assurance Face Has Signature Sharing Validation Edge",
+        description="Assurance face has corresponding signature face sharing validation edge",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec', 'name': 'Test Spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                },
+                'edges': {
+                    # Assurance edges
+                    'e:verification:test': {
+                        'id': 'e:verification:test',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:validation:test': {  # SHARED EDGE
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:test': {
+                        'id': 'e:coupling:test',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                    # Signature edges
+                    'e:qualifies:alice': {
+                        'id': 'e:qualifies:alice',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:signs:alice': {
+                        'id': 'e:signs:alice',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:assurance:test': {
+                        'id': 'f:assurance:test',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        'edges': ['e:verification:test', 'e:validation:test', 'e:coupling:test'],
+                        'orientation': 'oriented',
+                        'validation_edge': 'e:validation:test',
+                    },
+                    'f:signature:test': {
+                        'id': 'f:signature:test',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        # SHARES e:validation:test with assurance face
+                        'edges': ['e:validation:test', 'e:qualifies:alice', 'e:signs:alice'],
+                        'orientation': 'oriented',
+                        'signer': 'v:signer:alice',
+                        'guidance': 'v:guidance:test',
+                    },
+                },
+            },
+        },
+        expected_violations=0,
+        rule_type="face_adjacency",
+        explanation="Assurance face has a signature face sharing the same validation edge - human accountability is established."
+    ),
+    RuleDemo(
+        name="Valid: Signature Face Without Assurance (Pre-existing Approval)",
+        description="Signature face exists alone - this is VALID (approvals can pre-exist assurance)",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                },
+                'edges': {
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:qualifies:alice': {
+                        'id': 'e:qualifies:alice',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:signs:alice': {
+                        'id': 'e:signs:alice',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    # Signature face alone - this is VALID!
+                    'f:signature:standalone': {
+                        'id': 'f:signature:standalone',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        'edges': ['e:validation:test', 'e:qualifies:alice', 'e:signs:alice'],
+                        'orientation': 'oriented',
+                        'signer': 'v:signer:alice',
+                        'guidance': 'v:guidance:test',
+                    },
+                },
+            },
+        },
+        expected_violations=0,
+        rule_type="face_adjacency",
+        explanation="Signature faces CAN exist without assurance faces. They represent a signer's approval of a validation, which may pre-exist the assurance."
+    ),
+    RuleDemo(
+        name="Invalid: Assurance Face Without Signature (No Human Sign-off)",
+        description="Assurance face exists alone without any signature - NOT allowed!",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec', 'name': 'Test Spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                },
+                'edges': {
+                    'e:verification:test': {
+                        'id': 'e:verification:test',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:test': {
+                        'id': 'e:coupling:test',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                },
+                'faces': {
+                    # Assurance face alone - NO signature! This is INVALID
+                    'f:assurance:orphan': {
+                        'id': 'f:assurance:orphan',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        'edges': ['e:verification:test', 'e:validation:test', 'e:coupling:test'],
+                        'orientation': 'oriented',
+                        'validation_edge': 'e:validation:test',
+                    },
+                },
+            },
+        },
+        expected_violations=1,
+        rule_type="face_adjacency",
+        explanation="VIOLATION: Assurance face exists without a corresponding signature face. Every assurance requires human accountability via a signed validation."
+    ),
+]
+
+
 def run_demo(demo: RuleDemo) -> Dict[str, Any]:
     """Run a single demonstration and collect results."""
     complex = SimplicialComplex.from_cache(demo.cache)
@@ -503,6 +763,11 @@ def run_demo(demo: RuleDemo) -> Dict[str, Any]:
                 )
                 if violation:
                     engine.violations.append(violation)
+    elif demo.rule_type == "face_adjacency":
+        # Face adjacency rule: signature face must share validation edge with assurance face
+        # This is a critical accountability rule - signature faces are created when users
+        # approve validation edges, often pre-existing assurance faces
+        engine._check_signature_shares_edge_with_assurance()
 
     violations = engine.violations
 
@@ -755,8 +1020,14 @@ def main():
     print(generate_text_report(face_results, "Face Boundary Types"))
     generate_html_report(face_results, "Face Boundary Types", OUTPUT_DIR / "rule_face_boundary_types.html")
 
+    # Run face adjacency demos (signature-assurance coupling)
+    print("\n=== Face Adjacency Rules (Signature-Assurance) ===")
+    adjacency_results = [run_demo(demo) for demo in FACE_ADJACENCY_DEMOS]
+    print(generate_text_report(adjacency_results, "Face Adjacency (Signature-Assurance)"))
+    generate_html_report(adjacency_results, "Face Adjacency (Signature-Assurance)", OUTPUT_DIR / "rule_face_adjacency.html")
+
     # Generate summary
-    all_results = edge_results + degree_results + face_results
+    all_results = edge_results + degree_results + face_results + adjacency_results
     total_passed = sum(1 for r in all_results if r['passed'])
 
     summary_html = f"""<!DOCTYPE html>
@@ -810,6 +1081,12 @@ def main():
                 <td class="{'pass' if all(r['passed'] for r in face_results) else 'fail'}">{sum(1 for r in face_results if r['passed'])}/{len(face_results)}</td>
                 <td><a href="rule_face_boundary_types.html">View Details</a></td>
             </tr>
+            <tr>
+                <td>Face Adjacency (Signature-Assurance)</td>
+                <td>{len(adjacency_results)}</td>
+                <td class="{'pass' if all(r['passed'] for r in adjacency_results) else 'fail'}">{sum(1 for r in adjacency_results if r['passed'])}/{len(adjacency_results)}</td>
+                <td><a href="rule_face_adjacency.html">View Details</a></td>
+            </tr>
         </table>
     </div>
 
@@ -823,12 +1100,14 @@ def main():
             <li><strong>coupling:</strong> spec ↔ guidance (1:1 pairing of spec with its guidance)</li>
             <li><strong>signs:</strong> signer → doc (human accountability for validation)</li>
             <li><strong>qualifies:</strong> signer → guidance/module (human qualified to validate)</li>
+            <li><strong>inherits:</strong> spec → spec (child spec extends parent spec)</li>
+            <li><strong>instantiates:</strong> doc → spec (document is instance of spec type)</li>
         </ul>
 
         <h3>Vertex Degree Constraints</h3>
         <p>These rules constrain how many edges of each type can connect to a vertex:</p>
         <ul>
-            <li><strong>doc → verification:</strong> 0..1 (at most one verification per document)</li>
+            <li><strong>doc → verification:</strong> 0..n where n = number of inherited types (one verification per type)</li>
             <li><strong>spec ↔ coupling:</strong> exactly 1 (each spec pairs with exactly one guidance)</li>
             <li><strong>guidance ↔ coupling:</strong> exactly 1 (each guidance pairs with exactly one spec)</li>
         </ul>
@@ -839,6 +1118,14 @@ def main():
             <li><strong>assurance:</strong> must have verification + validation + coupling edges</li>
             <li><strong>signature:</strong> must have validation + qualifies + signs edges</li>
         </ul>
+
+        <h3>Face Adjacency Rules (Assurance Requires Signature)</h3>
+        <p>These rules ensure assurance faces have human accountability via signature faces:</p>
+        <ul>
+            <li><strong>assurance-requires-signature:</strong> assurance face (doc, spec, guidance) must have a signature face (doc, guidance, signer) sharing its validation edge</li>
+            <li><strong>signature-can-pre-exist:</strong> signature faces CAN exist without assurance faces (they represent pre-existing approvals)</li>
+        </ul>
+        <p><em>Key insight: Signature faces are created when a user approves a validation edge. They often PRE-EXIST assurance faces. Assurance faces CANNOT exist without a corresponding signature.</em></p>
     </div>
 </body>
 </html>

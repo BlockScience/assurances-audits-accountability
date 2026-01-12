@@ -384,8 +384,14 @@ class TestEdgeEndpointRules:
 class TestDegreeConstraintRules:
     """Tests for vertex degree constraints."""
 
-    def test_doc_single_verification(self):
-        """Doc can have at most one verification edge."""
+    def test_doc_multiple_verifications_allowed(self):
+        """Doc can have multiple verification edges (for multi-type documents).
+
+        Documents can verify against multiple specs when they have multiple types.
+        For example, a persona document can verify against both spec/persona AND
+        spec/doc simultaneously. This was previously restricted to at most 1, but
+        that constraint was incorrect.
+        """
         cache = {
             'elements': {
                 'vertices': {
@@ -415,11 +421,11 @@ class TestDegreeConstraintRules:
         engine = OntologyRuleEngine.from_cache(cache)
         engine._check_degree_constraints()
 
+        # No violations - documents can have multiple verification edges
         degree_violations = [v for v in engine.violations
                            if v.rule_name == 'degree_constraint'
                            and v.element_id == 'v:doc:test']
-        assert len(degree_violations) == 1
-        assert 'maximum is 1' in degree_violations[0].message
+        assert len(degree_violations) == 0
 
     def test_spec_must_have_coupling(self):
         """Spec must have exactly one coupling edge."""
@@ -533,6 +539,419 @@ class TestSignatureRules:
                         if v.rule_name == 'signature_requires_qualification']
         assert len(sig_violations) == 1
         assert 'lacks qualifies edge' in sig_violations[0].message
+
+
+class TestAssuranceRequiresSignature:
+    """Tests for assurance face must have signature face sharing validation edge.
+
+    This is a critical local rule: an assurance face (doc, spec, guidance) must
+    have a signature face (doc, guidance, signer) sharing its validation edge.
+
+    Key insight on directionality:
+    - Signature faces CAN exist without assurance faces (they represent a signer's
+      approval of a validation, which may pre-exist the assurance)
+    - Assurance faces CANNOT exist without a corresponding signature - every
+      assurance requires human accountability via a signed validation
+
+    The shared validation edge ensures:
+    - Every assurance has human accountability via a signed validation
+    - The signer is accountable for the same validation in the assurance triangle
+    """
+
+    @pytest.fixture
+    def valid_assurance_with_signature_cache(self):
+        """Complete valid setup with assurance and signature faces sharing validation edge.
+
+        Structure:
+        - Assurance face: doc -- spec -- guidance (verification, validation, coupling)
+        - Signature face: doc -- guidance -- signer (validation, qualifies, signs)
+        - Both faces SHARE the validation edge (doc -> guidance)
+        """
+        return {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec', 'name': 'Test Spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                },
+                'edges': {
+                    # Assurance edges
+                    'e:verification:test': {
+                        'id': 'e:verification:test',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:test': {
+                        'id': 'e:coupling:test',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                    # Signature edges
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:signs:alice-doc': {
+                        'id': 'e:signs:alice-doc',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:assurance:test': {
+                        'id': 'f:assurance:test',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        'edges': ['e:verification:test', 'e:validation:test', 'e:coupling:test'],
+                        'orientation': 'oriented',
+                        'target': 'v:doc:test',
+                        'spec': 'v:spec:test',
+                        'guidance': 'v:guidance:test',
+                        'validation_edge': 'e:validation:test',
+                        'verification_edge': 'e:verification:test',
+                        'coupling_edge': 'e:coupling:test',
+                    },
+                    'f:signature:test': {
+                        'id': 'f:signature:test',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        # SHARES e:validation:test with assurance face
+                        'edges': ['e:validation:test', 'e:qualifies:alice-guidance', 'e:signs:alice-doc'],
+                        'orientation': 'oriented',
+                        'doc': 'v:doc:test',
+                        'guidance': 'v:guidance:test',
+                        'signer': 'v:signer:alice',
+                        'validation_edge': 'e:validation:test',
+                    },
+                },
+            },
+            'statistics': {'vertices': 4, 'edges': 5, 'faces': 2}
+        }
+
+    @pytest.fixture
+    def invalid_assurance_no_shared_validation_cache(self):
+        """Invalid setup: assurance face has validation edge not shared with signature.
+
+        The assurance face has its own validation edge that is NOT the same as
+        the signature face's validation edge. This violates the rule.
+        """
+        return {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec', 'name': 'Test Spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                },
+                'edges': {
+                    # Assurance edges
+                    'e:verification:test': {
+                        'id': 'e:verification:test',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:validation:assurance': {
+                        'id': 'e:validation:assurance',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:test': {
+                        'id': 'e:coupling:test',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                    # Signature edges - DIFFERENT validation edge!
+                    'e:validation:signature': {
+                        'id': 'e:validation:signature',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:signs:alice-doc': {
+                        'id': 'e:signs:alice-doc',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:assurance:test': {
+                        'id': 'f:assurance:test',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        'edges': ['e:verification:test', 'e:validation:assurance', 'e:coupling:test'],
+                        'orientation': 'oriented',
+                        'target': 'v:doc:test',
+                        'spec': 'v:spec:test',
+                        'guidance': 'v:guidance:test',
+                        'validation_edge': 'e:validation:assurance',
+                    },
+                    'f:signature:test': {
+                        'id': 'f:signature:test',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        # Uses DIFFERENT validation edge - NOT shared!
+                        'edges': ['e:validation:signature', 'e:qualifies:alice-guidance', 'e:signs:alice-doc'],
+                        'orientation': 'oriented',
+                        'doc': 'v:doc:test',
+                        'guidance': 'v:guidance:test',
+                        'signer': 'v:signer:alice',
+                        'validation_edge': 'e:validation:signature',
+                    },
+                },
+            },
+            'statistics': {'vertices': 4, 'edges': 6, 'faces': 2}
+        }
+
+    @pytest.fixture
+    def valid_signature_without_assurance_cache(self):
+        """Valid setup: signature face exists alone - this is OK!
+
+        Signature faces CAN exist without assurance faces. They represent a signer's
+        approval of a validation, which may pre-exist the assurance.
+        """
+        return {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                    'v:signer:alice': {'id': 'v:signer:alice', 'type': 'vertex/signer', 'name': 'Alice'},
+                },
+                'edges': {
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:qualifies:alice-guidance': {
+                        'id': 'e:qualifies:alice-guidance',
+                        'type': 'edge/qualifies',
+                        'source': 'v:signer:alice',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:signs:alice-doc': {
+                        'id': 'e:signs:alice-doc',
+                        'type': 'edge/signs',
+                        'source': 'v:signer:alice',
+                        'target': 'v:doc:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    # Signature face alone - this is VALID
+                    'f:signature:standalone': {
+                        'id': 'f:signature:standalone',
+                        'type': 'face/signature',
+                        'vertices': ['v:doc:test', 'v:guidance:test', 'v:signer:alice'],
+                        'edges': ['e:validation:test', 'e:qualifies:alice-guidance', 'e:signs:alice-doc'],
+                        'orientation': 'oriented',
+                        'doc': 'v:doc:test',
+                        'guidance': 'v:guidance:test',
+                        'signer': 'v:signer:alice',
+                        'validation_edge': 'e:validation:test',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    @pytest.fixture
+    def invalid_assurance_without_signature_cache(self):
+        """Invalid setup: assurance face exists without signature - NOT allowed!
+
+        Assurance faces CANNOT exist without a corresponding signature face.
+        Every assurance requires human accountability via a signed validation.
+        """
+        return {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc', 'name': 'Test Doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec', 'name': 'Test Spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance', 'name': 'Test Guidance'},
+                },
+                'edges': {
+                    'e:verification:test': {
+                        'id': 'e:verification:test',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:validation:test': {
+                        'id': 'e:validation:test',
+                        'type': 'edge/validation',
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:test': {
+                        'id': 'e:coupling:test',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                },
+                'faces': {
+                    # Assurance face alone - NO signature! This is INVALID
+                    'f:assurance:orphan': {
+                        'id': 'f:assurance:orphan',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        'edges': ['e:verification:test', 'e:validation:test', 'e:coupling:test'],
+                        'orientation': 'oriented',
+                        'target': 'v:doc:test',
+                        'spec': 'v:spec:test',
+                        'guidance': 'v:guidance:test',
+                        'validation_edge': 'e:validation:test',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    def test_valid_assurance_with_signature(self, valid_assurance_with_signature_cache):
+        """Assurance face with signature face sharing validation edge should pass."""
+        engine = OntologyRuleEngine.from_cache(valid_assurance_with_signature_cache)
+        engine._check_assurance_requires_signature()
+
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'assurance_requires_signature']
+        assert len(adjacency_violations) == 0
+
+    def test_invalid_assurance_different_validation_edge(self, invalid_assurance_no_shared_validation_cache):
+        """Assurance face with different validation edge than signature face should fail."""
+        engine = OntologyRuleEngine.from_cache(invalid_assurance_no_shared_validation_cache)
+        engine._check_assurance_requires_signature()
+
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'assurance_requires_signature']
+        assert len(adjacency_violations) == 1
+        assert 'No signature face shares validation edge' in adjacency_violations[0].message
+
+    def test_valid_signature_without_assurance(self, valid_signature_without_assurance_cache):
+        """Signature face without assurance face is VALID - signatures can pre-exist assurance."""
+        engine = OntologyRuleEngine.from_cache(valid_signature_without_assurance_cache)
+        engine._check_assurance_requires_signature()
+
+        # No violations - signature faces can exist alone
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'assurance_requires_signature']
+        assert len(adjacency_violations) == 0
+
+    def test_invalid_assurance_without_signature(self, invalid_assurance_without_signature_cache):
+        """Assurance face without signature face is INVALID - assurance requires human sign-off."""
+        engine = OntologyRuleEngine.from_cache(invalid_assurance_without_signature_cache)
+        engine._check_assurance_requires_signature()
+
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'assurance_requires_signature']
+        assert len(adjacency_violations) == 1
+        assert 'No signature face shares validation edge' in adjacency_violations[0].message
+        assert 'assurance requires human sign-off' in adjacency_violations[0].message
+
+    def test_assurance_no_validation_edge_in_boundary(self):
+        """Assurance face without validation edge in boundary should fail."""
+        cache = {
+            'elements': {
+                'vertices': {
+                    'v:doc:test': {'id': 'v:doc:test', 'type': 'vertex/doc'},
+                    'v:spec:test': {'id': 'v:spec:test', 'type': 'vertex/spec'},
+                    'v:guidance:test': {'id': 'v:guidance:test', 'type': 'vertex/guidance'},
+                },
+                'edges': {
+                    'e:verification:test': {
+                        'id': 'e:verification:test',
+                        'type': 'edge/verification',
+                        'source': 'v:doc:test',
+                        'target': 'v:spec:test',
+                        'orientation': 'directed',
+                    },
+                    'e:coupling:test': {
+                        'id': 'e:coupling:test',
+                        'type': 'edge/coupling',
+                        'source': 'v:spec:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'undirected',
+                    },
+                    'e:other:test': {
+                        'id': 'e:other:test',
+                        'type': 'edge/other',  # Wrong type - not validation!
+                        'source': 'v:doc:test',
+                        'target': 'v:guidance:test',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:assurance:bad': {
+                        'id': 'f:assurance:bad',
+                        'type': 'face/assurance',
+                        'vertices': ['v:doc:test', 'v:spec:test', 'v:guidance:test'],
+                        # Has verification, coupling, and 'other' - NO validation!
+                        'edges': ['e:verification:test', 'e:other:test', 'e:coupling:test'],
+                        'orientation': 'oriented',
+                        'target': 'v:doc:test',
+                        'spec': 'v:spec:test',
+                        'guidance': 'v:guidance:test',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+        engine = OntologyRuleEngine.from_cache(cache)
+        engine._check_assurance_requires_signature()
+
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'assurance_requires_signature']
+        assert len(adjacency_violations) == 1
+        assert 'no validation edge in boundary' in adjacency_violations[0].message
+
+    def test_full_ontology_check_includes_assurance_signature_rule(self, valid_assurance_with_signature_cache):
+        """Full check_all should include assurance-requires-signature check."""
+        engine = OntologyRuleEngine.from_cache(valid_assurance_with_signature_cache)
+        all_violations = engine.check_all()
+
+        # Filter to only adjacency violations
+        adjacency_violations = [v for v in all_violations
+                               if v.rule_name == 'assurance_requires_signature']
+
+        # Should have no adjacency violations for valid cache
+        assert len(adjacency_violations) == 0
 
 
 class TestExecutionDagRules:

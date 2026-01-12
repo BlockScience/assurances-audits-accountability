@@ -35,7 +35,7 @@
     <h1>Ontology Rule Demonstration: Edge Endpoint Types</h1>
 
     <div class="summary">
-        <strong>Summary:</strong> 6/6 demonstrations passed
+        <strong>Summary:</strong> 9/9 demonstrations passed
     </div>
 
     <div class="demo pass">
@@ -221,6 +221,95 @@
 
             </ul>
         </div>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 7: Valid Inherits Edge</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">spec → spec (CORRECT - type hierarchy)</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="115.0,100.0 125.0,95.0 125.0,105.0" fill="#666"/>
+<line x1="300" y1="100" x2="115.0" y2="100.0" class="edge"/>
+<text x="207.5" y="90.0" class="label" text-anchor="middle" font-size="10">inherits</text>
+<circle cx="100" cy="100" r="20" class="vertex spec"/>
+<text x="100" y="105" class="label" text-anchor="middle">spec</text>
+<circle cx="300" cy="100" r="20" class="vertex spec"/>
+<text x="300" y="105" class="label" text-anchor="middle">spec</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> Inherits edges connect a child spec to its parent spec, establishing type hierarchy.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 0<br>
+            <strong>Actual violations:</strong> 0
+        </p>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 8: Invalid Inherits Edge - Wrong Target</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">spec → guidance (WRONG: target should be spec)</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="285.0,100.0 275.0,105.0 275.0,95.0" fill="#666"/>
+<line x1="100" y1="100" x2="285.0" y2="100.0" class="edge"/>
+<text x="192.5" y="90.0" class="label" text-anchor="middle" font-size="10">inherits</text>
+<circle cx="100" cy="100" r="20" class="vertex spec"/>
+<text x="100" y="105" class="label" text-anchor="middle">spec</text>
+<circle cx="300" cy="100" r="20" class="vertex guidance"/>
+<text x="300" y="105" class="label" text-anchor="middle">guidance</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> Inherits edges must connect specs to other specs - a spec cannot inherit from guidance.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 1<br>
+            <strong>Actual violations:</strong> 1
+        </p>
+
+        <div class="violations">
+            <h4>Violations Found:</h4>
+            <ul>
+                <li><code>[ERROR] edge_endpoint_type_compliance: Target vertex type 'vertex/guidance' not allowed for inherits edge (e:inherits:bad)</code></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 9: Valid Instantiates Edge</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">doc → spec (CORRECT - type instantiation)</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="285.0,100.0 275.0,105.0 275.0,95.0" fill="#666"/>
+<line x1="100" y1="100" x2="285.0" y2="100.0" class="edge"/>
+<text x="192.5" y="90.0" class="label" text-anchor="middle" font-size="10">instantiates</text>
+<circle cx="100" cy="100" r="20" class="vertex"/>
+<text x="100" y="105" class="label" text-anchor="middle">doc/persona</text>
+<circle cx="300" cy="100" r="20" class="vertex spec"/>
+<text x="300" y="105" class="label" text-anchor="middle">spec</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> Instantiates edges connect a document to the spec that defines its type.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 0<br>
+            <strong>Actual violations:</strong> 0
+        </p>
     </div>
 
 </body>
