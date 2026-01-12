@@ -63,6 +63,7 @@ from .accountability import (
 
 from .resources import (
     get_bundled_templates_path,
+    get_bundled_foundation_path,
     get_templates_path,
 )
 
@@ -110,5 +111,6 @@ __all__ = [
     'usernames_match',
     # Resources
     'get_bundled_templates_path',
+    'get_bundled_foundation_path',
     'get_templates_path',
 ]
