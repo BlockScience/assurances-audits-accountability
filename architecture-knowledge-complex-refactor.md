@@ -329,6 +329,14 @@ Key local rules include:
 │  │  │  signatures │ │qualifications│                            │   │
 │  │  └─────────────┘ └──────────────┘                            │   │
 │  └──────────────────────────────────────────────────────────────┘   │
+│                       │                                              │
+│                       ▼                                              │
+│  ┌──────────────────────────────────────────────────────────────┐   │
+│  │              Branch Protection Rules                          │   │
+│  │  • Require CI pass before merge to main                      │   │
+│  │  • Require GPG-signed commits (for accountability edges)     │   │
+│  │  • Require pull request reviews (optional)                   │   │
+│  └──────────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
