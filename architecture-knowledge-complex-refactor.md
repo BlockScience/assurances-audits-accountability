@@ -3,536 +3,440 @@ type: vertex/doc
 extends: doc
 id: v:doc:architecture-knowledge-complex-refactor
 name: Architecture - Knowledge Complex Framework Refactor
-description: Four-layer architecture for refactoring the knowledge complex framework to serve BlockScience internal use and eventual external productization
+description: Capstone architecture document synthesizing the extended architecture chain for the Knowledge Complex Framework
 tags:
   - vertex
   - doc
   - architecture
-version: 0.1.0
+version: 1.1.0
 created: 2026-01-11T00:00:00Z
-modified: 2026-01-11T00:00:00Z
+modified: 2026-01-12T00:00:00Z
 system_name: Knowledge Complex Framework
-scope: Core framework for typed document management with verification, validation, and assurance capabilities—internal-first deployment
-stakeholders:
-  - Operators
-  - Approvers
-  - Workflow Builders
-  - Infrastructure Builders
-  - Compliance Officers
-  - Regulators
+scope: Internal-first deployment enabling systematic documentation with verification, validation, and assurance for BlockScience client work
 field_survey_ref: v:doc:field-survey-knowledge-complex-refactor
+conceptual_architecture_ref: v:doc:conceptual-architecture-knowledge-complex-refactor
+functional_architecture_ref: v:doc:functional-architecture-knowledge-complex-refactor
+logical_architecture_ref: v:doc:logical-architecture-knowledge-complex-refactor
+physical_architecture_ref: v:doc:physical-architecture-knowledge-complex-refactor
+stakeholders:
+  - A3 Operators
+  - A4 Approvers
+  - A5 Workflow Builders
+  - A6 Infrastructure Builders
 ---
 
 # Architecture - Knowledge Complex Framework Refactor
 
-This architecture document defines the Knowledge Complex Framework across four layers aligned with the V-model lifecycle. The framework enables systematic documentation, verification, validation, and assurance of work products—initially for BlockScience internal use, with design accommodating eventual external productization.
+This architecture document synthesizes the complete extended architecture chain for the Knowledge Complex Framework—from stakeholder needs through physical implementation. The framework enables systematic documentation, verification, validation, and assurance of work products for BlockScience's internal use and eventual external productization.
 
 ## Overview
 
-The Knowledge Complex Framework transforms how organizations manage knowledge-intensive work products. Built on the mathematical foundation of typed simplicial complexes, the framework abstracts rigorous concepts into usable tools that operators can use daily and approvers can trust for sign-off.
+The Knowledge Complex Framework transforms how organizations manage knowledge-intensive work products. Built on the mathematical foundation of **typed simplicial complexes**, the framework provides:
 
-This architecture addresses three interconnected pain points identified in the field survey:
+- **Typed Documents** (vertices) with YAML frontmatter defining structure and semantics
+- **Typed Relationships** (edges) for verification, validation, coupling, and accountability
+- **Typed Triangles** (faces) for assurance, signatures, and authorization
+- **Charts** (subcomplexes) for modular organization and contextual interpretation
 
-1. **Documentation chaos**: Documents scattered across systems, inconsistent formats, hard to verify
-2. **Knowledge capture**: Institutional knowledge in people's heads, not systematized or searchable
-3. **Client deliverable quality**: Need to produce demonstrably high-quality assured work products
+The key innovation is the **base ontology** ([[ontology-base]]) which defines the foundational type system:
+- 10 vertex types across 5 categories (documents, actors, organizational, modules)
+- 13 edge types across 6 categories (assurance, signature, RBAC, module I/O, document relationships)
+- 9 face types across 4 categories (assurance, RBAC, module I/O)
+- 12 local rules enabling compositional verification
+- 3 chart types (audit, module, runbook) for bounded sub-complexes
 
-The architecture follows a three-layer organizational model:
-- **Platform Layer (A6)**: Infrastructure Builders develop the core framework
-- **Configuration Layer (A5)**: Workflow Builders configure domain-specific instances
-- **Execution Layer (A1-A4)**: End users (Regulators, Compliance Officers, Operators, Approvers) consume outputs
+This architecture uses **Extended Mode**—each layer is documented in a separate extended architecture document, with this summary synthesizing key decisions and traceability.
 
-**Internal-first deployment**: BlockScience uses the framework for client engagements before external productization. Acceptance criteria focus on Operators (A3) and Approvers (A4) successfully using the system for daily work.
+### Architecture Chain
+
+| Layer | Document | Key Content |
+|-------|----------|-------------|
+| Field Survey | [[field-survey-knowledge-complex-refactor]] | 6 stakeholders (A1-A6), 15 resources (R1-R15), 28 relationships |
+| Conceptual | [[conceptual-architecture-knowledge-complex-refactor]] | 4 stakeholders (A3-A6), 11 acceptance criteria (AC1-AC11), 3 constraints |
+| Functional | [[functional-architecture-knowledge-complex-refactor]] | 24 functions (F1-F24) in 5 functional areas |
+| Logical | [[logical-architecture-knowledge-complex-refactor]] | 14 components (C1-C14), 40 interfaces, references [[ontology-base]] |
+| Physical | [[physical-architecture-knowledge-complex-refactor]] | 12 elements (E1-E12), deployment architecture |
 
 ## V-Model Summary
 
-| Layer | Left Side (Idealized) | Current Status | Right Side (Realized) |
-|-------|----------------------|----------------|----------------------|
-| **Conceptual** | ConOps: Enable systematic knowledge work with demonstrable effectiveness and compliance | Design | Acceptance Testing: Operators and Approvers can complete real work with confidence |
-| **Functional** | Functional Architecture: Author, Verify, Validate, Assure, Trace, Audit | Design | System Testing: End-to-end workflow verification from document creation to assured delivery |
-| **Logical** | Logical Architecture: Core Engine, Toolkits, Registries, Interfaces | Design | Integration Testing: Cross-component interaction verification |
-| **Physical** | Physical Architecture: Python package, VS Code, Claude Code, Obsidian, git-based registries | Design | Unit Testing: Individual component verification |
+| Layer | Left Side (Idealized) | Design Status | Right Side (Realized) | Implementation Status |
+|-------|----------------------|---------------|----------------------|----------------------|
+| **Conceptual** | ConOps: 4 stakeholders, 11 acceptance criteria defining success | Assured | Acceptance Testing: Operator/Approver workflow validation, effectiveness metrics | Partial |
+| **Functional** | Functional Architecture: 24 functions in 5 areas | Assured | System Testing: Function-by-function test criteria | Partial |
+| **Logical** | Logical Architecture: 14 components, 40 interfaces, [[ontology-base]] | Assured | Integration Testing: 40 interface tests, coherence suite | In Progress |
+| **Physical** | Physical Architecture: 12 elements (OFM, Git, Python, Obsidian, Claude Code) | Assured | Unit Testing: Element-by-element test criteria | Partial |
+
+**Status Legend:**
+
+| Column | Values | Meaning |
+|--------|--------|---------|
+| Design Status | Draft, Review, Assured | Maturity of design documentation |
+| Implementation Status | Not Started, In Progress, Partial, Complete | Progress on realization and testing |
+
+**Current State:** All design documents are assured. Implementation is partial—core verification scripts exist and pass, but full test suites for all 40 interfaces and acceptance testing workflows are in progress.
 
 ## Conceptual Layer
 
+**Reference:** [[conceptual-architecture-knowledge-complex-refactor]]
+
 ### Problem Statement (ConOps)
 
-BlockScience produces knowledge-intensive work products—research reports, system designs, technical specifications, audit findings—that must be both effective (achieving intended outcomes) and compliant (following defined processes). Currently, institutional knowledge is fragmented: documents live in scattered locations, quality assurance is manual and inconsistent, and demonstrating that work meets standards requires significant effort.
-
-The Knowledge Complex Framework systematizes this work by treating documents as typed vertices in a mathematical structure, with explicit edges for verification (against specs) and validation (against guidance), and faces for assurance (complete quality attestation). Operators produce documents within defined workflows; Approvers attest to quality; the system provides the infrastructure to make this tractable.
-
-**Stakeholder Needs:**
-
-- **Operators (A3)**: Need intuitive tools to produce documents that conform to organizational standards without understanding the underlying mathematics. Need to find prior work quickly. Need clear guidance on what "good" looks like. Need LLM assistance for drafting and verification.
-
-- **Approvers (A4)**: Need confidence that documents are ready for sign-off before review. Need to understand what they're attesting to. Need efficient review workflows. Need traceability to requirements so they know the work addresses the right problems. Need both compliance evidence (process followed) and effectiveness evidence (outcomes achieved).
-
-- **Workflow Builders (A5)**: Need to configure document types, templates, and runbooks for specific domains without deep mathematical expertise. Need a registry of reusable components. Need APIs to build custom tooling.
-
-- **Infrastructure Builders (A6)**: Need clean abstractions over the mathematical foundations. Need to maintain and extend the core framework. Need the system to be self-demonstrating (the framework should be documented using itself).
-
-- **Compliance Officers (A2)**: Need audit reports that demonstrate work products meet regulatory requirements. Need gap analysis when assurance is incomplete. Need remediation tracking.
-
-- **Regulators (A1)**: Need consumable evidence that organizational processes produce compliant outputs. (External to the system; consume outputs only.)
-
-**Operational Context:**
-
-BlockScience operates as a research and engineering firm producing complex deliverables for clients. Work products range from technical specifications to audit reports to research papers. Team members collaborate across time zones. Quality assurance historically depends on individual expertise rather than systematic process.
-
-The framework must:
-- Support daily work without adding friction
-- Make quality visible (not just assumed)
-- Capture institutional knowledge as reusable assets
-- Enable both effectiveness and compliance demonstration
-- Work with existing tools (git, markdown, VS Code, Obsidian)
-
-### Acceptance Criteria
-
-The system will be accepted for internal use when:
-
-- **AC1**: Operators can create a new typed document from template in <5 minutes using IDE integration
-- **AC2**: Verification runs automatically on save and reports pass/fail within 2 seconds
-- **AC3**: Approvers can review a document's assurance status (verification passed, validation assessment, related documents) in a single view
-- **AC4**: At least 3 document types are fully specified (spec, guidance, doc) with working verification
-- **AC5**: At least 1 complete assurance chart exists demonstrating end-to-end workflow
-- **AC6**: Prior work is searchable through Obsidian graph navigation and full-text search
-- **AC7**: LLM assistant (Claude Code) can draft documents that pass verification on first attempt >80% of time
-- **AC8**: Runbooks exist for common workflows (create document, verify, validate, assure)
-- **AC9**: Both effectiveness metrics (did the work achieve its purpose?) and compliance metrics (was the process followed?) are visible in audit reports
-
-## Functional Layer
-
-### Functional Architecture
-
-The system performs six core functions to enable systematic knowledge work.
-
-| Function | Inputs | Outputs | Description |
-|----------|--------|---------|-------------|
-| F1: Author | Templates, prior work, user input | Draft documents | Create and edit typed documents with structure guidance |
-| F2: Verify | Document, specification | Pass/fail result, error details | Check document structure against type specification |
-| F3: Validate | Document, guidance, human judgment | Quality assessment, accountability record | Assess document quality against guidance criteria |
-| F4: Assure | Verification edge, validation edge, coupling edge | Assurance face, trust attestation | Close the assurance triangle with human accountability |
-| F5: Trace | Documents, requirements | Traceability chart, gap analysis | Map documents to originating requirements |
-| F6: Audit | Assurance chart, requirements | Audit report, compliance evidence, effectiveness metrics | Generate consumable reports for compliance demonstration |
-
-```mermaid
-flowchart LR
-    subgraph Authoring["Document Production"]
-        F1[F1: Author]
-    end
-
-    subgraph Quality["Quality Assurance"]
-        F2[F2: Verify]
-        F3[F3: Validate]
-        F4[F4: Assure]
-    end
-
-    subgraph Accountability["Accountability & Audit"]
-        F5[F5: Trace]
-        F6[F6: Audit]
-    end
-
-    F1 --> F2
-    F2 --> F3
-    F3 --> F4
-    F4 --> F5
-    F5 --> F6
-
-    F2 -->|feedback| F1
-    F3 -->|feedback| F1
-```
-
-### Functional Decomposition
-
-#### F1: Author
-
-| Sub-Function | Description | Key Capability |
-|--------------|-------------|----------------|
-| F1.1 Create | Initialize new document from template | Template instantiation with frontmatter |
-| F1.2 Edit | Modify document content | IDE integration with syntax support |
-| F1.3 Navigate | Find related documents | Graph navigation, backlinks |
-| F1.4 Draft | Generate content with AI assistance | LLM-powered drafting within type constraints |
-| F1.5 Search | Find prior work | Full-text and metadata search |
-
-#### F2: Verify
-
-| Sub-Function | Description | Key Capability |
-|--------------|-------------|----------------|
-| F2.1 Parse | Extract frontmatter and structure | YAML parsing, section detection |
-| F2.2 Check | Compare against specification | Template-based verification |
-| F2.3 Report | Communicate results | Pass/fail with specific errors |
-| F2.4 Integrate | Run automatically in workflow | IDE hooks, CLI, CI/CD |
-
-#### F3: Validate
-
-| Sub-Function | Description | Key Capability |
-|--------------|-------------|----------------|
-| F3.1 Assess | Evaluate against guidance criteria | Human judgment, LLM-assisted |
-| F3.2 Rate | Assign quality levels | Excellent/Good/Needs Improvement per criterion |
-| F3.3 Record | Document assessment with accountability | Validation edge with approver signature |
-| F3.4 Recommend | Provide improvement guidance | Actionable feedback |
-
-#### F4: Assure
-
-| Sub-Function | Description | Key Capability |
-|--------------|-------------|----------------|
-| F4.1 Collect | Gather verification and validation edges | Edge reference resolution |
-| F4.2 Close | Form assurance triangle | Face creation with boundary edges |
-| F4.3 Attest | Record human accountability | Assurance face with approver signature |
-| F4.4 Audit | Verify assurance completeness | Chart-level assurance audit |
-
-#### F5: Trace
-
-| Sub-Function | Description | Key Capability |
-|--------------|-------------|----------------|
-| F5.1 Link | Connect documents to requirements | Explicit requirement references |
-| F5.2 Chart | Build requirements traceability chart | Subcomplex extraction |
-| F5.3 Analyze | Identify gaps in traceability | Topological gap detection |
-| F5.4 Report | Generate traceability matrix | Requirements coverage report |
-
-#### F6: Audit
-
-| Sub-Function | Description | Key Capability |
-|--------------|-------------|----------------|
-| F6.1 Extract | Build audit chart from assurance data | Chart construction |
-| F6.2 Analyze | Compute completeness metrics | Euler characteristic, coverage |
-| F6.3 Generate | Produce audit reports | Compliance and effectiveness reports |
-| F6.4 Remediate | Track gap resolution | Remediation workflow support |
-
-### System Testing Criteria
-
-- **ST1**: End-to-end workflow: Create document → Verify → Validate → Assure completes without manual intervention except approval signatures
-- **ST2**: Verification correctly rejects documents with missing required fields (100% detection rate)
-- **ST3**: Validation assessments are recorded with proper accountability chain
-- **ST4**: Assurance faces correctly reference all three boundary edges
-- **ST5**: Traceability charts accurately reflect document-requirement relationships
-- **ST6**: Audit reports include both compliance metrics (assurance coverage) and effectiveness metrics (performance against runbook criteria)
-
-## Logical Layer
-
-### Logical Architecture
-
-The logical architecture organizes capabilities into four integrated component groups, independent of specific implementation technologies.
-
-```mermaid
-flowchart TB
-    subgraph Interfaces["User Interfaces"]
-        UI1[Document Editor]
-        UI2[Knowledge Explorer]
-        UI3[AI Assistant]
-        UI4[Auditor Dashboard]
-    end
-
-    subgraph Core["Core Engine"]
-        C1[Type System]
-        C2[Document Parser]
-        C3[Verification Engine]
-        C4[Topology Engine]
-    end
-
-    subgraph Toolkits["Capability Toolkits"]
-        T1[Validation Toolkit]
-        T2[Assurance Toolkit]
-        T3[Traceability Toolkit]
-        T4[Audit Toolkit]
-    end
-
-    subgraph Registries["Registries"]
-        R1[Public Registry]
-        R2[Private Registry]
-    end
-
-    subgraph Storage["Storage"]
-        S1[Document Store]
-        S2[Edge Store]
-        S3[Face Store]
-    end
-
-    Interfaces --> Core
-    Interfaces --> Toolkits
-    Core --> Storage
-    Toolkits --> Core
-    Toolkits --> Registries
-    Registries --> Storage
-```
-
-### Component Specifications
-
-#### Core Engine
-
-**Purpose:** Foundational capabilities for typed document management
-
-| Component | Responsibility | Interfaces |
-|-----------|---------------|------------|
-| C1: Type System | Define and enforce document types, inheritance, constraints | Type definitions, validation rules |
-| C2: Document Parser | Parse markdown with YAML frontmatter, extract structure | Raw text → structured document |
-| C3: Verification Engine | Check documents against type specifications | Document + spec → pass/fail + errors |
-| C4: Topology Engine | Compute simplicial complex properties, Euler characteristic | Complex → topological metrics |
-
-**Integration Points:**
-- Type System provides schemas to Verification Engine
-- Document Parser feeds all other components
-- Topology Engine used by Audit Toolkit for completeness analysis
-
-**Key Design Decisions:**
-- Types form inheritance hierarchy (doc → spec, guidance, etc.)
-- Documents are vertices; verification/validation/coupling are edges; assurance is faces
-- Sparse bipartite relationships (not every document connects to every other)
-
-#### Capability Toolkits
-
-**Purpose:** Higher-level capabilities built on Core Engine
-
-| Component | Responsibility | Interfaces |
-|-----------|---------------|------------|
-| T1: Validation Toolkit | Support validation workflow with accountability | Document + guidance → validation edge |
-| T2: Assurance Toolkit | Create and audit assurance faces | Edges → face; chart → audit results |
-| T3: Traceability Toolkit | Build and analyze requirements traceability | Documents + requirements → traceability chart |
-| T4: Audit Toolkit | Generate compliance and effectiveness reports | Assurance chart → audit report |
-
-**Integration Points:**
-- All toolkits use Core Engine for parsing and verification
-- Toolkits are independently installable (plugin architecture)
-- Toolkits share common patterns for edge/face creation
-
-**Key Design Decisions:**
-- Toolkits are optional—core functionality works without them
-- Each toolkit can be extended for domain-specific needs
-- Effectiveness metrics live in runbooks; toolkits extract and report them
-
-#### Registries
-
-**Purpose:** Share and discover document types, templates, and runbooks
-
-| Component | Responsibility | Interfaces |
-|-----------|---------------|------------|
-| R1: Public Registry | Publish and discover community types/runbooks | Package manager interface (search, install, publish) |
-| R2: Private Registry | Organization-specific types with access control | Same interface, private storage |
-
-**Integration Points:**
-- Registries provide types to Type System
-- Toolkits can be distributed via registries
-- Version control integrated (semantic versioning)
-
-**Key Design Decisions:**
-- Package manager model (like PyPI/npm for document types)
-- Private registries use same interface for portability
-- Registries support both types and runbooks
-
-#### User Interfaces
-
-**Purpose:** Enable different actors to interact with the system
-
-| Component | Responsibility | Interfaces |
-|-----------|---------------|------------|
-| UI1: Document Editor | Create and edit documents with verification feedback | IDE integration, syntax highlighting, snippets |
-| UI2: Knowledge Explorer | Navigate, search, and review knowledge complex | Graph visualization, backlinks, search |
-| UI3: AI Assistant | Intelligent help for authoring and verification | LLM integration, context-aware prompts |
-| UI4: Auditor Dashboard | Compliance and effectiveness reporting views | Analytics, charts, export |
-
-**Integration Points:**
-- Document Editor triggers Verification Engine on save
-- Knowledge Explorer reads from Document/Edge/Face stores
-- AI Assistant uses Type System for context-aware generation
-- Auditor Dashboard uses Audit Toolkit for report generation
-
-**Key Design Decisions:**
-- Interfaces are loosely coupled—can substitute implementations
-- Core functionality accessible via CLI/API (interfaces are optional)
-- AI Assistant requires human approval for validation/assurance
-
-### Integration Testing Criteria
-
-- **IT1**: Document Editor correctly invokes Verification Engine and displays results
-- **IT2**: Knowledge Explorer accurately reflects document relationships from storage
-- **IT3**: AI Assistant generates documents that conform to Type System definitions
-- **IT4**: Auditor Dashboard correctly aggregates data from Audit Toolkit
-- **IT5**: Registry installation correctly extends Type System with new types
-- **IT6**: Toolkits correctly use Core Engine APIs for document operations
-
-## Physical Layer
-
-### Physical Architecture
-
-The physical layer specifies concrete technologies for the reference implementation, with documented extension points for alternative implementations.
-
-| Logical Component | Technology Selection | Rationale |
-|-------------------|---------------------|-----------|
-| Core Engine | Python 3.11+ package | Widely adopted, good ecosystem, team expertise |
-| Type System | YAML schemas + Python dataclasses | Human-readable definitions, runtime validation |
-| Document Parser | PyYAML + python-frontmatter + custom markdown parser | Standard libraries, extensible |
-| Verification Engine | Template-based Python scripts | Existing implementation, proven approach |
-| Topology Engine | Custom Python + NetworkX | Graph algorithms available, extensible |
-| Validation Toolkit | Python module + LLM integration | Combines automation with human judgment |
-| Assurance Toolkit | Python module | Extends verification/validation |
-| Traceability Toolkit | Python module + chart builder | Subcomplex extraction |
-| Audit Toolkit | Python + pandas + plotly | Analytics and visualization |
-| Public Registry | Custom service (PyPI-like) | Package manager model per requirements |
-| Private Registry | Git repositories + registry interface | Familiar workflow, version control built-in |
-| Document Editor | VS Code extension | Primary IDE for team, excellent extension API |
-| Knowledge Explorer | Obsidian | Graph visualization, backlinks, markdown-native |
-| AI Assistant | Claude Code integration | Current tooling, system prompt customization |
-| Auditor Dashboard | Jupyter notebooks + Streamlit | Flexible analytics, shareable reports |
-| Storage | Git repositories (markdown files) | Version control, collaboration, portability |
-
-### Package Structure
-
-```
-knowledge-complex/
-├── knowledge_complex/           # Core package
-│   ├── __init__.py
-│   ├── types/                   # Type system
-│   │   ├── base.py              # Base document types
-│   │   ├── spec.py              # Specification type
-│   │   ├── guidance.py          # Guidance type
-│   │   └── registry.py          # Type registry
-│   ├── parser/                  # Document parsing
-│   │   ├── frontmatter.py       # YAML frontmatter
-│   │   └── markdown.py          # Markdown structure
-│   ├── verification/            # Verification engine
-│   │   ├── engine.py            # Core verification
-│   │   └── templates.py         # Template-based checks
-│   ├── topology/                # Topology engine
-│   │   ├── complex.py           # Simplicial complex
-│   │   └── analysis.py          # Topological analysis
-│   └── cli.py                   # Command-line interface
-├── knowledge_complex_validation/    # Validation toolkit (plugin)
-├── knowledge_complex_assurance/     # Assurance toolkit (plugin)
-├── knowledge_complex_traceability/  # Traceability toolkit (plugin)
-├── knowledge_complex_audit/         # Audit toolkit (plugin)
-└── knowledge_complex_registry/      # Registry service
-```
-
-### API Design
-
-```python
-# Core API examples (technology-specific)
-
-from knowledge_complex import Document, TypeRegistry, verify
-
-# Load type registry
-registry = TypeRegistry.from_registry("public")
-registry.extend_from("./private-types")
-
-# Parse and verify document
-doc = Document.from_file("my-spec.md")
-result = verify(doc, registry)
-
-if result.passed:
-    print("Verification passed")
-else:
-    for error in result.errors:
-        print(f"Error: {error}")
-
-# Validation (requires human approval)
-from knowledge_complex_validation import ValidationSession
-
-session = ValidationSession(doc, guidance="guidance-for-spec")
-assessment = session.assess_with_llm(model="claude-opus-4-5")
-assessment.set_approver("mzargham")
-validation_edge = assessment.create_edge()
-
-# Assurance
-from knowledge_complex_assurance import AssuranceFace
-
-face = AssuranceFace.create(
-    target=doc,
-    verification_edge=verification_edge,
-    validation_edge=validation_edge,
-    coupling_edge=coupling_edge,
-    approver="mzargham"
-)
-```
-
-### CLI Design
-
-```bash
-# Verification
-kc verify document.md                    # Verify single document
-kc verify --all                          # Verify all documents
-kc verify --watch                        # Watch mode for development
-
-# Validation
-kc validate document.md --guidance guidance-for-spec
-kc validate document.md --llm-assist     # LLM-assisted assessment
-
-# Assurance
-kc assure document.md --approver mzargham
-kc audit chart.md                        # Audit assurance chart
-
-# Registry
-kc registry search "field-survey"        # Search public registry
-kc registry install type-name            # Install type from registry
-kc registry publish ./my-type            # Publish to registry
-
-# Traceability
-kc trace document.md --requirements reqs.md
-kc trace --chart project-chart.md        # Build traceability chart
-```
-
-### Extension Points
-
-| Extension Point | Mechanism | Example |
-|-----------------|-----------|---------|
-| Custom document types | Type definition files in registry | Industry-specific specs |
-| Alternative editors | Language Server Protocol (LSP) | Vim, Emacs, other IDEs |
-| Alternative explorers | Export to standard formats | Notion, Confluence |
-| Custom LLM providers | Provider interface | OpenAI, local models |
-| Custom analytics | Plugin API | Domain-specific metrics |
-| Alternative storage | Storage backend interface | Database, cloud storage |
-
-### Unit Testing Criteria
-
-- **UT1**: Document parser correctly extracts frontmatter from valid markdown files
-- **UT2**: Type System correctly validates documents against type definitions
-- **UT3**: Verification Engine produces correct pass/fail for known test cases
-- **UT4**: Topology Engine correctly computes Euler characteristic
-- **UT5**: CLI commands execute without error for valid inputs
-- **UT6**: Registry client correctly searches and retrieves packages
-- **UT7**: VS Code extension correctly triggers verification on save
-- **UT8**: LLM integration correctly formats prompts and parses responses
-
-## Traceability Matrix
-
-| Conceptual Need | Functional Requirement | Logical Component | Physical Element |
-|-----------------|----------------------|-------------------|------------------|
-| Operators need templates (A3) | F1: Author | UI1: Document Editor | VS Code extension |
-| Operators need verification feedback (A3) | F2: Verify | C3: Verification Engine | Python verification scripts |
-| Approvers need confidence (A4) | F3: Validate, F4: Assure | T1: Validation, T2: Assurance | Validation/Assurance modules |
-| Approvers need traceability (A4) | F5: Trace | T3: Traceability | Traceability module |
-| Compliance Officers need reports (A2) | F6: Audit | T4: Audit, UI4: Dashboard | Jupyter + Streamlit |
-| Workflow Builders need registry (A5) | F1.5: Search | R1: Public Registry | Registry service |
-| All need search (A3, A4, A5) | F1.3: Navigate, F1.5: Search | UI2: Knowledge Explorer | Obsidian |
-| All need AI assistance (A3, A4, A5) | F1.4: Draft | UI3: AI Assistant | Claude Code |
-
-## Constraints and Assumptions
+BlockScience produces complex deliverables for clients—research reports, system designs, technical specifications, audit findings. Current pain points:
+
+- **Documentation chaos**: Scattered locations, inconsistent formats, quality by individual expertise
+- **Knowledge capture**: Institutional knowledge not systematized or searchable
+- **Client deliverable quality**: Need to produce demonstrably assured work products
+
+**Desired state**: Documents in version-controlled repositories with consistent structure, measurable quality criteria, systematic verification, clear accountability, and demonstrable work quality through assurance charts.
+
+### Stakeholder Needs Summary
+
+| Stakeholder                    | Key Needs                                                                                                                                                                       |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **A3 Operators**               | Find templates quickly, create conforming documents without needing to understand framework, get immediate verification feedback, work with familiar tools (IDE, markdown, git) |
+| **A4 Approvers**               | Know documents are verification-ready, understand attestation scope, review efficiently, trust verification infrastructure, see both compliance and effectiveness evidence      |
+| **A5 Workflow Builders**       | Configure types without mathematical expertise, create runbooks, access reusable components, test workflows, define effectiveness metrics                                       |
+| **A6 Infrastructure Builders** | Maintain clean abstractions; develop, use and enforce ontologies; develop testable tooling, support multiple deployment contexts                                                |
+
+### Acceptance Criteria Summary
+
+| ID | Criterion | Target | Stakeholder Impact |
+|----|-----------|--------|-------------------|
+| AC1 | Document creation time | <30 min for standard types | A3, A5 |
+| AC2 | Verification feedback speed | <3 seconds | A3, A5, A6 |
+| AC3 | Verification accuracy | <5% false negatives/positives | A3, A4, A5, A6 |
+| AC4 | Search effectiveness | <5 min to find usable reference | A3, A6 |
+| AC5 | Approval efficiency | <15 min for standard documents | A4 |
+| AC6 | Approval confidence | >90% report confident | A4 |
+| AC7 | Effectiveness visibility | 100% runbooks include metrics | A4, A5 |
+| AC8 | Workflow builder productivity | <2 hr for new runbook with types | A5, A6 |
+| AC9 | Self-demonstration | 100% framework docs assured | A6 |
+| AC10 | Evaluation usefulness | >90% find scores useful | A3, A4, A5, A6 |
+| AC11 | Client demonstration | ≥3 production-quality examples | A5, A6 |
 
 ### Constraints
 
-- **C1**: All documents must remain human-readable markdown with YAML frontmatter (no binary formats)
-- **C2**: Git must remain the source of truth for version control
-- **C3**: Human approval required for all validation and assurance attestations (no fully automated trust)
-- **C4**: Internal-first deployment; external productization deferred
-- **C5**: Budget and timeline constrained; build incrementally
+| ID | Constraint |
+|----|------------|
+| C1 | Documents must remain human-readable markdown with YAML frontmatter |
+| C2 | Git must remain the source of truth for version control |
+| C3 | Human approval required for all validation and assurance (no automated trust) |
 
-### Assumptions
+## Functional Layer
 
-- **A1**: Team has Python development expertise
-- **A2**: VS Code is primary IDE for most users
-- **A3**: Claude Code available for LLM integration
-- **A4**: Obsidian acceptable for knowledge exploration
-- **A5**: Package manager infrastructure can be developed or adapted
+**Reference:** [[functional-architecture-knowledge-complex-refactor]]
+
+### Functional Architecture
+
+The framework provides 24 functions organized into 5 functional areas:
+
+| Area | Functions | Purpose |
+|------|-----------|---------|
+| **Document Authoring** | F1-F4 | Template retrieval, prior work discovery, draft generation, parameter injection |
+| **Quality Assurance** | F5-F9 | Frontmatter verification, section structure verification, count verification, reference verification, guidance evaluation |
+| **Knowledge Navigation** | F10-F12 | Full-text search, graph traversal, backlink discovery |
+| **Approval & Accountability** | F13-F18 | Approval requests, status presentation, validation edge creation, runbook tracking, metrics collection |
+| **Configuration & Meta** | F19-F24 | Spec authoring, guidance authoring, template authoring, coupling/verification/assurance construction |
+
+### Function-Criterion Matrix (Key Traces)
+
+| Criterion | Primary Functions | Rationale |
+|-----------|-------------------|-----------|
+| AC1 (Creation time) | F1, F3 | Template retrieval + draft generation enable fast document creation |
+| AC2, AC3 (Verification) | F5, F6, F7, F8 | Four-layer verification: frontmatter, sections, counts, references |
+| AC4 (Search) | F2, F10, F11, F12 | Discovery + search + graph navigation |
+| AC5, AC6, AC10 (Approval) | F14, F15, F16 | Status presentation + evaluation scores + validation edges |
+| AC7 (Effectiveness) | F17, F18 | Runbook tracking + metrics collection |
+| AC8 (Workflow builder) | F19, F20, F21, F22 | Type configuration chain: spec → guidance → template → coupling |
+| AC9 (Self-demonstration) | F8, F22, F23, F24 | Coupling + verification edge + assurance face construction |
+
+### System Testing Criteria
+
+All 24 functions have specific test methods with measurable success indicators. Key system-level tests include:
+- End-to-end workflow completion (draft → verify → validate → assure)
+- Verification accuracy against known-good and known-bad document suites
+- Evaluation correlation with expert ratings (>80% agreement)
+- Runbook step tracking accuracy (100% correct)
+
+## Logical Layer
+
+**Reference:** [[logical-architecture-knowledge-complex-refactor]]
+
+### The Base Ontology Innovation
+
+The logical architecture is founded on [[ontology-base]]—a typed simplicial complex where:
+
+**Simplex Structure:**
+- **0-simplices (vertices)** = documents with typed YAML headers
+- **1-simplices (edges)** = typed relationships between vertices
+- **2-simplices (faces)** = triangular structures (assurance, signature, authorization)
+
+**Type Hierarchy:**
+```
+vertex (abstract base)
+├── doc (content artifacts)
+│   ├── spec (structural requirements)
+│   ├── guidance (quality criteria)
+│   ├── ontology (type definitions)
+│   └── module (typed I/O transformation)
+├── actor (entities that can act)
+│   └── signer (verified identity for signing)
+├── role (organizational position)
+└── authority (atomic permission)
+```
+
+**Local Rules (Compositional Verification):**
+
+Local rules are constraints evaluated using only topologically adjacent simplices, enabling:
+- Check locally → guarantee globally
+- Incremental validation on simplex addition
+- Domain-specific constraints through face adjacency requirements
+
+Key local rules include:
+- **Module Qualification Cascade**: `qualifies(signer, module)` requires `qualifies(signer, g)` for all output guidances
+- **Signature-Assurance Adjacency**: Signature faces must share validation edge with assurance faces
+- **Assurance-B2 Anchor**: All assurance faces must trace to bootstrap (b2) anchor
+- **Runbook DAG Requirement**: `precedes` edges form directed acyclic graph
+- **Runbook I/O Chaining**: Output type of module N = input type of module N+1
+
+### Logical Architecture
+
+14 components organized into 6 areas:
+
+| Area | Components | Responsibility |
+|------|------------|----------------|
+| **Type System** | C1 Type Ontology, C2 Schema Registry | Define simplex types, schemas, local rules |
+| **Document Management** | C3 Template Registry, C4 Document Composer, C5 Simplex Store | Templates, composition, persistence with coherence enforcement |
+| **Coherence Verification** | C6 Schema Verifier, C7 Structure Analyzer, C8 Boundary Verifier | YAML, markdown, and simplicial complex verification |
+| **Quality Assessment** | C9 Evaluation Engine, C10 Result Presenter | Guidance scoring, result formatting |
+| **Knowledge Graph** | C11 Search Index, C12 Graph Navigator | Full-text search, relationship traversal |
+| **Workflow & Accountability** | C13 Workflow Coordinator, C14 Simplex Constructor | Approval workflow, edge/face creation |
+
+### Component-Function Matrix (Key Allocations)
+
+| Component | Primary Functions | Rationale |
+|-----------|-------------------|-----------|
+| C1 Type Ontology | All (supporting) | Foundation for all typed operations |
+| C6 Schema Verifier | F5 | Frontmatter verification |
+| C7 Structure Analyzer | F6, F7 | Section and count verification |
+| C8 Boundary Verifier | F8 | Reference resolution + local rules |
+| C14 Simplex Constructor | F16, F22-F24 | All edge and face creation |
+
+### Integration Testing Criteria
+
+40 interface tests ensure correct component collaboration. Key coherence tests:
+- Type inheritance chain validation
+- Edge endpoint type compliance
+- Face boundary closure
+- Local rule satisfaction (all 12 rules)
+- Euler characteristic verification
+
+## Physical Layer
+
+**Reference:** [[physical-architecture-knowledge-complex-refactor]]
+
+### Design Decisions
+
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| Data standard | Obsidian Flavored Markdown (OFM) | Wikilinks for navigation, YAML for structure, human-readable |
+| Structural truth | YAML frontmatter | Boundaries computed from YAML fields, not wikilinks |
+| Toolchain | Python-only with uv | Single language, fast environment management |
+| Human interface | Obsidian + Claude Code | Dual interface for navigation and AI-assisted authoring |
+| Accountability | GPG signatures on commits | Cryptographic verification of approvers |
+| CI enforcement | GitHub Actions | Prevents invalid documents from reaching main branch |
+
+### Physical Elements Summary
+
+| ID | Element | Technology | Purpose |
+|----|---------|------------|---------|
+| E1 | Ontology Files | OFM + YAML | Load-bearing type definitions |
+| E2 | Document Files | OFM + YAML | All simplices as markdown with frontmatter |
+| E3 | Template Files | OFM + placeholders | Document scaffolding |
+| E4 | Git Repository | Git 2.40+ with GPG | Version control and cryptographic accountability |
+| E5 | Python Package | Python 3.12+, uv | Core library implementing all logic |
+| E6 | YAML Parser | PyYAML 6.0+ | Frontmatter parsing |
+| E7 | Graph Library | NetworkX 3.2+ | In-memory graph for traversal and verification |
+| E8 | Chart Visualization | matplotlib + plotly | Visual validation of charts |
+| E9 | Obsidian | Obsidian 1.5+ | Human navigation, search, review |
+| E10 | Claude Code | Claude Code | LLM-assisted authoring |
+| E11 | GPG Signatures | GnuPG 2.x | Commit and edge signing |
+| E12 | GitHub Actions | GitHub Actions | CI enforcement of ontology rules |
+
+### Element-Component Matrix (Key Implementations)
+
+| Element | Components | Implementation Notes |
+|---------|------------|---------------------|
+| E1, E2, E3, E4 | C3, C5 | File-based storage—documents ARE the stores |
+| E5 | C4, C6-C10, C13-C14 | Python implements all programmatic logic |
+| E6 | C6, C14 | YAML parser extracts structural truth |
+| E7 | C8, C12 | NetworkX for boundary verification and graph traversal |
+| E9, E10 | C11, C12, C4, C13 | Dual interface for human and AI access |
+| E11, E12 | C13, C6-C8 | Cryptographic accountability + CI enforcement |
+
+### Deployment Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                        User Workstation                              │
+├─────────────────────────────────────────────────────────────────────┤
+│  ┌──────────────┐              ┌──────────────┐                     │
+│  │   Obsidian   │              │  Claude Code │                     │
+│  │    (E9)      │              │    (E10)     │                     │
+│  └──────┬───────┘              └──────┬───────┘                     │
+│         └─────────────┬───────────────┘                              │
+│                       ▼                                              │
+│  ┌──────────────────────────────────────────────────────────────┐   │
+│  │                  Python Package (E5)                          │   │
+│  │  ┌─────────┐ ┌─────────┐ ┌─────────────────────────────┐     │   │
+│  │  │  YAML   │ │ NetworkX│ │  Visualization               │     │   │
+│  │  │ Parser  │ │  Graph  │ │  (matplotlib, plotly)        │     │   │
+│  │  │  (E6)   │ │  (E7)   │ │        (E8)                 │     │   │
+│  │  └─────────┘ └─────────┘ └─────────────────────────────┘     │   │
+│  └──────────────────────────────────────────────────────────────┘   │
+│                       │                                              │
+│                       ▼                                              │
+│  ┌──────────────────────────────────────────────────────────────┐   │
+│  │              Git Repository (E4) + GPG (E11)                  │   │
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐             │   │
+│  │  │  Ontology   │ │  Template   │ │  Document   │             │   │
+│  │  │  Files (E1) │ │  Files (E3) │ │  Files (E2) │             │   │
+│  │  └─────────────┘ └─────────────┘ └─────────────┘             │   │
+│  │  ┌───────────────────────────────────────────────────────┐   │   │
+│  │  │  00_vertices/  │  01_edges/  │  02_faces/  │  charts/  │   │   │
+│  │  └───────────────────────────────────────────────────────┘   │   │
+│  └──────────────────────────────────────────────────────────────┘   │
+└───────────────────────┼─────────────────────────────────────────────┘
+                        │ git push
+                        ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                          GitHub (Remote)                             │
+├─────────────────────────────────────────────────────────────────────┤
+│  ┌──────────────────────────────────────────────────────────────┐   │
+│  │                  GitHub Actions (E12)                         │   │
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐             │   │
+│  │  │   verify-   │ │   verify-   │ │   verify-   │             │   │
+│  │  │  documents  │ │    types    │ │  boundaries │             │   │
+│  │  └─────────────┘ └─────────────┘ └─────────────┘             │   │
+│  └──────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Deferred Elements
+
+The following are deferred for future scaling:
+- Full-text search engine (when >10k docs)
+- CLI framework (Click) for polished non-IDE experience
+- Document/Relational database for complex queries
+- LLM abstraction layer for multi-provider support
+
+## Traceability Matrix
+
+### End-to-End Traceability
+
+| Stakeholder Need | Acceptance Criterion | Primary Functions | Components | Elements |
+|------------------|---------------------|-------------------|------------|----------|
+| Operators find templates (A3) | AC1 | F1, F3 | C3, C4 | E3, E5 |
+| Operators get verification feedback (A3) | AC2, AC3 | F5, F6, F7, F8 | C6, C7, C8 | E5, E6 |
+| Operators search prior work (A3) | AC4 | F2, F10, F11 | C11, C12 | E7, E9 |
+| Approvers review efficiently (A4) | AC5 | F14, F15 | C10 | E5, E8 |
+| Approvers sign with confidence (A4) | AC6 | F16 | C14 | E5, E11 |
+| Approvers see effectiveness (A4) | AC7, AC10 | F9, F17, F18 | C9, C13 | E5, E10 |
+| Workflow builders create types (A5) | AC8 | F19, F20, F21, F22 | C2, C3 | E1, E3, E5 |
+| Framework self-demonstrates (A6) | AC9 | F23, F24 | C14 | E5 |
+| Client demonstration (A5, A6) | AC11 | F3, F24 | C4, C14 | E2, E5 |
+
+### Constraints Trace
+
+| Constraint | Enforcement Layer | Mechanism |
+|------------|-------------------|-----------|
+| C1 (Human-readable markdown) | Physical | OFM documents (E2), YAML frontmatter (E6) |
+| C2 (Git as truth) | Physical | Git repository (E4), GitHub Actions (E12) |
+| C3 (Human approval required) | Logical + Physical | C13 Workflow Coordinator + GPG signatures (E11) |
 
 ## Risks and Mitigations
 
-| Risk | Impact | Probability | Mitigation |
-|------|--------|-------------|------------|
-| Mathematical abstraction too complex | High | Medium | Extensive testing with non-mathematical users; iterative UX improvement |
-| LLM reliability for verification | Medium | Medium | LLM assists only; human approval required; fallback to manual |
-| Registry adoption | Medium | Low | Internal-first; external registry deferred until proven internally |
-| Integration complexity (VS Code, Obsidian, Claude) | Medium | Medium | Loose coupling; graceful degradation if integrations fail |
-| Scope creep to productization | High | Medium | Explicit internal-first acceptance criteria; defer external features |
+| Risk | Impact | Likelihood | Mitigation |
+|------|--------|------------|------------|
+| Learning curve deters adoption | High | Medium | Simple document types first; hands-on training; pair with experienced users |
+| Verification too slow | Medium | Low | Profile and optimize; cache results; incremental verification |
+| Operators bypass verification | High | Medium | Automatic non-blocking verification; prominent results; tie to approval workflow |
+| Approvers rubber-stamp | High | Medium | Explicit attestation; track patterns; review effectiveness metrics |
+| Runbooks lack effectiveness metrics | Medium | High | Templates with metric placeholders; review before deployment |
+| Local rules too complex to verify | Medium | Low | Neighborhood queries in C5; star/coboundary primitives; incremental checking |
+| Ontology changes break existing docs | High | Low | Ontology files (E1) protected; change control; version-locked deployments |
+
+## Key Design Decisions
+
+### 1. OFM as Data Standard
+
+**Decision**: Use Obsidian Flavored Markdown with YAML frontmatter as the universal data format.
+
+**Rationale**:
+- Human-readable (constraint C1)
+- Wikilinks enable Obsidian navigation
+- YAML provides structural truth for programmatic access
+- Documents remain valid even if wikilinks removed
+
+### 2. YAML Frontmatter as Structural Truth
+
+**Decision**: Compute simplicial complex boundaries from YAML fields (`source`, `target`, `boundary_edges`, `boundary_vertices`), not from wikilink presence.
+
+**Rationale**:
+- Non-Obsidian tools can compute graph structure from YAML alone
+- Separates navigation concerns (wikilinks) from structural concerns (YAML)
+- Enables reliable programmatic verification
+
+### 3. Typed Simplicial Complex Foundation
+
+**Decision**: Base all document relationships on [[ontology-base]] typed simplicial complex.
+
+**Rationale**:
+- Local rules enable compositional verification (check locally, guarantee globally)
+- Face types (assurance, signature, authorization) encode accountability
+- Chart types (audit, module, runbook) enable modular organization
+- Mathematical foundation ensures coherence
+
+### 4. Python-Only Toolchain with uv
+
+**Decision**: Implement all tooling in Python 3.12+ with uv for environment management.
+
+**Rationale**:
+- Single language simplifies maintenance
+- Team expertise in Python
+- uv provides fast, reliable environment management
+- Defers TypeScript/VS Code extension complexity
+
+### 5. Dual Interface (Obsidian + Claude Code)
+
+**Decision**: Obsidian for human navigation/review; Claude Code for AI-assisted authoring.
+
+**Rationale**:
+- Obsidian excels at graph navigation and search
+- Claude Code excels at template filling and verification interpretation
+- Both operate on same git repository
+- No lock-in to either tool
+
+### 6. Cryptographic Accountability (GPG)
+
+**Decision**: Use GPG signatures on git commits for accountability.
+
+**Rationale**:
+- Verifiable attribution for validation edges
+- Tamper-evident commit history
+- Standard tooling (git + gpg)
+- Supports constraint C3 (human approval)
+
+### 7. CI Enforcement (GitHub Actions)
+
+**Decision**: Use GitHub Actions to enforce ontology rules at repository level.
+
+**Rationale**:
+- Prevents invalid documents from reaching main branch
+- Catches issues even if local checks bypassed
+- Maintains coherence across contributors
+- Enables branch protection integration
 
 ---
 
-**Note:** This architecture document follows the INCOSE SE Handbook patterns and V-model lifecycle. Physical layer specifies default tools (Python, VS Code, Claude Code, Obsidian) while Logical layer remains technology-agnostic to support future extensibility.
+**Note:** This architecture document is the capstone of the extended architecture chain. It synthesizes decisions from [[field-survey-knowledge-complex-refactor]] through [[physical-architecture-knowledge-complex-refactor]], with the [[ontology-base]] typed simplicial complex as the foundational innovation enabling systematic, verifiable knowledge management.

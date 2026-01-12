@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - guidance
-version: 1.1.0
+version: 1.2.0
 created: 2025-12-30T12:00:00Z
-modified: 2025-01-11T00:00:00Z
+modified: 2026-01-12T00:00:00Z
 dependencies: []
 criteria:
   - layer-completeness
@@ -193,21 +193,38 @@ However, starting in extended mode when rigorous traceability is expected will p
 
 ### V-Model Summary Table
 
-**Purpose:** Provide at-a-glance understanding of the full architecture lifecycle.
+**Purpose:** Provide at-a-glance understanding of the full architecture lifecycle, showing both design document status and implementation/realization progress.
 
 **Tips:**
 - Fill in all cells before detailing individual layers
-- Use the "current status" column to show where you are in the lifecycle
+- Use the "Design Status" column to show design document maturity (Draft → Review → Assured)
+- Use the "Implementation Status" column to show realization progress (Not Started → In Progress → Partial → Complete)
 - Ensure consistency—descriptions in the table should match section content
 - The table is a navigation aid; readers should be able to jump to relevant sections
+- The two status columns serve different purposes: design status tracks documentation, implementation status tracks actual system realization
+
+**Design Status Values:**
+- **Draft**: Design document in progress, not yet ready for review
+- **Review**: Design document complete, under review or awaiting assurance
+- **Assured**: Design document has been verified and validated
+
+**Implementation Status Values:**
+- **Not Started**: No implementation work has begun
+- **In Progress**: Implementation actively underway
+- **Partial**: Some tests passing, some functionality implemented
+- **Complete**: All tests passing, functionality fully realized
 
 **Anti-patterns:**
 
 - ❌ Leaving cells empty or writing "TBD"
+- ❌ Conflating design status with implementation status
+- ❌ Marking implementation "Complete" when only design is done
 
 **Preferred:**
 
 - ✅ Write brief but substantive content for each cell, even if sections need more work
+- ✅ Be honest about implementation gaps—"Not Started" is valid and useful information
+- ✅ Update implementation status as the project progresses through the V-model right side
 
 ### Conceptual Layer
 
