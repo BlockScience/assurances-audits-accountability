@@ -1,0 +1,955 @@
+"""
+Ontology rule enforcement engine.
+
+This module enforces the local rules defined in the ontology. Local rules are
+type constraints layered on top of topological structure. They cannot weaken
+topological rules (e.g., faces must have 3 edges) but can add type-specific
+constraints (e.g., verification edges must go from doc to spec).
+
+TOPOLOGY vs ONTOLOGY:
+- Topology: Structural rules of simplicial complexes. A face has 3 edges,
+  edges have 2 vertices, charts form valid simplicial complexes.
+- Ontology: Type system with local rules. Types define what edges can connect
+  to what vertices, what faces must be adjacent, degree constraints, etc.
+
+This module implements ontology verification (deterministic type checking),
+NOT validation (human judgment of fitness for purpose).
+"""
+
+from typing import Dict, Any, List, Optional, Tuple
+from dataclasses import dataclass
+from enum import Enum
+
+from .graph import ComplexGraph, build_complex_graph
+
+
+class RuleType(Enum):
+    """Types of ontology rules."""
+    DEGREE = "degree"           # Vertex degree constraints
+    EDGE_ENDPOINT = "edge-endpoint"  # Edge source/target type constraints
+    FACE_BOUNDARY = "face-boundary"  # Face must have valid boundary
+    FACE_ADJACENCY = "face-adjacency"  # Faces must share specific edges
+    STAR = "star"               # Constraints on vertex neighborhood
+
+
+class Severity(Enum):
+    """Rule violation severity."""
+    ERROR = "error"      # Must be fixed
+    WARNING = "warning"  # Should be reviewed
+
+
+@dataclass
+class RuleViolation:
+    """A single rule violation."""
+    rule_name: str
+    rule_type: RuleType
+    severity: Severity
+    element_id: str
+    element_type: str  # 'vertex', 'edge', 'face'
+    message: str
+    details: Optional[Dict[str, Any]] = None
+
+    def __str__(self) -> str:
+        return f"[{self.severity.value.upper()}] {self.rule_name}: {self.message} ({self.element_id})"
+
+
+class OntologyRuleEngine:
+    """
+    Enforces ontology local rules on a knowledge complex.
+
+    Rules are from ontology-base.md:
+    1. Vertex degree constraints
+    2. Module qualification cascade
+    3. Signature face requires guidance qualification
+    4. Module-signature shares edge with signature
+    5. Signature shares edge with assurance
+    6. Assurance requires b2 anchor
+    7. Output satisfaction requires output type
+    8. Input satisfaction requires input type
+    9. Edge endpoint type compliance
+    10. Face boundary closure
+    11. Authorization chain validity
+    12. Runbook module ordering (DAG)
+    13. Runbook I/O chaining
+    14. Execution trace DAG requirement
+    15. Execution causal chain
+    """
+
+    # Edge endpoint type constraints from ontology
+    # Format: edge_type -> (source_types, target_types)
+    # source_types/target_types are lists of allowed vertex type prefixes
+    EDGE_ENDPOINT_CONSTRAINTS = {
+        'verification': (['vertex/doc', 'vertex/spec', 'vertex/guidance', 'vertex/module'],
+                        ['vertex/spec']),
+        'validation': (['vertex/doc', 'vertex/spec', 'vertex/guidance'],
+                      ['vertex/guidance']),
+        'coupling': (['vertex/spec'], ['vertex/guidance']),
+        'signs': (['vertex/signer'], ['vertex/doc', 'vertex/spec', 'vertex/guidance']),
+        'qualifies': (['vertex/signer'], ['vertex/guidance', 'vertex/module']),
+        'has-role': (['vertex/actor'], ['vertex/role']),
+        'conveys': (['vertex/role'], ['vertex/authority']),
+        'requires-authority': (['vertex/action'], ['vertex/authority']),
+        'precedes': (['vertex/module'], ['vertex/module']),
+        'feeds': (['vertex/doc'], ['vertex/module']),
+        'yields': (['vertex/module'], ['vertex/doc']),
+        'consumes': (['vertex/execution'], ['vertex/doc']),
+        'produces': (['vertex/execution'], ['vertex/doc']),
+        'executes': (['vertex/execution'], ['vertex/module']),
+        'follows': (['vertex/execution'], ['vertex/execution']),
+    }
+
+    # Degree constraints from ontology
+    # Format: (vertex_type_prefix, edge_type, direction) -> (min, max)
+    # direction: 'out', 'in', 'any'
+    # max=None means unlimited
+    DEGREE_CONSTRAINTS = {
+        ('vertex/doc', 'verification', 'out'): (0, 1),
+        ('vertex/spec', 'coupling', 'any'): (1, 1),
+        ('vertex/guidance', 'coupling', 'any'): (1, 1),
+        ('vertex/module', 'input', 'in'): (1, None),
+        ('vertex/module', 'output', 'out'): (1, None),
+    }
+
+    def __init__(self, graph: ComplexGraph):
+        """
+        Initialize rule engine with a typed graph.
+
+        Args:
+            graph: ComplexGraph built from cache
+        """
+        self.graph = graph
+        self.violations: List[RuleViolation] = []
+
+    @classmethod
+    def from_cache(cls, cache: Dict[str, Any]) -> 'OntologyRuleEngine':
+        """Create rule engine from cache data."""
+        graph = build_complex_graph(cache)
+        return cls(graph)
+
+    def check_all(self) -> List[RuleViolation]:
+        """
+        Run all ontology rule checks.
+
+        Returns:
+            List of all rule violations found
+        """
+        self.violations = []
+
+        # Core type constraints
+        self._check_edge_endpoint_constraints()
+        self._check_degree_constraints()
+        self._check_face_boundary_closure()
+
+        # Signature and assurance rules
+        self._check_signature_requires_qualification()
+        self._check_signature_shares_edge_with_assurance()
+        self._check_assurance_requires_b2_anchor()
+
+        # Module rules
+        self._check_module_qualification_cascade()
+        self._check_module_signature_shares_edge()
+
+        # Satisfaction rules
+        self._check_input_satisfaction_requires_input_type()
+        self._check_output_satisfaction_requires_output_type()
+
+        # DAG requirements
+        self._check_execution_trace_dag()
+        self._check_runbook_module_ordering()
+
+        # Chaining rules
+        self._check_runbook_io_chaining()
+        self._check_execution_causal_chain()
+
+        return self.violations
+
+    def _add_violation(
+        self,
+        rule_name: str,
+        rule_type: RuleType,
+        severity: Severity,
+        element_id: str,
+        element_type: str,
+        message: str,
+        details: Optional[Dict[str, Any]] = None
+    ):
+        """Add a rule violation."""
+        self.violations.append(RuleViolation(
+            rule_name=rule_name,
+            rule_type=rule_type,
+            severity=severity,
+            element_id=element_id,
+            element_type=element_type,
+            message=message,
+            details=details
+        ))
+
+    # ========== Edge Endpoint Type Compliance (Rule 9) ==========
+
+    def _check_edge_endpoint_constraints(self):
+        """
+        Check that edge endpoints match type constraints.
+
+        Rule: Edge source and target must match type constraints defined
+        for that edge type in the ontology.
+        """
+        for edge_id, edge in self.graph.edges.items():
+            # Extract base edge type
+            edge_type = edge.type.replace('edge/', '') if edge.type.startswith('edge/') else edge.type
+
+            if edge_type not in self.EDGE_ENDPOINT_CONSTRAINTS:
+                continue  # Unknown edge type - skip (might be app-specific)
+
+            source_types, target_types = self.EDGE_ENDPOINT_CONSTRAINTS[edge_type]
+
+            # Check source
+            source_vertex = self.graph.get_vertex(edge.source)
+            if source_vertex:
+                if not self._type_matches_any(source_vertex.type, source_types):
+                    self._add_violation(
+                        rule_name="edge_endpoint_type_compliance",
+                        rule_type=RuleType.EDGE_ENDPOINT,
+                        severity=Severity.ERROR,
+                        element_id=edge_id,
+                        element_type="edge",
+                        message=f"Source vertex type '{source_vertex.type}' not allowed for edge type '{edge_type}'",
+                        details={
+                            'source_id': edge.source,
+                            'source_type': source_vertex.type,
+                            'allowed_source_types': source_types
+                        }
+                    )
+
+            # Check target
+            target_vertex = self.graph.get_vertex(edge.target)
+            if target_vertex:
+                if not self._type_matches_any(target_vertex.type, target_types):
+                    self._add_violation(
+                        rule_name="edge_endpoint_type_compliance",
+                        rule_type=RuleType.EDGE_ENDPOINT,
+                        severity=Severity.ERROR,
+                        element_id=edge_id,
+                        element_type="edge",
+                        message=f"Target vertex type '{target_vertex.type}' not allowed for edge type '{edge_type}'",
+                        details={
+                            'target_id': edge.target,
+                            'target_type': target_vertex.type,
+                            'allowed_target_types': target_types
+                        }
+                    )
+
+    def _type_matches_any(self, actual_type: str, allowed_types: List[str]) -> bool:
+        """Check if actual type matches any of the allowed type prefixes."""
+        for allowed in allowed_types:
+            if actual_type == allowed or actual_type.startswith(f"{allowed}/"):
+                return True
+        return False
+
+    # ========== Degree Constraints (Rules 1-7) ==========
+
+    def _check_degree_constraints(self):
+        """
+        Check vertex degree constraints.
+
+        Rule: Vertices of certain types have min/max constraints on
+        incident edges of specific types.
+        """
+        for vid, vertex in self.graph.vertices.items():
+            for (vertex_type_prefix, edge_type, direction), (min_deg, max_deg) in self.DEGREE_CONSTRAINTS.items():
+                # Check if this vertex matches the constraint's vertex type
+                if not (vertex.type == vertex_type_prefix or vertex.type.startswith(f"{vertex_type_prefix}/")):
+                    continue
+
+                # Count edges of this type
+                if direction == 'out':
+                    count = self.graph.out_degree(vid, edge_type)
+                elif direction == 'in':
+                    count = self.graph.in_degree(vid, edge_type)
+                else:  # 'any'
+                    count = self.graph.degree(vid, edge_type)
+
+                # Check constraints
+                if count < min_deg:
+                    self._add_violation(
+                        rule_name="degree_constraint",
+                        rule_type=RuleType.DEGREE,
+                        severity=Severity.ERROR,
+                        element_id=vid,
+                        element_type="vertex",
+                        message=f"Vertex has {count} {edge_type} edges ({direction}), minimum is {min_deg}",
+                        details={
+                            'vertex_type': vertex.type,
+                            'edge_type': edge_type,
+                            'direction': direction,
+                            'actual': count,
+                            'min': min_deg,
+                            'max': max_deg
+                        }
+                    )
+
+                if max_deg is not None and count > max_deg:
+                    self._add_violation(
+                        rule_name="degree_constraint",
+                        rule_type=RuleType.DEGREE,
+                        severity=Severity.ERROR,
+                        element_id=vid,
+                        element_type="vertex",
+                        message=f"Vertex has {count} {edge_type} edges ({direction}), maximum is {max_deg}",
+                        details={
+                            'vertex_type': vertex.type,
+                            'edge_type': edge_type,
+                            'direction': direction,
+                            'actual': count,
+                            'min': min_deg,
+                            'max': max_deg
+                        }
+                    )
+
+    # ========== Face Boundary Closure (Rule 10) ==========
+
+    def _check_face_boundary_closure(self):
+        """
+        Check that face boundaries form closed triangles.
+
+        Rule: Face boundary edges must form a closed triangle
+        connecting exactly three vertices.
+
+        Note: This is technically a topological rule, but we check it
+        here for completeness since the ontology specifies it.
+        """
+        for fid, face in self.graph.faces.items():
+            # Must have exactly 3 vertices
+            if len(face.vertices) != 3:
+                self._add_violation(
+                    rule_name="face_boundary_closure",
+                    rule_type=RuleType.FACE_BOUNDARY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"Face has {len(face.vertices)} vertices, must have exactly 3",
+                    details={'vertices': face.vertices}
+                )
+                continue
+
+            # Must have exactly 3 edges
+            if len(face.edges) != 3:
+                self._add_violation(
+                    rule_name="face_boundary_closure",
+                    rule_type=RuleType.FACE_BOUNDARY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"Face has {len(face.edges)} boundary edges, must have exactly 3",
+                    details={'edges': face.edges}
+                )
+                continue
+
+            # Check that edges connect the vertices
+            edge_vertices = set()
+            for eid in face.edges:
+                edge = self.graph.get_edge(eid)
+                if edge:
+                    edge_vertices.add(edge.source)
+                    edge_vertices.add(edge.target)
+
+            face_vertex_set = set(face.vertices)
+            if edge_vertices != face_vertex_set:
+                self._add_violation(
+                    rule_name="face_boundary_closure",
+                    rule_type=RuleType.FACE_BOUNDARY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message="Face boundary edges don't connect the face's vertices",
+                    details={
+                        'face_vertices': list(face_vertex_set),
+                        'edge_vertices': list(edge_vertices)
+                    }
+                )
+
+    # ========== Signature Requires Qualification (Rule 3) ==========
+
+    def _check_signature_requires_qualification(self):
+        """
+        Check that signature faces have required qualifies edge.
+
+        Rule: f:signature:(doc, guidance, signer) requires
+        qualifies(signer, guidance) in signer's star.
+        """
+        for fid in self.graph.get_faces_by_type('signature'):
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            # Extract signer and guidance from face data
+            signer_id = face.data.get('signer')
+            guidance_id = face.data.get('guidance')
+
+            if not signer_id or not guidance_id:
+                self._add_violation(
+                    rule_name="signature_requires_qualification",
+                    rule_type=RuleType.STAR,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message="Signature face missing signer or guidance field",
+                    details={'signer': signer_id, 'guidance': guidance_id}
+                )
+                continue
+
+            # Check for qualifies edge from signer to guidance
+            has_qualifies = self.graph.edge_exists(signer_id, guidance_id, 'qualifies')
+
+            if not has_qualifies:
+                self._add_violation(
+                    rule_name="signature_requires_qualification",
+                    rule_type=RuleType.STAR,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"Signer '{signer_id}' lacks qualifies edge to guidance '{guidance_id}'",
+                    details={'signer': signer_id, 'guidance': guidance_id}
+                )
+
+    # ========== Signature Shares Edge with Assurance (Rule 5) ==========
+
+    def _check_signature_shares_edge_with_assurance(self):
+        """
+        Check that signature faces share validation edge with assurance face.
+
+        Rule: f:signature: must share e:validation: edge with f:assurance: face.
+        """
+        for fid in self.graph.get_faces_by_type('signature'):
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            validation_edge_id = face.data.get('validation_edge')
+            if not validation_edge_id:
+                # Try to find validation edge in boundary
+                for eid in face.edges:
+                    if self.graph._edge_matches_type(eid, 'validation'):
+                        validation_edge_id = eid
+                        break
+
+            if not validation_edge_id:
+                self._add_violation(
+                    rule_name="signature_shares_validation_with_assurance",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message="Signature face has no validation edge in boundary",
+                    details={'edges': face.edges}
+                )
+                continue
+
+            # Check if any assurance face shares this edge
+            assurance_faces = self.graph.get_faces_containing_edge(validation_edge_id, 'assurance')
+
+            if not assurance_faces:
+                self._add_violation(
+                    rule_name="signature_shares_validation_with_assurance",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"No assurance face shares validation edge '{validation_edge_id}'",
+                    details={'validation_edge': validation_edge_id}
+                )
+
+    # ========== Assurance Requires B2 Anchor (Rule 6) ==========
+
+    def _check_assurance_requires_b2_anchor(self):
+        """
+        Check that assurance faces can trace to b2 anchor.
+
+        Rule: f:assurance: must be adjacent to f:b2: sharing e:coupling: edge.
+        The assurance chain must terminate at a b2 face (no infinite regress).
+        """
+        # Get all assurance and b2 faces
+        assurance_faces = set(self.graph.get_faces_by_type('assurance'))
+        b2_faces = set(self.graph.get_faces_by_type('b2'))
+
+        # B2 faces are self-anchoring (bootstrap)
+        # For each non-b2 assurance face, trace to b2
+
+        for fid in assurance_faces:
+            if fid in b2_faces:
+                continue  # B2 faces don't need further anchoring
+
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            # Find coupling edge
+            coupling_edge_id = face.data.get('coupling_edge')
+            if not coupling_edge_id:
+                for eid in face.edges:
+                    if self.graph._edge_matches_type(eid, 'coupling'):
+                        coupling_edge_id = eid
+                        break
+
+            if not coupling_edge_id:
+                self._add_violation(
+                    rule_name="assurance_requires_b2_anchor",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message="Assurance face has no coupling edge",
+                    details={'edges': face.edges}
+                )
+                continue
+
+            # Trace coupling edges to find b2 anchor
+            visited = {fid}
+            found_b2 = self._trace_to_b2(fid, coupling_edge_id, visited, b2_faces)
+
+            if not found_b2:
+                self._add_violation(
+                    rule_name="assurance_requires_b2_anchor",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.WARNING,  # Warning because chain might be incomplete
+                    element_id=fid,
+                    element_type="face",
+                    message="Assurance face cannot trace to b2 anchor through coupling edges",
+                    details={'coupling_edge': coupling_edge_id, 'visited': list(visited)}
+                )
+
+    def _trace_to_b2(
+        self,
+        face_id: str,
+        coupling_edge_id: str,
+        visited: set,
+        b2_faces: set,
+        max_depth: int = 20
+    ) -> bool:
+        """
+        Recursively trace coupling edges to find b2 anchor.
+
+        Returns True if b2 face found, False otherwise.
+        """
+        if len(visited) > max_depth:
+            return False
+
+        # Get faces sharing the coupling edge
+        adjacent_faces = self.graph.get_faces_containing_edge(coupling_edge_id)
+
+        for adj_fid in adjacent_faces:
+            if adj_fid == face_id or adj_fid in visited:
+                continue
+
+            # Check if it's a b2 face
+            if adj_fid in b2_faces:
+                return True
+
+            visited.add(adj_fid)
+
+            # If it's an assurance face, trace further
+            adj_face = self.graph.get_face(adj_fid)
+            if adj_face and self.graph._face_matches_type(adj_fid, 'assurance'):
+                # Find its coupling edge
+                next_coupling = None
+                for eid in adj_face.edges:
+                    if self.graph._edge_matches_type(eid, 'coupling') and eid != coupling_edge_id:
+                        next_coupling = eid
+                        break
+
+                if next_coupling:
+                    if self._trace_to_b2(adj_fid, next_coupling, visited, b2_faces, max_depth):
+                        return True
+
+        return False
+
+    # ========== Module Qualification Cascade (Rule 2) ==========
+
+    def _check_module_qualification_cascade(self):
+        """
+        Check module qualification cascade rule.
+
+        Rule: qualifies(signer, module) requires qualifies(signer, g)
+        for every guidance g in module's output faces.
+        """
+        # Find all qualifies edges to modules
+        for eid in self.graph.get_edges_by_type('qualifies'):
+            edge = self.graph.get_edge(eid)
+            if not edge:
+                continue
+
+            target_vertex = self.graph.get_vertex(edge.target)
+            if not target_vertex:
+                continue
+
+            # Check if target is a module
+            if not (target_vertex.type == 'vertex/module' or target_vertex.type.startswith('vertex/module/')):
+                continue
+
+            signer_id = edge.source
+            module_id = edge.target
+
+            # Find output faces for this module
+            output_faces = self.graph.get_faces_containing_vertex(module_id, 'output')
+
+            for output_fid in output_faces:
+                output_face = self.graph.get_face(output_fid)
+                if not output_face:
+                    continue
+
+                # Get guidance from output face
+                guidance_id = output_face.data.get('guidance')
+                if not guidance_id:
+                    continue
+
+                # Check signer has qualifies edge to this guidance
+                has_guidance_qual = self.graph.edge_exists(signer_id, guidance_id, 'qualifies')
+
+                if not has_guidance_qual:
+                    self._add_violation(
+                        rule_name="module_qualification_cascade",
+                        rule_type=RuleType.STAR,
+                        severity=Severity.ERROR,
+                        element_id=eid,
+                        element_type="edge",
+                        message=f"Signer '{signer_id}' qualified for module '{module_id}' but lacks qualification for output guidance '{guidance_id}'",
+                        details={
+                            'signer': signer_id,
+                            'module': module_id,
+                            'missing_guidance': guidance_id,
+                            'output_face': output_fid
+                        }
+                    )
+
+    # ========== Module-Signature Shares Edge (Rule 4) ==========
+
+    def _check_module_signature_shares_edge(self):
+        """
+        Check that module-signature faces share signs edge with signature face.
+
+        Rule: f:module-signature: must share e:signs: edge with f:signature: face.
+        """
+        for fid in self.graph.get_faces_by_type('module-signature'):
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            # Find signs edge in boundary
+            signs_edge_id = None
+            for eid in face.edges:
+                if self.graph._edge_matches_type(eid, 'signs'):
+                    signs_edge_id = eid
+                    break
+
+            if not signs_edge_id:
+                self._add_violation(
+                    rule_name="module_signature_shares_signs_edge",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message="Module-signature face has no signs edge in boundary",
+                    details={'edges': face.edges}
+                )
+                continue
+
+            # Check if any signature face shares this edge
+            signature_faces = self.graph.get_faces_containing_edge(signs_edge_id, 'signature')
+
+            if not signature_faces:
+                self._add_violation(
+                    rule_name="module_signature_shares_signs_edge",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"No signature face shares signs edge '{signs_edge_id}'",
+                    details={'signs_edge': signs_edge_id}
+                )
+
+    # ========== Input/Output Satisfaction Rules (Rules 7-8) ==========
+
+    def _check_input_satisfaction_requires_input_type(self):
+        """
+        Check that input-satisfaction faces share edges with input faces.
+
+        Rule: f:input-satisfaction: must share edges with f:input: in module chart.
+        """
+        for fid in self.graph.get_faces_by_type('input-satisfaction'):
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            module_id = face.data.get('module')
+            if not module_id:
+                continue
+
+            # Find input faces for this module
+            input_faces = self.graph.get_faces_containing_vertex(module_id, 'input')
+
+            if not input_faces:
+                self._add_violation(
+                    rule_name="input_satisfaction_requires_input_type",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"No input face found for module '{module_id}'",
+                    details={'module': module_id}
+                )
+                continue
+
+            # Check for shared edges with any input face
+            has_shared_edge = False
+            for input_fid in input_faces:
+                shared = self.graph.faces_share_edge(fid, input_fid)
+                if shared:
+                    has_shared_edge = True
+                    break
+
+            if not has_shared_edge:
+                self._add_violation(
+                    rule_name="input_satisfaction_requires_input_type",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message="Input-satisfaction face shares no edges with module's input faces",
+                    details={'module': module_id, 'input_faces': input_faces}
+                )
+
+    def _check_output_satisfaction_requires_output_type(self):
+        """
+        Check that output-satisfaction faces share edges with output faces.
+
+        Rule: f:output-satisfaction: must share edges with f:output: in module chart.
+        """
+        for fid in self.graph.get_faces_by_type('output-satisfaction'):
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            module_id = face.data.get('module')
+            if not module_id:
+                continue
+
+            # Find output faces for this module
+            output_faces = self.graph.get_faces_containing_vertex(module_id, 'output')
+
+            if not output_faces:
+                self._add_violation(
+                    rule_name="output_satisfaction_requires_output_type",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"No output face found for module '{module_id}'",
+                    details={'module': module_id}
+                )
+                continue
+
+            # Check for shared edges with any output face
+            has_shared_edge = False
+            for output_fid in output_faces:
+                shared = self.graph.faces_share_edge(fid, output_fid)
+                if shared:
+                    has_shared_edge = True
+                    break
+
+            if not has_shared_edge:
+                self._add_violation(
+                    rule_name="output_satisfaction_requires_output_type",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message="Output-satisfaction face shares no edges with module's output faces",
+                    details={'module': module_id, 'output_faces': output_faces}
+                )
+
+    # ========== Execution Trace DAG (Rule 14) ==========
+
+    def _check_execution_trace_dag(self):
+        """
+        Check that follows edges form a DAG.
+
+        Rule: Follows edges MUST form a directed acyclic graph (causality).
+        """
+        is_dag, cycle = self.graph.check_dag('follows')
+
+        if not is_dag:
+            self._add_violation(
+                rule_name="execution_trace_dag",
+                rule_type=RuleType.EDGE_ENDPOINT,
+                severity=Severity.ERROR,
+                element_id="follows_edges",
+                element_type="edge",
+                message="Follows edges contain a cycle (violates causality)",
+                details={'cycle_vertices': cycle}
+            )
+
+    # ========== Runbook Module Ordering (Rule 12) ==========
+
+    def _check_runbook_module_ordering(self):
+        """
+        Check that precedes edges form a valid partial order.
+
+        Rule: Precedes edges define a partial order on modules.
+        Note: Same module MAY appear multiple times if I/O types are compatible.
+        """
+        # Note: Unlike follows edges, precedes edges need not be a strict DAG
+        # because a module can refine its own output (iterative refinement).
+        # We only check for type-incompatible cycles.
+
+        # For now, just verify precedes edges connect modules
+        for eid in self.graph.get_edges_by_type('precedes'):
+            edge = self.graph.get_edge(eid)
+            if not edge:
+                continue
+
+            source = self.graph.get_vertex(edge.source)
+            target = self.graph.get_vertex(edge.target)
+
+            if source and not self._type_matches_any(source.type, ['vertex/module']):
+                self._add_violation(
+                    rule_name="runbook_module_ordering",
+                    rule_type=RuleType.EDGE_ENDPOINT,
+                    severity=Severity.ERROR,
+                    element_id=eid,
+                    element_type="edge",
+                    message=f"Precedes edge source '{edge.source}' is not a module",
+                    details={'source_type': source.type if source else None}
+                )
+
+            if target and not self._type_matches_any(target.type, ['vertex/module']):
+                self._add_violation(
+                    rule_name="runbook_module_ordering",
+                    rule_type=RuleType.EDGE_ENDPOINT,
+                    severity=Severity.ERROR,
+                    element_id=eid,
+                    element_type="edge",
+                    message=f"Precedes edge target '{edge.target}' is not a module",
+                    details={'target_type': target.type if target else None}
+                )
+
+    # ========== Runbook I/O Chaining (Rule 13) ==========
+
+    def _check_runbook_io_chaining(self):
+        """
+        Check runbook I/O type chaining.
+
+        Rule: Prior module's output type must match subsequent module's input type.
+        """
+        for eid in self.graph.get_edges_by_type('precedes'):
+            edge = self.graph.get_edge(eid)
+            if not edge:
+                continue
+
+            prior_module = edge.source
+            next_module = edge.target
+
+            # Get output faces of prior module
+            prior_outputs = self.graph.get_faces_containing_vertex(prior_module, 'output')
+
+            # Get input faces of next module
+            next_inputs = self.graph.get_faces_containing_vertex(next_module, 'input')
+
+            if not prior_outputs or not next_inputs:
+                continue  # Can't check without both
+
+            # Collect output specs from prior
+            prior_output_specs = set()
+            for fid in prior_outputs:
+                face = self.graph.get_face(fid)
+                if face and face.data.get('spec'):
+                    prior_output_specs.add(face.data['spec'])
+
+            # Collect input specs from next
+            next_input_specs = set()
+            for fid in next_inputs:
+                face = self.graph.get_face(fid)
+                if face and face.data.get('spec'):
+                    next_input_specs.add(face.data['spec'])
+
+            # Check for overlap
+            matching_specs = prior_output_specs & next_input_specs
+
+            if not matching_specs and prior_output_specs and next_input_specs:
+                self._add_violation(
+                    rule_name="runbook_io_chaining",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=eid,
+                    element_type="edge",
+                    message=f"No matching I/O type between modules",
+                    details={
+                        'prior_module': prior_module,
+                        'next_module': next_module,
+                        'prior_output_specs': list(prior_output_specs),
+                        'next_input_specs': list(next_input_specs)
+                    }
+                )
+
+    # ========== Execution Causal Chain (Rule 15) ==========
+
+    def _check_execution_causal_chain(self):
+        """
+        Check execution causal chain.
+
+        Rule: If execution B follows execution A, then B must consume
+        at least one document that A produced.
+        """
+        for eid in self.graph.get_edges_by_type('follows'):
+            edge = self.graph.get_edge(eid)
+            if not edge:
+                continue
+
+            # B follows A means: A -> B (A precedes B)
+            exec_a = edge.source
+            exec_b = edge.target
+
+            # Get documents produced by A
+            docs_produced_by_a = set()
+            for prod_eid in self.graph.get_edges_from(exec_a, 'produces'):
+                prod_edge = self.graph.get_edge(prod_eid)
+                if prod_edge:
+                    docs_produced_by_a.add(prod_edge.target)
+
+            # Get documents consumed by B
+            docs_consumed_by_b = set()
+            for cons_eid in self.graph.get_edges_from(exec_b, 'consumes'):
+                cons_edge = self.graph.get_edge(cons_eid)
+                if cons_edge:
+                    docs_consumed_by_b.add(cons_edge.target)
+
+            # Check overlap
+            shared_docs = docs_produced_by_a & docs_consumed_by_b
+
+            if not shared_docs and docs_produced_by_a:
+                self._add_violation(
+                    rule_name="execution_causal_chain",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=eid,
+                    element_type="edge",
+                    message=f"Execution '{exec_b}' follows '{exec_a}' but consumes none of A's outputs",
+                    details={
+                        'exec_a': exec_a,
+                        'exec_b': exec_b,
+                        'a_produces': list(docs_produced_by_a),
+                        'b_consumes': list(docs_consumed_by_b)
+                    }
+                )
+
+
+def check_ontology_rules(cache: Dict[str, Any]) -> List[RuleViolation]:
+    """
+    Convenience function to check all ontology rules.
+
+    Args:
+        cache: Parsed complex.json data
+
+    Returns:
+        List of rule violations
+    """
+    engine = OntologyRuleEngine.from_cache(cache)
+    return engine.check_all()

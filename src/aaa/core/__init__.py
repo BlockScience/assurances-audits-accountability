@@ -67,6 +67,22 @@ from .resources import (
     get_templates_path,
 )
 
+from .graph import (
+    ComplexGraph,
+    TypedVertex,
+    TypedEdge,
+    TypedFace,
+    build_complex_graph,
+)
+
+from .rules import (
+    OntologyRuleEngine,
+    RuleViolation,
+    RuleType,
+    Severity,
+    check_ontology_rules,
+)
+
 # Backwards compatibility alias
 audit_chart = audit_assurance_chart
 
@@ -113,4 +129,16 @@ __all__ = [
     'get_bundled_templates_path',
     'get_bundled_foundation_path',
     'get_templates_path',
+    # Graph
+    'ComplexGraph',
+    'TypedVertex',
+    'TypedEdge',
+    'TypedFace',
+    'build_complex_graph',
+    # Rules (Ontology Verification)
+    'OntologyRuleEngine',
+    'RuleViolation',
+    'RuleType',
+    'Severity',
+    'check_ontology_rules',
 ]

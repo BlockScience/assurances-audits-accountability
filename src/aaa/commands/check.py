@@ -5,9 +5,11 @@ Examples:
     aaa check accountability document.md
     aaa check topology charts/my-chart
     aaa check ontology
+    aaa check rules
 """
 
 import click
+import json
 import sys
 from pathlib import Path
 
@@ -17,6 +19,9 @@ from aaa.core import (
     get_bundled_foundation_path,
     check_validation_edge_accountability,
     find_holes,
+    check_ontology_rules,
+    load_cache,
+    Severity,
 )
 
 
@@ -30,6 +35,7 @@ def check(ctx):
         aaa check accountability <file>  - Check accountability statements
         aaa check topology <chart>       - Check topological properties
         aaa check ontology               - Verify ontology integrity
+        aaa check rules                  - Verify ontology type rules
     """
     pass
 
@@ -227,4 +233,113 @@ def ontology(ctx, templates, verbose):
         click.echo(f"\nAll ontology files valid ({len(ontology_files)} checked)")
     else:
         click.echo(f"\nSome ontology files invalid", err=True)
+        sys.exit(1)
+
+
+@check.command()
+@click.option('--verbose', '-v', is_flag=True, help='Show detailed output')
+@click.option('--json-output', '-j', is_flag=True, help='Output results as JSON')
+@click.option('--warnings/--no-warnings', default=True, help='Include warnings (default: yes)')
+@click.pass_context
+def rules(ctx, verbose, json_output, warnings):
+    """Verify ontology type rules against the knowledge complex.
+
+    Checks that all elements conform to ontology local rules:
+    - Edge endpoint type constraints
+    - Vertex degree constraints
+    - Face boundary closure
+    - Signature/assurance face adjacency requirements
+    - Module qualification cascade
+    - Execution trace DAG requirements
+    - And more...
+
+    IMPORTANT: This is verification (deterministic type checking),
+    not validation (human judgment of fitness for purpose).
+
+    \b
+    Examples:
+        aaa check rules              # Check all rules
+        aaa check rules -v           # Verbose output
+        aaa check rules --json       # JSON output for CI/CD
+        aaa check rules --no-warnings  # Errors only
+    """
+    repo_root = ctx.obj.get('repo_root', Path.cwd())
+
+    # Load cache
+    try:
+        cache = load_cache(repo_root)
+    except FileNotFoundError:
+        click.echo("Error: complex.json not found. Run 'aaa build' first.", err=True)
+        sys.exit(1)
+
+    if not json_output:
+        click.echo("Checking ontology rules...")
+        stats = cache.get('statistics', {})
+        click.echo(f"  Vertices: {stats.get('vertices', 0)}")
+        click.echo(f"  Edges: {stats.get('edges', 0)}")
+        click.echo(f"  Faces: {stats.get('faces', 0)}")
+        click.echo("")
+
+    # Run rule checks
+    violations = check_ontology_rules(cache)
+
+    # Filter warnings if requested
+    if not warnings:
+        violations = [v for v in violations if v.severity == Severity.ERROR]
+
+    # Count by severity
+    errors = [v for v in violations if v.severity == Severity.ERROR]
+    warns = [v for v in violations if v.severity == Severity.WARNING]
+
+    if json_output:
+        # JSON output for CI/CD integration
+        output = {
+            'status': 'pass' if not errors else 'fail',
+            'errors': len(errors),
+            'warnings': len(warns),
+            'violations': [
+                {
+                    'rule': v.rule_name,
+                    'type': v.rule_type.value,
+                    'severity': v.severity.value,
+                    'element_id': v.element_id,
+                    'element_type': v.element_type,
+                    'message': v.message,
+                    'details': v.details
+                }
+                for v in violations
+            ]
+        }
+        click.echo(json.dumps(output, indent=2))
+    else:
+        # Human-readable output
+        if not violations:
+            click.echo("All ontology rules passed!")
+        else:
+            # Group by rule name for cleaner output
+            by_rule = {}
+            for v in violations:
+                if v.rule_name not in by_rule:
+                    by_rule[v.rule_name] = []
+                by_rule[v.rule_name].append(v)
+
+            for rule_name, rule_violations in by_rule.items():
+                click.echo(f"\n{rule_name} ({len(rule_violations)} violation(s)):")
+
+                for v in rule_violations[:10]:  # Show first 10 per rule
+                    severity_marker = "ERROR" if v.severity == Severity.ERROR else "WARN"
+                    click.echo(f"  [{severity_marker}] {v.element_id}")
+                    click.echo(f"    {v.message}")
+
+                    if verbose and v.details:
+                        for key, value in v.details.items():
+                            click.echo(f"    {key}: {value}")
+
+                if len(rule_violations) > 10:
+                    click.echo(f"  ... and {len(rule_violations) - 10} more")
+
+            click.echo(f"\nSummary: {len(errors)} error(s), {len(warns)} warning(s)")
+
+    # Exit with error if there are errors
+    if errors:
         sys.exit(1)
