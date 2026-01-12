@@ -64,8 +64,9 @@ When using extended mode (see Architecture Modes below), these fields reference 
 | `functional_architecture_ref` | string | OPTIONAL | Reference to functional-architecture document |
 | `logical_architecture_ref` | string | OPTIONAL | Reference to logical-architecture document |
 | `physical_architecture_ref` | string | OPTIONAL | Reference to physical-architecture document |
+| `requirements_trace_ref` | string | OPTIONAL | Reference to requirements traceability report |
 
-**Note:** In extended mode, all four references MUST be present. In standard mode, these fields are omitted.
+**Note:** In extended mode, all four architecture layer references MUST be present. The `requirements_trace_ref` is RECOMMENDED for extended mode to provide formal bidirectional traceability evidence. In standard mode, these fields are omitted.
 
 ### Optional Metadata
 
@@ -264,12 +265,17 @@ The four layers are documented in separate extended architecture documents, and 
 - V-Model Summary table (required)
 - Layer sections with references to extended documents
 - Synthesis of key content (not duplication)
+- Optional requirements traceability report reference
 
 Extended mode requires all four frontmatter references:
 - `conceptual_architecture_ref` pointing to a valid conceptual-architecture document
 - `functional_architecture_ref` pointing to a valid functional-architecture document
 - `logical_architecture_ref` pointing to a valid logical-architecture document
 - `physical_architecture_ref` pointing to a valid physical-architecture document
+
+Extended mode RECOMMENDS:
+
+- `requirements_trace_ref` pointing to a valid requirements traceability report that demonstrates bidirectional coverage from stakeholder needs through implementation elements
 
 **Requirements:** Layer sections in extended mode MUST reference their extended documents and MAY contain abbreviated synthesis content rather than full inline detail. The minimum element counts (3+ per layer) are satisfied by the referenced extended documents, not the summary architecture.
 
@@ -278,6 +284,7 @@ This mode is appropriate for:
 - Programs needing stakeholder-criterion, function-criterion, component-function, and element-component matrices
 - Formal assurance requirements
 - Multi-team projects where each architecture layer may be owned separately
+- Compliance-critical work requiring evidence of complete requirements coverage
 
 ### Mode Detection
 
@@ -400,6 +407,7 @@ conceptual_architecture_ref: <string>   # Reference to conceptual-architecture d
 functional_architecture_ref: <string>   # Reference to functional-architecture doc
 logical_architecture_ref: <string>      # Reference to logical-architecture doc
 physical_architecture_ref: <string>     # Reference to physical-architecture doc
+requirements_trace_ref: <string>        # RECOMMENDED: Reference to requirements trace report
 
 # Required body sections (markdown)
 ## Overview

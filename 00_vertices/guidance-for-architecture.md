@@ -76,7 +76,7 @@ Use extended mode when:
 - **Evolving designs** where layers change at different rates
 - **Compliance requirements** requiring explicit traceability from stakeholder needs to implementation
 
-Extended mode produces four separate extended architecture documents plus a summary architecture:
+Extended mode produces four separate extended architecture documents plus a summary architecture, with an optional requirements traceability report:
 
 ```text
 field-survey (actors, resources)
@@ -95,19 +95,23 @@ physical-architecture (Element × Component matrix)
     │
     ▼
 architecture (V-Model synthesis referencing all four)
+    │
+    ▼
+requirements-trace (RECOMMENDED: bidirectional traceability analysis)
 ```
 
-Each extended document contains a bipartite relationship matrix enabling full traceability from stakeholder needs through to implementation elements.
+Each extended document contains a bipartite relationship matrix enabling full traceability from stakeholder needs through to implementation elements. The optional requirements trace report consolidates this traceability into a single document with forward trace (needs → elements), backward trace (elements → needs), and gap analysis.
 
 ### Mode Comparison
 
 | Aspect | Standard Mode | Extended Mode |
 |--------|---------------|---------------|
-| Documents produced | 1 architecture document | 4 extended + 1 summary |
-| Traceability | Implicit through structure | Explicit via matrices |
+| Documents produced | 1 architecture document | 4 extended + 1 summary + optional trace |
+| Traceability | Implicit through structure | Explicit via matrices and trace report |
 | Authoring time | Faster (2-4 hours) | More thorough (1-2 days) |
 | Layer ownership | Single owner | Can be distributed |
 | Formal assurance | Basic verification | Full assurance with matrices |
+| Gap analysis | Manual review | Formal requirements trace report |
 | Best for | Small-medium systems | Complex, compliance-critical systems |
 
 ### Transitioning Between Modes
@@ -118,6 +122,7 @@ It is possible to start with standard mode and upgrade to extended mode later:
 2. Build the bipartite relationship matrices
 3. Update the summary architecture to reference the extended documents
 4. Add the four `*_architecture_ref` frontmatter fields
+5. (Optional) Create a requirements trace report and add `requirements_trace_ref`
 
 However, starting in extended mode when rigorous traceability is expected will produce better results than retrofitting.
 
