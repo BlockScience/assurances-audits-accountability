@@ -20,7 +20,7 @@ from typing import Dict, Any, List, Optional, Tuple
 from dataclasses import dataclass
 from enum import Enum
 
-from .graph import ComplexGraph, build_complex_graph
+from .complex import SimplicialComplex, ComplexGraph, build_simplicial_complex, build_complex_graph
 
 
 class RuleType(Enum):
