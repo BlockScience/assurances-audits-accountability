@@ -8,9 +8,9 @@ tags:
   - vertex
   - doc
   - spec
-version: 1.2.0
+version: 1.3.0
 created: 2025-12-30T12:00:00Z
-modified: 2025-01-11T00:00:00Z
+modified: 2026-01-12T00:00:00Z
 dependencies:
   - v:spec:field-survey
 ---
@@ -91,24 +91,34 @@ A brief introduction to the system and architecture document.
 
 ### 2. V-Model Summary Table
 
-A table mapping the four layers to their evaluation counterparts.
+A table mapping the four layers to their evaluation counterparts, showing both design document status and implementation status.
 
 **Format:**
 ```markdown
 ## V-Model Summary
 
-| Layer | Left Side (Idealized) | ← Evaluation → | Right Side (Realized) |
-|-------|----------------------|----------------|----------------------|
-| **Conceptual** | ConOps: [description] | [current status] | Acceptance Testing: [description] |
-| **Functional** | Functional Architecture: [description] | [current status] | System Testing: [description] |
-| **Logical** | Logical Architecture: [description] | [current status] | Integration Testing: [description] |
-| **Physical** | Physical Architecture: [description] | [current status] | Unit Testing: [description] |
+| Layer | Left Side (Idealized) | Design Status | Right Side (Realized) | Implementation Status |
+|-------|----------------------|---------------|----------------------|----------------------|
+| **Conceptual** | ConOps: [description] | [design status] | Acceptance Testing: [description] | [impl status] |
+| **Functional** | Functional Architecture: [description] | [design status] | System Testing: [description] | [impl status] |
+| **Logical** | Logical Architecture: [description] | [design status] | Integration Testing: [description] | [impl status] |
+| **Physical** | Physical Architecture: [description] | [design status] | Unit Testing: [description] | [impl status] |
 ```
+
+**Column Definitions:**
+
+| Column | Purpose | Valid Values |
+|--------|---------|--------------|
+| Left Side (Idealized) | Describes the design/requirements for this layer | Descriptive text |
+| Design Status | Status of the design document(s) for this layer | Draft, Review, Assured |
+| Right Side (Realized) | Describes the testing/verification approach | Descriptive text |
+| Implementation Status | Status of actual implementation and testing | Not Started, In Progress, Partial, Complete |
 
 **Requirements:**
 - MUST include all four layers
 - MUST include both left side (idealized/design) and right side (realized/testing)
-- Status column SHOULD indicate current lifecycle position
+- Design Status column MUST indicate current design document lifecycle position
+- Implementation Status column MUST indicate realization/testing progress
 
 ### 3. Conceptual Layer
 
