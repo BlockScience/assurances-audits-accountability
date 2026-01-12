@@ -13,7 +13,7 @@ import click
 import sys
 from pathlib import Path
 
-from aaa.commands import verify, build, audit, check
+from aaa.commands import verify, build, audit, check, init
 
 
 @click.group()
@@ -55,6 +55,7 @@ main.add_command(verify.verify)
 main.add_command(build.build)
 main.add_command(audit.audit)
 main.add_command(check.check)
+main.add_command(init.init)
 
 
 if __name__ == '__main__':

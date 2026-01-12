@@ -11,13 +11,13 @@ import click
 import sys
 from pathlib import Path
 
-from aaa.core import TemplateBasedVerifier
+from aaa.core import TemplateBasedVerifier, get_templates_path
 
 
 @click.command()
 @click.argument('file', required=False, type=click.Path(exists=True))
 @click.option('--all', 'verify_all', is_flag=True, help='Verify all documents in the repository')
-@click.option('--templates', default='templates', help='Path to templates directory')
+@click.option('--templates', default=None, help='Path to templates directory (uses bundled if not specified)')
 @click.option('--verbose', '-v', is_flag=True, help='Show detailed output')
 @click.pass_context
 def verify(ctx, file, verify_all, templates, verbose):
@@ -32,14 +32,30 @@ def verify(ctx, file, verify_all, templates, verbose):
 
     if TemplateBasedVerifier is None:
         click.echo("Error: Could not import verification module.", err=True)
-        click.echo("Make sure you're running from the repository root.", err=True)
         sys.exit(1)
 
-    templates_path = repo_root / templates
+    # Resolve templates path: use custom, local, or bundled
+    if templates:
+        templates_path = Path(templates)
+        if not templates_path.is_absolute():
+            templates_path = repo_root / templates_path
+        if not templates_path.exists():
+            click.echo(f"Error: Templates directory not found: {templates_path}", err=True)
+            sys.exit(1)
+    else:
+        # Try local templates first, then fall back to bundled
+        local_templates = repo_root / 'templates'
+        if local_templates.exists():
+            templates_path = local_templates
+        else:
+            try:
+                templates_path = get_templates_path()
+            except FileNotFoundError as e:
+                click.echo(f"Error: {e}", err=True)
+                sys.exit(1)
 
-    if not templates_path.exists():
-        click.echo(f"Error: Templates directory not found: {templates_path}", err=True)
-        sys.exit(1)
+    if verbose:
+        click.echo(f"Using templates from: {templates_path}")
 
     verifier = TemplateBasedVerifier(templates_path)
 

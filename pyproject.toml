@@ -1,7 +1,7 @@
 [project]
-name = "assurances-audits-accountability"
+name = "aaa-docware"
 version = "1.0.0"
-description = "Typed simplicial complex framework for document verification, validation, and assurance - supporting material for INCOSE IS 2026"
+description = "Typed simplicial complex framework for document verification, validation, and assurance"
 readme = "README.md"
 requires-python = ">=3.12"
 license = { file = "LICENSE" }
@@ -9,6 +9,16 @@ authors = [
     { name = "Michael Zargham" }
 ]
 keywords = ["systems-engineering", "verification", "validation", "assurance", "simplicial-complex", "documentation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Documentation",
+    "Topic :: Software Development :: Quality Assurance",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
 
 dependencies = [
     "pyyaml>=6.0.1",
@@ -38,6 +48,16 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/aaa"]
+
+# Include templates in the package
+[tool.hatch.build.targets.wheel.sources]
+"src" = ""
+
+# Ensure templates are included as package data
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/aaa/**",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

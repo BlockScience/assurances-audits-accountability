@@ -1,8 +1,32 @@
 # Assurances, Audits & Accountability
 
-A typed simplicial complex framework for document verification, validation, and assurance of AI-generated content with explicit human accountability.
+A typed simplicial complex framework for document verification, validation, and assurance of AI-generated content with explicit human accountability. Repos built using knowledge complexes formed by assembling obsidian-flavor-markdown documents according to the rules of typed simplicial complexes treat collections of documents as "greater that the sum of their parts" and assembled to fulfill specific purposes in specific contexts. These repositories can be said to contain "docware" -- a portmanteau of documents and software.
 
-## Quick Start
+## Installation
+
+### As a Package (External Users)
+
+Install `aaa-docware` to use the framework in your own projects:
+
+```bash
+# Install the package
+pip install aaa-docware
+# or
+uv add aaa-docware
+
+# Initialize a new knowledge complex project
+aaa init my-project
+cd my-project
+
+# Start working with documents
+aaa verify 00_vertices/my-spec.md
+aaa build
+aaa audit charts/my-chart
+```
+
+### For Development (Contributors)
+
+Clone and set up the development environment:
 
 ```bash
 # Install
@@ -28,6 +52,7 @@ uv run pytest tests/ -v
 The `aaa` CLI is the primary interface for working with knowledge complexes:
 
 ```bash
+aaa init <name>                # Initialize a new knowledge complex project
 aaa verify <file>              # Verify document against its template
 aaa verify --all               # Verify all documents
 aaa build                      # Build complex.json cache

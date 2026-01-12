@@ -1,5 +1,18 @@
 # Scripts
 
+> **Note for external users**: If you installed `aaa-docware` as a package, use the
+> `aaa` CLI instead of these scripts. The package includes all core functionality:
+>
+> ```bash
+> pip install aaa-docware
+> aaa init my-project
+> aaa verify document.md
+> aaa build
+> aaa audit charts/my-chart
+> ```
+>
+> These scripts are for development within this repository.
+
 CLI tools for working with knowledge complexes.
 
 ## Categories

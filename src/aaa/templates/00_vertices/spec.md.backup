@@ -1,0 +1,192 @@
+---
+type: template/vertex/spec
+extends: doc
+id: template:vertex:spec
+name: Spec Type Template
+description: Specifications define structural requirements and schemas
+instantiable: true
+tags:
+  - template
+  - vertex
+  - doc
+  - spec
+version: 1.0.0
+created: 2025-12-27T15:00:00Z
+modified: 2025-12-27T15:00:00Z
+---
+
+# Spec Type Template
+
+**Specifications define structural requirements, schemas, and "what" constraints.**
+
+Specs extend docs and serve as the structural authority in the assurance triangle.
+
+## Type Hierarchy
+
+```
+vertex (abstract)
+└── doc (concrete)
+    └── spec (concrete) ← YOU ARE HERE
+```
+
+## Inheritance
+
+- **Extends:** `doc`
+- **Extended by:** None (terminal type in this hierarchy)
+- **Instantiable:** Yes
+
+## Required Frontmatter Fields
+
+Inherits all doc/vertex fields, plus:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `type` | string | Must be `vertex/spec` |
+| `extends` | string | Must be `doc` |
+| `tags` | array | Must include `[vertex, doc, spec]` |
+
+## Tag Requirements
+
+The `tags` array MUST include the full inheritance chain:
+
+```yaml
+tags:
+  - vertex    # base type
+  - doc       # parent type
+  - spec      # concrete type
+```
+
+## Optional Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `dependencies` | array | List of spec IDs this spec depends on (compositional dependencies) |
+| `sections` | array | Compositional spec structure |
+| `schema_type` | string | Type of schema (json-schema, yaml, etc.) |
+| `strictness` | string | Enforcement level (required, recommended, optional) |
+
+### Dependencies Field
+
+The `dependencies` field declares compositional dependencies - other specs that this spec uses in typed subsections:
+
+```yaml
+dependencies:
+  - v:spec:persona
+  - v:spec:purpose
+  - v:spec:protocol
+```
+
+- **Empty array if no dependencies:** Specs without compositional dependencies should use `dependencies: []` or omit the field
+- **Used for typed subsections:** When a spec defines sections that must conform to other specs (like system_prompt uses persona, purpose, protocol)
+- **Enables dependency tracking:** Tools can use this to understand compositional relationships
+- **Creates dependency edges:** Each dependency should have a corresponding `edge/dependency` connecting the specs
+
+### Compositional Specs
+
+Specs can reference other specs for modular structure:
+
+```yaml
+sections:
+  - name: header
+    spec: v:spec:header-format
+  - name: body
+    spec: v:spec:body-format
+  - name: footer
+    spec: v:spec:footer-format
+```
+
+## Body Content
+
+Spec bodies should contain:
+- **Structural requirements** - What fields must be present
+- **Format constraints** - Data types, patterns, validations
+- **Schema definitions** - Explicit schemas (JSON Schema, YAML, etc.)
+- **Compositional references** - Links to component specs
+- **Examples** - Valid instances satisfying the spec
+
+## Role in Assurance Pattern
+
+Specs participate as **parent_spec** in assurance faces:
+
+```
+          child_doc
+           /      \
+          /        \
+  verification   validation
+        /            \
+       /              \
+   parent_spec ---- parent_guidance
+              coupling
+```
+
+- **Verification edges** point from docs to specs (doc → spec)
+- Specs define "what must be present/correct"
+- Specs are coupled with guidances that define "how to evaluate quality"
+
+## Self-Referential Bootstrap
+
+The knowledge complex requires:
+- **spec-for-spec** - A spec that defines what makes a valid spec
+- This spec verifies itself, creating the foundation for all other specs
+
+## Example Instance
+
+```yaml
+---
+type: vertex/spec
+extends: doc
+id: v:spec:frontmatter-schema
+name: Frontmatter Schema Specification
+tags:
+  - vertex
+  - doc
+  - spec
+version: 1.0.0
+created: 2025-01-15T10:00:00Z
+modified: 2025-01-15T10:00:00Z
+---
+
+# Frontmatter Schema Specification
+
+Defines required and optional fields for YAML frontmatter in markdown files.
+
+## Required Fields
+
+All elements MUST include:
+- `type`: Element type identifier
+- `id`: Unique identifier
+- `name`: Human-readable name
+- `tags`: Array of type tags
+- `version`: Semantic version string
+
+## Optional Fields
+
+Elements MAY include:
+- `description`: Brief description
+- `created`: Creation timestamp (ISO 8601)
+- `modified`: Modification timestamp (ISO 8601)
+
+## Schema
+
+\`\`\`yaml
+required:
+  - type
+  - id
+  - name
+  - tags
+  - version
+optional:
+  - description
+  - created
+  - modified
+\`\`\`
+```
+
+## Validation Rules
+
+1. **Type Format:** `type` must be `vertex/spec`
+2. **Tag Chain:** Tags must include `[vertex, doc, spec]`
+3. **Extends:** Must extend `doc`
+4. **Verification Target:** Can be target of verification edges
+5. **Coupling:** Should be coupled with corresponding guidance
+6. **Content:** Body should define structural/schema requirements

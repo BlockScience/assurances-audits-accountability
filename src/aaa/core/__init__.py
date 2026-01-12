@@ -2,68 +2,113 @@
 AAA Core Module
 
 This module provides the core functionality for the AAA (Assurances, Audits, Accountability)
-framework. It wraps the verification scripts and provides a clean API for use by the CLI
-and other tools.
+framework. It provides parsing, verification, caching, auditing, and topology analysis
+for knowledge complex documents.
 
-The core module re-exports key classes and functions from the scripts directory,
-providing a stable import path for users of the package.
+All functionality is self-contained within the package - no external dependencies
+on repository structure.
 """
 
-import sys
-from pathlib import Path
+# Re-export key classes and functions from submodules
+from .parse import (
+    ParseError,
+    extract_frontmatter,
+    parse_element,
+    parse_vertex,
+    parse_edge,
+    parse_face,
+    parse_chart,
+    parse_directory,
+)
 
+from .template_parser import (
+    TemplateParser,
+    TemplateSpec,
+    TemplateRequirement,
+)
 
-def _find_repo_root() -> Path:
-    """Find the repository root by looking for pyproject.toml or .git."""
-    # Start from the package location and work upward
-    current = Path(__file__).parent
-    for parent in [current] + list(current.parents):
-        if (parent / 'pyproject.toml').exists() or (parent / '.git').exists():
-            return parent
-    # Also try from cwd
-    current = Path.cwd()
-    for parent in [current] + list(current.parents):
-        if (parent / 'pyproject.toml').exists() or (parent / '.git').exists():
-            return parent
-    return current
+from .verifier import (
+    TemplateBasedVerifier,
+)
 
+from .cache import (
+    build_cache,
+    calculate_euler_characteristic,
+    sanitize_for_json,
+)
 
-# Find repo root and add scripts to path
-_repo_root = _find_repo_root()
-_scripts_dir = _repo_root / 'scripts'
-if _scripts_dir.exists() and str(_scripts_dir) not in sys.path:
-    sys.path.insert(0, str(_scripts_dir))
+from .audit import (
+    audit_assurance_chart,
+    format_audit_trail,
+    is_document_vertex,
+    check_invariant,
+    check_assurance_coverage,
+    BOUNDARY_COMPLEX,
+)
 
-# Re-export key classes and functions
-_import_error = None
-try:
-    from verify_template_based import TemplateBasedVerifier
-    from template_parser import TemplateParser, TemplateSpec, TemplateRequirement
-    from parse_chart import extract_frontmatter, ParseError
-    from build_cache import build_cache, calculate_euler_characteristic
-    from audit_assurance_chart import audit_assurance_chart as audit_chart
-except ImportError as e:
-    # If running outside repo context, these won't be available
-    # This allows the package to be imported even when scripts aren't present
-    _import_error = e
-    TemplateBasedVerifier = None
-    TemplateParser = None
-    TemplateSpec = None
-    TemplateRequirement = None
-    extract_frontmatter = None
-    ParseError = None
-    build_cache = None
-    calculate_euler_characteristic = None
-    audit_chart = None
+from .topology import (
+    find_holes,
+    find_potential_faces,
+    load_cache,
+)
+
+from .accountability import (
+    AccountabilityError,
+    check_validation_edge_accountability,
+    check_shared_validation_edge_consistency,
+    check_all_signature_accountability,
+    get_accountable_party_from_edge,
+    usernames_match,
+)
+
+from .resources import (
+    get_bundled_templates_path,
+    get_templates_path,
+)
+
+# Backwards compatibility alias
+audit_chart = audit_assurance_chart
 
 __all__ = [
-    'TemplateBasedVerifier',
+    # Parse
+    'ParseError',
+    'extract_frontmatter',
+    'parse_element',
+    'parse_vertex',
+    'parse_edge',
+    'parse_face',
+    'parse_chart',
+    'parse_directory',
+    # Template Parser
     'TemplateParser',
     'TemplateSpec',
     'TemplateRequirement',
-    'extract_frontmatter',
-    'ParseError',
+    # Verifier
+    'TemplateBasedVerifier',
+    # Cache
     'build_cache',
     'calculate_euler_characteristic',
-    'audit_chart',
+    'sanitize_for_json',
+    # Audit
+    'audit_assurance_chart',
+    'audit_chart',  # backwards compatibility
+    'format_audit_trail',
+    'is_document_vertex',
+    'check_invariant',
+    'check_assurance_coverage',
+    'BOUNDARY_COMPLEX',
+    # Topology
+    'find_holes',
+    'find_potential_faces',
+    'load_cache',
+    # Accountability
+    'AccountabilityError',
+    'check_validation_edge_accountability',
+    'check_shared_validation_edge_consistency',
+    'check_all_signature_accountability',
+    'get_accountable_party_from_edge',
+    'usernames_match',
+    # Resources
+    'get_bundled_templates_path',
+    'get_templates_path',
 ]
