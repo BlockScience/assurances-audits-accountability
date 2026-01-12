@@ -8,14 +8,14 @@ tags:
   - vertex
   - doc
   - conceptual-architecture
-version: 0.1.0
+version: 0.2.0
 created: 2026-01-11T00:00:00Z
-modified: 2026-01-11T00:00:00Z
+modified: 2026-01-12T00:00:00Z
 system_name: Knowledge Complex Framework
 scope: Internal-first deployment enabling systematic documentation with verification, validation, and assurance for BlockScience client work
 field_survey_ref: v:doc:field-survey-knowledge-complex-refactor
 stakeholder_count: 4
-criterion_count: 11
+criterion_count: 12
 stakeholders:
   - A3
   - A4
@@ -40,6 +40,21 @@ This conceptual architecture addresses the internal-first deployment: BlockScien
 - **Infrastructure Builders (A6)** who develop and maintain the platform
 
 The key pain points driving this architecture are: documentation chaos (scattered, inconsistent documents), knowledge capture (institutional knowledge not systematized), and client deliverable quality (need to produce demonstrably assured work products). Success requires demonstrating both effectiveness (outcomes meet expectations) and compliance (processes were followed).
+
+### Workflows and Runbooks
+
+Throughout this architecture, we distinguish between **workflows** and **runbooks**:
+
+- **Workflow**: The end user's conception of a work practice—how they think about the sequence of activities needed to produce a deliverable. Workflows are informal, understood through experience and institutional knowledge.
+
+- **Runbook**: A formally defined, typed representation within the knowledge complex that documents a workflow and facilitates its compliant, effective execution. Runbooks are first-class objects in the system with defined structure: ordered modules (steps), typed inputs and outputs, chaining constraints between modules, and effectiveness metrics.
+
+The framework transforms implicit workflows into explicit runbooks. When operators "follow a workflow," they are executing a runbook. When workflow builders "create workflows," they are authoring runbooks. This distinction matters because:
+
+1. **Runbooks are verifiable**: The system can check that runbook structure is valid (modules chain correctly, I/O types match)
+2. **Runbooks enable tracking**: Step-by-step execution can be monitored and measured
+3. **Runbooks support assurance**: Each module's outputs can be verified and validated before proceeding
+4. **Runbooks capture knowledge**: The runbook itself is a document that can be searched, reused, and improved
 
 ## Field Survey Reference
 
@@ -103,6 +118,9 @@ BlockScience produces complex deliverables for clients: research reports, system
 - **N3.3**: Get immediate feedback when documents have structural problems
 - **N3.4**: Receive guidance on what "good" looks like for each document type
 - **N3.5**: Work with familiar tools (IDE, markdown, git) rather than learning new systems
+- **N3.6**: Find and start the appropriate runbook for a given task
+- **N3.7**: Know which step of a runbook they're on and what comes next
+- **N3.8**: Understand what inputs are required for a runbook step and what outputs are expected
 
 #### A4: Approver Needs
 
@@ -111,6 +129,7 @@ BlockScience produces complex deliverables for clients: research reports, system
 - **N4.3**: Review documents efficiently without excessive context-switching
 - **N4.4**: Trust that the verification infrastructure catches structural problems
 - **N4.5**: See both compliance evidence (process followed) and effectiveness evidence (outcomes met expectations)
+- **N4.6**: See runbook execution context when reviewing step outputs (what step, what runbook, what prior steps)
 
 #### A5: Workflow Builder Needs
 
@@ -119,6 +138,9 @@ BlockScience produces complex deliverables for clients: research reports, system
 - **N5.3**: Access reusable components (types, templates, runbooks) from a registry
 - **N5.4**: Test workflows before deploying them to operators
 - **N5.5**: Define effectiveness metrics that approvers can evaluate
+- **N5.6**: Define runbook modules with typed inputs and outputs
+- **N5.7**: Chain modules together with correct I/O type matching
+- **N5.8**: Validate runbook structure before deployment (modules chain correctly, no orphans)
 
 #### A6: Infrastructure Builder Needs
 
@@ -143,6 +165,7 @@ BlockScience produces complex deliverables for clients: research reports, system
 | AC9  | Self-demonstration              | Framework documents pass own verification                | 100% of framework docs verified and assured                                    |
 | AC10 | Evaluation usefulness           | Evaluation scores help identify quality gaps             | >90% of approvers report evaluation scores are useful for review               |
 | AC11 | Client demonstration capability | Ability to show example deliverables during sales        | At least 3 document types have production-quality examples available           |
+| AC12 | Runbook execution support       | System guides operators through runbook steps            | 100% of runbook executions show current step, next step, and I/O requirements  |
 
 ### Criterion Definitions
 
@@ -190,16 +213,20 @@ Evaluation scores (step 4 in the workflow) provide a quantitative assessment of 
 
 Before signing contracts, clients often want to see what deliverables will look like. Having production-quality example documents (not templates, but actual completed work) demonstrates the framework's output quality and helps set client expectations. The target of 3 document types ensures coverage of common deliverable categories.
 
+#### AC12: Runbook Execution Support
+
+Runbooks define multi-step workflows. Operators need to know where they are in a runbook, what the current step requires as input, what output it should produce, and what comes next. The system should present this context clearly during execution. The 100% target reflects that this is essential—every runbook execution should provide this guidance, not just some. Without execution support, operators revert to reading runbook definitions manually, losing the benefit of systematic workflow guidance.
+
 ## Stakeholder-Criterion Matrix
 
 ### Matrix View
 
-|    | AC1 | AC2 | AC3 | AC4 | AC5 | AC6 | AC7 | AC8 | AC9 | AC10 | AC11 |
-|----|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|------|
-| A3 |  X  |  X  |  X  |  X  |     |     |     |     |     |  X   |      |
-| A4 |     |     |  X  |     |  X  |  X  |  X  |     |     |  X   |      |
-| A5 |  X  |  X  |  X  |     |     |     |  X  |  X  |     |  X   |  X   |
-| A6 |     |  X  |  X  |  X  |     |     |     |  X  |  X  |  X   |  X   |
+|    | AC1 | AC2 | AC3 | AC4 | AC5 | AC6 | AC7 | AC8 | AC9 | AC10 | AC11 | AC12 |
+|----|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|------|------|
+| A3 |  X  |  X  |  X  |  X  |     |     |     |     |     |  X   |      |  X   |
+| A4 |     |     |  X  |     |  X  |  X  |  X  |     |     |  X   |      |  X   |
+| A5 |  X  |  X  |  X  |     |     |     |  X  |  X  |     |  X   |  X   |  X   |
+| A6 |     |  X  |  X  |  X  |     |     |     |  X  |  X  |  X   |  X   |  X   |
 
 ### Relationship Details
 
@@ -229,6 +256,10 @@ Before signing contracts, clients often want to see what deliverables will look 
 | A6 | AC10 | Accountable | Infrastructure builders implement evaluation scoring engine |
 | A5 | AC11 | Accountable | Workflow builders create and maintain example deliverables |
 | A6 | AC11 | Accountable | Infrastructure builders ensure framework supports example document workflows |
+| A3 | AC12 | Primary Beneficiary | Operators benefit from clear step-by-step guidance during runbook execution |
+| A4 | AC12 | Primary Beneficiary | Approvers benefit from seeing execution context when reviewing step outputs |
+| A5 | AC12 | Accountable | Workflow builders define runbooks that execution support presents |
+| A6 | AC12 | Accountable | Infrastructure builders implement runbook execution presentation |
 
 ### Key Dependencies
 
@@ -245,6 +276,8 @@ Before signing contracts, clients often want to see what deliverables will look 
 6. **Evaluation scores bridge verification and approval (A3 → AC10 → A4)**: Operators run evaluation (step 4 in workflow) to score alignment with guidance before requesting approval. Approvers use these scores to focus their review. If evaluation is not useful (AC10), the workflow reverts to manual quality assessment.
 
 7. **Client demonstration depends on production-quality examples (A5 → AC11)**: Closing contracts often requires showing clients what they'll get. Workflow Builders must create and maintain example deliverables that showcase framework outputs. This also serves as a forcing function for quality—examples must be excellent.
+
+8. **Runbook execution requires well-defined modules (A3 → A5 → AC12)**: Operators can only receive step-by-step guidance (AC12) if Workflow Builders have defined runbooks with proper module structure, typed I/O, and sequencing. Poorly structured runbooks produce confusing execution guidance.
 
 ## Acceptance Testing Strategy
 
@@ -263,6 +296,7 @@ Before signing contracts, clients often want to see what deliverables will look 
 | AC9 | Verification | Run verification on all framework documents | 100% pass; all have assurance faces |
 | AC10 | Survey | Post-review survey of approvers about evaluation usefulness | >90% report scores are useful for focusing review |
 | AC11 | Inspection | Audit of document type registry for production examples | At least 3 document types have complete, assured examples |
+| AC12 | Functional | Execute runbooks, verify step/context presentation | 100% of executions show current step, next step, and I/O requirements |
 
 ## Constraints and Assumptions
 
