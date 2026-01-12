@@ -73,7 +73,7 @@ The Element-Component Matrix shows how 12 physical elements combine to implement
 | E4  | Git Repository       | Git                    | 2.40+            | Version control, branching, accountability via git blame       |
 | E5  | Python Package       | Python + uv            | 3.12+            | Core library, scripts, virtual environment management          |
 | E6  | YAML Parser          | PyYAML                 | 6.0+             | Frontmatter parsing (structural truth for simplicial complex)  |
-| E7  | Graph Library        | NetworkX               | 3.2+             | In-memory graph for traversal, topology, boundary verification |
+| E7  | Graph Library        | NetworkX               | 3.2+             | Graph layout computation for chart visualization               |
 | E8  | Chart Visualization  | matplotlib + plotly    | 3.8+ / 5.18+     | Visualize charts for validation (essential verification step)  |
 | E9  | Obsidian             | Obsidian               | 1.5+             | Navigation, search, review, wikilink rendering                 |
 | E10 | Claude Code          | Claude Code            | Latest           | LLM-assisted authoring via system prompt                       |
@@ -195,30 +195,29 @@ This architecture uses **Obsidian Flavored Markdown (OFM)**, a layered markdown 
 - Frontmatter extraction: Split on `---` delimiters, parse middle section
 - Error handling: Catch `yaml.YAMLError` for malformed frontmatter
 
-#### E7: Graph Library
+#### E7: Graph Library (Visualization)
 
 **Technology:** NetworkX
 **Version:** 3.2+
 
-**Purpose:** In-memory graph representation for relationship traversal, backlink discovery, topological analysis, and boundary verification.
+**Purpose:** Graph layout computation for interactive chart visualization.
 
-**Rationale:** NetworkX is Python's standard graph library with algorithms for path finding, cycle detection, and subgraph operations. The knowledge complex graph is built from YAML frontmatter at startup—each edge document's `source` and `target` fields create graph edges.
+**Rationale:** NetworkX provides the `spring_layout` algorithm used by visualization scripts (`visualize_chart.py`, `visualize_assured_signed.py`, `visualize_syllabus.py`) to compute 3D node positions for Plotly interactive displays.
 
-**Configuration:**
+**Usage Pattern:**
 
-- Graph type: `nx.MultiDiGraph` (directed edges with multiple edge types)
-- Node attributes: Vertex type, file path, frontmatter metadata
-- Edge attributes: Edge type, source, target, file path
-- Queries: `G.predecessors()`, `G.successors()` for traversal
+```python
+G = nx.MultiDiGraph()
+# Build graph from exported JSON chart data
+for vertex in chart_data['elements']['vertices']:
+    G.add_node(vertex['id'], **vertex)
+for edge in chart_data['elements']['edges']:
+    G.add_edge(edge['source'], edge['target'], **edge)
+# Compute layout (undirected for balanced positioning)
+pos = nx.spring_layout(G.to_undirected(), dim=3, seed=42)
+```
 
-**Relationship to Simplicial Complex:**
-
-NetworkX represents the **1-skeleton** (vertices and edges) of the simplicial complex. Faces (2-simplices) are higher-order objects not directly representable in a graph. The implementation handles this as follows:
-
-- NetworkX stores vertices and edges with their metadata
-- Face boundaries (`boundary_edges`, `boundary_vertices` fields) are stored as YAML frontmatter
-- The boundary verifier computes face closure from YAML, not from NetworkX structure
-- Euler characteristic verification uses both NetworkX (for V, E counts) and YAML (for F count)
+**Note on Verification:** Graph-based verification (boundary checking, topology analysis, traversal) is performed using pure Python with the JSON cache (`complex.json`), not NetworkX. This separation keeps verification simple and dependency-light while allowing rich visualization capabilities. See E5 (Python Package) for verification implementation details.
 
 #### E8: Chart Visualization
 
@@ -476,7 +475,7 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 | E4  |    |    |    |    | X  |    |    |    |    |    |     |     | X   |     |
 | E5  | S  | S  | S  | X  | S  | X  | X  | X  | X  | X  | S   | S   | X   | X   |
 | E6  |    |    |    | P  |    | X  |    |    |    |    |     |     |     | P   |
-| E7  |    |    |    |    |    |    |    | X  |    |    |     | X   |     |     |
+| E7  |    |    |    |    |    |    |    |    |    | S  |     |     |     |     |
 | E8  |    |    |    |    |    |    |    |    |    | X  |     |     |     |     |
 | E9  |    |    |    |    |    |    |    |    |    |    | X   | X   |     |     |
 | E10 |    |    |    | P  |    |    |    |    | P  |    | P   |     | P   |     |
@@ -495,7 +494,7 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 | E4 | C5, C13 | Shared | Git provides version control for storage and accountability for workflows |
 | E5 | C4, C6-C10, C13-C14 | Full | Python package implements all programmatic logic |
 | E6 | C6, C4, C14 | Partial | YAML parser extracts frontmatter for verification and construction |
-| E7 | C8, C12 | Full | NetworkX provides boundary verification and graph traversal |
+| E7 | C10 | Supporting | NetworkX provides graph layout for chart visualization (E8) |
 | E8 | C10 | Full | Visualization presents charts for human validation |
 | E9 | C11, C12 | Full | Obsidian provides search and graph navigation for humans |
 | E10 | C4, C9, C11, C13 | Partial | Claude Code assists with composition, evaluation, search, workflow |
@@ -506,7 +505,7 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 
 1. **File-Based Storage (E1, E2, E3, E4)**: The simplicial complex is stored entirely as files in a git repository. Ontology files (E1) define types; document files (E2) store simplices; template files (E3) scaffold new documents. Git (E4) provides version control and `git blame` attribution for accountability.
 
-2. **Python Package as Core (E5)**: The Python package implements verification (C6, C7, C8), evaluation (C9), composition (C4), construction (C14), and workflow coordination (C13). It uses PyYAML (E6) for frontmatter parsing and NetworkX (E7) for graph operations.
+2. **Python Package as Core (E5)**: The Python package implements verification (C6, C7, C8), evaluation (C9), composition (C4), construction (C14), and workflow coordination (C13). It uses PyYAML (E6) for frontmatter parsing. Graph operations (traversal, boundary verification) use the JSON cache (`complex.json`) with Python dicts and sets—not NetworkX.
 
 3. **YAML as Structural Truth (E6)**: The simplicial complex structure is determined entirely from YAML frontmatter fields. Edge documents have `source` and `target`; face documents have `boundary_edges` and `boundary_vertices`. Wikilinks in body text are for Obsidian navigation only.
 
@@ -530,7 +529,7 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 | E4 | pytest + git | Commit operations, signature verification | Git operations succeed, signatures valid |
 | E5 | pytest + coverage | Unit tests for each module | >90% coverage, all tests pass |
 | E6 | pytest | Parse test YAML files with edge cases | All frontmatter parsed correctly |
-| E7 | pytest | Graph construction, traversal, cycle detection | Algorithms return correct results |
+| E7 | pytest | Graph layout computation for visualization | Layout positions computed correctly |
 | E8 | pytest | Generate visualizations, verify output | Visualizations render without error |
 | E9 | Manual | Vault configuration, navigation, search | Obsidian displays correctly |
 | E10 | Integration | Claude Code interactions with test repo | AI assistance produces valid outputs |
@@ -550,11 +549,11 @@ The knowledge complex framework deploys as a file-based system with GitHub as th
 | C5 Simplex Store | E2, E4 | Document files (E2) ARE storage; Git (E4) provides version control |
 | C6 Schema Verifier | E5, E6, E12 | Python implements verification; GitHub Actions enforces |
 | C7 Structure Analyzer | E5, E12 | Python analyzes structure; GitHub Actions enforces |
-| C8 Boundary Verifier | E5, E7, E12 | Python + NetworkX verify; GitHub Actions enforces |
+| C8 Boundary Verifier | E5, E12 | Python verifies using JSON cache; GitHub Actions enforces |
 | C9 Evaluation Engine | E5, E10 | Python implements scoring; Claude assists interpretation |
 | C10 Result Presenter | E5, E8 | Python formats results; visualization for charts |
 | C11 Search Index | E9, E10 | Obsidian provides search; Claude uses search |
-| C12 Graph Navigator | E7, E9 | NetworkX stores graph; Obsidian visualizes |
+| C12 Graph Navigator | E5, E9 | Python traverses JSON cache; Obsidian visualizes for humans |
 | C13 Workflow Coordinator | E4, E5, E10, E11 | Git blame for accountability (GPG future); Python for logic; Claude guides |
 | C14 Simplex Constructor | E5, E6 | Python implements construction; YAML generates frontmatter |
 
