@@ -8,34 +8,35 @@ tags:
   - vertex
   - doc
   - physical-architecture
-version: 0.1.0
+version: 0.2.0
 created: 2026-01-11T00:00:00Z
 modified: 2026-01-11T00:00:00Z
 system_name: Knowledge Complex Framework
 scope: Internal-first deployment using file-based storage with git version control and Python tooling
 logical_architecture_ref: v:doc:logical-architecture-knowledge-complex-refactor
-element_count: 16
+element_count: 12
 ---
 
 # Physical Architecture - Knowledge Complex Framework Refactor
 
 ## Purpose
 
-This physical architecture defines the specific technology choices that implement the 14 logical components of the knowledge complex framework. The document specifies 16 physical elements using Python libraries, file formats, and tool integrations appropriate for BlockScience's internal-first deployment, where markdown documents with YAML frontmatter are stored in git repositories and accessed through VS Code, Claude Code, and Obsidian.
+This physical architecture defines the specific technology choices that implement the 14 logical components of the knowledge complex framework. The document specifies 12 physical elements using a minimal, coherent toolchain appropriate for BlockScience's internal-first, IDE-first deployment, where Obsidian Flavored Markdown documents with YAML frontmatter are stored in git repositories and accessed through Obsidian and Claude Code.
 
 ## Overview
 
-The logical architecture established 14 technology-agnostic components organized into 6 areas: Type System (C1-C2), Document Management (C3-C5), Coherence Verification (C6-C8), Quality Assessment (C9-C10), Knowledge Graph (C11-C12), and Workflow & Accountability (C13-C14). This physical architecture translates those components into concrete technologies.
+The logical architecture established 14 technology-agnostic components organized into 6 areas: Type System (C1-C2), Document Management (C3-C5), Coherence Verification (C6-C8), Quality Assessment (C9-C10), Knowledge Graph (C11-C12), and Workflow & Accountability (C13-C14). This physical architecture translates those components into a minimal set of concrete technologies.
 
-The key architectural decisions reflect the constraints from the conceptual architecture:
+The key architectural decisions reflect the constraints from the conceptual architecture and lessons from prototyping:
 
 1. **File-based storage over database**: Documents remain human-readable markdown files in git repositories (constraint C1, C2)
-2. **Python ecosystem**: Leverage Python for all programmatic tooling, consistent with BlockScience's technical stack
-3. **Git as truth**: All simplices (vertices, edges, faces) stored as markdown files version-controlled in git (constraint C2)
+2. **Obsidian Flavored Markdown**: Documents use OFM syntax (CommonMark + GFM tables + wikilinks) for Obsidian compatibility
+3. **Git as truth with GPG signatures**: All simplices version-controlled in git; accountability via GPG-signed commits (constraint C2)
 4. **Human-in-the-loop**: Validation edges require explicit human approval captured in YAML frontmatter (constraint C3)
-5. **Familiar interfaces**: VS Code for authoring, Obsidian for navigation, Claude Code for AI assistance (field survey resources R12-R14)
+5. **Python-only toolchain**: All programmatic tooling in Python with uv for environment management
+6. **IDE-first interfaces**: Obsidian for navigation/review, Claude Code for AI-assisted authoring
 
-The Element-Component Matrix shows how 16 physical elements combine to implement all 14 logical components, completing the traceability chain from stakeholder needs through functions and components to concrete implementation.
+The Element-Component Matrix shows how 12 physical elements combine to implement all 14 logical components.
 
 ## Logical Architecture Reference
 
@@ -43,423 +44,398 @@ The Element-Component Matrix shows how 16 physical elements combine to implement
 
 ### Components Summary
 
-| ID | Name | Responsibility |
-|----|------|----------------|
-| C1 | Type Ontology | Define and manage simplex type hierarchy, inheritance rules, and local rules |
-| C2 | Schema Registry | Store schemas for each type defining required YAML fields and inheritance chains |
-| C3 | Template Registry | Store and retrieve document templates by type, linked to schemas |
-| C4 | Document Composer | Assemble documents from templates and parameters ensuring type compliance |
-| C5 | Simplex Store | Persist and retrieve typed simplices with coherence enforcement |
-| C6 | Schema Verifier | Verify YAML frontmatter against type schemas |
-| C7 | Structure Analyzer | Verify markdown body structure against spec-defined sections |
-| C8 | Boundary Verifier | Verify simplicial complex rules and local rules |
-| C9 | Evaluation Engine | Score documents against guidance criteria |
-| C10 | Result Presenter | Format verification and evaluation results for display |
-| C11 | Search Index | Support full-text and filtered search across typed simplices |
-| C12 | Graph Navigator | Traverse typed relationships and discover backlinks |
-| C13 | Workflow Coordinator | Manage approval requests and runbook execution |
-| C14 | Simplex Constructor | Create typed edges and faces ensuring coherence |
+| ID  | Name                | Responsibility                                                           |
+| --- | ------------------- | ------------------------------------------------------------------------ |
+| C1  | Type Ontology       | Define and manage simplex type hierarchy, inheritance rules, local rules |
+| C2  | Schema Registry     | Store schemas for each type defining required YAML fields                |
+| C3  | Template Registry   | Store and retrieve document templates by type                            |
+| C4  | Document Composer   | Assemble documents from templates and parameters                         |
+| C5  | Simplex Store       | Persist and retrieve typed simplices with coherence enforcement          |
+| C6  | Schema Verifier     | Verify YAML frontmatter against type schemas                             |
+| C7  | Structure Analyzer  | Verify markdown body structure against spec-defined sections             |
+| C8  | Boundary Verifier   | Verify simplicial complex rules and local rules                          |
+| C9  | Evaluation Engine   | Score documents against guidance criteria                                |
+| C10 | Result Presenter    | Format verification and evaluation results for display                   |
+| C11 | Search Index        | Support full-text and filtered search across typed simplices             |
+| C12 | Graph Navigator     | Traverse typed relationships and discover backlinks                      |
+| C13 | Workflow Coordinator| Manage approval requests and runbook execution                           |
+| C14 | Simplex Constructor | Create typed edges and faces ensuring coherence                          |
 
 ## Physical Architecture
 
 ### Element Table
 
-| ID  | Name                    | Technology/Tool      | Version                   | Purpose                                                            |
-| --- | ----------------------- | -------------------- | ------------------------- | ------------------------------------------------------------------ |
-| E1  | Ontology Files          | Markdown + YAML      | CommonMark 0.30+          | Store type definitions as human-readable ontology documents        |
-| E2  | Schema Files            | JSON Schema          | Draft 2020-12             | Machine-readable schemas for frontmatter validation                |
-| E3  | Template Files          | Markdown + Jinja2    | Jinja2 3.1+               | Parameterized templates with placeholder syntax                    |
-| E4  | Python Package          | Python               | 3.11+                     | Core library implementing all programmatic components              |
-| E5  | Document Files          | Markdown + YAML      | CommonMark 0.30+          | All simplices stored as markdown with YAML frontmatter             |
-| E6  | Git Repository          | Git                  | 2.40+                     | Version control, branching, and commit-based accountability        |
-| E7  | YAML Parser             | PyYAML + ruamel.yaml | PyYAML 6.0+, ruamel 0.18+ | Parse and emit YAML frontmatter with comment preservation          |
-| E8  | Markdown Parser         | markdown-it-py       | 3.0+                      | Parse markdown structure for section analysis                      |
-| E9  | JSON Schema Validator   | jsonschema           | 4.20+                     | Validate frontmatter against JSON Schema definitions               |
-| E10 | Graph Data Structure    | NetworkX             | 3.2+                      | In-memory graph for relationship traversal and topological queries |
-| E11 | Full-Text Search        | Whoosh               | 2.7+                      | File-based search index for content discovery                      |
-| E12 | CLI Framework           | Click                | 8.1+                      | Command-line interface for all operations                          |
-| E13 | VS Code Extension       | TypeScript           | 5.0+                      | IDE integration for authoring and verification                     |
-| E14 | Obsidian Vault          | Obsidian             | 1.5+                      | Knowledge navigation and review interface                          |
-| E15 | Claude Code Integration | Claude Code          | Latest                    | LLM-assisted authoring with system prompt configuration            |
-| E16 | Result Formatter        | Rich                 | 13.0+                     | Terminal output formatting for verification and evaluation results |
+| ID  | Name                 | Technology/Tool        | Version          | Purpose                                                        |
+| --- | -------------------- | ---------------------- | ---------------- | -------------------------------------------------------------- |
+| E1  | Ontology Files       | OFM + YAML             | OFM 2024         | Load-bearing type definitions; stored separately, change-resistant |
+| E2  | Document Files       | OFM + YAML             | OFM 2024         | All simplices (vertices, edges, faces) as markdown with frontmatter |
+| E3  | Template Files       | OFM + placeholders     | OFM 2024         | Simple `<placeholder>` syntax for document scaffolding         |
+| E4  | Git Repository       | Git                    | 2.40+            | Version control, branching, GPG-signed commits                 |
+| E5  | Python Package       | Python + uv            | 3.12+            | Core library, scripts, virtual environment management          |
+| E6  | YAML Parser          | PyYAML                 | 6.0+             | Frontmatter parsing (structural truth for simplicial complex)  |
+| E7  | Graph Library        | NetworkX               | 3.2+             | In-memory graph for traversal, topology, boundary verification |
+| E8  | Chart Visualization  | matplotlib + plotly    | 3.8+ / 5.18+     | Visualize charts for validation (essential verification step)  |
+| E9  | Obsidian             | Obsidian               | 1.5+             | Navigation, search, review, wikilink rendering                 |
+| E10 | Claude Code          | Claude Code            | Latest           | LLM-assisted authoring via system prompt                       |
+| E11 | GPG Signatures       | GnuPG                  | 2.x              | Sign git commits and accountability edges                      |
+| E12 | GitHub Actions       | GitHub Actions         | Latest           | CI enforcement of ontology rules; prevent invalid merges       |
+
+### Markdown Flavor Specification
+
+This architecture uses **Obsidian Flavored Markdown (OFM)**, a layered markdown standard:
+
+| Layer | Standard | Features | Tools Supporting |
+|-------|----------|----------|------------------|
+| 1 | CommonMark | Headers, lists, code blocks, links, emphasis | All markdown tools |
+| 2 | GFM Extensions | Tables, task lists, strikethrough, autolinks | GitHub, Obsidian, most editors |
+| 3 | Obsidian Extensions | Wikilinks `[[doc]]`, callouts `> [!note]`, embeds `![[doc]]` | Obsidian only |
+
+**Design principle**: Wikilinks (`[[document-name]]`) serve **Obsidian navigation**. Simplicial complex boundaries (edges, faces) are determined from **YAML frontmatter fields** (`source`, `target`, `boundary_edges`, `boundary_vertices`), not from wikilink presence in body text. This separation ensures:
+
+- Non-Obsidian tools can compute graph structure from YAML alone
+- Wikilinks are a UI convenience, not a structural dependency
+- Documents remain valid even if wikilinks are removed
 
 ### Element Definitions
 
 #### E1: Ontology Files
 
-**Technology:** Markdown files with YAML frontmatter (CommonMark specification)
-**Version:** CommonMark 0.30+
+**Technology:** Obsidian Flavored Markdown with YAML frontmatter
+**Version:** OFM 2024 (CommonMark + GFM + Obsidian extensions)
 
-**Purpose:** Store type ontology definitions as human-readable documents that can be version-controlled and reviewed like any other knowledge complex artifact.
+**Purpose:** Store type ontology definitions as load-bearing infrastructure documents that define the type system for the entire knowledge complex.
 
-**Rationale:** The ontology is itself a knowledge complex artifact—it should be stored in the same format as the documents it governs. This enables self-demonstration (AC9) where the framework's own documents pass verification. Markdown with YAML frontmatter is human-readable (constraint C1) and git-friendly (constraint C2).
+**Rationale:** Ontology files are conceptually distinct from regular documents—they define the rules that govern all other documents. They should be stored in a protected location and changed rarely. Like database schemas, ontology changes have cascading effects.
 
 **Configuration:**
-- Location: Repository root or `00_vertices/` directory
+- Location: Protected directory (e.g., `ontologies/` or package distribution)
 - Naming: `ontology-<name>.md`
 - Required frontmatter: `type: vertex/ontology`, `extends: doc`
 - Body structure: Vertex Types, Edge Types, Face Types, Chart Types, Local Rules sections
+- Change control: Requires explicit approval; version-locked in deployments
 
-#### E2: Schema Files
+#### E2: Document Files
 
-**Technology:** JSON Schema
-**Version:** Draft 2020-12
+**Technology:** Obsidian Flavored Markdown with YAML frontmatter
+**Version:** OFM 2024
 
-**Purpose:** Machine-readable schema definitions that can be used for automated frontmatter validation.
+**Purpose:** All simplices (vertices, edges, faces) stored as human-readable markdown files that can be authored in Obsidian, reviewed, and version-controlled.
 
-**Rationale:** JSON Schema is the industry standard for validating structured data. It provides formal definitions that complement the human-readable specs. Using JSON Schema 2020-12 provides `$ref` for schema composition, `prefixItems` for tuple validation, and `dependentRequired` for conditional fields.
+**Rationale:** Human-readable markdown is required by constraint C1. YAML frontmatter provides structured metadata that defines the simplicial complex structure. The body contains human-readable content with wikilinks for Obsidian navigation.
 
 **Configuration:**
-- Location: `schemas/` directory
-- Naming: `<type-name>.schema.json`
-- Base schema: `vertex.schema.json` with type-specific extensions
-- Composition: Use `$ref` to inherit from parent type schemas
+- Vertices: `00_vertices/` directory
+- Edges: `01_edges/` directory
+- Faces: `02_faces/` directory
+- Charts: `charts/` directory
+- File extension: `.md`
+- Frontmatter delimiter: `---`
+- Structural fields: `source`, `target` (edges); `boundary_edges`, `boundary_vertices` (faces)
 
 #### E3: Template Files
 
-**Technology:** Markdown with Jinja2 template syntax
-**Version:** Jinja2 3.1+
+**Technology:** Obsidian Flavored Markdown with simple placeholder syntax
+**Version:** OFM 2024
 
-**Purpose:** Parameterized templates for document creation with placeholder syntax for context injection.
+**Purpose:** Document templates with placeholder syntax for scaffolding new documents.
 
-**Rationale:** Jinja2 is Python's standard templating engine with clear placeholder syntax (`{{ variable }}`), conditionals (`{% if %}`), and loops. Templates remain readable markdown when placeholders are unfilled. Jinja2 integrates naturally with the Python package (E4).
-
-**Configuration:**
-- Location: `templates/` directory
-- Naming: `template-<type-name>.md`
-- Placeholders: `{{ system_name }}`, `{{ created_date }}`, `{{ id }}`
-- Required sections: Must match spec-defined required sections
-
-#### E4: Python Package
-
-**Technology:** Python package (pip-installable)
-**Version:** Python 3.11+
-
-**Purpose:** Core library implementing all programmatic logic for verification, validation, graph operations, and workflow management.
-
-**Rationale:** Python is BlockScience's primary language for analytical work. Python 3.11+ provides significant performance improvements, better error messages, and tomllib for TOML configuration. A pip-installable package enables reuse across projects and aligns with the public registry vision (resource R10).
+**Rationale:** Templates use simple `<placeholder>` syntax (e.g., `<name>`, `<version>`, `YYYY-MM-DDTHH:MM:SSZ`) rather than a templating engine. This syntax is:
+- Human-readable in Obsidian
+- Trivial to process with Python string replacement
+- Compatible with Obsidian's built-in Templates plugin
+- No additional dependency (Jinja2 not needed)
 
 **Configuration:**
-- Package name: `knowledge-complex` (PyPI) or `kcomplex` (import name)
-- Entry points: CLI via `kc` command
-- Dependencies: See E7-E12 for required libraries
-- Structure: `src/kcomplex/` layout with submodules for each component area
+- Location: `templates/` directory with subdirectories mirroring document structure
+- Naming: `<type-name>.md` (e.g., `spec.md`, `guidance.md`)
+- Placeholders: `<name>`, `<version>`, `<description>`, `YYYY-MM-DDTHH:MM:SSZ`
+- Required sections: Must match spec-defined required sections for the type
 
-#### E5: Document Files
+#### E4: Git Repository
 
-**Technology:** Markdown files with YAML frontmatter
-**Version:** CommonMark 0.30+
-
-**Purpose:** All simplices (vertices, edges, faces) stored as human-readable markdown files that can be authored, reviewed, and version-controlled.
-
-**Rationale:** Human-readable markdown is required by constraint C1. YAML frontmatter provides structured metadata while keeping the body human-readable. This format integrates with VS Code, Obsidian, and standard markdown tooling.
-
-**Configuration:**
-- Vertices: `00_vertices/` or repository root
-- Edges: `01_edges/` directory
-- Faces: `02_faces/` directory
-- Charts: `03_charts/` directory
-- File extension: `.md`
-- Frontmatter delimiter: `---`
-
-#### E6: Git Repository
-
-**Technology:** Git distributed version control
+**Technology:** Git distributed version control with GPG signing
 **Version:** Git 2.40+
 
-**Purpose:** Version control, branching for approval workflows, and commit-based accountability for all changes.
+**Purpose:** Version control, branching for approval workflows, and cryptographically signed commits for accountability.
 
-**Rationale:** Git is required by constraint C2 as the source of truth. Git 2.40+ provides improved performance for large repositories, better merge conflict resolution, and `safe.directory` improvements. Commit hashes provide immutable references for accountability edges.
+**Rationale:** Git is required by constraint C2 as the source of truth. GPG-signed commits provide cryptographic accountability—signers can be verified, and commit history is tamper-evident. This supports the accountability requirements for validation edges.
 
 **Configuration:**
-- `.gitignore`: Exclude caches, search indices, temporary files
+- `.gitignore`: Exclude `.obsidian/`, `__pycache__/`, `.venv/`, `*.pyc`
 - Branch strategy: `main` for assured documents, feature branches for drafts
-- Hooks: Pre-commit for verification, post-merge for index updates
-- Signature: Use `git commit -S` for GPG-signed commits when available
+- Signing: `git config commit.gpgsign true` for automatic GPG signing
+- Hooks: Pre-commit for verification (optional)
 
-#### E7: YAML Parser
+#### E5: Python Package
 
-**Technology:** PyYAML + ruamel.yaml
-**Version:** PyYAML 6.0+, ruamel.yaml 0.18+
+**Technology:** Python with uv for environment management
+**Version:** Python 3.12+, uv latest
 
-**Purpose:** Parse YAML frontmatter for schema validation and emit YAML for document generation with comment preservation.
+**Purpose:** Core library implementing all programmatic logic for verification, graph operations, and visualization.
 
-**Rationale:** PyYAML is fast for parsing; ruamel.yaml preserves comments and formatting when modifying frontmatter. Using both provides optimal read performance with high-fidelity write operations. Comment preservation is important for documents with inline documentation.
-
-**Configuration:**
-- Reading: PyYAML `safe_load()` for security
-- Writing: ruamel.yaml `YAML(typ='rt')` for round-trip
-- Frontmatter extraction: Split on `---` delimiters
-
-#### E8: Markdown Parser
-
-**Technology:** markdown-it-py
-**Version:** 3.0+
-
-**Purpose:** Parse markdown structure for section analysis, heading extraction, and body structure verification.
-
-**Rationale:** markdown-it-py is a Python port of the standard markdown-it parser with full CommonMark compliance. It provides a token-based AST that enables programmatic analysis of document structure (heading levels, section nesting, table parsing). It's actively maintained and extensible.
+**Rationale:** Python is BlockScience's primary language. Python 3.12+ provides performance improvements and better error messages. uv provides fast, reliable environment management replacing pip/venv/virtualenv with a single tool.
 
 **Configuration:**
-- Extensions: tables, footnotes (if used)
-- Parsing mode: CommonMark strict
-- Output: Token stream for structure analysis (not HTML rendering)
+- Package definition: `pyproject.toml` with hatchling build backend
+- Environment: `uv venv` for virtual environment, `uv pip install` for dependencies
+- Dependencies: PyYAML, NetworkX, matplotlib, plotly, numpy, scipy, pytest
+- Scripts: `scripts/` directory for verification, visualization, analysis tools
 
-#### E9: JSON Schema Validator
+#### E6: YAML Parser
 
-**Technology:** jsonschema library
-**Version:** 4.20+
+**Technology:** PyYAML
+**Version:** 6.0+
 
-**Purpose:** Validate YAML frontmatter against JSON Schema definitions for automated schema verification.
+**Purpose:** Parse YAML frontmatter from markdown files to extract structural metadata for the simplicial complex.
 
-**Rationale:** jsonschema is the reference implementation for JSON Schema in Python. Version 4.20+ supports Draft 2020-12 with `format_nongpl` validators for format checking without GPL dependencies. The library provides detailed error messages for validation failures.
+**Rationale:** PyYAML is the standard Python YAML parser. It's fast, well-maintained, and sufficient for frontmatter parsing. The frontmatter contains the structural truth—`type`, `source`, `target`, `boundary_edges` fields that define the simplicial complex.
 
 **Configuration:**
-- Draft version: 2020-12
-- Format validation: Enabled for datetime, uri-reference
-- Error handling: Collect all errors (not fail-fast) for complete reporting
+- Loading: `yaml.safe_load()` for security (no arbitrary Python execution)
+- Frontmatter extraction: Split on `---` delimiters, parse middle section
+- Error handling: Catch `yaml.YAMLError` for malformed frontmatter
 
-#### E10: Graph Data Structure
+#### E7: Graph Library
 
 **Technology:** NetworkX
 **Version:** 3.2+
 
-**Purpose:** In-memory graph representation for relationship traversal, backlink discovery, and topological analysis.
+**Purpose:** In-memory graph representation for relationship traversal, backlink discovery, topological analysis, and boundary verification.
 
-**Rationale:** NetworkX is Python's standard graph library with extensive algorithms for path finding, cycle detection (DAG verification), and subgraph operations. Version 3.2+ provides improved performance and better typing support. The graph is built from document files at startup and updated on changes.
+**Rationale:** NetworkX is Python's standard graph library with algorithms for path finding, cycle detection, and subgraph operations. The knowledge complex graph is built from YAML frontmatter at startup—each edge document's `source` and `target` fields create graph edges.
 
 **Configuration:**
 - Graph type: `nx.MultiDiGraph` (directed edges with multiple edge types)
 - Node attributes: Vertex type, file path, frontmatter metadata
 - Edge attributes: Edge type, source, target, file path
-- Neighborhood queries: `G.predecessors()`, `G.successors()`, `G.neighbors()`
+- Queries: `G.predecessors()`, `G.successors()` for traversal
 
-#### E11: Full-Text Search
+#### E8: Chart Visualization
 
-**Technology:** Whoosh
-**Version:** 2.7+
+**Technology:** matplotlib + plotly
+**Version:** matplotlib 3.8+, plotly 5.18+
 
-**Purpose:** File-based search index for full-text content discovery across the knowledge complex.
+**Purpose:** Visualize charts (subcomplexes) for validation—a critical step in verifying chart correctness.
 
-**Rationale:** Whoosh is a pure-Python search library that stores indices as files—no external services required. This aligns with the file-based architecture and git-friendly approach. It supports fielded search (type, tags, content) and relevance ranking. For larger deployments, this could be upgraded to Elasticsearch/OpenSearch.
-
-**Configuration:**
-- Index location: `.whoosh_index/` directory (gitignored)
-- Schema: id, type, name, tags, content, path
-- Analyzers: Stemming for content, keyword for type/tags
-- Update strategy: Incremental on file change, full rebuild on request
-
-#### E12: CLI Framework
-
-**Technology:** Click
-**Version:** 8.1+
-
-**Purpose:** Command-line interface for all knowledge complex operations—verification, validation, graph queries, and workflow management.
-
-**Rationale:** Click is the standard Python CLI framework with automatic help generation, argument validation, and composable command groups. It integrates well with Rich (E16) for formatted output. Click's decorator-based API enables rapid development of CLI commands.
+**Rationale:** Visualization is essential for validating charts before approval. Visual inspection catches structural issues that automated checks might miss. matplotlib provides static 2D visualization; plotly provides interactive 3D visualization for complex charts.
 
 **Configuration:**
-- Entry point: `kc` command
-- Command groups: `kc verify`, `kc validate`, `kc graph`, `kc workflow`
-- Global options: `--repo`, `--verbose`, `--format`
-- Output formats: text (default), json, markdown
+- matplotlib: 2D graph layouts, assurance triangle diagrams
+- plotly: Interactive 3D simplicial complex visualization
+- Supporting: numpy for numerical operations, scipy for sparse matrices (Hodge analysis)
+- Output: PNG/SVG for static, HTML for interactive
 
-#### E13: VS Code Extension
-
-**Technology:** VS Code Extension API (TypeScript)
-**Version:** TypeScript 5.0+, VS Code Extension API 1.85+
-
-**Purpose:** IDE integration for real-time verification feedback, template insertion, and knowledge complex navigation.
-
-**Rationale:** VS Code is BlockScience's standard IDE (assumption A2 from conceptual architecture). The extension provides integration with the Python tooling via subprocess calls or Language Server Protocol. TypeScript is required for VS Code extensions.
-
-**Configuration:**
-- Extension ID: `blockscience.knowledge-complex`
-- Activation: On `.md` file open in knowledge complex repository
-- Features: Frontmatter validation on save, template snippets, graph view panel
-- Communication: Calls Python CLI (E12) for verification operations
-
-#### E14: Obsidian Vault
+#### E9: Obsidian
 
 **Technology:** Obsidian knowledge base application
 **Version:** Obsidian 1.5+
 
-**Purpose:** Knowledge navigation, graph visualization, backlink discovery, and document review interface.
+**Purpose:** Primary human interface for navigation, search, document review, and light editing.
 
-**Rationale:** Obsidian is specified as the knowledge explorer interface (resource R14, assumption A4). It provides native support for markdown with YAML frontmatter, wikilink navigation (`[[doc-name]]`), and graph visualization. The vault is simply the git repository—no separate data store.
+**Rationale:** Obsidian is the knowledge explorer interface specified in the field survey. It provides native support for OFM syntax (wikilinks, YAML frontmatter), graph visualization, and backlink discovery. The vault is simply the git repository—no separate data store.
 
 **Configuration:**
 - Vault: Point Obsidian at the git repository root
-- Plugins: Dataview (for queries), Graph Analysis (for visualization)
-- Templates: Configure Obsidian to use `templates/` directory
+- Recommended plugins: Dataview (for queries), Graph Analysis (for visualization)
+- Templates: Configure to use `templates/` directory
 - Settings: Enable YAML frontmatter parsing, wikilink auto-completion
 
-#### E15: Claude Code Integration
+#### E10: Claude Code
 
-**Technology:** Claude Code (Anthropic CLI assistant)
+**Technology:** Claude Code (Anthropic CLI/IDE assistant)
 **Version:** Latest
 
-**Purpose:** LLM-assisted authoring with knowledge complex awareness, template filling, and guided workflow execution.
+**Purpose:** LLM-assisted authoring with knowledge complex awareness, template filling, verification interpretation, and guided workflow execution.
 
-**Rationale:** Claude Code is specified as the LLM facilitator (resource R13, assumption A3). It provides AI assistance within the terminal/IDE context. The integration consists primarily of a system prompt (`.claude/CLAUDE.md`) that teaches Claude about knowledge complex conventions.
+**Rationale:** Claude Code is the LLM facilitator specified in the field survey. The integration is configuration-based via `.claude/CLAUDE.md` system prompt that teaches Claude about knowledge complex conventions, document types, and verification workflows.
 
 **Configuration:**
 - System prompt: Repository's `.claude/CLAUDE.md` file
 - Context: Current working directory provides repository context
 - Capabilities: Template retrieval, prior work discovery, draft generation, verification interpretation
-- Constraints: Human approval required—Claude prepares but doesn't approve
+- Constraints: Human approval required—Claude prepares but doesn't approve validation edges
 
-#### E16: Result Formatter
+#### E11: GPG Signatures
 
-**Technology:** Rich terminal formatting library
-**Version:** Rich 13.0+
+**Technology:** GnuPG (GNU Privacy Guard)
+**Version:** GnuPG 2.x
 
-**Purpose:** Format verification results, evaluation scores, and workflow status for readable terminal output.
+**Purpose:** Cryptographic signatures for git commits and accountability edges, enabling verifiable attribution.
 
-**Rationale:** Rich provides cross-platform terminal formatting with tables, syntax highlighting, progress bars, and panels. It integrates with Click (E12) for consistent CLI output. Rich renders markdown for displaying document excerpts.
+**Rationale:** GPG signatures provide cryptographic proof of authorship. Signed commits create an immutable, verifiable record of who approved what and when. This supports the accountability requirements—validation edges can reference signed commits as evidence of human approval.
 
 **Configuration:**
-- Theme: Default or custom knowledge complex theme
-- Tables: For verification results, matrix views
-- Panels: For evaluation summaries with criteria scores
-- Markdown: For document previews and help text
+- Key generation: `gpg --gen-key` for each signer
+- Git integration: `git config user.signingkey <key-id>`, `git config commit.gpgsign true`
+- Verification: `git log --show-signature` to verify commit signatures
+- Key distribution: Public keys shared via keyserver or repository
+
+#### E12: GitHub Actions
+
+**Technology:** GitHub Actions (CI/CD)
+**Version:** Latest
+
+**Purpose:** Continuous integration enforcement of ontology rules, preventing merges that would break the simplicial complex or violate type rules.
+
+**Rationale:** While local verification (E5) catches issues during authoring, GitHub Actions provides a repository-level gate that prevents invalid documents from being merged to protected branches. This is essential for maintaining ontology coherence when multiple contributors are working on the same repository. CI enforcement ensures that even if local checks are bypassed, the repository remains consistent.
+
+**Configuration:**
+- Workflow file: `.github/workflows/verify.yml`
+- Triggers: On pull request to `main`, on push to `main`
+- Jobs:
+  - `verify-documents`: Run `verify_template_based.py` on all changed documents
+  - `verify-types`: Run `verify_typed.py` on all changed documents
+  - `verify-boundaries`: Run boundary verification on edges and faces
+  - `verify-charts`: Run chart topology verification if charts are modified
+- Branch protection: Require CI pass before merge to `main`
+- Caching: Cache Python environment with uv for faster runs
+
+**Example workflow:**
+```yaml
+name: Verify Knowledge Complex
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync
+      - run: uv run python scripts/verify_template_based.py --all
+      - run: uv run python scripts/verify_typed.py --all
+```
 
 ### Deployment View
 
-The knowledge complex framework deploys as a file-based system with no external services required for basic operation.
+The knowledge complex framework deploys as a file-based system with GitHub as the remote repository and CI enforcement layer.
 
 #### Deployment Diagram
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                          User Workstation                                │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                          │
-│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐                │
-│  │   VS Code    │   │   Obsidian   │   │  Claude Code │                │
-│  │    (E13)     │   │    (E14)     │   │    (E15)     │                │
-│  └──────┬───────┘   └──────┬───────┘   └──────┬───────┘                │
-│         │                  │                  │                          │
-│         └─────────────────┼──────────────────┘                          │
-│                           │                                              │
-│                           ▼                                              │
-│  ┌────────────────────────────────────────────────────────────────┐     │
-│  │                    Python Package (E4)                          │     │
-│  │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐  │     │
-│  │  │  CLI    │ │  YAML   │ │Markdown │ │  JSON   │ │ Search  │  │     │
-│  │  │  (E12)  │ │ Parser  │ │ Parser  │ │ Schema  │ │ Index   │  │     │
-│  │  │         │ │  (E7)   │ │  (E8)   │ │  (E9)   │ │ (E11)   │  │     │
-│  │  └─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘  │     │
-│  │  ┌─────────┐ ┌─────────────────────────────────┐              │     │
-│  │  │  Rich   │ │         NetworkX (E10)          │              │     │
-│  │  │  (E16)  │ │       In-Memory Graph           │              │     │
-│  │  └─────────┘ └─────────────────────────────────┘              │     │
-│  └────────────────────────────────────────────────────────────────┘     │
-│                           │                                              │
-│                           ▼                                              │
-│  ┌────────────────────────────────────────────────────────────────┐     │
-│  │                    Git Repository (E6)                          │     │
-│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐               │     │
-│  │  │  Ontology   │ │   Schema    │ │  Template   │               │     │
-│  │  │  Files (E1) │ │  Files (E2) │ │  Files (E3) │               │     │
-│  │  └─────────────┘ └─────────────┘ └─────────────┘               │     │
-│  │  ┌───────────────────────────────────────────────────────┐    │     │
-│  │  │               Document Files (E5)                      │    │     │
-│  │  │  00_vertices/  │  01_edges/  │  02_faces/  │ 03_charts/ │    │     │
-│  │  └───────────────────────────────────────────────────────┘    │     │
-│  └────────────────────────────────────────────────────────────────┘     │
-│                                                                          │
-└─────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────┐
+│                        User Workstation                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌──────────────┐              ┌──────────────┐                     │
+│  │   Obsidian   │              │  Claude Code │                     │
+│  │    (E9)      │              │    (E10)     │                     │
+│  └──────┬───────┘              └──────┬───────┘                     │
+│         │                             │                              │
+│         └─────────────┬───────────────┘                              │
+│                       │                                              │
+│                       ▼                                              │
+│  ┌──────────────────────────────────────────────────────────────┐   │
+│  │                  Python Package (E5)                          │   │
+│  │  ┌─────────┐ ┌─────────┐ ┌─────────────────────────────┐     │   │
+│  │  │  YAML   │ │ NetworkX│ │  Visualization (matplotlib, │     │   │
+│  │  │ Parser  │ │  Graph  │ │  plotly, numpy, scipy)      │     │   │
+│  │  │  (E6)   │ │  (E7)   │ │        (E8)                 │     │   │
+│  │  └─────────┘ └─────────┘ └─────────────────────────────┘     │   │
+│  └──────────────────────────────────────────────────────────────┘   │
+│                       │                                              │
+│                       ▼                                              │
+│  ┌──────────────────────────────────────────────────────────────┐   │
+│  │              Git Repository (E4) + GPG (E11)                  │   │
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐             │   │
+│  │  │  Ontology   │ │  Template   │ │  Document   │             │   │
+│  │  │  Files (E1) │ │  Files (E3) │ │  Files (E2) │             │   │
+│  │  │ (protected) │ │             │ │             │             │   │
+│  │  └─────────────┘ └─────────────┘ └─────────────┘             │   │
+│  │  ┌───────────────────────────────────────────────────────┐   │   │
+│  │  │  00_vertices/  │  01_edges/  │  02_faces/  │  charts/  │   │   │
+│  │  └───────────────────────────────────────────────────────┘   │   │
+│  └──────────────────────────────────────────────────────────────┘   │
+│                       │                                              │
+└───────────────────────┼─────────────────────────────────────────────┘
+                        │ git push
+                        ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                          GitHub (Remote)                             │
+├─────────────────────────────────────────────────────────────────────┤
+│  ┌──────────────────────────────────────────────────────────────┐   │
+│  │                  GitHub Actions (E12)                         │   │
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐             │   │
+│  │  │   verify-   │ │   verify-   │ │   verify-   │             │   │
+│  │  │  documents  │ │    types    │ │  boundaries │             │   │
+│  │  └─────────────┘ └─────────────┘ └─────────────┘             │   │
+│  └──────────────────────────────────────────────────────────────┘   │
+│                       │                                              │
+│                       ▼                                              │
+│  ┌──────────────────────────────────────────────────────────────┐   │
+│  │              Branch Protection Rules                          │   │
+│  │  • Require CI pass before merge to main                      │   │
+│  │  • Require GPG-signed commits (optional)                     │   │
+│  │  • Require pull request reviews (optional)                   │   │
+│  └──────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 #### Environment Configuration
 
 | Environment | Configuration Notes |
 |-------------|---------------------|
-| Development | Full toolchain: VS Code, Obsidian, Claude Code, Python package installed in editable mode (`pip install -e .`). Search index in `.whoosh_index/` (gitignored). Pre-commit hooks enabled. |
-| Production | Same as development for internal-first deployment. No separate production environment—users work directly with git repositories. For future client deployments, may add CI/CD verification gates. |
+| Development | Obsidian vault pointed at repo, Claude Code configured with system prompt, Python environment via `uv venv && uv pip install -e .`, GPG key configured for signing |
+| CI (GitHub) | GitHub Actions runs verification on PR/push; branch protection requires CI pass; workflow uses `astral-sh/setup-uv` for fast Python setup |
+| Production | Same as development for internal-first deployment. GitHub serves as remote with CI enforcement |
 
 ## Element-Component Matrix
 
 ### Matrix View
 
-|      | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 | C11 | C12 | C13 | C14 |
-|------|----|----|----|----|----|----|----|----|----|----|-----|-----|-----|-----|
-| E1   | X  |    |    |    |    |    |    |    |    |    |     |     |     |     |
-| E2   |    | X  |    |    |    |    |    |    |    |    |     |     |     |     |
-| E3   |    |    | X  |    |    |    |    |    |    |    |     |     |     |     |
-| E4   | S  | S  | S  | X  | S  | S  | S  | S  | X  | S  | S   | S   | X   | X   |
-| E5   |    |    |    |    | X  |    |    |    |    |    |     |     |     |     |
-| E6   |    |    |    |    | X  |    |    |    |    |    |     |     | X   |     |
-| E7   |    |    |    | X  |    | X  |    |    |    |    |     |     |     | X   |
-| E8   |    |    |    |    |    |    | X  |    |    |    |     |     |     |     |
-| E9   |    | X  |    |    |    | X  |    |    |    |    |     |     |     |     |
-| E10  |    |    |    |    |    |    |    | X  |    |    |     | X   |     |     |
-| E11  |    |    |    |    |    |    |    |    |    |    | X   |     |     |     |
-| E12  | S  | S  | S  | S  | S  | S  | S  | S  | S  | S  | S   | S   | S   | S   |
-| E13  |    |    | X  | X  |    | X  | X  |    |    | X  |     |     |     |     |
-| E14  |    |    |    |    |    |    |    |    |    |    | X   | X   |     |     |
-| E15  |    |    |    | X  |    |    |    |    | X  |    | X   |     | X   |     |
-| E16  |    |    |    |    |    |    |    |    |    | X  |     |     |     |     |
+|     | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 | C11 | C12 | C13 | C14 |
+|-----|----|----|----|----|----|----|----|----|----|----|-----|-----|-----|-----|
+| E1  | X  | X  |    |    |    |    |    |    |    |    |     |     |     |     |
+| E2  |    |    |    |    | X  |    |    |    |    |    |     |     |     |     |
+| E3  |    |    | X  |    |    |    |    |    |    |    |     |     |     |     |
+| E4  |    |    |    |    | X  |    |    |    |    |    |     |     | X   |     |
+| E5  | S  | S  | S  | X  | S  | X  | X  | X  | X  | X  | S   | S   | X   | X   |
+| E6  |    |    |    | P  |    | X  |    |    |    |    |     |     |     | P   |
+| E7  |    |    |    |    |    |    |    | X  |    |    |     | X   |     |     |
+| E8  |    |    |    |    |    |    |    |    |    | X  |     |     |     |     |
+| E9  |    |    |    |    |    |    |    |    |    |    | X   | X   |     |     |
+| E10 |    |    |    | P  |    |    |    |    | P  |    | P   |     | P   |     |
+| E11 |    |    |    |    |    |    |    |    |    |    |     |     | X   |     |
+| E12 |    |    |    |    |    | X  | X  | X  |    |    |     |     |     |     |
 
-**Legend:** X = Primary Implementation, S = Supporting (infrastructure)
+**Legend:** X = Primary Implementation, S = Supporting (infrastructure), P = Partial (assists)
 
 ### Relationship Details
 
 | Element | Component | Implementation Type | Rationale |
 |---------|-----------|---------------------|-----------|
-| E1 | C1 | Full Implementation | Ontology files ARE the Type Ontology—definitions stored as markdown documents |
-| E2 | C2 | Full Implementation | JSON Schema files ARE the Schema Registry—schemas stored as files |
-| E3 | C3 | Full Implementation | Template files ARE the Template Registry—templates stored as markdown |
-| E4 | C1 | Shared Implementation | Python package provides programmatic access to ontology definitions |
-| E4 | C2 | Shared Implementation | Python package loads and queries schema files |
-| E4 | C3 | Shared Implementation | Python package retrieves templates for composition |
-| E4 | C4 | Full Implementation | Python package implements template instantiation and parameter injection |
-| E4 | C5 | Shared Implementation | Python package implements coherence enforcement on file operations |
-| E4 | C6-C8 | Shared Implementation | Python package orchestrates verification using E7, E8, E9, E10 |
-| E4 | C9 | Full Implementation | Python package implements guidance-based evaluation logic |
-| E4 | C10 | Shared Implementation | Python package formats results using E16 |
-| E4 | C11-C12 | Shared Implementation | Python package provides search and graph APIs using E10, E11 |
-| E4 | C13 | Full Implementation | Python package implements workflow coordination logic |
-| E4 | C14 | Full Implementation | Python package implements simplex construction with coherence checks |
-| E5 | C5 | Full Implementation | Document files ARE the Simplex Store—persistence as markdown files |
-| E6 | C5 | Shared Implementation | Git provides version control and accountability for stored simplices |
-| E6 | C13 | Shared Implementation | Git commits provide accountability timestamps for workflow events |
-| E7 | C4 | Partial Implementation | YAML parser enables parameter extraction and frontmatter manipulation |
-| E7 | C6 | Partial Implementation | YAML parser extracts frontmatter for schema verification |
-| E7 | C14 | Partial Implementation | YAML parser generates frontmatter for constructed simplices |
-| E8 | C7 | Full Implementation | Markdown parser analyzes document structure for section verification |
-| E9 | C2 | Partial Implementation | JSON Schema validator uses schema files for validation |
-| E9 | C6 | Partial Implementation | JSON Schema validator performs frontmatter validation |
-| E10 | C8 | Full Implementation | NetworkX provides graph queries for boundary and local rule verification |
-| E10 | C12 | Full Implementation | NetworkX provides relationship traversal and backlink discovery |
-| E11 | C11 | Full Implementation | Whoosh provides full-text search across document content |
-| E12 | All | Shared Implementation | CLI provides user interface to all component operations |
-| E13 | C3 | Partial Implementation | VS Code extension provides template insertion snippets |
-| E13 | C4 | Partial Implementation | VS Code extension triggers document composition |
-| E13 | C6-C7 | Partial Implementation | VS Code extension displays verification results inline |
-| E13 | C10 | Partial Implementation | VS Code extension presents formatted results in panels |
-| E14 | C11 | Partial Implementation | Obsidian provides search UI for content discovery |
-| E14 | C12 | Partial Implementation | Obsidian provides graph navigation and backlink panels |
-| E15 | C4 | Partial Implementation | Claude Code assists with template filling and draft generation |
-| E15 | C9 | Partial Implementation | Claude Code helps interpret evaluation results and suggest improvements |
-| E15 | C11 | Partial Implementation | Claude Code uses search to find prior work |
-| E15 | C13 | Partial Implementation | Claude Code guides operators through runbook steps |
-| E16 | C10 | Full Implementation | Rich formats terminal output for verification and evaluation results |
+| E1 | C1, C2 | Full | Ontology files define type hierarchy AND serve as schema definitions |
+| E2 | C5 | Full | Document files ARE the Simplex Store—persistence as markdown files |
+| E3 | C3 | Full | Template files ARE the Template Registry |
+| E4 | C5, C13 | Shared | Git provides version control for storage and accountability for workflows |
+| E5 | C4, C6-C10, C13-C14 | Full | Python package implements all programmatic logic |
+| E6 | C6, C4, C14 | Partial | YAML parser extracts frontmatter for verification and construction |
+| E7 | C8, C12 | Full | NetworkX provides boundary verification and graph traversal |
+| E8 | C10 | Full | Visualization presents charts for human validation |
+| E9 | C11, C12 | Full | Obsidian provides search and graph navigation for humans |
+| E10 | C4, C9, C11, C13 | Partial | Claude Code assists with composition, evaluation, search, workflow |
+| E11 | C13 | Full | GPG signatures provide cryptographic accountability |
+| E12 | C6, C7, C8 | Full | GitHub Actions enforces verification at repository level |
 
 ### Key Implementations
 
-1. **File-Based Storage (E1, E2, E3, E5, E6)**: The simplicial complex is stored entirely as files in a git repository. Ontologies, schemas, templates, and all simplices (vertices, edges, faces) are markdown files with YAML frontmatter. This implements C1 (Type Ontology), C2 (Schema Registry), C3 (Template Registry), and C5 (Simplex Store) without any database dependencies. Git (E6) provides version control, branching, and commit-based accountability.
+1. **File-Based Storage (E1, E2, E3, E4)**: The simplicial complex is stored entirely as files in a git repository. Ontology files (E1) define types; document files (E2) store simplices; template files (E3) scaffold new documents. Git (E4) provides version control and GPG-signed commits for accountability.
 
-2. **Python Package as Orchestrator (E4)**: The Python package implements the core logic for all components, using specialized libraries (E7-E11) for parsing, validation, and graph operations. It provides both a programmatic API and CLI (E12) for all operations. This is the "core" package referenced in the field survey (resource R1).
+2. **Python Package as Core (E5)**: The Python package implements verification (C6, C7, C8), evaluation (C9), composition (C4), construction (C14), and workflow coordination (C13). It uses PyYAML (E6) for frontmatter parsing and NetworkX (E7) for graph operations.
 
-3. **Multi-Parser Verification (E7, E8, E9, E10)**: Verification uses specialized parsers for each concern: PyYAML/ruamel for YAML frontmatter (C6), markdown-it-py for body structure (C7), jsonschema for schema validation (C6), and NetworkX for graph-based coherence (C8). This separation of concerns enables focused testing and extensibility.
+3. **YAML as Structural Truth (E6)**: The simplicial complex structure is determined entirely from YAML frontmatter fields. Edge documents have `source` and `target`; face documents have `boundary_edges` and `boundary_vertices`. Wikilinks in body text are for Obsidian navigation only.
 
-4. **Triple Interface Strategy (E13, E14, E15)**: Three complementary interfaces serve different user needs: VS Code (E13) for authoring with real-time feedback, Obsidian (E14) for navigation and review, and Claude Code (E15) for AI-assisted workflows. All three operate on the same git repository—no synchronization needed.
+4. **Dual Interface (E9, E10)**: Obsidian (E9) provides human navigation, search, and review. Claude Code (E10) provides AI-assisted authoring. Both operate on the same git repository.
 
-5. **Search and Graph Navigation (E10, E11, E14)**: Discovery combines full-text search (Whoosh/E11) with graph traversal (NetworkX/E10), exposed through Obsidian's native features (E14) and the Python API. This implements C11 (Search Index) and C12 (Graph Navigator).
+5. **Visualization for Validation (E8)**: Chart visualization is essential for validating charts before approval. Visual inspection catches structural issues that automated checks miss.
 
-6. **Evaluation Engine (E4, E15)**: The evaluation engine (C9) is implemented in Python (E4) with guidance-parsing logic, while Claude Code (E15) provides AI-assisted interpretation and improvement suggestions. This hybrid approach combines deterministic scoring with contextual guidance.
+6. **Cryptographic Accountability (E11)**: GPG signatures on git commits provide verifiable attribution for validation edges and approvals.
+
+7. **CI Enforcement (E12)**: GitHub Actions provides repository-level verification gates. Even if local checks are bypassed, CI prevents merging documents that violate ontology rules, maintaining coherence across contributors.
 
 ## Unit Testing Strategy
 
@@ -467,22 +443,18 @@ The knowledge complex framework deploys as a file-based system with no external 
 
 | Element | Test Framework | Test Method | Success Indicator |
 |---------|----------------|-------------|-------------------|
-| E1 | pytest | Parse ontology files, verify structure | All ontology files parse correctly, counts match |
-| E2 | pytest + jsonschema | Validate test documents against schemas | Valid docs pass, invalid docs fail with correct errors |
-| E3 | pytest + jinja2 | Render templates with test parameters | Rendered output matches expected structure |
-| E4 | pytest + coverage | Unit tests for each module, integration tests for workflows | >90% coverage, all integration scenarios pass |
-| E5 | pytest | Read/write document files, verify roundtrip fidelity | Content preserved exactly through read/write cycle |
-| E6 | pytest + git | Commit operations, branch workflows, signature verification | Git operations succeed, hooks execute correctly |
-| E7 | pytest | Parse test YAML files, verify roundtrip with comments | Comments preserved, Unicode handled correctly |
-| E8 | pytest | Parse test markdown files, extract section structure | Section hierarchy matches expected structure |
-| E9 | pytest + jsonschema | Validate frontmatter against schemas with edge cases | All validation rules enforced correctly |
-| E10 | pytest + networkx | Graph construction, traversal, cycle detection | Graph algorithms return correct results |
-| E11 | pytest + whoosh | Index documents, execute searches, verify relevance | Search returns expected results in correct order |
-| E12 | pytest + click.testing | Invoke CLI commands, verify output and exit codes | Commands execute successfully, output formatted correctly |
-| E13 | VS Code Extension Tests | Extension activation, command execution, UI updates | Extension functions correctly in VS Code environment |
-| E14 | Manual Testing | Vault configuration, plugin functionality, navigation | Obsidian displays and navigates correctly |
-| E15 | Integration Testing | Claude Code interactions with test repository | AI assistance produces valid outputs |
-| E16 | pytest + rich | Format test results, verify terminal output | Output renders correctly across terminal types |
+| E1 | pytest | Parse ontology files, verify structure | All ontology files parse correctly |
+| E2 | pytest | Read/write document files, verify roundtrip | Content preserved through read/write |
+| E3 | pytest | Apply templates with test parameters | Placeholders replaced correctly |
+| E4 | pytest + git | Commit operations, signature verification | Git operations succeed, signatures valid |
+| E5 | pytest + coverage | Unit tests for each module | >90% coverage, all tests pass |
+| E6 | pytest | Parse test YAML files with edge cases | All frontmatter parsed correctly |
+| E7 | pytest | Graph construction, traversal, cycle detection | Algorithms return correct results |
+| E8 | pytest | Generate visualizations, verify output | Visualizations render without error |
+| E9 | Manual | Vault configuration, navigation, search | Obsidian displays correctly |
+| E10 | Integration | Claude Code interactions with test repo | AI assistance produces valid outputs |
+| E11 | pytest + gpg | Sign and verify test commits | Signatures verify correctly |
+| E12 | GitHub Actions | Workflow runs on test repository | All verification jobs pass |
 
 ## Traceability to Logical Architecture
 
@@ -490,29 +462,44 @@ The knowledge complex framework deploys as a file-based system with no external 
 
 | Component | Implemented by Elements | Implementation Notes |
 |-----------|------------------------|----------------------|
-| C1 Type Ontology | E1, E4 | Ontology files (E1) ARE the storage; Python (E4) provides access |
-| C2 Schema Registry | E2, E4, E9 | Schema files (E2) ARE the storage; Python uses jsonschema (E9) |
-| C3 Template Registry | E3, E4, E13 | Template files (E3) ARE the storage; Python and VS Code provide access |
-| C4 Document Composer | E4, E7, E13, E15 | Python (E4) orchestrates; YAML parser (E7), VS Code (E13), Claude (E15) assist |
-| C5 Simplex Store | E5, E6, E4 | Document files (E5) ARE the storage; Git (E6) provides version control |
-| C6 Schema Verifier | E4, E7, E9, E13 | Python orchestrates; YAML parser (E7), jsonschema (E9); VS Code displays |
-| C7 Structure Analyzer | E4, E8, E13 | Python orchestrates; markdown parser (E8) analyzes; VS Code displays |
-| C8 Boundary Verifier | E4, E10 | Python orchestrates; NetworkX (E10) provides graph queries |
-| C9 Evaluation Engine | E4, E15 | Python (E4) implements scoring; Claude Code (E15) assists interpretation |
-| C10 Result Presenter | E4, E16, E13 | Python orchestrates; Rich (E16) formats terminal; VS Code formats IDE |
-| C11 Search Index | E11, E4, E14, E15 | Whoosh (E11) indexes; Python provides API; Obsidian and Claude search |
-| C12 Graph Navigator | E10, E4, E14 | NetworkX (E10) stores graph; Python provides API; Obsidian visualizes |
-| C13 Workflow Coordinator | E4, E6, E15 | Python (E4) implements logic; Git (E6) provides accountability; Claude guides |
-| C14 Simplex Constructor | E4, E7 | Python (E4) implements construction; YAML parser (E7) generates frontmatter |
+| C1 Type Ontology | E1, E5 | Ontology files (E1) ARE the definitions; Python (E5) provides access |
+| C2 Schema Registry | E1, E5 | Ontology files include schema definitions; specs define required fields |
+| C3 Template Registry | E3, E5 | Template files (E3) ARE the registry; Python retrieves them |
+| C4 Document Composer | E5, E6, E10 | Python orchestrates; YAML parser extracts; Claude assists |
+| C5 Simplex Store | E2, E4 | Document files (E2) ARE storage; Git (E4) provides version control |
+| C6 Schema Verifier | E5, E6, E12 | Python implements verification; GitHub Actions enforces |
+| C7 Structure Analyzer | E5, E12 | Python analyzes structure; GitHub Actions enforces |
+| C8 Boundary Verifier | E5, E7, E12 | Python + NetworkX verify; GitHub Actions enforces |
+| C9 Evaluation Engine | E5, E10 | Python implements scoring; Claude assists interpretation |
+| C10 Result Presenter | E5, E8 | Python formats results; visualization for charts |
+| C11 Search Index | E9, E10 | Obsidian provides search; Claude uses search |
+| C12 Graph Navigator | E7, E9 | NetworkX stores graph; Obsidian visualizes |
+| C13 Workflow Coordinator | E4, E5, E10, E11 | Git/GPG for accountability; Python for logic; Claude guides |
+| C14 Simplex Constructor | E5, E6 | Python implements construction; YAML generates frontmatter |
 
 ### Coverage Analysis
 
-- **Complete coverage**: All 14 logical components are implemented by at least one physical element
-- **File-based foundation**: E1, E2, E3, E5, E6 provide file-based storage for all data (no external services)
-- **Python as hub**: E4 touches all components, providing the programmatic core that orchestrates all operations
-- **Specialized parsers**: E7, E8, E9, E10 handle specific parsing/validation concerns
-- **Multi-interface access**: E13, E14, E15 provide three complementary user interfaces
-- **CLI and formatting**: E12, E16 provide command-line access with formatted output
+- **Complete coverage**: All 14 logical components implemented by the 12 elements
+- **File-based foundation**: E1, E2, E3, E4 provide file-based storage (no external services)
+- **Python as hub**: E5 implements core logic for most components
+- **Dual interface**: E9 (Obsidian) and E10 (Claude Code) provide complementary access
+- **Cryptographic accountability**: E11 (GPG) enables verifiable signatures
+- **CI enforcement**: E12 (GitHub Actions) prevents invalid documents from reaching main branch
+
+## Deferred Elements
+
+The following elements are deferred to future iterations when scaling or quality-of-life improvements are needed:
+
+| Element | Technology | When Needed |
+|---------|------------|-------------|
+| JSON Schema Files | JSON Schema Draft 2020-12 | When specs need machine-checkable schemas beyond YAML |
+| Markdown AST Parser | markdown-it-py | When structure verification needs deep AST analysis |
+| Full-Text Search Engine | Whoosh or Elasticsearch | When Obsidian search insufficient (>10k docs) |
+| CLI Framework | Click | When scripts need proper CLI UX for non-IDE users |
+| Terminal Formatter | Rich | When terminal output needs polish |
+| Document Database | MongoDB or similar | When file-based storage doesn't scale |
+| Relational Database | PostgreSQL | For RBAC views, traceability queries, status dashboards |
+| LLM Abstraction Layer | OpenRouter | When supporting non-Claude models or cloud deployment |
 
 ## Technology Selection Rationale
 
@@ -520,45 +507,46 @@ The knowledge complex framework deploys as a file-based system with no external 
 
 Technology choices were guided by:
 
-1. **File-based over database**: Constraints C1 and C2 require human-readable files in git
-2. **Python ecosystem**: BlockScience's primary language for analytical work
-3. **Existing toolchain**: VS Code, Obsidian, Claude Code specified in field survey
-4. **No external services**: Internal deployment should not require databases or cloud services
-5. **Maintainability**: Standard libraries preferred over custom implementations
-6. **Future extensibility**: Upgrade path to more scalable solutions if needed
+1. **Minimal toolchain**: Fewer dependencies = fewer compatibility issues
+2. **Obsidian compatibility**: OFM as primary markdown flavor
+3. **Python-only**: No TypeScript/JavaScript toolchain needed
+4. **File-based**: No external services for MVP (except GitHub for CI)
+5. **Cryptographic accountability**: GPG for verifiable signatures
+6. **CI enforcement**: GitHub Actions prevents invalid documents from reaching main
 
-### Alternatives Considered
+### What This Architecture Eliminates
 
-| Element | Technology Chosen | Alternatives Considered | Why Chosen |
-|---------|-------------------|------------------------|------------|
-| E5 | Markdown files | SQLite, PostgreSQL | Constraint C1 requires human-readable; git-friendly |
-| E7 | PyYAML + ruamel.yaml | strictyaml, pyyaml-safe | Best balance of speed (PyYAML) and fidelity (ruamel) |
-| E8 | markdown-it-py | mistune, commonmark | Most complete CommonMark implementation in Python |
-| E10 | NetworkX | igraph, graph-tool | Pure Python, sufficient for expected graph sizes |
-| E11 | Whoosh | SQLite FTS, Elasticsearch | Pure Python, file-based, no external service |
-| E12 | Click | argparse, typer | Mature, well-documented, Click is standard for Python CLIs |
-| E16 | Rich | colorama, blessed | Best terminal formatting with markdown support |
+Compared to the initial 16-element design, this simplified architecture eliminates:
+
+- VS Code extension (TypeScript toolchain) — Claude Code extension suffices
+- Jinja2 templating — Simple `<placeholder>` syntax works with Obsidian
+- ruamel.yaml — PyYAML sufficient for parsing
+- markdown-it-py — Structure verification via spec patterns
+- jsonschema — YAML frontmatter + specs sufficient for MVP
+- Whoosh search — Obsidian provides search
+- Click CLI — Scripts run directly
+- Rich formatting — Print statements sufficient for MVP
 
 ## Constraints and Assumptions
 
 ### Constraints
 
-- **Cst1**: All simplices stored as markdown files with YAML frontmatter (from conceptual C1)
-- **Cst2**: Git is the sole version control system; no alternative persistence (from conceptual C2)
+- **Cst1**: All simplices stored as OFM files with YAML frontmatter (from conceptual C1)
+- **Cst2**: Git is the sole version control system with GPG signing (from conceptual C2)
 - **Cst3**: Validation requires human signature; cannot be fully automated (from conceptual C3)
-- **Cst4**: Python 3.11+ required for performance and language features
-- **Cst5**: File-based search may not scale beyond ~10,000 documents; upgrade path to Elasticsearch if needed
-- **Cst6**: VS Code extension requires TypeScript; separate build from Python package
+- **Cst4**: Python 3.12+ required; environment managed by uv
+- **Cst5**: Simplicial complex boundaries computed from YAML frontmatter, not wikilinks
+- **Cst6**: File-based search may not scale beyond ~10,000 documents
 
 ### Assumptions
 
-- **Asm1**: Users have Python 3.11+ installed or can install it
-- **Asm2**: Users have VS Code 1.85+ installed and are willing to use extensions
-- **Asm3**: Users have Obsidian 1.5+ installed or can install it
-- **Asm4**: Users have access to Claude Code for LLM assistance
+- **Asm1**: Users have Python 3.12+ and uv installed or can install them
+- **Asm2**: Users have Obsidian 1.5+ installed
+- **Asm3**: Users have access to Claude Code for LLM assistance
+- **Asm4**: Users have GPG 2.x installed and configured
 - **Asm5**: Git 2.40+ is available on user workstations
-- **Asm6**: Repository sizes will remain manageable (<10,000 documents) for file-based search
+- **Asm6**: Repository is hosted on GitHub with Actions enabled
 
 ---
 
-**Note:** This physical architecture is the fourth and final extended architecture document. It completes the chain: Conceptual Architecture (stakeholder needs, acceptance criteria) → Functional Architecture (24 functions) → Logical Architecture (14 components, 40 interfaces) → Physical Architecture (16 elements implementing the components). The next step is the summary Architecture document that consolidates key decisions.
+**Note:** This physical architecture is version 0.2.0, with 12 elements (simplified from initial 16-element design, plus GitHub Actions for CI). It reflects lessons from prototyping: Obsidian Flavored Markdown as the data standard, simple placeholder templates, Python-only toolchain with uv, GPG signatures for accountability, and GitHub Actions for ontology enforcement. Deferred elements can be added when scaling requires them.
