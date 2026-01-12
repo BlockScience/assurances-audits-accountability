@@ -316,7 +316,7 @@ The base ontology defines 12 local rules. See [[ontology-base]] for complete def
 | E4 | Git Repository | Git 2.40+ | Version control and accountability via git blame |
 | E5 | Python Package | Python 3.12+, uv | Core library implementing all logic |
 | E6 | YAML Parser | PyYAML 6.0+ | Frontmatter parsing |
-| E7 | Graph Library | NetworkX 3.2+ | In-memory graph for traversal and verification |
+| E7 | Graph Library | NetworkX 3.2+ | Graph layout for chart visualization |
 | E8 | Chart Visualization | matplotlib + plotly | Visual validation of charts |
 | E9 | Obsidian | Obsidian 1.5+ | Human navigation, search, review |
 | E10 | Claude Code | Claude Code (VS Code extension) | LLM-assisted authoring |
@@ -330,7 +330,7 @@ The base ontology defines 12 local rules. See [[ontology-base]] for complete def
 | E1, E2, E3, E4 | C3, C5 | File-based storage—documents ARE the stores |
 | E5 | C4, C6-C10, C13-C14 | Python implements all programmatic logic |
 | E6 | C6, C14 | YAML parser extracts structural truth |
-| E7 | C8, C12 | NetworkX for boundary verification and graph traversal |
+| E7 | C10 | NetworkX provides graph layout for chart visualization (E8) |
 | E9, E10 | C11, C12, C4, C13 | Dual interface for human and AI access |
 | E11, E12 | C13, C6-C8 | Accountability enforcement via CI (E11 future capability) |
 
@@ -413,7 +413,7 @@ The following are deferred for future scaling:
 |------------------|---------------------|-------------------|------------|----------|
 | Operators find templates (A3) | AC1 | F1, F3 | C3, C4 | E3, E5 |
 | Operators get verification feedback (A3) | AC2, AC3 | F5, F6, F7, F8 | C6, C7, C8 | E5, E6, E12 |
-| Operators search prior work (A3) | AC4 | F2, F10, F11 | C11, C12 | E7, E9 |
+| Operators search prior work (A3) | AC4 | F2, F10, F11 | C11, C12 | E5, E9 |
 | Approvers review efficiently (A4) | AC5 | F14, F15 | C10 | E5, E8 |
 | Approvers sign with confidence (A4) | AC6 | F16 | C14 | E5, E11, E12 |
 | Approvers see effectiveness (A4) | AC7, AC10 | F9, F17, F18 | C9, C13 | E5, E10 |

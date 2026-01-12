@@ -181,11 +181,11 @@ This document provides bidirectional requirements traceability analysis for the 
 | **C5** Simplex Store | E2, E4 | Document files ARE storage; Git version control |
 | **C6** Schema Verifier | E5, E6, E12 | Python implements; GitHub Actions enforces |
 | **C7** Structure Analyzer | E5, E12 | Python analyzes; GitHub Actions enforces |
-| **C8** Boundary Verifier | E5, E7, E12 | Python + NetworkX verify; GitHub Actions enforces |
+| **C8** Boundary Verifier | E5, E12 | Python verifies using JSON cache; GitHub Actions enforces |
 | **C9** Evaluation Engine | E5, E10 | Python scores; Claude interprets |
 | **C10** Result Presenter | E5, E8 | Python formats; visualization for charts |
 | **C11** Search Index | E9, E10 | Obsidian searches; Claude queries |
-| **C12** Graph Navigator | E7, E9 | NetworkX stores; Obsidian visualizes |
+| **C12** Graph Navigator | E5, E9 | Python traverses JSON cache; Obsidian visualizes |
 | **C13** Workflow Coordinator | E4, E5, E10, E11 | Git accountability (GPG future); Python logic; Claude guides |
 | **C14** Simplex Constructor | E5, E6 | Python constructs; YAML generates frontmatter |
 
@@ -266,18 +266,17 @@ E6 YAML Parser (PyYAML 6.0+)
             └─→ N4.2, N6.2
 ```
 
-#### E7: Graph Library
+#### E7: Graph Library (Visualization)
 
 ```
 E7 Graph Library (NetworkX 3.2+)
-├─→ C8 Boundary Verifier
-│   └─→ F8 Reference Resolution
-│       └─→ AC3
-│           └─→ N3.3, N4.4, N6.3
-└─→ C12 Graph Navigator
-    └─→ F11 Graph Traversal, F12 Backlink Discovery
-        └─→ AC4
-            └─→ N3.1, N5.3
+└─→ C10 Result Presenter (supporting role)
+    └─→ F14, F15 (Chart layout for visualization)
+        └─→ AC5, AC10
+            └─→ N3.4, N4.3
+
+Note: E7 provides graph layout (spring_layout) for chart visualization only.
+Boundary verification and graph traversal use E5 (Python) with JSON cache.
 ```
 
 #### E8: Chart Visualization
@@ -468,8 +467,9 @@ ELEMENTS (12)
 │
 ├─ E1-E3: File-Based Storage (Ontology, Documents, Templates)
 ├─ E4-E5: Core Infrastructure (Git, Python Package)
-├─ E6-E7: Data Processing (YAML, NetworkX)
-├─ E8-E10: User Interfaces (Visualization, Obsidian, Claude Code)
+├─ E6: Data Processing (YAML Parser)
+├─ E7-E8: Visualization (NetworkX layout, matplotlib/plotly charts)
+├─ E9-E10: User Interfaces (Obsidian, Claude Code)
 ├─ E11: Accountability (GPG Signatures — future capability)
 └─ E12: CI Enforcement (GitHub Actions)
     ├─ verify-documents, verify-types, verify-boundaries
