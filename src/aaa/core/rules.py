@@ -354,14 +354,24 @@ class OntologyRuleEngine:
         'produces': (['vertex/execution'], ['vertex/doc']),
         'executes': (['vertex/execution'], ['vertex/module']),
         'follows': (['vertex/execution'], ['vertex/execution']),
+        # Type hierarchy edges
+        'inherits': (['vertex/spec'], ['vertex/spec']),
+        'instantiates': (['vertex/doc'], ['vertex/spec']),
     }
 
     # Degree constraints from ontology
     # Format: (vertex_type_prefix, edge_type, direction) -> (min, max)
     # direction: 'out', 'in', 'any'
     # max=None means unlimited
+    #
+    # NOTE: doc verification/validation degree constraints are NOT enforced here because:
+    # - Documents can have multiple types through inheritance
+    # - Each inherited type allows ONE verification edge and ONE validation edge
+    # - E.g., vertex/doc/persona inherits from 'persona' AND 'doc', so it can have:
+    #   - verification → spec/persona AND verification → spec/doc
+    #   - validation → guidance/persona AND validation → guidance/doc
+    # - The constraint is "0..n where n = number of inherited types", not a fixed max
     DEGREE_CONSTRAINTS = {
-        ('vertex/doc', 'verification', 'out'): (0, 1),
         ('vertex/spec', 'coupling', 'any'): (1, 1),
         ('vertex/guidance', 'coupling', 'any'): (1, 1),
         ('vertex/module', 'input', 'in'): (1, None),
@@ -616,15 +626,20 @@ class OntologyRuleEngine:
                     details={'signer': signer_id, 'guidance': guidance_id}
                 )
 
-    # ========== Signature Shares Edge with Assurance (Rule 5) ==========
+    # ========== Assurance Requires Signature (Rule 5) ==========
 
-    def _check_signature_shares_edge_with_assurance(self):
+    def _check_assurance_requires_signature(self):
         """
-        Check that signature faces share validation edge with assurance face.
+        Check that assurance faces have a signature face sharing their validation edge.
 
-        Rule: f:signature: must share e:validation: edge with f:assurance: face.
+        Rule: f:assurance: must have f:signature: sharing e:validation: edge.
+
+        Key insight: Signature faces CAN exist without assurance faces (they represent
+        a signer's approval of a validation, which may pre-exist the assurance).
+        But assurance faces CANNOT exist without a corresponding signature - every
+        assurance requires human accountability via a signed validation.
         """
-        for fid in self.graph.get_faces_by_type('signature'):
+        for fid in self.graph.get_faces_by_type('assurance'):
             face = self.graph.get_face(fid)
             if not face:
                 continue
@@ -639,29 +654,34 @@ class OntologyRuleEngine:
 
             if not validation_edge_id:
                 self._add_violation(
-                    rule_name="signature_shares_validation_with_assurance",
+                    rule_name="assurance_requires_signature",
                     rule_type=RuleType.FACE_ADJACENCY,
                     severity=Severity.ERROR,
                     element_id=fid,
                     element_type="face",
-                    message="Signature face has no validation edge in boundary",
+                    message="Assurance face has no validation edge in boundary",
                     details={'edges': face.edges}
                 )
                 continue
 
-            # Check if any assurance face shares this edge
-            assurance_faces = self.graph.get_faces_containing_edge(validation_edge_id, 'assurance')
+            # Check if any signature face shares this validation edge
+            signature_faces = self.graph.get_faces_containing_edge(validation_edge_id, 'signature')
 
-            if not assurance_faces:
+            if not signature_faces:
                 self._add_violation(
-                    rule_name="signature_shares_validation_with_assurance",
+                    rule_name="assurance_requires_signature",
                     rule_type=RuleType.FACE_ADJACENCY,
                     severity=Severity.ERROR,
                     element_id=fid,
                     element_type="face",
-                    message=f"No assurance face shares validation edge '{validation_edge_id}'",
+                    message=f"No signature face shares validation edge '{validation_edge_id}' - assurance requires human sign-off",
                     details={'validation_edge': validation_edge_id}
                 )
+
+    # Legacy alias for backward compatibility
+    def _check_signature_shares_edge_with_assurance(self):
+        """Backward compatibility alias - calls _check_assurance_requires_signature."""
+        self._check_assurance_requires_signature()
 
     # ========== Assurance Requires B2 Anchor (Rule 6) ==========
 

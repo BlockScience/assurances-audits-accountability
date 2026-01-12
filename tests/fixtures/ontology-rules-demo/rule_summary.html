@@ -19,7 +19,7 @@
     <h1>Ontology Rules Demonstration Summary</h1>
 
     <div class="card">
-        <h2>Overall Results: <span class="pass">13/13 passed</span></h2>
+        <h2>Overall Results: <span class="pass">19/19 passed</span></h2>
     </div>
 
     <div class="card">
@@ -33,8 +33,8 @@
             </tr>
             <tr>
                 <td>Edge Endpoint Types</td>
-                <td>6</td>
-                <td class="pass">6/6</td>
+                <td>9</td>
+                <td class="pass">9/9</td>
                 <td><a href="rule_edge_endpoints.html">View Details</a></td>
             </tr>
             <tr>
@@ -49,6 +49,12 @@
                 <td class="pass">2/2</td>
                 <td><a href="rule_face_boundary_types.html">View Details</a></td>
             </tr>
+            <tr>
+                <td>Face Adjacency (Signature-Assurance)</td>
+                <td>3</td>
+                <td class="pass">3/3</td>
+                <td><a href="rule_face_adjacency.html">View Details</a></td>
+            </tr>
         </table>
     </div>
 
@@ -62,12 +68,14 @@
             <li><strong>coupling:</strong> spec ↔ guidance (1:1 pairing of spec with its guidance)</li>
             <li><strong>signs:</strong> signer → doc (human accountability for validation)</li>
             <li><strong>qualifies:</strong> signer → guidance/module (human qualified to validate)</li>
+            <li><strong>inherits:</strong> spec → spec (child spec extends parent spec)</li>
+            <li><strong>instantiates:</strong> doc → spec (document is instance of spec type)</li>
         </ul>
 
         <h3>Vertex Degree Constraints</h3>
         <p>These rules constrain how many edges of each type can connect to a vertex:</p>
         <ul>
-            <li><strong>doc → verification:</strong> 0..1 (at most one verification per document)</li>
+            <li><strong>doc → verification:</strong> 0..n where n = number of inherited types (one verification per type)</li>
             <li><strong>spec ↔ coupling:</strong> exactly 1 (each spec pairs with exactly one guidance)</li>
             <li><strong>guidance ↔ coupling:</strong> exactly 1 (each guidance pairs with exactly one spec)</li>
         </ul>
@@ -78,6 +86,14 @@
             <li><strong>assurance:</strong> must have verification + validation + coupling edges</li>
             <li><strong>signature:</strong> must have validation + qualifies + signs edges</li>
         </ul>
+
+        <h3>Face Adjacency Rules (Assurance Requires Signature)</h3>
+        <p>These rules ensure assurance faces have human accountability via signature faces:</p>
+        <ul>
+            <li><strong>assurance-requires-signature:</strong> assurance face (doc, spec, guidance) must have a signature face (doc, guidance, signer) sharing its validation edge</li>
+            <li><strong>signature-can-pre-exist:</strong> signature faces CAN exist without assurance faces (they represent pre-existing approvals)</li>
+        </ul>
+        <p><em>Key insight: Signature faces are created when a user approves a validation edge. They often PRE-EXIST assurance faces. Assurance faces CANNOT exist without a corresponding signature.</em></p>
     </div>
 </body>
 </html>

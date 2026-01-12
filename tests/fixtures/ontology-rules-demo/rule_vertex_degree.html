@@ -60,7 +60,7 @@
         </div>
 
         <div class="explanation">
-            <strong>Rule:</strong> A document can have at most 1 verification edge (verified against one spec). Spec is properly coupled.
+            <strong>Rule:</strong> A document with a single verification edge. Spec is properly coupled to guidance.
         </div>
 
         <p>
@@ -70,9 +70,9 @@
     </div>
 
     <div class="demo pass">
-        <h2>Demo 2: Invalid: Doc with Multiple Verifications</h2>
+        <h2>Demo 2: Valid: Doc with Multiple Type Verifications</h2>
         <p class="status pass">✓ PASS</p>
-        <p class="description">Doc → Spec1 ↔ G1, Doc → Spec2 ↔ G2 (VIOLATION: doc has 2 verification edges)</p>
+        <p class="description">Doc → Spec1 ↔ G1, Doc → Spec2 ↔ G2 (VALID: doc has multiple types)</p>
 
         <div class="graph">
             <svg width="400" height="300" viewBox="0 0 400 300">
@@ -100,21 +100,13 @@
         </div>
 
         <div class="explanation">
-            <strong>Rule:</strong> A document cannot be verified against multiple specs - max degree is 1. Both specs are properly coupled.
+            <strong>Rule:</strong> Documents can have one verification edge PER TYPE they inherit. A persona doc inherits from both 'persona' and 'doc', so it can verify against spec/persona AND spec/doc (one verification per inherited type).
         </div>
 
         <p>
-            <strong>Expected violations:</strong> 1<br>
-            <strong>Actual violations:</strong> 1
+            <strong>Expected violations:</strong> 0<br>
+            <strong>Actual violations:</strong> 0
         </p>
-
-        <div class="violations">
-            <h4>Violations Found:</h4>
-            <ul>
-                <li><code>[ERROR] degree_constraint: Has 2 verification edges (out), maximum is 1 (v:doc:test)</code></li>
-
-            </ul>
-        </div>
     </div>
 
     <div class="demo pass">
