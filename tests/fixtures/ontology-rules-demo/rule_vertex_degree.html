@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ontology Rule Demo: Vertex Degree Constraints</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 40px; background: #f5f5f5; }
+        h1 { color: #2c3e50; }
+        h2 { color: #34495e; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .demo { background: white; margin: 20px 0; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .pass { border-left: 4px solid #27ae60; }
+        .fail { border-left: 4px solid #e74c3c; }
+        .status { font-weight: bold; font-size: 1.2em; }
+        .status.pass { color: #27ae60; }
+        .status.fail { color: #e74c3c; }
+        .description { color: #7f8c8d; font-style: italic; margin: 10px 0; }
+        .explanation { background: #ecf0f1; padding: 15px; border-radius: 4px; margin: 15px 0; }
+        .violations { background: #fdedec; padding: 15px; border-radius: 4px; margin: 15px 0; }
+        .violations h4 { color: #c0392b; margin-top: 0; }
+        .graph { margin: 20px 0; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 4px; }
+        .vertex { fill: #3498db; stroke: white; stroke-width: 2; }
+        .vertex.spec { fill: #27ae60; }
+        .vertex.guidance { fill: #f39c12; }
+        .vertex.signer { fill: #9b59b6; }
+        .edge { stroke: #95a5a6; stroke-width: 2; }
+        .edge.verification { stroke: #3498db; }
+        .edge.validation { stroke: #e74c3c; }
+        .edge.coupling { stroke: #9b59b6; stroke-dasharray: 5,5; }
+        .edge.invalid { stroke: #e74c3c; stroke-width: 3; }
+        .label { font-size: 12px; fill: #2c3e50; }
+        code { background: #ecf0f1; padding: 2px 6px; border-radius: 3px; font-family: 'Fira Code', monospace; }
+        .summary { background: #d5dbdb; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <h1>Ontology Rule Demonstration: Vertex Degree Constraints</h1>
+
+    <div class="summary">
+        <strong>Summary:</strong> 5/5 demonstrations passed
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 1: Valid: Doc with One Verification</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Doc → Spec ↔ Guidance (doc has 1 verification edge)</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="279.1025403784439,187.00961894323342 269.7724133595217,180.84936490538902 278.4326673973661,175.84936490538902" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="279.1025403784439" y2="187.00961894323342" class="edge verification"/>
+<text x="239.55127018922195" y="108.50480947161671" class="label" text-anchor="middle" font-size="10">verification</text>
+<line x1="286.6025403784439" y1="200.0" x2="113.39745962155615" y2="200.00000000000003" class="edge coupling"/>
+<text x="200.00000000000003" y="190.0" class="label" text-anchor="middle" font-size="10">coupling</text>
+<circle cx="200.0" cy="50.0" r="20" class="vertex"/>
+<text x="200.0" y="55.0" class="label" text-anchor="middle">doc</text>
+<circle cx="286.6025403784439" cy="200.0" r="20" class="vertex spec"/>
+<text x="286.6025403784439" y="205.0" class="label" text-anchor="middle">spec</text>
+<circle cx="113.39745962155615" cy="200.00000000000003" r="20" class="vertex guidance"/>
+<text x="113.39745962155615" y="205.00000000000003" class="label" text-anchor="middle">guidance</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> A document can have at most 1 verification edge (verified against one spec). Spec is properly coupled.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 0<br>
+            <strong>Actual violations:</strong> 0
+        </p>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 2: Invalid: Doc with Multiple Verifications</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Doc → Spec1 ↔ G1, Doc → Spec2 ↔ G2 (VIOLATION: doc has 2 verification edges)</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<polygon points="282.97039671389115,110.28152177811816 271.9413005086793,108.44875422706818 277.81915303160406,100.35858428331869" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="282.97039671389115" y2="110.28152177811816" class="edge verification"/>
+<text x="241.48519835694557" y="70.14076088905908" class="label" text-anchor="middle" font-size="10">verification</text>
+<polygon points="254.14327031362308,216.63585169306745 246.29781778839785,208.67037150199064 255.8083829513494,205.58020155824119" fill="#666"/>
+<line x1="200.0" y1="50.0" x2="254.14327031362308" y2="216.63585169306745" class="edge verification"/>
+<text x="227.07163515681154" y="123.31792584653374" class="label" text-anchor="middle" font-size="10">verification</text>
+<line x1="295.10565162951536" y1="119.09830056250526" x2="141.2214747707527" y2="230.90169943749476" class="edge coupling"/>
+<text x="218.16356320013404" y="165.0" class="label" text-anchor="middle" font-size="10">coupling</text>
+<line x1="258.7785252292473" y1="230.90169943749476" x2="104.89434837048464" y2="119.09830056250527" class="edge coupling"/>
+<text x="181.83643679986596" y="165.0" class="label" text-anchor="middle" font-size="10">coupling</text>
+<circle cx="200.0" cy="50.0" r="20" class="vertex"/>
+<text x="200.0" y="55.0" class="label" text-anchor="middle">doc</text>
+<circle cx="295.10565162951536" cy="119.09830056250526" r="20" class="vertex spec"/>
+<text x="295.10565162951536" y="124.09830056250526" class="label" text-anchor="middle">spec</text>
+<circle cx="258.7785252292473" cy="230.90169943749476" r="20" class="vertex spec"/>
+<text x="258.7785252292473" y="235.90169943749476" class="label" text-anchor="middle">spec</text>
+<circle cx="141.2214747707527" cy="230.90169943749476" r="20" class="vertex guidance"/>
+<text x="141.2214747707527" y="235.90169943749476" class="label" text-anchor="middle">guidance</text>
+<circle cx="104.89434837048464" cy="119.09830056250527" r="20" class="vertex guidance"/>
+<text x="104.89434837048464" y="124.09830056250527" class="label" text-anchor="middle">guidance</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> A document cannot be verified against multiple specs - max degree is 1. Both specs are properly coupled.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 1<br>
+            <strong>Actual violations:</strong> 1
+        </p>
+
+        <div class="violations">
+            <h4>Violations Found:</h4>
+            <ul>
+                <li><code>[ERROR] degree_constraint: Has 2 verification edges (out), maximum is 1 (v:doc:test)</code></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 3: Valid: Spec with Exactly One Coupling</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Spec ↔ Guidance (exactly 1 coupling)</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<line x1="100" y1="100" x2="300" y2="100" class="edge coupling"/>
+<text x="200.0" y="90.0" class="label" text-anchor="middle" font-size="10">coupling</text>
+<circle cx="100" cy="100" r="20" class="vertex spec"/>
+<text x="100" y="105" class="label" text-anchor="middle">spec</text>
+<circle cx="300" cy="100" r="20" class="vertex guidance"/>
+<text x="300" y="105" class="label" text-anchor="middle">guidance</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> Each spec couples to exactly one guidance (1:1 relationship).
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 0<br>
+            <strong>Actual violations:</strong> 0
+        </p>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 4: Invalid: Spec with No Coupling</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Spec alone (VIOLATION: must have exactly 1 coupling)</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<circle cx="100" cy="100" r="20" class="vertex spec"/>
+<text x="100" y="105" class="label" text-anchor="middle">spec</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> A spec without a coupling edge is incomplete - it needs corresponding guidance.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 1<br>
+            <strong>Actual violations:</strong> 1
+        </p>
+
+        <div class="violations">
+            <h4>Violations Found:</h4>
+            <ul>
+                <li><code>[ERROR] degree_constraint: Has 0 coupling edges (any), minimum is 1 (v:spec:orphan)</code></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="demo pass">
+        <h2>Demo 5: Invalid: Spec with Multiple Couplings</h2>
+        <p class="status pass">✓ PASS</p>
+        <p class="description">Spec ↔ Guidance1, Spec ↔ Guidance2 (VIOLATION)</p>
+
+        <div class="graph">
+            <svg width="400" height="300" viewBox="0 0 400 300">
+<line x1="200.0" y1="50.0" x2="286.6025403784439" y2="200.0" class="edge coupling"/>
+<text x="243.30127018922195" y="115.0" class="label" text-anchor="middle" font-size="10">coupling</text>
+<line x1="200.0" y1="50.0" x2="113.39745962155615" y2="200.00000000000003" class="edge coupling"/>
+<text x="156.69872981077808" y="115.00000000000001" class="label" text-anchor="middle" font-size="10">coupling</text>
+<circle cx="200.0" cy="50.0" r="20" class="vertex spec"/>
+<text x="200.0" y="55.0" class="label" text-anchor="middle">spec</text>
+<circle cx="286.6025403784439" cy="200.0" r="20" class="vertex guidance"/>
+<text x="286.6025403784439" y="205.0" class="label" text-anchor="middle">guidance</text>
+<circle cx="113.39745962155615" cy="200.00000000000003" r="20" class="vertex guidance"/>
+<text x="113.39745962155615" y="205.00000000000003" class="label" text-anchor="middle">guidance</text>
+</svg>
+        </div>
+
+        <div class="explanation">
+            <strong>Rule:</strong> A spec cannot couple to multiple guidances - this creates ambiguity in validation.
+        </div>
+
+        <p>
+            <strong>Expected violations:</strong> 1<br>
+            <strong>Actual violations:</strong> 1
+        </p>
+
+        <div class="violations">
+            <h4>Violations Found:</h4>
+            <ul>
+                <li><code>[ERROR] degree_constraint: Has 2 coupling edges (any), maximum is 1 (v:spec:test)</code></li>
+
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

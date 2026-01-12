@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ontology Rules Summary</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 40px; background: #f5f5f5; }
+        h1 { color: #2c3e50; }
+        .card { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .pass { color: #27ae60; }
+        .fail { color: #e74c3c; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #3498db; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Ontology Rules Demonstration Summary</h1>
+
+    <div class="card">
+        <h2>Overall Results: <span class="pass">13/13 passed</span></h2>
+    </div>
+
+    <div class="card">
+        <h2>Rule Categories</h2>
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Demos</th>
+                <th>Passed</th>
+                <th>Link</th>
+            </tr>
+            <tr>
+                <td>Edge Endpoint Types</td>
+                <td>6</td>
+                <td class="pass">6/6</td>
+                <td><a href="rule_edge_endpoints.html">View Details</a></td>
+            </tr>
+            <tr>
+                <td>Vertex Degree Constraints</td>
+                <td>5</td>
+                <td class="pass">5/5</td>
+                <td><a href="rule_vertex_degree.html">View Details</a></td>
+            </tr>
+            <tr>
+                <td>Face Boundary Types</td>
+                <td>2</td>
+                <td class="pass">2/2</td>
+                <td><a href="rule_face_boundary_types.html">View Details</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Rule Summary</h2>
+        <h3>Edge Endpoint Type Rules</h3>
+        <p>These rules ensure edges connect the correct types of vertices:</p>
+        <ul>
+            <li><strong>verification:</strong> doc → spec (machine-checkable structural compliance)</li>
+            <li><strong>validation:</strong> doc → guidance (human assessment of fitness for purpose)</li>
+            <li><strong>coupling:</strong> spec ↔ guidance (1:1 pairing of spec with its guidance)</li>
+            <li><strong>signs:</strong> signer → doc (human accountability for validation)</li>
+            <li><strong>qualifies:</strong> signer → guidance/module (human qualified to validate)</li>
+        </ul>
+
+        <h3>Vertex Degree Constraints</h3>
+        <p>These rules constrain how many edges of each type can connect to a vertex:</p>
+        <ul>
+            <li><strong>doc → verification:</strong> 0..1 (at most one verification per document)</li>
+            <li><strong>spec ↔ coupling:</strong> exactly 1 (each spec pairs with exactly one guidance)</li>
+            <li><strong>guidance ↔ coupling:</strong> exactly 1 (each guidance pairs with exactly one spec)</li>
+        </ul>
+
+        <h3>Face Boundary Type Rules</h3>
+        <p>These rules ensure faces have the correct edge types in their boundary:</p>
+        <ul>
+            <li><strong>assurance:</strong> must have verification + validation + coupling edges</li>
+            <li><strong>signature:</strong> must have validation + qualifies + signs edges</li>
+        </ul>
+    </div>
+</body>
+</html>
