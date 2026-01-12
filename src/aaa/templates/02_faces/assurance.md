@@ -4,10 +4,11 @@ extends: face
 id: f:assurance:<name>
 name: Assurance Face - <Descriptive Name>
 description: Complete assurance pattern for <target document>
-boundary:
+edges:
   - <coupling-edge-id>
   - <verification-edge-id>
   - <validation-edge-id>
+orientation: oriented
 vertices:
   - <target-vertex-id>
   - <spec-vertex-id>

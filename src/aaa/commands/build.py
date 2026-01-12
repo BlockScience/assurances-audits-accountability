@@ -11,7 +11,7 @@ import click
 import sys
 from pathlib import Path
 
-from aaa.core import build_cache as do_build_cache, calculate_euler_characteristic
+from aaa.core import build_cache as do_build_cache
 
 
 @click.command()
@@ -57,15 +57,7 @@ def build(ctx, path, output, verbose):
         # build_cache already prints progress and writes the file
         cache_data = do_build_cache(build_root, output_path)
 
-        if cache_data:
-            # Print summary
-            vertices = cache_data.get('vertices', [])
-            edges = cache_data.get('edges', [])
-            faces = cache_data.get('faces', [])
-
-            euler = calculate_euler_characteristic(vertices, edges, faces)
-            click.echo(f"Euler characteristic: χ = {euler}")
-        else:
+        if not cache_data:
             click.echo("Error: Failed to build cache", err=True)
             sys.exit(1)
 

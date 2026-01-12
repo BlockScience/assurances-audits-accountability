@@ -49,7 +49,8 @@ face (abstract)
 | `doc` | string | Document vertex ID |
 | `guidance` | string | Guidance vertex ID |
 | `signer` | string | Signer vertex ID |
-| `boundary` | array | Exactly 3: [validation, signs, qualifies] |
+| `edges` | array | Exactly 3: [validation, signs, qualifies] |
+| `orientation` | string | Must be `oriented` |
 | `validation_edge` | string | Validation edge ID (shared with assurance) |
 | `signs_edge` | string | Signs edge ID |
 | `qualifies_edge` | string | Qualifies edge ID |
@@ -119,10 +120,11 @@ vertices:
 doc: v:spec:persona
 guidance: v:guidance:spec
 signer: v:signer:mzargham
-boundary:
+edges:
   - e:validation:spec-persona:guidance-spec
   - e:signs:mzargham:spec-persona
   - e:qualifies:mzargham:guidance-spec
+orientation: oriented
 validation_edge: e:validation:spec-persona:guidance-spec
 signs_edge: e:signs:mzargham:spec-persona
 qualifies_edge: e:qualifies:mzargham:guidance-spec
