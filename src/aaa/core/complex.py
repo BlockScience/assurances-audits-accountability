@@ -737,7 +737,12 @@ class SimplicialComplex:
 
     def get_edge_boundary(self, edge_id: str) -> Optional[Tuple[str, str]]:
         """
-        Get the boundary vertices of an edge.
+        Get the boundary vertices of an edge as an ordered tuple.
+
+        For directed edges, the ordering is (source, target).
+        For undirected edges, the ordering is preserved from the definition,
+        but semantically represents an unordered pair. Use get_edge_boundary_set()
+        when order doesn't matter.
 
         Args:
             edge_id: Edge ID
@@ -750,35 +755,239 @@ class SimplicialComplex:
             return (edge.source, edge.target)
         return None
 
+    def get_edge_boundary_set(self, edge_id: str) -> Optional[Set[str]]:
+        """
+        Get the boundary vertices of an edge as an unordered set.
+
+        Use this when the edge orientation doesn't matter (e.g., for
+        checking vertex membership, not for type checking source/target).
+
+        Args:
+            edge_id: Edge ID
+
+        Returns:
+            Set of vertex IDs {source, target}, or None if not found
+        """
+        edge = self.edges.get(edge_id)
+        if edge:
+            return {edge.source, edge.target}
+        return None
+
+    def is_edge_directed(self, edge_id: str) -> Optional[bool]:
+        """
+        Check if an edge is directed.
+
+        Args:
+            edge_id: Edge ID
+
+        Returns:
+            True if directed, False if undirected, None if edge not found
+        """
+        edge = self.edges.get(edge_id)
+        if edge:
+            return edge.orientation == 'directed'
+        return None
+
+    def get_edge_boundary_with_types(self, edge_id: str) -> Optional[Tuple[Tuple[str, str], Tuple[str, str]]]:
+        """
+        Get the boundary vertices of an edge with their types.
+
+        Returns (source, target) where each is (vertex_id, vertex_type).
+        Useful for ontology rules that check endpoint types.
+
+        Args:
+            edge_id: Edge ID
+
+        Returns:
+            ((source_id, source_type), (target_id, target_type)), or None if not found
+
+        Example:
+            (('v:doc:test', 'vertex/doc'), ('v:spec:test', 'vertex/spec'))
+        """
+        edge = self.edges.get(edge_id)
+        if not edge:
+            return None
+
+        source_vertex = self.vertices.get(edge.source)
+        target_vertex = self.vertices.get(edge.target)
+
+        source_type = source_vertex.type if source_vertex else ''
+        target_type = target_vertex.type if target_vertex else ''
+
+        return ((edge.source, source_type), (edge.target, target_type))
+
+    def get_edge_endpoint_types(self, edge_id: str) -> Optional[Tuple[str, str]]:
+        """
+        Get the types of an edge's source and target vertices.
+
+        Shorthand for getting just the types from get_edge_boundary_with_types().
+
+        Args:
+            edge_id: Edge ID
+
+        Returns:
+            (source_type, target_type), or None if edge not found
+        """
+        edge = self.edges.get(edge_id)
+        if not edge:
+            return None
+
+        source_vertex = self.vertices.get(edge.source)
+        target_vertex = self.vertices.get(edge.target)
+
+        source_type = source_vertex.type if source_vertex else ''
+        target_type = target_vertex.type if target_vertex else ''
+
+        return (source_type, target_type)
+
     def get_face_boundary(self, face_id: str) -> Optional[List[str]]:
         """
-        Get the boundary edges of a face.
+        Get the boundary edges of a face as an ordered list.
+
+        For oriented faces, the ordering defines the cycle direction.
+        For unoriented faces, the ordering is preserved from definition but
+        semantically represents an unordered collection.
+
+        The boundary edges are ordered such that they form a connected cycle
+        around the face. This ordering is important for:
+        - Type checking (e.g., assurance face has [verification, validation, coupling])
+        - Determining face orientation relative to other faces
 
         Args:
             face_id: Face ID
 
         Returns:
-            List of edge IDs forming the boundary, or None if not found
+            Ordered list of edge IDs forming the boundary, or None if not found
         """
         face = self.faces.get(face_id)
         if face:
             return list(face.edges)
         return None
 
-    def get_face_vertices(self, face_id: str) -> Optional[List[str]]:
+    def get_face_boundary_set(self, face_id: str) -> Optional[Set[str]]:
         """
-        Get the vertices of a face.
+        Get the boundary edges of a face as an unordered set.
+
+        Use this when edge ordering doesn't matter (e.g., checking if
+        a specific edge is in the face boundary).
 
         Args:
             face_id: Face ID
 
         Returns:
-            List of vertex IDs, or None if not found
+            Set of edge IDs, or None if not found
+        """
+        face = self.faces.get(face_id)
+        if face:
+            return set(face.edges)
+        return None
+
+    def get_face_vertices(self, face_id: str) -> Optional[List[str]]:
+        """
+        Get the vertices of a face as an ordered list.
+
+        For oriented faces, vertices are ordered consistently with edge ordering.
+        For unoriented faces, the ordering is preserved but semantically unordered.
+
+        Args:
+            face_id: Face ID
+
+        Returns:
+            Ordered list of vertex IDs, or None if not found
         """
         face = self.faces.get(face_id)
         if face:
             return list(face.vertices)
         return None
+
+    def get_face_vertices_set(self, face_id: str) -> Optional[Set[str]]:
+        """
+        Get the vertices of a face as an unordered set.
+
+        Use this when vertex ordering doesn't matter (e.g., checking if
+        a vertex is part of a face).
+
+        Args:
+            face_id: Face ID
+
+        Returns:
+            Set of vertex IDs, or None if not found
+        """
+        face = self.faces.get(face_id)
+        if face:
+            return set(face.vertices)
+        return None
+
+    def is_face_oriented(self, face_id: str) -> Optional[bool]:
+        """
+        Check if a face is oriented.
+
+        Args:
+            face_id: Face ID
+
+        Returns:
+            True if oriented, False if unoriented, None if face not found
+        """
+        face = self.faces.get(face_id)
+        if face:
+            return face.orientation == 'oriented'
+        return None
+
+    def get_face_boundary_with_types(self, face_id: str) -> Optional[List[Tuple[str, str]]]:
+        """
+        Get the boundary edges of a face with their types.
+
+        Returns edges in order, paired with their types. Useful for ontology
+        rules that check boundary edge types.
+
+        Args:
+            face_id: Face ID
+
+        Returns:
+            Ordered list of (edge_id, edge_type) tuples, or None if not found
+
+        Example:
+            [('e:verification:a', 'edge/verification'),
+             ('e:validation:a', 'edge/validation'),
+             ('e:coupling:a', 'edge/coupling')]
+        """
+        face = self.faces.get(face_id)
+        if not face:
+            return None
+
+        result = []
+        for edge_id in face.edges:
+            edge = self.edges.get(edge_id)
+            edge_type = edge.type if edge else ''
+            result.append((edge_id, edge_type))
+        return result
+
+    def get_face_boundary_types(self, face_id: str) -> Optional[Set[str]]:
+        """
+        Get the set of edge types in a face's boundary.
+
+        Useful for checking that a face has the required edge types
+        (regardless of order or count).
+
+        Args:
+            face_id: Face ID
+
+        Returns:
+            Set of edge type strings, or None if face not found
+
+        Example:
+            {'edge/verification', 'edge/validation', 'edge/coupling'}
+        """
+        face = self.faces.get(face_id)
+        if not face:
+            return None
+
+        types = set()
+        for edge_id in face.edges:
+            edge = self.edges.get(edge_id)
+            if edge:
+                types.add(edge.type)
+        return types
 
     def get_coboundary(self, element_id: str) -> List[str]:
         """
@@ -986,3 +1195,222 @@ def build_simplicial_complex(cache: Dict[str, Any]) -> SimplicialComplex:
 
 # Backwards compatibility alias
 build_complex_graph = build_simplicial_complex
+
+
+# ========== Topology Rules (Structural - Dimension Agnostic) ==========
+#
+# These rules apply to ALL simplicial complexes regardless of types.
+# They are the structural rules that make a valid simplicial complex.
+#
+# Key insight: Topology rules are LOCAL - they only need to inspect an element
+# and its boundary/coboundary, not the entire complex.
+
+
+@dataclass
+class TopologyViolation:
+    """A violation of a topological rule."""
+    rule_name: str
+    element_id: str
+    dimension: int  # 0=vertex, 1=edge, 2=face
+    message: str
+
+
+def check_edge_valid_boundary(
+    complex: 'SimplicialComplex',
+    edge_id: str
+) -> Optional[TopologyViolation]:
+    """
+    Check that an edge has a valid boundary.
+
+    Topological rule: An edge (1-simplex) must have exactly 2 vertices
+    as its boundary, and both vertices must exist in the complex.
+
+    Args:
+        complex: The simplicial complex
+        edge_id: ID of the edge to check
+
+    Returns:
+        TopologyViolation if the rule is violated, None otherwise
+    """
+    boundary = complex.get_edge_boundary(edge_id)
+    if boundary is None:
+        return TopologyViolation(
+            rule_name='edge_valid_boundary',
+            element_id=edge_id,
+            dimension=1,
+            message=f"Edge {edge_id} has no boundary defined"
+        )
+
+    source_id, target_id = boundary
+
+    if source_id not in complex.vertices:
+        return TopologyViolation(
+            rule_name='edge_valid_boundary',
+            element_id=edge_id,
+            dimension=1,
+            message=f"Edge {edge_id} source vertex {source_id} does not exist"
+        )
+
+    if target_id not in complex.vertices:
+        return TopologyViolation(
+            rule_name='edge_valid_boundary',
+            element_id=edge_id,
+            dimension=1,
+            message=f"Edge {edge_id} target vertex {target_id} does not exist"
+        )
+
+    return None
+
+
+def check_face_valid_boundary(
+    complex: 'SimplicialComplex',
+    face_id: str
+) -> Optional[TopologyViolation]:
+    """
+    Check that a face has a valid boundary.
+
+    Topological rule: A face (2-simplex) must have exactly 3 edges
+    as its boundary, and all edges must exist in the complex.
+
+    Args:
+        complex: The simplicial complex
+        face_id: ID of the face to check
+
+    Returns:
+        TopologyViolation if the rule is violated, None otherwise
+    """
+    boundary = complex.get_face_boundary(face_id)
+    if boundary is None:
+        return TopologyViolation(
+            rule_name='face_valid_boundary',
+            element_id=face_id,
+            dimension=2,
+            message=f"Face {face_id} has no boundary defined"
+        )
+
+    if len(boundary) != 3:
+        return TopologyViolation(
+            rule_name='face_valid_boundary',
+            element_id=face_id,
+            dimension=2,
+            message=f"Face {face_id} must have exactly 3 boundary edges, has {len(boundary)}"
+        )
+
+    for edge_id in boundary:
+        if edge_id not in complex.edges:
+            return TopologyViolation(
+                rule_name='face_valid_boundary',
+                element_id=face_id,
+                dimension=2,
+                message=f"Face {face_id} boundary edge {edge_id} does not exist"
+            )
+
+    return None
+
+
+def check_face_closure(
+    complex: 'SimplicialComplex',
+    face_id: str
+) -> Optional[TopologyViolation]:
+    """
+    Check that a face's boundary edges form a closed triangle.
+
+    Topological rule: The 3 boundary edges of a face must connect
+    exactly 3 vertices, forming a closed triangle (each vertex appears
+    in exactly 2 edges).
+
+    Args:
+        complex: The simplicial complex
+        face_id: ID of the face to check
+
+    Returns:
+        TopologyViolation if the rule is violated, None otherwise
+    """
+    boundary = complex.get_face_boundary(face_id)
+    if boundary is None or len(boundary) != 3:
+        # Already caught by check_face_valid_boundary
+        return None
+
+    face_vertices = complex.get_face_vertices(face_id)
+    if face_vertices is None or len(face_vertices) != 3:
+        return TopologyViolation(
+            rule_name='face_closure',
+            element_id=face_id,
+            dimension=2,
+            message=f"Face {face_id} must have exactly 3 vertices, has {len(face_vertices) if face_vertices else 0}"
+        )
+
+    # Collect all vertices from boundary edges
+    edge_vertex_set = set()
+    for edge_id in boundary:
+        edge_boundary = complex.get_edge_boundary(edge_id)
+        if edge_boundary:
+            edge_vertex_set.add(edge_boundary[0])
+            edge_vertex_set.add(edge_boundary[1])
+
+    # Check that edge endpoints match face vertices
+    if edge_vertex_set != set(face_vertices):
+        return TopologyViolation(
+            rule_name='face_closure',
+            element_id=face_id,
+            dimension=2,
+            message=f"Face {face_id} boundary edges don't connect to face vertices. "
+                    f"Edge vertices: {edge_vertex_set}, Face vertices: {set(face_vertices)}"
+        )
+
+    # Check that each vertex appears in exactly 2 edges (closed triangle)
+    vertex_edge_count: Dict[str, int] = {}
+    for edge_id in boundary:
+        edge_boundary = complex.get_edge_boundary(edge_id)
+        if edge_boundary:
+            for vid in edge_boundary:
+                vertex_edge_count[vid] = vertex_edge_count.get(vid, 0) + 1
+
+    for vid, count in vertex_edge_count.items():
+        if count != 2:
+            return TopologyViolation(
+                rule_name='face_closure',
+                element_id=face_id,
+                dimension=2,
+                message=f"Face {face_id} vertex {vid} appears in {count} boundary edges (must be exactly 2)"
+            )
+
+    return None
+
+
+def check_topology(complex: 'SimplicialComplex') -> List[TopologyViolation]:
+    """
+    Check all topology rules on all elements.
+
+    Runs the following checks:
+    - Edge valid boundary (dimension 1)
+    - Face valid boundary (dimension 2)
+    - Face closure (dimension 2)
+
+    Args:
+        complex: The simplicial complex to check
+
+    Returns:
+        List of all topology violations found
+    """
+    violations: List[TopologyViolation] = []
+
+    # Check all edges
+    for edge_id in complex.get_all_edges():
+        violation = check_edge_valid_boundary(complex, edge_id)
+        if violation:
+            violations.append(violation)
+
+    # Check all faces
+    for face_id in complex.get_all_faces():
+        # Check boundary exists and has 3 edges
+        violation = check_face_valid_boundary(complex, face_id)
+        if violation:
+            violations.append(violation)
+        else:
+            # Only check closure if boundary is valid
+            violation = check_face_closure(complex, face_id)
+            if violation:
+                violations.append(violation)
+
+    return violations

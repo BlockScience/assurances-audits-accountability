@@ -12,12 +12,19 @@ TOPOLOGY vs ONTOLOGY:
 - Ontology: Type system with local rules. Types define what edges can connect
   to what vertices, what faces must be adjacent, degree constraints, etc.
 
+LOCAL + UNIVERSAL PATTERN:
+Each ontology rule is:
+1. LOCAL: It only inspects an element and its boundary/coboundary
+2. UNIVERSAL: It applies to all elements of a particular type
+
+This makes rules compositional - checking locally guarantees global coherence.
+
 This module implements ontology verification (deterministic type checking),
 NOT validation (human judgment of fitness for purpose).
 """
 
-from typing import Dict, Any, List, Optional, Tuple
-from dataclasses import dataclass
+from typing import Dict, Any, List, Optional, Tuple, Callable
+from dataclasses import dataclass, field
 from enum import Enum
 
 from .complex import SimplicialComplex, ComplexGraph, build_simplicial_complex, build_complex_graph
@@ -51,6 +58,257 @@ class RuleViolation:
 
     def __str__(self) -> str:
         return f"[{self.severity.value.upper()}] {self.rule_name}: {self.message} ({self.element_id})"
+
+
+# ========== Local Rule Functions ==========
+#
+# Each rule function follows the LOCAL pattern:
+# - Takes (complex, element_id) as arguments
+# - Only inspects the element and its boundary/coboundary
+# - Returns Optional[RuleViolation] (None if passes)
+#
+# Rules are applied UNIVERSALLY to all elements of matching types.
+
+def check_edge_endpoint_types(
+    complex: SimplicialComplex,
+    edge_id: str,
+    source_types: List[str],
+    target_types: List[str],
+    rule_name: str = "edge_endpoint_type"
+) -> Optional[RuleViolation]:
+    """
+    Check that an edge's endpoints match allowed types.
+
+    This is a LOCAL rule - it only inspects the edge's boundary vertices.
+
+    Args:
+        complex: The simplicial complex
+        edge_id: Edge to check
+        source_types: Allowed vertex type prefixes for source
+        target_types: Allowed vertex type prefixes for target
+        rule_name: Name for violation reporting
+
+    Returns:
+        RuleViolation if endpoints don't match, None otherwise
+    """
+    edge = complex.get_edge(edge_id)
+    if edge is None:
+        return RuleViolation(
+            rule_name=rule_name,
+            rule_type=RuleType.EDGE_ENDPOINT,
+            severity=Severity.ERROR,
+            element_id=edge_id,
+            element_type="edge",
+            message=f"Edge {edge_id} not found",
+            details={'edge_id': edge_id}
+        )
+
+    # Get edge type for error messages
+    edge_type = edge.type.replace('edge/', '') if edge.type.startswith('edge/') else edge.type
+
+    endpoint_types = complex.get_edge_endpoint_types(edge_id)
+    if endpoint_types is None:
+        return RuleViolation(
+            rule_name=rule_name,
+            rule_type=RuleType.EDGE_ENDPOINT,
+            severity=Severity.ERROR,
+            element_id=edge_id,
+            element_type="edge",
+            message=f"Edge {edge_id} has no endpoint types",
+            details={'edge_id': edge_id, 'edge_type': edge_type}
+        )
+
+    source_type, target_type = endpoint_types
+
+    # Check source type matches any allowed prefix
+    source_matches = any(
+        source_type == allowed or source_type.startswith(f"{allowed}/")
+        for allowed in source_types
+    )
+    if not source_matches:
+        return RuleViolation(
+            rule_name=rule_name,
+            rule_type=RuleType.EDGE_ENDPOINT,
+            severity=Severity.ERROR,
+            element_id=edge_id,
+            element_type="edge",
+            message=f"Source vertex type '{source_type}' not allowed for {edge_type} edge",
+            details={
+                'edge_type': edge_type,
+                'source_type': source_type,
+                'allowed_source_types': source_types
+            }
+        )
+
+    # Check target type matches any allowed prefix
+    target_matches = any(
+        target_type == allowed or target_type.startswith(f"{allowed}/")
+        for allowed in target_types
+    )
+    if not target_matches:
+        return RuleViolation(
+            rule_name=rule_name,
+            rule_type=RuleType.EDGE_ENDPOINT,
+            severity=Severity.ERROR,
+            element_id=edge_id,
+            element_type="edge",
+            message=f"Target vertex type '{target_type}' not allowed for {edge_type} edge",
+            details={
+                'edge_type': edge_type,
+                'target_type': target_type,
+                'allowed_target_types': target_types
+            }
+        )
+
+    return None
+
+
+def check_vertex_degree(
+    complex: SimplicialComplex,
+    vertex_id: str,
+    edge_type: str,
+    direction: str,  # 'in', 'out', 'any'
+    min_degree: int,
+    max_degree: Optional[int],
+    rule_name: str = "vertex_degree"
+) -> Optional[RuleViolation]:
+    """
+    Check that a vertex has the required degree for edges of a type.
+
+    This is a LOCAL rule - it only inspects the vertex's coboundary edges.
+
+    Args:
+        complex: The simplicial complex
+        vertex_id: Vertex to check
+        edge_type: Edge type to count
+        direction: 'in', 'out', or 'any'
+        min_degree: Minimum required degree
+        max_degree: Maximum allowed degree (None = unlimited)
+        rule_name: Name for violation reporting
+
+    Returns:
+        RuleViolation if degree constraint violated, None otherwise
+    """
+    if direction == 'out':
+        count = complex.out_degree(vertex_id, edge_type)
+    elif direction == 'in':
+        count = complex.in_degree(vertex_id, edge_type)
+    else:  # 'any'
+        count = complex.degree(vertex_id, edge_type)
+
+    if count < min_degree:
+        return RuleViolation(
+            rule_name=rule_name,
+            rule_type=RuleType.DEGREE,
+            severity=Severity.ERROR,
+            element_id=vertex_id,
+            element_type="vertex",
+            message=f"Has {count} {edge_type} edges ({direction}), minimum is {min_degree}",
+            details={
+                'edge_type': edge_type,
+                'direction': direction,
+                'actual': count,
+                'min': min_degree,
+                'max': max_degree
+            }
+        )
+
+    if max_degree is not None and count > max_degree:
+        return RuleViolation(
+            rule_name=rule_name,
+            rule_type=RuleType.DEGREE,
+            severity=Severity.ERROR,
+            element_id=vertex_id,
+            element_type="vertex",
+            message=f"Has {count} {edge_type} edges ({direction}), maximum is {max_degree}",
+            details={
+                'edge_type': edge_type,
+                'direction': direction,
+                'actual': count,
+                'min': min_degree,
+                'max': max_degree
+            }
+        )
+
+    return None
+
+
+def check_face_boundary_types(
+    complex: SimplicialComplex,
+    face_id: str,
+    required_edge_types: List[str],
+    rule_name: str = "face_boundary_types"
+) -> Optional[RuleViolation]:
+    """
+    Check that a face's boundary contains edges of required types.
+
+    This is a LOCAL rule - it only inspects the face's boundary edges.
+
+    Args:
+        complex: The simplicial complex
+        face_id: Face to check
+        required_edge_types: Edge types that must be in the boundary
+        rule_name: Name for violation reporting
+
+    Returns:
+        RuleViolation if required types missing, None otherwise
+    """
+    boundary_types = complex.get_face_boundary_types(face_id)
+    if boundary_types is None:
+        return RuleViolation(
+            rule_name=rule_name,
+            rule_type=RuleType.FACE_BOUNDARY,
+            severity=Severity.ERROR,
+            element_id=face_id,
+            element_type="face",
+            message=f"Face {face_id} has no boundary",
+            details={'face_id': face_id}
+        )
+
+    # Normalize required types (handle edge/ prefix)
+    normalized_required = set()
+    for t in required_edge_types:
+        if t.startswith('edge/'):
+            normalized_required.add(t)
+        else:
+            normalized_required.add(f"edge/{t}")
+
+    # Check each required type is present
+    missing = normalized_required - boundary_types
+    if missing:
+        return RuleViolation(
+            rule_name=rule_name,
+            rule_type=RuleType.FACE_BOUNDARY,
+            severity=Severity.ERROR,
+            element_id=face_id,
+            element_type="face",
+            message=f"Missing required edge types: {missing}",
+            details={
+                'required': list(normalized_required),
+                'actual': list(boundary_types),
+                'missing': list(missing)
+            }
+        )
+
+    return None
+
+
+@dataclass
+class OntologyRule:
+    """
+    A local ontology rule applied universally to elements of a type.
+
+    Each rule:
+    - Targets elements of a specific type
+    - Uses a local check function that only inspects boundary/coboundary
+    - Is applied to all matching elements universally
+    """
+    name: str
+    element_type: str  # e.g., 'edge/verification', 'face/assurance', 'vertex/doc'
+    dimension: int  # 0=vertex, 1=edge, 2=face
+    check: Callable[[SimplicialComplex, str], Optional[RuleViolation]]
+    strict: bool = False  # If True, only exact type match; else includes subtypes
+    description: str = ""
 
 
 class OntologyRuleEngine:
@@ -192,6 +450,8 @@ class OntologyRuleEngine:
 
         Rule: Edge source and target must match type constraints defined
         for that edge type in the ontology.
+
+        Uses LOCAL pattern: For each edge, only inspects its boundary vertices.
         """
         for edge_id, edge in self.graph.edges.items():
             # Extract base edge type
@@ -202,41 +462,16 @@ class OntologyRuleEngine:
 
             source_types, target_types = self.EDGE_ENDPOINT_CONSTRAINTS[edge_type]
 
-            # Check source
-            source_vertex = self.graph.get_vertex(edge.source)
-            if source_vertex:
-                if not self._type_matches_any(source_vertex.type, source_types):
-                    self._add_violation(
-                        rule_name="edge_endpoint_type_compliance",
-                        rule_type=RuleType.EDGE_ENDPOINT,
-                        severity=Severity.ERROR,
-                        element_id=edge_id,
-                        element_type="edge",
-                        message=f"Source vertex type '{source_vertex.type}' not allowed for edge type '{edge_type}'",
-                        details={
-                            'source_id': edge.source,
-                            'source_type': source_vertex.type,
-                            'allowed_source_types': source_types
-                        }
-                    )
-
-            # Check target
-            target_vertex = self.graph.get_vertex(edge.target)
-            if target_vertex:
-                if not self._type_matches_any(target_vertex.type, target_types):
-                    self._add_violation(
-                        rule_name="edge_endpoint_type_compliance",
-                        rule_type=RuleType.EDGE_ENDPOINT,
-                        severity=Severity.ERROR,
-                        element_id=edge_id,
-                        element_type="edge",
-                        message=f"Target vertex type '{target_vertex.type}' not allowed for edge type '{edge_type}'",
-                        details={
-                            'target_id': edge.target,
-                            'target_type': target_vertex.type,
-                            'allowed_target_types': target_types
-                        }
-                    )
+            # Use the local rule function
+            violation = check_edge_endpoint_types(
+                self.graph,
+                edge_id,
+                source_types,
+                target_types,
+                rule_name="edge_endpoint_type_compliance"
+            )
+            if violation:
+                self.violations.append(violation)
 
     def _type_matches_any(self, actual_type: str, allowed_types: List[str]) -> bool:
         """Check if actual type matches any of the allowed type prefixes."""
@@ -253,6 +488,8 @@ class OntologyRuleEngine:
 
         Rule: Vertices of certain types have min/max constraints on
         incident edges of specific types.
+
+        Uses LOCAL pattern: For each vertex, only inspects its coboundary edges.
         """
         for vid, vertex in self.graph.vertices.items():
             for (vertex_type_prefix, edge_type, direction), (min_deg, max_deg) in self.DEGREE_CONSTRAINTS.items():
@@ -260,50 +497,18 @@ class OntologyRuleEngine:
                 if not (vertex.type == vertex_type_prefix or vertex.type.startswith(f"{vertex_type_prefix}/")):
                     continue
 
-                # Count edges of this type
-                if direction == 'out':
-                    count = self.graph.out_degree(vid, edge_type)
-                elif direction == 'in':
-                    count = self.graph.in_degree(vid, edge_type)
-                else:  # 'any'
-                    count = self.graph.degree(vid, edge_type)
-
-                # Check constraints
-                if count < min_deg:
-                    self._add_violation(
-                        rule_name="degree_constraint",
-                        rule_type=RuleType.DEGREE,
-                        severity=Severity.ERROR,
-                        element_id=vid,
-                        element_type="vertex",
-                        message=f"Vertex has {count} {edge_type} edges ({direction}), minimum is {min_deg}",
-                        details={
-                            'vertex_type': vertex.type,
-                            'edge_type': edge_type,
-                            'direction': direction,
-                            'actual': count,
-                            'min': min_deg,
-                            'max': max_deg
-                        }
-                    )
-
-                if max_deg is not None and count > max_deg:
-                    self._add_violation(
-                        rule_name="degree_constraint",
-                        rule_type=RuleType.DEGREE,
-                        severity=Severity.ERROR,
-                        element_id=vid,
-                        element_type="vertex",
-                        message=f"Vertex has {count} {edge_type} edges ({direction}), maximum is {max_deg}",
-                        details={
-                            'vertex_type': vertex.type,
-                            'edge_type': edge_type,
-                            'direction': direction,
-                            'actual': count,
-                            'min': min_deg,
-                            'max': max_deg
-                        }
-                    )
+                # Use the local rule function
+                violation = check_vertex_degree(
+                    self.graph,
+                    vid,
+                    edge_type,
+                    direction,
+                    min_deg,
+                    max_deg,
+                    rule_name="degree_constraint"
+                )
+                if violation:
+                    self.violations.append(violation)
 
     # ========== Face Boundary Closure (Rule 10) ==========
 
