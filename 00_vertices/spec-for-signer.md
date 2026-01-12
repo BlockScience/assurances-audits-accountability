@@ -21,7 +21,7 @@ dependencies:
 
 ## Purpose
 
-Signer documents define **actors with verified identity** who can attest to validation assessments through signature faces. A signer extends actor with a required GitHub username, providing cryptographic identity verification through commit signatures. Signers participate in signature faces that complement assurance faces by explicitly representing the human accountability for validation.
+Signer documents define **actors with verified identity** who can attest to validation assessments through signature faces. A signer extends actor with a required GitHub username, providing identity verification through commit attribution (git blame). Signers participate in signature faces that complement assurance faces by explicitly representing the human accountability for validation.
 
 ## Inheritance
 
@@ -241,4 +241,4 @@ A document claiming `type: vertex/signer` is compliant with this specification i
 
 ---
 
-**Note:** Signer extends actor to represent humans with verified GitHub identity who can sign validation edges. The github_username requirement enables identity verification through commit signatures, creating an accountable chain of trust in the knowledge complex.
+**Note:** Signer extends actor to represent humans with verified GitHub identity who can sign validation edges. The github_username requirement enables identity verification through commit attribution (git blame), creating an accountable chain of trust in the knowledge complex.

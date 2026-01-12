@@ -186,7 +186,7 @@ This document provides bidirectional requirements traceability analysis for the 
 | **C10** Result Presenter | E5, E8 | Python formats; visualization for charts |
 | **C11** Search Index | E9, E10 | Obsidian searches; Claude queries |
 | **C12** Graph Navigator | E7, E9 | NetworkX stores; Obsidian visualizes |
-| **C13** Workflow Coordinator | E4, E5, E10, E11 | Git/GPG accountability; Python logic; Claude guides |
+| **C13** Workflow Coordinator | E4, E5, E10, E11 | Git accountability (GPG future); Python logic; Claude guides |
 | **C14** Simplex Constructor | E5, E6 | Python constructs; YAML generates frontmatter |
 
 **Coverage: All 14 components realized by elements**
@@ -232,7 +232,7 @@ E3 Template Files (OFM + placeholders)
 #### E4: Git Repository
 
 ```
-E4 Git Repository (Git 2.40+ with GPG)
+E4 Git Repository (Git 2.40+; GPG optional/future)
 ├─→ C5 Simplex Store (version control)
 │   └─→ All Functions
 │       └─→ All Criteria
@@ -326,20 +326,23 @@ E10 Claude Code (VS Code extension)
             └─→ N4.1, N4.2, N4.4
 ```
 
-#### E11: GPG Signatures
+#### E11: GPG Signatures (Future Capability)
 
 ```
-E11 GPG Signatures (GnuPG 2.x)
+E11 GPG Signatures (GnuPG 2.x) — FUTURE CAPABILITY
 └─→ C13 Workflow Coordinator
     └─→ F16 Validation Edge Creation
         └─→ AC6 Approval confidence
             └─→ N4.2 Understand attestation, N4.4 Trust verification
+
+Note: Current implementation uses GitHub username + git blame for accountability.
+GPG signatures are defined as future upgrade path for external/adversarial audit contexts.
 ```
 
 #### E12: GitHub Actions
 
 ```
-E12 GitHub Actions (CI enforcement + signature verification)
+E12 GitHub Actions (CI enforcement + accountability verification)
 ├─→ C6 Schema Verifier
 │   └─→ F5 Frontmatter Verification
 │       └─→ AC2, AC3
@@ -389,12 +392,13 @@ Components
     ▼
 Elements
 └─ E12: GitHub Actions
-    ├─ verify-signatures (GPG validation)
+    ├─ verify-signatures (accountability validation; GPG future)
     └─ verify-qualifications (qualifies edge checking)
 ```
 
 **Jobs Trace Back to:**
-- **verify-signatures**: Ensures GPG commit signatures match registered signer vertices → AC6 (approval confidence) → N4.2, N4.4 (approver trust)
+
+- **verify-signatures**: Validates commit author matches signer vertex (current: GitHub username; future: GPG) → AC6 (approval confidence) → N4.2, N4.4 (approver trust)
 - **verify-qualifications**: Ensures signs edges reference valid qualifies edges → AC3 (verification accuracy), AC9 (self-demonstration) → N4.4, N6.2 (trust verification, framework self-use)
 
 ## Gap Analysis
@@ -416,7 +420,7 @@ All 24 stakeholder needs are addressed by acceptance criteria. All 12 acceptance
 | Risk | Likelihood | Mitigation |
 |------|------------|-----------|
 | E9 (Obsidian) search scalability | Low | Deferred element: Whoosh/Elasticsearch when >10k docs |
-| E11 (GPG) key management complexity | Medium | Assumption A4: users configure GPG; documented in physical architecture |
+| E11 (GPG) key management complexity | Low | GPG is future capability; current implementation uses GitHub username + git blame |
 | E12 GitHub Actions latency | Low | Typical latency <5 minutes; acceptable for approval workflows |
 
 ## Traceability Summary
@@ -466,7 +470,7 @@ ELEMENTS (12)
 ├─ E4-E5: Core Infrastructure (Git, Python Package)
 ├─ E6-E7: Data Processing (YAML, NetworkX)
 ├─ E8-E10: User Interfaces (Visualization, Obsidian, Claude Code)
-├─ E11: Accountability (GPG Signatures)
+├─ E11: Accountability (GPG Signatures — future capability)
 └─ E12: CI Enforcement (GitHub Actions)
     ├─ verify-documents, verify-types, verify-boundaries
     ├─ verify-signatures, verify-qualifications

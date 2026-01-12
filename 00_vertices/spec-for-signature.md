@@ -30,7 +30,7 @@ Signature faces represent **accountability triangles** that complement assurance
 A signature face with vertices (doc D, guidance G, signer S) means:
 - "S signed the validation of D against G"
 - "S was qualified to validate against G at signing time"
-- "The signing event is cryptographically recorded"
+- "The signing event is recorded in git history"
 
 ## Relationship to Assurance
 
@@ -201,7 +201,7 @@ This signature records that [signer name] ([github_username]) attested to [docum
 
 The signer's qualification was verified through [qualifies-edge-id], which establishes [credential_type] authority to validate against [guidance name].
 
-This signature is recorded in commit [hash] and can be verified through GitHub's commit signature verification.
+This signature is recorded in commit [hash] and can be verified through git history.
 
 **Signed:** [signer name]
 **GitHub:** [username]

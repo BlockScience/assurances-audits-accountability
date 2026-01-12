@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-05T15:17:22.132582+00:00",
+  "generated": "2026-01-12T17:17:36.139407+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -222,9 +222,9 @@
           "doc",
           "guidance"
         ],
-        "version": "1.0.0",
+        "version": "1.2.0",
         "created": "2025-12-30T12:00:00+00:00",
-        "modified": "2025-12-30T12:00:00+00:00",
+        "modified": "2026-01-12T00:00:00+00:00",
         "dependencies": [],
         "criteria": [
           "layer-completeness",
@@ -315,6 +315,31 @@
         "modified": "2025-12-27T20:00:00+00:00",
         "dependencies": []
       },
+      "v:guidance:conceptual-architecture": {
+        "file": "00_vertices/guidance-for-conceptual-architecture.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:conceptual-architecture",
+        "name": "Guidance for Conceptual Architecture Documents",
+        "description": "Quality criteria and best practices for creating effective conceptual architecture documents with stakeholder-criterion matrices",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "stakeholder-completeness",
+          "criterion-quality",
+          "matrix-accuracy",
+          "conops-clarity",
+          "testing-strategy",
+          "traceability"
+        ]
+      },
       "v:guidance:field-survey": {
         "file": "00_vertices/guidance-for-field-survey.md",
         "type": "vertex/guidance",
@@ -338,6 +363,31 @@
           "relationship-accuracy",
           "boundary-precision",
           "executive-accessibility"
+        ]
+      },
+      "v:guidance:functional-architecture": {
+        "file": "00_vertices/guidance-for-functional-architecture.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:functional-architecture",
+        "name": "Guidance for Functional Architecture Documents",
+        "description": "Quality criteria and best practices for creating effective functional architecture documents with function-criterion matrices",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "criterion-coverage",
+          "function-completeness",
+          "io-clarity",
+          "technology-independence",
+          "testing-strategy",
+          "traceability"
         ]
       },
       "v:guidance:guidance": {
@@ -489,9 +539,9 @@
           "doc",
           "guidance"
         ],
-        "version": "2.0.0",
+        "version": "2.1.0",
         "created": "2025-12-30T18:00:00+00:00",
-        "modified": "2025-01-04T20:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
         "criteria": [
           "v-model-alignment",
           "architecture-traceability",
@@ -502,6 +552,31 @@
         ],
         "dependencies": [
           "v:guidance:architecture"
+        ]
+      },
+      "v:guidance:logical-architecture": {
+        "file": "00_vertices/guidance-for-logical-architecture.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:logical-architecture",
+        "name": "Guidance for Logical Architecture Documents",
+        "description": "Quality criteria and best practices for creating effective logical architecture documents with component-function matrices",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "function-coverage",
+          "component-cohesion",
+          "interface-clarity",
+          "technology-independence",
+          "testing-strategy",
+          "traceability"
         ]
       },
       "v:guidance:novel-contributions": {
@@ -528,6 +603,33 @@
           "intellectual-honesty"
         ],
         "dependencies": []
+      },
+      "v:guidance:ontology": {
+        "file": "00_vertices/guidance-for-ontology.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:ontology",
+        "name": "Guidance for Ontology Documents",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00",
+        "description": "Quality criteria for evaluating knowledge complex ontology documents",
+        "criteria": [
+          "Type Completeness",
+          "Coherence Rules",
+          "Extension Clarity",
+          "Type Hierarchy Consistency",
+          "Documentation Quality",
+          "Local Rule Verifiability",
+          "Chart Design Quality",
+          "Assurance Completeness"
+        ],
+        "rubric": "excellent/good/needs-improvement"
       },
       "v:guidance:organization": {
         "file": "00_vertices/guidance-for-organization.md",
@@ -564,6 +666,31 @@
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00",
         "dependencies": []
+      },
+      "v:guidance:physical-architecture": {
+        "file": "00_vertices/guidance-for-physical-architecture.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:physical-architecture",
+        "name": "Guidance for Physical Architecture Documents",
+        "description": "Quality criteria and best practices for creating effective physical architecture documents with element-component matrices",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "component-coverage",
+          "technology-specificity",
+          "rationale-clarity",
+          "deployment-clarity",
+          "testing-strategy",
+          "traceability"
+        ]
       },
       "v:guidance:program-memo": {
         "file": "00_vertices/guidance-for-program-memo.md",
@@ -698,6 +825,30 @@
         ],
         "rubric": "validation-assessment"
       },
+      "v:guidance:requirements-trace": {
+        "file": "00_vertices/guidance-for-requirements-trace.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:requirements-trace",
+        "name": "Guidance for Requirements Trace Documents",
+        "description": "Quality criteria and best practices for creating effective requirements traceability reports",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-12T00:00:00+00:00",
+        "modified": "2026-01-12T00:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "completeness",
+          "bidirectionality",
+          "gap-identification",
+          "actionability",
+          "accuracy"
+        ]
+      },
       "v:guidance:runbook": {
         "file": "00_vertices/guidance-for-runbook.md",
         "type": "vertex/guidance",
@@ -818,6 +969,28 @@
           "v:guidance:purpose",
           "v:guidance:protocol"
         ]
+      },
+      "v:ontology:base": {
+        "file": "00_vertices/ontology-base.md",
+        "type": "vertex/ontology",
+        "extends": "doc",
+        "id": "v:ontology:base",
+        "name": "Base Ontology for Knowledge Complexes",
+        "tags": [
+          "vertex",
+          "doc",
+          "ontology"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00",
+        "description": "Foundational type ontology for accountability, traceability, and auditing in knowledge complexes",
+        "extends_ontology": null,
+        "vertex_type_count": 14,
+        "edge_type_count": 18,
+        "face_type_count": 11,
+        "local_rule_count": 15,
+        "chart_type_count": 4
       },
       "v:doc:runbook-assurance-audit-chart": {
         "file": "00_vertices/runbook-assurance-audit-chart.md",
@@ -980,9 +1153,9 @@
           "doc",
           "runbook"
         ],
-        "version": "1.2.0",
+        "version": "1.4.0",
         "created": "2025-01-04T18:00:00+00:00",
-        "modified": "2025-01-04T23:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
         "workflow_name": "Program Development",
         "target_roles": [
           "systems engineer",
@@ -1061,9 +1234,9 @@
           "doc",
           "spec"
         ],
-        "version": "1.1.0",
+        "version": "1.3.0",
         "created": "2025-12-30T12:00:00+00:00",
-        "modified": "2025-01-04T23:00:00+00:00",
+        "modified": "2026-01-12T00:00:00+00:00",
         "dependencies": [
           "v:spec:field-survey"
         ]
@@ -1152,6 +1325,25 @@
         "modified": "2025-12-27T20:00:00+00:00",
         "dependencies": []
       },
+      "v:spec:conceptual-architecture": {
+        "file": "00_vertices/spec-for-conceptual-architecture.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:conceptual-architecture",
+        "name": "Specification for Conceptual Architecture Documents",
+        "description": "Defines what makes a valid conceptual architecture document focusing on stakeholder needs and acceptance criteria with a stakeholder-criterion matrix",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
+        "dependencies": [
+          "v:spec:field-survey"
+        ]
+      },
       "v:spec:field-survey": {
         "file": "00_vertices/spec-for-field-survey.md",
         "type": "vertex/spec",
@@ -1168,6 +1360,25 @@
         "created": "2025-01-04T23:00:00+00:00",
         "modified": "2025-01-04T23:00:00+00:00",
         "dependencies": []
+      },
+      "v:spec:functional-architecture": {
+        "file": "00_vertices/spec-for-functional-architecture.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:functional-architecture",
+        "name": "Specification for Functional Architecture Documents",
+        "description": "Defines what makes a valid functional architecture document focusing on system functions and their relationship to acceptance criteria",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
+        "dependencies": [
+          "v:spec:conceptual-architecture"
+        ]
       },
       "v:spec:guidance": {
         "file": "00_vertices/spec-for-guidance.md",
@@ -1337,11 +1548,30 @@
           "doc",
           "spec"
         ],
-        "version": "2.0.0",
+        "version": "2.1.0",
         "created": "2025-12-30T18:00:00+00:00",
-        "modified": "2025-01-04T20:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
         "dependencies": [
           "v:spec:architecture"
+        ]
+      },
+      "v:spec:logical-architecture": {
+        "file": "00_vertices/spec-for-logical-architecture.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:logical-architecture",
+        "name": "Specification for Logical Architecture Documents",
+        "description": "Defines what makes a valid logical architecture document focusing on technology-agnostic components and their relationship to functions",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
+        "dependencies": [
+          "v:spec:functional-architecture"
         ]
       },
       "v:spec:novel-contributions": {
@@ -1360,6 +1590,24 @@
         "created": "2025-12-30T18:00:00+00:00",
         "modified": "2025-12-30T18:00:00+00:00",
         "dependencies": []
+      },
+      "v:spec:ontology": {
+        "file": "00_vertices/spec-for-ontology.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:ontology",
+        "name": "Specification for Ontology Documents",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00",
+        "description": "Defines structural requirements for knowledge complex type ontology documents",
+        "schema_type": "yaml",
+        "strictness": "required"
       },
       "v:spec:organization": {
         "file": "00_vertices/spec-for-organization.md",
@@ -1397,6 +1645,25 @@
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:00:00+00:00",
         "dependencies": []
+      },
+      "v:spec:physical-architecture": {
+        "file": "00_vertices/spec-for-physical-architecture.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:physical-architecture",
+        "name": "Specification for Physical Architecture Documents",
+        "description": "Defines what makes a valid physical architecture document focusing on concrete technology choices and their relationship to logical components",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
+        "dependencies": [
+          "v:spec:logical-architecture"
+        ]
       },
       "v:spec:program-memo": {
         "file": "00_vertices/spec-for-program-memo.md",
@@ -1523,6 +1790,25 @@
         "created": "2026-01-02T12:00:00+00:00",
         "modified": "2026-01-02T12:00:00+00:00",
         "dependencies": []
+      },
+      "v:spec:requirements-trace": {
+        "file": "00_vertices/spec-for-requirements-trace.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:requirements-trace",
+        "name": "Specification for Requirements Trace Documents",
+        "description": "Defines what makes a valid requirements traceability report in the knowledge complex",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-12T00:00:00+00:00",
+        "modified": "2026-01-12T00:00:00+00:00",
+        "dependencies": [
+          "v:spec:architecture"
+        ]
       },
       "v:spec:runbook": {
         "file": "00_vertices/spec-for-runbook.md",
@@ -1785,7 +2071,7 @@
         "modified": "2025-12-27T22:15:00+00:00"
       },
       "e:cites:incose-paper-2026:architecture-incose": {
-        "file": "01_edges/cites-incose-paper-2026:architecture-incose.md",
+        "file": "01_edges/cites-incose-paper-2026_architecture-incose.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:cites:incose-paper-2026:architecture-incose",
@@ -1808,7 +2094,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:cites:incose-paper-2026:lifecycle-incose": {
-        "file": "01_edges/cites-incose-paper-2026:lifecycle-incose.md",
+        "file": "01_edges/cites-incose-paper-2026_lifecycle-incose.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:cites:incose-paper-2026:lifecycle-incose",
@@ -1831,7 +2117,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:cites:incose-paper-2026:literature-review-incose": {
-        "file": "01_edges/cites-incose-paper-2026:literature-review-incose.md",
+        "file": "01_edges/cites-incose-paper-2026_literature-review-incose.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:cites:incose-paper-2026:literature-review-incose",
@@ -1854,7 +2140,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:cites:incose-paper-2026:novel-contributions-incose": {
-        "file": "01_edges/cites-incose-paper-2026:novel-contributions-incose.md",
+        "file": "01_edges/cites-incose-paper-2026_novel-contributions-incose.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:cites:incose-paper-2026:novel-contributions-incose",
@@ -1954,6 +2240,25 @@
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00"
       },
+      "e:coupling:conceptual-architecture": {
+        "file": "01_edges/coupling-conceptual-architecture.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:conceptual-architecture",
+        "name": "Coupling - Spec-for-Conceptual-Architecture and Guidance-for-Conceptual-Architecture",
+        "source": "v:spec:conceptual-architecture",
+        "target": "v:guidance:conceptual-architecture",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00"
+      },
       "e:coupling:field-survey": {
         "file": "01_edges/coupling-field-survey.md",
         "type": "edge/coupling",
@@ -1972,6 +2277,25 @@
         "version": "1.0.0",
         "created": "2025-01-04T23:00:00+00:00",
         "modified": "2025-01-04T23:00:00+00:00"
+      },
+      "e:coupling:functional-architecture": {
+        "file": "01_edges/coupling-functional-architecture.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:functional-architecture",
+        "name": "Coupling - Spec-for-Functional-Architecture and Guidance-for-Functional-Architecture",
+        "source": "v:spec:functional-architecture",
+        "target": "v:guidance:functional-architecture",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00"
       },
       "e:coupling:guidance": {
         "file": "01_edges/coupling-guidance.md",
@@ -2088,6 +2412,25 @@
         "created": "2025-12-30T18:00:00+00:00",
         "modified": "2025-12-30T18:00:00+00:00"
       },
+      "e:coupling:logical-architecture": {
+        "file": "01_edges/coupling-logical-architecture.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:logical-architecture",
+        "name": "Coupling - Spec-for-Logical-Architecture and Guidance-for-Logical-Architecture",
+        "source": "v:spec:logical-architecture",
+        "target": "v:guidance:logical-architecture",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00"
+      },
       "e:coupling:novel-contributions": {
         "file": "01_edges/coupling-novel-contributions.md",
         "type": "edge/coupling",
@@ -2107,6 +2450,25 @@
         "created": "2025-12-30T18:00:00+00:00",
         "modified": "2025-12-30T18:00:00+00:00"
       },
+      "e:coupling:ontology": {
+        "file": "01_edges/coupling-ontology.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:ontology",
+        "name": "Coupling - Ontology Spec and Guidance",
+        "source": "v:spec:ontology",
+        "target": "v:guidance:ontology",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00"
+      },
       "e:coupling:persona": {
         "file": "01_edges/coupling-persona.md",
         "type": "edge/coupling",
@@ -2125,6 +2487,25 @@
         "version": "1.0.0",
         "created": "2025-12-27T23:30:00+00:00",
         "modified": "2025-12-27T23:30:00+00:00"
+      },
+      "e:coupling:physical-architecture": {
+        "file": "01_edges/coupling-physical-architecture.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:physical-architecture",
+        "name": "Coupling - Spec-for-Physical-Architecture and Guidance-for-Physical-Architecture",
+        "source": "v:spec:physical-architecture",
+        "target": "v:guidance:physical-architecture",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00"
       },
       "e:coupling:program-memo": {
         "file": "01_edges/coupling-program-memo.md",
@@ -2300,7 +2681,7 @@
         "modified": "2025-12-27T23:30:00+00:00"
       },
       "e:dependency:architecture-digital-transformation:field-survey-digital-transformation": {
-        "file": "01_edges/dependency-architecture-digital-transformation:field-survey-digital-transformation.md",
+        "file": "01_edges/dependency-architecture-digital-transformation_field-survey-digital-transformation.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:architecture-digital-transformation:field-survey-digital-transformation",
@@ -2323,7 +2704,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:dependency:incose-self-demonstration-guidance:architecture-guidance": {
-        "file": "01_edges/dependency-incose-self-demonstration-guidance:architecture-guidance.md",
+        "file": "01_edges/dependency-incose-self-demonstration-guidance_architecture-guidance.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:incose-self-demonstration-guidance:architecture-guidance",
@@ -2348,7 +2729,7 @@
         "modified": "2025-12-30T22:00:00+00:00"
       },
       "e:dependency:incose-self-demonstration-guidance:lifecycle-guidance": {
-        "file": "01_edges/dependency-incose-self-demonstration-guidance:lifecycle-guidance.md",
+        "file": "01_edges/dependency-incose-self-demonstration-guidance_lifecycle-guidance.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:incose-self-demonstration-guidance:lifecycle-guidance",
@@ -2373,7 +2754,7 @@
         "modified": "2025-12-30T22:00:00+00:00"
       },
       "e:dependency:incose-self-demonstration-guidance:literature-review-guidance": {
-        "file": "01_edges/dependency-incose-self-demonstration-guidance:literature-review-guidance.md",
+        "file": "01_edges/dependency-incose-self-demonstration-guidance_literature-review-guidance.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:incose-self-demonstration-guidance:literature-review-guidance",
@@ -2398,7 +2779,7 @@
         "modified": "2025-12-30T22:00:00+00:00"
       },
       "e:dependency:incose-self-demonstration-guidance:novel-contributions-guidance": {
-        "file": "01_edges/dependency-incose-self-demonstration-guidance:novel-contributions-guidance.md",
+        "file": "01_edges/dependency-incose-self-demonstration-guidance_novel-contributions-guidance.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:incose-self-demonstration-guidance:novel-contributions-guidance",
@@ -2423,7 +2804,7 @@
         "modified": "2025-12-30T22:00:00+00:00"
       },
       "e:dependency:incose-self-demonstration-spec:architecture-spec": {
-        "file": "01_edges/dependency-incose-self-demonstration-spec:architecture-spec.md",
+        "file": "01_edges/dependency-incose-self-demonstration-spec_architecture-spec.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:incose-self-demonstration-spec:architecture-spec",
@@ -2447,7 +2828,7 @@
         "modified": "2025-12-30T22:00:00+00:00"
       },
       "e:dependency:incose-self-demonstration-spec:lifecycle-spec": {
-        "file": "01_edges/dependency-incose-self-demonstration-spec:lifecycle-spec.md",
+        "file": "01_edges/dependency-incose-self-demonstration-spec_lifecycle-spec.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:incose-self-demonstration-spec:lifecycle-spec",
@@ -2471,7 +2852,7 @@
         "modified": "2025-12-30T22:00:00+00:00"
       },
       "e:dependency:incose-self-demonstration-spec:literature-review-spec": {
-        "file": "01_edges/dependency-incose-self-demonstration-spec:literature-review-spec.md",
+        "file": "01_edges/dependency-incose-self-demonstration-spec_literature-review-spec.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:incose-self-demonstration-spec:literature-review-spec",
@@ -2495,7 +2876,7 @@
         "modified": "2025-12-30T22:00:00+00:00"
       },
       "e:dependency:incose-self-demonstration-spec:novel-contributions-spec": {
-        "file": "01_edges/dependency-incose-self-demonstration-spec:novel-contributions-spec.md",
+        "file": "01_edges/dependency-incose-self-demonstration-spec_novel-contributions-spec.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:incose-self-demonstration-spec:novel-contributions-spec",
@@ -2519,7 +2900,7 @@
         "modified": "2025-12-30T22:00:00+00:00"
       },
       "e:dependency:lifecycle-digital-transformation:architecture-digital-transformation": {
-        "file": "01_edges/dependency-lifecycle-digital-transformation:architecture-digital-transformation.md",
+        "file": "01_edges/dependency-lifecycle-digital-transformation_architecture-digital-transformation.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:lifecycle-digital-transformation:architecture-digital-transformation",
@@ -2542,7 +2923,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:dependency:program-memo-digital-transformation:architecture-digital-transformation": {
-        "file": "01_edges/dependency-program-memo-digital-transformation:architecture-digital-transformation.md",
+        "file": "01_edges/dependency-program-memo-digital-transformation_architecture-digital-transformation.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:program-memo-digital-transformation:architecture-digital-transformation",
@@ -2565,7 +2946,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:dependency:program-memo-digital-transformation:field-survey-digital-transformation": {
-        "file": "01_edges/dependency-program-memo-digital-transformation:field-survey-digital-transformation.md",
+        "file": "01_edges/dependency-program-memo-digital-transformation_field-survey-digital-transformation.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:program-memo-digital-transformation:field-survey-digital-transformation",
@@ -2588,7 +2969,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:dependency:program-memo-digital-transformation:lifecycle-digital-transformation": {
-        "file": "01_edges/dependency-program-memo-digital-transformation:lifecycle-digital-transformation.md",
+        "file": "01_edges/dependency-program-memo-digital-transformation_lifecycle-digital-transformation.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:program-memo-digital-transformation:lifecycle-digital-transformation",
@@ -2611,7 +2992,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:dependency:program-memo-digital-transformation:program-plan-digital-transformation": {
-        "file": "01_edges/dependency-program-memo-digital-transformation:program-plan-digital-transformation.md",
+        "file": "01_edges/dependency-program-memo-digital-transformation_program-plan-digital-transformation.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:program-memo-digital-transformation:program-plan-digital-transformation",
@@ -2634,7 +3015,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:dependency:program-plan-digital-transformation:architecture-digital-transformation": {
-        "file": "01_edges/dependency-program-plan-digital-transformation:architecture-digital-transformation.md",
+        "file": "01_edges/dependency-program-plan-digital-transformation_architecture-digital-transformation.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:program-plan-digital-transformation:architecture-digital-transformation",
@@ -2657,7 +3038,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:dependency:program-plan-digital-transformation:lifecycle-digital-transformation": {
-        "file": "01_edges/dependency-program-plan-digital-transformation:lifecycle-digital-transformation.md",
+        "file": "01_edges/dependency-program-plan-digital-transformation_lifecycle-digital-transformation.md",
         "type": "edge/dependency",
         "extends": "edge",
         "id": "e:dependency:program-plan-digital-transformation:lifecycle-digital-transformation",
@@ -2680,7 +3061,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:inherits:incose-self-demonstration-guidance:incose-paper-guidance": {
-        "file": "01_edges/inherits-incose-self-demonstration-guidance:incose-paper-guidance.md",
+        "file": "01_edges/inherits-incose-self-demonstration-guidance_incose-paper-guidance.md",
         "type": "edge/inherits",
         "extends": "edge",
         "id": "e:inherits:incose-self-demonstration-guidance:incose-paper-guidance",
@@ -2724,7 +3105,7 @@
         "modified": "2025-12-30T22:30:00+00:00"
       },
       "e:inherits:incose-self-demonstration:incose-paper": {
-        "file": "01_edges/inherits-incose-self-demonstration:incose-paper.md",
+        "file": "01_edges/inherits-incose-self-demonstration_incose-paper.md",
         "type": "edge/inherits",
         "extends": "edge",
         "id": "e:inherits:incose-self-demonstration:incose-paper",
@@ -2763,7 +3144,7 @@
         "modified": "2025-12-30T22:30:00+00:00"
       },
       "e:qualifies:mzargham:guidance-architecture": {
-        "file": "01_edges/qualifies-mzargham:guidance-architecture.md",
+        "file": "01_edges/qualifies-mzargham_guidance-architecture.md",
         "type": "edge/qualifies",
         "extends": "edge",
         "id": "e:qualifies:mzargham:guidance-architecture",
@@ -2786,7 +3167,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:qualifies:mzargham:guidance-guidance": {
-        "file": "01_edges/qualifies-mzargham:guidance-guidance.md",
+        "file": "01_edges/qualifies-mzargham_guidance-guidance.md",
         "type": "edge/qualifies",
         "extends": "edge",
         "id": "e:qualifies:mzargham:guidance-guidance",
@@ -2809,7 +3190,7 @@
         "modified": "2025-12-30T23:45:00+00:00"
       },
       "e:qualifies:mzargham:guidance-incose-literature-review": {
-        "file": "01_edges/qualifies-mzargham:guidance-incose-literature-review.md",
+        "file": "01_edges/qualifies-mzargham_guidance-incose-literature-review.md",
         "type": "edge/qualifies",
         "extends": "edge",
         "id": "e:qualifies:mzargham:guidance-incose-literature-review",
@@ -2832,7 +3213,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:qualifies:mzargham:guidance-incose-paper": {
-        "file": "01_edges/qualifies-mzargham:guidance-incose-paper.md",
+        "file": "01_edges/qualifies-mzargham_guidance-incose-paper.md",
         "type": "edge/qualifies",
         "extends": "edge",
         "id": "e:qualifies:mzargham:guidance-incose-paper",
@@ -2855,7 +3236,7 @@
         "modified": "2025-12-30T23:00:00+00:00"
       },
       "e:qualifies:mzargham:guidance-incose-self-demonstration": {
-        "file": "01_edges/qualifies-mzargham:guidance-incose-self-demonstration.md",
+        "file": "01_edges/qualifies-mzargham_guidance-incose-self-demonstration.md",
         "type": "edge/qualifies",
         "extends": "edge",
         "id": "e:qualifies:mzargham:guidance-incose-self-demonstration",
@@ -2878,7 +3259,7 @@
         "modified": "2025-12-30T23:00:00+00:00"
       },
       "e:qualifies:mzargham:guidance-lifecycle": {
-        "file": "01_edges/qualifies-mzargham:guidance-lifecycle.md",
+        "file": "01_edges/qualifies-mzargham_guidance-lifecycle.md",
         "type": "edge/qualifies",
         "extends": "edge",
         "id": "e:qualifies:mzargham:guidance-lifecycle",
@@ -2901,7 +3282,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:qualifies:mzargham:guidance-novel-contributions": {
-        "file": "01_edges/qualifies-mzargham:guidance-novel-contributions.md",
+        "file": "01_edges/qualifies-mzargham_guidance-novel-contributions.md",
         "type": "edge/qualifies",
         "extends": "edge",
         "id": "e:qualifies:mzargham:guidance-novel-contributions",
@@ -2924,7 +3305,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:qualifies:mzargham:guidance-spec": {
-        "file": "01_edges/qualifies-mzargham:guidance-spec.md",
+        "file": "01_edges/qualifies-mzargham_guidance-spec.md",
         "type": "edge/qualifies",
         "extends": "edge",
         "id": "e:qualifies:mzargham:guidance-spec",
@@ -2947,7 +3328,7 @@
         "modified": "2025-12-30T23:45:00+00:00"
       },
       "e:qualifies:root:guidance-guidance": {
-        "file": "01_edges/qualifies-root:guidance-guidance.md",
+        "file": "01_edges/qualifies-root_guidance-guidance.md",
         "type": "edge/qualifies",
         "extends": "edge",
         "id": "e:qualifies:root:guidance-guidance",
@@ -2969,7 +3350,7 @@
         "modified": "2025-12-30T00:00:00+00:00"
       },
       "e:qualifies:root:guidance-spec": {
-        "file": "01_edges/qualifies-root:guidance-spec.md",
+        "file": "01_edges/qualifies-root_guidance-spec.md",
         "type": "edge/qualifies",
         "extends": "edge",
         "id": "e:qualifies:root:guidance-spec",
@@ -2991,7 +3372,7 @@
         "modified": "2025-12-30T00:00:00+00:00"
       },
       "e:signs:mzargham:architecture-incose": {
-        "file": "01_edges/signs-mzargham:architecture-incose.md",
+        "file": "01_edges/signs-mzargham_architecture-incose.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:architecture-incose",
@@ -3014,7 +3395,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:signs:mzargham:guidance-architecture": {
-        "file": "01_edges/signs-mzargham:guidance-architecture.md",
+        "file": "01_edges/signs-mzargham_guidance-architecture.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:guidance-architecture",
@@ -3036,7 +3417,7 @@
         "modified": "2025-12-30T23:45:00+00:00"
       },
       "e:signs:mzargham:guidance-incose-literature-review": {
-        "file": "01_edges/signs-mzargham:guidance-incose-literature-review.md",
+        "file": "01_edges/signs-mzargham_guidance-incose-literature-review.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:guidance-incose-literature-review",
@@ -3058,7 +3439,7 @@
         "modified": "2025-12-30T23:45:00+00:00"
       },
       "e:signs:mzargham:guidance-incose-paper": {
-        "file": "01_edges/signs-mzargham:guidance-incose-paper.md",
+        "file": "01_edges/signs-mzargham_guidance-incose-paper.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:guidance-incose-paper",
@@ -3080,7 +3461,7 @@
         "modified": "2025-12-30T23:55:00+00:00"
       },
       "e:signs:mzargham:guidance-incose-self-demonstration": {
-        "file": "01_edges/signs-mzargham:guidance-incose-self-demonstration.md",
+        "file": "01_edges/signs-mzargham_guidance-incose-self-demonstration.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:guidance-incose-self-demonstration",
@@ -3102,7 +3483,7 @@
         "modified": "2025-12-30T23:55:00+00:00"
       },
       "e:signs:mzargham:guidance-lifecycle": {
-        "file": "01_edges/signs-mzargham:guidance-lifecycle.md",
+        "file": "01_edges/signs-mzargham_guidance-lifecycle.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:guidance-lifecycle",
@@ -3124,7 +3505,7 @@
         "modified": "2025-12-30T23:45:00+00:00"
       },
       "e:signs:mzargham:guidance-novel-contributions": {
-        "file": "01_edges/signs-mzargham:guidance-novel-contributions.md",
+        "file": "01_edges/signs-mzargham_guidance-novel-contributions.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:guidance-novel-contributions",
@@ -3146,7 +3527,7 @@
         "modified": "2025-12-30T23:45:00+00:00"
       },
       "e:signs:mzargham:incose-paper-2026-self-demo": {
-        "file": "01_edges/signs-mzargham:incose-paper-2026-self-demo.md",
+        "file": "01_edges/signs-mzargham_incose-paper-2026-self-demo.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:incose-paper-2026-self-demo",
@@ -3169,7 +3550,7 @@
         "modified": "2025-12-30T23:00:00+00:00"
       },
       "e:signs:mzargham:incose-paper-2026": {
-        "file": "01_edges/signs-mzargham:incose-paper-2026.md",
+        "file": "01_edges/signs-mzargham_incose-paper-2026.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:incose-paper-2026",
@@ -3192,7 +3573,7 @@
         "modified": "2025-12-30T23:00:00+00:00"
       },
       "e:signs:mzargham:lifecycle-incose": {
-        "file": "01_edges/signs-mzargham:lifecycle-incose.md",
+        "file": "01_edges/signs-mzargham_lifecycle-incose.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:lifecycle-incose",
@@ -3215,7 +3596,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:signs:mzargham:literature-review-incose": {
-        "file": "01_edges/signs-mzargham:literature-review-incose.md",
+        "file": "01_edges/signs-mzargham_literature-review-incose.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:literature-review-incose",
@@ -3238,7 +3619,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:signs:mzargham:novel-contributions-incose": {
-        "file": "01_edges/signs-mzargham:novel-contributions-incose.md",
+        "file": "01_edges/signs-mzargham_novel-contributions-incose.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:novel-contributions-incose",
@@ -3261,7 +3642,7 @@
         "modified": "2025-12-30T23:30:00+00:00"
       },
       "e:signs:mzargham:spec-architecture": {
-        "file": "01_edges/signs-mzargham:spec-architecture.md",
+        "file": "01_edges/signs-mzargham_spec-architecture.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:spec-architecture",
@@ -3283,7 +3664,7 @@
         "modified": "2025-12-30T23:45:00+00:00"
       },
       "e:signs:mzargham:spec-incose-literature-review": {
-        "file": "01_edges/signs-mzargham:spec-incose-literature-review.md",
+        "file": "01_edges/signs-mzargham_spec-incose-literature-review.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:spec-incose-literature-review",
@@ -3305,7 +3686,7 @@
         "modified": "2025-12-30T23:45:00+00:00"
       },
       "e:signs:mzargham:spec-incose-paper": {
-        "file": "01_edges/signs-mzargham:spec-incose-paper.md",
+        "file": "01_edges/signs-mzargham_spec-incose-paper.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:spec-incose-paper",
@@ -3327,7 +3708,7 @@
         "modified": "2025-12-30T23:55:00+00:00"
       },
       "e:signs:mzargham:spec-incose-self-demonstration": {
-        "file": "01_edges/signs-mzargham:spec-incose-self-demonstration.md",
+        "file": "01_edges/signs-mzargham_spec-incose-self-demonstration.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:spec-incose-self-demonstration",
@@ -3349,7 +3730,7 @@
         "modified": "2025-12-30T23:55:00+00:00"
       },
       "e:signs:mzargham:spec-lifecycle": {
-        "file": "01_edges/signs-mzargham:spec-lifecycle.md",
+        "file": "01_edges/signs-mzargham_spec-lifecycle.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:spec-lifecycle",
@@ -3371,7 +3752,7 @@
         "modified": "2025-12-30T23:45:00+00:00"
       },
       "e:signs:mzargham:spec-novel-contributions": {
-        "file": "01_edges/signs-mzargham:spec-novel-contributions.md",
+        "file": "01_edges/signs-mzargham_spec-novel-contributions.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:mzargham:spec-novel-contributions",
@@ -3393,7 +3774,7 @@
         "modified": "2025-12-30T23:45:00+00:00"
       },
       "e:signs:root:guidance-guidance": {
-        "file": "01_edges/signs-root:guidance-guidance.md",
+        "file": "01_edges/signs-root_guidance-guidance.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:root:guidance-guidance",
@@ -3418,7 +3799,7 @@
         "modified": "2025-12-30T00:00:00+00:00"
       },
       "e:signs:root:guidance-spec": {
-        "file": "01_edges/signs-root:guidance-spec.md",
+        "file": "01_edges/signs-root_guidance-spec.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:root:guidance-spec",
@@ -3443,7 +3824,7 @@
         "modified": "2025-12-30T00:00:00+00:00"
       },
       "e:signs:root:spec-guidance": {
-        "file": "01_edges/signs-root:spec-guidance.md",
+        "file": "01_edges/signs-root_spec-guidance.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:root:spec-guidance",
@@ -3468,7 +3849,7 @@
         "modified": "2025-12-30T00:00:00+00:00"
       },
       "e:signs:root:spec-spec": {
-        "file": "01_edges/signs-root:spec-spec.md",
+        "file": "01_edges/signs-root_spec-spec.md",
         "type": "edge/signs",
         "extends": "edge",
         "id": "e:signs:root:spec-spec",
@@ -3493,7 +3874,7 @@
         "modified": "2025-12-30T00:00:00+00:00"
       },
       "e:validation:architecture-guidance:guidance-guidance": {
-        "file": "01_edges/validation-architecture-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-architecture-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:architecture-guidance:guidance-guidance",
@@ -3516,7 +3897,7 @@
         "modified": "2025-12-30T12:00:00+00:00"
       },
       "e:validation:architecture-incose:guidance-architecture": {
-        "file": "01_edges/validation-architecture-incose:guidance-architecture.md",
+        "file": "01_edges/validation-architecture-incose_guidance-architecture.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:architecture-incose:guidance-architecture",
@@ -3539,7 +3920,7 @@
         "modified": "2025-12-30T12:00:00+00:00"
       },
       "e:validation:architecture-spec:guidance-spec": {
-        "file": "01_edges/validation-architecture-spec:guidance-spec.md",
+        "file": "01_edges/validation-architecture-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:architecture-spec:guidance-spec",
@@ -3562,7 +3943,7 @@
         "modified": "2025-12-30T12:00:00+00:00"
       },
       "e:validation:assurance_audit-guidance:guidance": {
-        "file": "01_edges/validation-assurance_audit-guidance:guidance.md",
+        "file": "01_edges/validation-assurance_audit-guidance_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:assurance_audit-guidance:guidance",
@@ -3586,7 +3967,7 @@
         "modified": "2025-12-27T20:40:00+00:00"
       },
       "e:validation:assurance_audit:assurance_audit": {
-        "file": "01_edges/validation-assurance_audit:assurance_audit.md",
+        "file": "01_edges/validation-assurance_audit_assurance_audit.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:assurance_audit:assurance_audit",
@@ -3610,7 +3991,7 @@
         "modified": "2025-12-27T23:15:00+00:00"
       },
       "e:validation:background-section:guidance": {
-        "file": "01_edges/validation-background-section:guidance.md",
+        "file": "01_edges/validation-background-section_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:background-section:guidance",
@@ -3635,7 +4016,7 @@
         "description": "Human-approved validation of INCOSE paper Background section against quality criteria"
       },
       "e:validation:boundary-complex-assurance-audit:assurance_audit": {
-        "file": "01_edges/validation-boundary-complex-assurance-audit:assurance_audit.md",
+        "file": "01_edges/validation-boundary-complex-assurance-audit_assurance_audit.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:boundary-complex-assurance-audit:assurance_audit",
@@ -3660,7 +4041,7 @@
         "modified": "2025-12-27T18:00:00+00:00"
       },
       "e:validation:chart-guidance:guidance": {
-        "file": "01_edges/validation-chart-guidance:guidance.md",
+        "file": "01_edges/validation-chart-guidance_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:chart-guidance:guidance",
@@ -3684,7 +4065,7 @@
         "modified": "2025-12-27T20:35:00+00:00"
       },
       "e:validation:chart:chart": {
-        "file": "01_edges/validation-chart:chart.md",
+        "file": "01_edges/validation-chart_chart.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:chart:chart",
@@ -3707,8 +4088,31 @@
         "created": "2025-12-27T23:15:00+00:00",
         "modified": "2025-12-27T23:15:00+00:00"
       },
+      "e:validation:conceptual-architecture-knowledge-complex-refactor:guidance-conceptual-architecture": {
+        "file": "01_edges/validation-conceptual-architecture-knowledge-complex-refactor.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:conceptual-architecture-knowledge-complex-refactor:guidance-conceptual-architecture",
+        "name": "Validation - Conceptual Architecture Knowledge Complex Refactor against Guidance-for-Conceptual-Architecture",
+        "source": "v:doc:conceptual-architecture-knowledge-complex-refactor",
+        "target": "v:guidance:conceptual-architecture",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00"
+      },
       "e:validation:field-survey-guidance:guidance-guidance": {
-        "file": "01_edges/validation-field-survey-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-field-survey-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:field-survey-guidance:guidance-guidance",
@@ -3730,8 +4134,31 @@
         "created": "2025-01-04T23:00:00+00:00",
         "modified": "2025-01-04T23:00:00+00:00"
       },
+      "e:validation:field-survey-knowledge-complex-refactor:guidance-field-survey": {
+        "file": "01_edges/validation-field-survey-knowledge-complex-refactor.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:field-survey-knowledge-complex-refactor:guidance-field-survey",
+        "name": "Validation - Field Survey Knowledge Complex Refactor against Guidance-for-Field-Survey",
+        "source": "v:doc:field-survey-knowledge-complex-refactor",
+        "target": "v:guidance:field-survey",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00"
+      },
       "e:validation:field-survey-spec:guidance-spec": {
-        "file": "01_edges/validation-field-survey-spec:guidance-spec.md",
+        "file": "01_edges/validation-field-survey-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:field-survey-spec:guidance-spec",
@@ -3754,7 +4181,7 @@
         "modified": "2025-01-04T23:00:00+00:00"
       },
       "e:validation:framework-architecture-section:guidance": {
-        "file": "01_edges/validation-framework-architecture-section:guidance.md",
+        "file": "01_edges/validation-framework-architecture-section_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:framework-architecture-section:guidance",
@@ -3779,7 +4206,7 @@
         "description": "Human-approved validation of INCOSE paper Framework Architecture section (Section 4) against quality criteria"
       },
       "e:validation:framework-intuition-section:guidance": {
-        "file": "01_edges/validation-framework-intuition-section:guidance.md",
+        "file": "01_edges/validation-framework-intuition-section_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:framework-intuition-section:guidance",
@@ -3802,6 +4229,29 @@
         "created": "2025-12-31T20:30:00+00:00",
         "modified": "2025-12-31T20:30:00+00:00",
         "description": "Human-approved validation of INCOSE paper Framework Intuition section (NEW Section 3) against quality criteria"
+      },
+      "e:validation:functional-architecture-knowledge-complex-refactor:guidance-functional-architecture": {
+        "file": "01_edges/validation-functional-architecture-knowledge-complex-refactor.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:functional-architecture-knowledge-complex-refactor:guidance-functional-architecture",
+        "name": "Validation - Functional Architecture Knowledge Complex Refactor against Guidance-for-Functional-Architecture",
+        "source": "v:doc:functional-architecture-knowledge-complex-refactor",
+        "target": "v:guidance:functional-architecture",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "claude-opus-4-5-20251101",
+        "validation_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "edge",
+          "validation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00"
       },
       "e:validation:guidance-guidance:guidance-guidance": {
         "file": "01_edges/validation-guidance-guidance.md",
@@ -3848,7 +4298,7 @@
         "modified": "2025-12-27T21:30:00+00:00"
       },
       "e:validation:incose-paper-2026:guidance-incose-paper": {
-        "file": "01_edges/validation-incose-paper-2026:guidance-incose-paper.md",
+        "file": "01_edges/validation-incose-paper-2026_guidance-incose-paper.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:incose-paper-2026:guidance-incose-paper",
@@ -3871,7 +4321,7 @@
         ]
       },
       "e:validation:incose-paper-2026:guidance-incose-self-demonstration": {
-        "file": "01_edges/validation-incose-paper-2026:guidance-incose-self-demonstration.md",
+        "file": "01_edges/validation-incose-paper-2026_guidance-incose-self-demonstration.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:incose-paper-2026:guidance-incose-self-demonstration",
@@ -3894,7 +4344,7 @@
         ]
       },
       "e:validation:incose-paper-content:guidance-incose-paper": {
-        "file": "01_edges/validation-incose-paper-content:guidance-incose-paper.md",
+        "file": "01_edges/validation-incose-paper-content_guidance-incose-paper.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:incose-paper-content:guidance-incose-paper",
@@ -3917,7 +4367,7 @@
         "modified": "2025-12-30T12:20:00+00:00"
       },
       "e:validation:incose-paper-guidance:guidance-guidance": {
-        "file": "01_edges/validation-incose-paper-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-incose-paper-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:incose-paper-guidance:guidance-guidance",
@@ -3940,7 +4390,7 @@
         "modified": "2025-12-30T11:35:00+00:00"
       },
       "e:validation:incose-paper-spec:guidance-spec": {
-        "file": "01_edges/validation-incose-paper-spec:guidance-spec.md",
+        "file": "01_edges/validation-incose-paper-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:incose-paper-spec:guidance-spec",
@@ -3963,7 +4413,7 @@
         "modified": "2025-12-30T11:30:00+00:00"
       },
       "e:validation:incose-self-demonstration-guidance:guidance-guidance": {
-        "file": "01_edges/validation-incose-self-demonstration-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-incose-self-demonstration-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:incose-self-demonstration-guidance:guidance-guidance",
@@ -3986,7 +4436,7 @@
         "human_approver": "mzargham"
       },
       "e:validation:incose-self-demonstration-spec:guidance-spec": {
-        "file": "01_edges/validation-incose-self-demonstration-spec:guidance-spec.md",
+        "file": "01_edges/validation-incose-self-demonstration-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:incose-self-demonstration-spec:guidance-spec",
@@ -4009,7 +4459,7 @@
         "human_approver": "mzargham"
       },
       "e:validation:introduction-section:guidance": {
-        "file": "01_edges/validation-introduction-section:guidance.md",
+        "file": "01_edges/validation-introduction-section_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:introduction-section:guidance",
@@ -4034,7 +4484,7 @@
         "description": "Human-approved validation of INCOSE paper Introduction section against quality criteria"
       },
       "e:validation:lifecycle-guidance:guidance-guidance": {
-        "file": "01_edges/validation-lifecycle-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-lifecycle-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:lifecycle-guidance:guidance-guidance",
@@ -4057,7 +4507,7 @@
         "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:validation:lifecycle-incose:guidance-lifecycle": {
-        "file": "01_edges/validation-lifecycle-incose:guidance-lifecycle.md",
+        "file": "01_edges/validation-lifecycle-incose_guidance-lifecycle.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:lifecycle-incose:guidance-lifecycle",
@@ -4080,7 +4530,7 @@
         "modified": "2025-12-30T20:45:00+00:00"
       },
       "e:validation:lifecycle-spec:guidance-spec": {
-        "file": "01_edges/validation-lifecycle-spec:guidance-spec.md",
+        "file": "01_edges/validation-lifecycle-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:lifecycle-spec:guidance-spec",
@@ -4103,7 +4553,7 @@
         "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:validation:literature-review-guidance:guidance-guidance": {
-        "file": "01_edges/validation-literature-review-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-literature-review-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:literature-review-guidance:guidance-guidance",
@@ -4126,7 +4576,7 @@
         "modified": "2025-12-30T19:00:00+00:00"
       },
       "e:validation:literature-review-incose:guidance-incose-literature-review": {
-        "file": "01_edges/validation-literature-review-incose:guidance-incose-literature-review.md",
+        "file": "01_edges/validation-literature-review-incose_guidance-incose-literature-review.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:literature-review-incose:guidance-incose-literature-review",
@@ -4149,7 +4599,7 @@
         "modified": "2025-12-30T21:00:00+00:00"
       },
       "e:validation:literature-review-spec:guidance-spec": {
-        "file": "01_edges/validation-literature-review-spec:guidance-spec.md",
+        "file": "01_edges/validation-literature-review-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:literature-review-spec:guidance-spec",
@@ -4172,7 +4622,7 @@
         "modified": "2025-12-30T19:00:00+00:00"
       },
       "e:validation:novel-contributions-guidance:guidance-guidance": {
-        "file": "01_edges/validation-novel-contributions-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-novel-contributions-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:novel-contributions-guidance:guidance-guidance",
@@ -4195,7 +4645,7 @@
         "modified": "2025-12-30T18:00:00+00:00"
       },
       "e:validation:novel-contributions-incose:guidance-novel-contributions": {
-        "file": "01_edges/validation-novel-contributions-incose:guidance-novel-contributions.md",
+        "file": "01_edges/validation-novel-contributions-incose_guidance-novel-contributions.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:novel-contributions-incose:guidance-novel-contributions",
@@ -4218,7 +4668,7 @@
         "modified": "2025-12-30T20:30:00+00:00"
       },
       "e:validation:novel-contributions-spec:guidance-spec": {
-        "file": "01_edges/validation-novel-contributions-spec:guidance-spec.md",
+        "file": "01_edges/validation-novel-contributions-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:novel-contributions-spec:guidance-spec",
@@ -4241,7 +4691,7 @@
         "modified": "2025-12-30T18:00:00+00:00"
       },
       "e:validation:persona-claude:guidance": {
-        "file": "01_edges/validation-persona-claude:guidance.md",
+        "file": "01_edges/validation-persona-claude_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:persona-claude:guidance",
@@ -4269,7 +4719,7 @@
         "modified": "2025-12-28T00:40:00+00:00"
       },
       "e:validation:persona-guidance:guidance-guidance": {
-        "file": "01_edges/validation-persona-guidance:guidance.md",
+        "file": "01_edges/validation-persona-guidance_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:persona-guidance:guidance-guidance",
@@ -4292,7 +4742,7 @@
         "modified": "2025-12-27T23:55:00+00:00"
       },
       "e:validation:persona:guidance-spec": {
-        "file": "01_edges/validation-persona:spec.md",
+        "file": "01_edges/validation-persona_spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:persona:guidance-spec",
@@ -4315,7 +4765,7 @@
         "modified": "2025-12-27T23:50:00+00:00"
       },
       "e:validation:program-memo-guidance:guidance-guidance": {
-        "file": "01_edges/validation-program-memo-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-program-memo-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:program-memo-guidance:guidance-guidance",
@@ -4338,7 +4788,7 @@
         "modified": "2025-01-04T22:30:00+00:00"
       },
       "e:validation:program-memo-spec:guidance-spec": {
-        "file": "01_edges/validation-program-memo-spec:guidance-spec.md",
+        "file": "01_edges/validation-program-memo-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:program-memo-spec:guidance-spec",
@@ -4361,7 +4811,7 @@
         "modified": "2025-01-04T22:30:00+00:00"
       },
       "e:validation:program-plan-guidance:guidance-guidance": {
-        "file": "01_edges/validation-program-plan-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-program-plan-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:program-plan-guidance:guidance-guidance",
@@ -4384,7 +4834,7 @@
         "modified": "2025-01-04T22:00:00+00:00"
       },
       "e:validation:program-plan-spec:guidance-spec": {
-        "file": "01_edges/validation-program-plan-spec:guidance-spec.md",
+        "file": "01_edges/validation-program-plan-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:program-plan-spec:guidance-spec",
@@ -4407,7 +4857,7 @@
         "modified": "2025-01-04T22:00:00+00:00"
       },
       "e:validation:protocol-claude:guidance": {
-        "file": "01_edges/validation-protocol-claude:guidance.md",
+        "file": "01_edges/validation-protocol-claude_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:protocol-claude:guidance",
@@ -4435,7 +4885,7 @@
         "modified": "2025-12-28T02:15:00+00:00"
       },
       "e:validation:protocol-guidance:guidance-guidance": {
-        "file": "01_edges/validation-protocol-guidance:guidance.md",
+        "file": "01_edges/validation-protocol-guidance_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:protocol-guidance:guidance-guidance",
@@ -4458,7 +4908,7 @@
         "modified": "2025-12-27T23:55:00+00:00"
       },
       "e:validation:protocol:guidance-spec": {
-        "file": "01_edges/validation-protocol:spec.md",
+        "file": "01_edges/validation-protocol_spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:protocol:guidance-spec",
@@ -4481,7 +4931,7 @@
         "modified": "2025-12-27T23:50:00+00:00"
       },
       "e:validation:purpose-claude:guidance": {
-        "file": "01_edges/validation-purpose-claude:guidance.md",
+        "file": "01_edges/validation-purpose-claude_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:purpose-claude:guidance",
@@ -4509,7 +4959,7 @@
         "modified": "2025-12-28T00:55:00+00:00"
       },
       "e:validation:purpose-guidance:guidance-guidance": {
-        "file": "01_edges/validation-purpose-guidance:guidance.md",
+        "file": "01_edges/validation-purpose-guidance_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:purpose-guidance:guidance-guidance",
@@ -4532,7 +4982,7 @@
         "modified": "2025-12-27T23:55:00+00:00"
       },
       "e:validation:purpose:guidance-spec": {
-        "file": "01_edges/validation-purpose:spec.md",
+        "file": "01_edges/validation-purpose_spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:purpose:guidance-spec",
@@ -4555,7 +5005,7 @@
         "modified": "2025-12-27T23:50:00+00:00"
       },
       "e:validation:repository-policy-aaa:guidance-repository-policy": {
-        "file": "01_edges/validation-repository-policy-aaa:guidance-repository-policy.md",
+        "file": "01_edges/validation-repository-policy-aaa_guidance-repository-policy.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:repository-policy-aaa:guidance-repository-policy",
@@ -4578,7 +5028,7 @@
         "modified": "2026-01-02T19:00:00+00:00"
       },
       "e:validation:repository-policy-guidance:guidance-guidance": {
-        "file": "01_edges/validation-repository-policy-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-repository-policy-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:repository-policy-guidance:guidance-guidance",
@@ -4601,7 +5051,7 @@
         "modified": "2026-01-02T18:00:00+00:00"
       },
       "e:validation:repository-policy-spec:guidance-spec": {
-        "file": "01_edges/validation-repository-policy-spec:guidance-spec.md",
+        "file": "01_edges/validation-repository-policy-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:repository-policy-spec:guidance-spec",
@@ -4624,7 +5074,7 @@
         "modified": "2026-01-02T18:00:00+00:00"
       },
       "e:validation:runbook-guidance:guidance-guidance": {
-        "file": "01_edges/validation-runbook-guidance:guidance-guidance.md",
+        "file": "01_edges/validation-runbook-guidance_guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:runbook-guidance:guidance-guidance",
@@ -4647,7 +5097,7 @@
         "modified": "2025-01-04T17:00:00+00:00"
       },
       "e:validation:runbook-llm-specialization:guidance": {
-        "file": "01_edges/validation-runbook-llm-specialization:guidance.md",
+        "file": "01_edges/validation-runbook-llm-specialization_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:runbook-llm-specialization:guidance",
@@ -4670,7 +5120,7 @@
         "human_approver": "mzargham"
       },
       "e:validation:runbook-spec:guidance-spec": {
-        "file": "01_edges/validation-runbook-spec:guidance-spec.md",
+        "file": "01_edges/validation-runbook-spec_guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:runbook-spec:guidance-spec",
@@ -4737,7 +5187,7 @@
         "modified": "2025-12-27T21:30:00+00:00"
       },
       "e:validation:system_prompt-compiled:guidance": {
-        "file": "01_edges/validation-system_prompt-compiled:guidance.md",
+        "file": "01_edges/validation-system_prompt-compiled_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:system_prompt-compiled:guidance",
@@ -4765,7 +5215,7 @@
         "modified": "2025-12-28T02:25:00+00:00"
       },
       "e:validation:system_prompt-guidance:guidance-guidance": {
-        "file": "01_edges/validation-system_prompt-guidance:guidance.md",
+        "file": "01_edges/validation-system_prompt-guidance_guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:system_prompt-guidance:guidance-guidance",
@@ -4788,7 +5238,7 @@
         "modified": "2025-12-27T23:55:00+00:00"
       },
       "e:validation:system_prompt:guidance-spec": {
-        "file": "01_edges/validation-system_prompt:spec.md",
+        "file": "01_edges/validation-system_prompt_spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:system_prompt:guidance-spec",
@@ -4832,7 +5282,7 @@
         "modified": "2025-12-27T20:00:00+00:00"
       },
       "e:verification:architecture-digital-transformation:spec-architecture": {
-        "file": "01_edges/verification-architecture-digital-transformation:spec-architecture.md",
+        "file": "01_edges/verification-architecture-digital-transformation_spec-architecture.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:architecture-digital-transformation:spec-architecture",
@@ -4855,7 +5305,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:verification:architecture-guidance:spec-guidance": {
-        "file": "01_edges/verification-architecture-guidance:spec-guidance.md",
+        "file": "01_edges/verification-architecture-guidance_spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:architecture-guidance:spec-guidance",
@@ -4874,7 +5324,7 @@
         "modified": "2025-12-30T12:00:00+00:00"
       },
       "e:verification:architecture-incose:spec-architecture": {
-        "file": "01_edges/verification-architecture-incose:spec-architecture.md",
+        "file": "01_edges/verification-architecture-incose_spec-architecture.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:architecture-incose:spec-architecture",
@@ -4893,7 +5343,7 @@
         "modified": "2025-12-30T12:00:00+00:00"
       },
       "e:verification:architecture-spec:spec-spec": {
-        "file": "01_edges/verification-architecture-spec:spec-spec.md",
+        "file": "01_edges/verification-architecture-spec_spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:architecture-spec:spec-spec",
@@ -4912,7 +5362,7 @@
         "modified": "2025-12-30T12:00:00+00:00"
       },
       "e:verification:assurance_audit-guidance:guidance": {
-        "file": "01_edges/verification-assurance_audit-guidance:guidance.md",
+        "file": "01_edges/verification-assurance_audit-guidance_guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:assurance_audit-guidance:guidance",
@@ -4937,7 +5387,7 @@
         "modified": "2025-12-27T17:00:00+00:00"
       },
       "e:verification:assurance_audit:spec-spec": {
-        "file": "01_edges/verification-assurance_audit:spec.md",
+        "file": "01_edges/verification-assurance_audit_spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:assurance_audit:spec-spec",
@@ -4962,7 +5412,7 @@
         "modified": "2025-12-27T17:00:00+00:00"
       },
       "e:verification:boundary-complex-assurance-audit:assurance_audit": {
-        "file": "01_edges/verification-boundary-complex-assurance-audit:assurance_audit.md",
+        "file": "01_edges/verification-boundary-complex-assurance-audit_assurance_audit.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:boundary-complex-assurance-audit:assurance_audit",
@@ -4987,7 +5437,7 @@
         "modified": "2025-12-27T18:00:00+00:00"
       },
       "e:verification:chart-guidance:guidance": {
-        "file": "01_edges/verification-chart-guidance:guidance.md",
+        "file": "01_edges/verification-chart-guidance_guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:chart-guidance:guidance",
@@ -5007,7 +5457,7 @@
         "modified": "2025-12-27T20:35:00+00:00"
       },
       "e:verification:chart:spec-spec": {
-        "file": "01_edges/verification-chart:chart.md",
+        "file": "01_edges/verification-chart_chart.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:chart:spec-spec",
@@ -5026,8 +5476,29 @@
         "created": "2025-12-27T23:10:00+00:00",
         "modified": "2025-12-27T23:10:00+00:00"
       },
+      "e:verification:conceptual-architecture-knowledge-complex-refactor:spec-conceptual-architecture": {
+        "file": "01_edges/verification-conceptual-architecture-knowledge-complex-refactor.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:conceptual-architecture-knowledge-complex-refactor:spec-conceptual-architecture",
+        "name": "Verification - Conceptual Architecture Knowledge Complex Refactor against Spec-for-Conceptual-Architecture",
+        "source": "v:doc:conceptual-architecture-knowledge-complex-refactor",
+        "target": "v:spec:conceptual-architecture",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "verify_template_based.py",
+        "verification_method": "automated",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00"
+      },
       "e:verification:field-survey-digital-transformation:spec-field-survey": {
-        "file": "01_edges/verification-field-survey-digital-transformation:spec-field-survey.md",
+        "file": "01_edges/verification-field-survey-digital-transformation_spec-field-survey.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:field-survey-digital-transformation:spec-field-survey",
@@ -5050,7 +5521,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:verification:field-survey-guidance:spec-guidance": {
-        "file": "01_edges/verification-field-survey-guidance:spec-guidance.md",
+        "file": "01_edges/verification-field-survey-guidance_spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:field-survey-guidance:spec-guidance",
@@ -5072,8 +5543,27 @@
         "created": "2025-01-04T23:00:00+00:00",
         "modified": "2025-01-04T23:00:00+00:00"
       },
+      "e:verification:field-survey-knowledge-complex-refactor:spec-field-survey": {
+        "file": "01_edges/verification-field-survey-knowledge-complex-refactor.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:field-survey-knowledge-complex-refactor:spec-field-survey",
+        "name": "Verification - Field Survey Knowledge Complex Refactor against Spec-for-Field-Survey",
+        "source": "v:doc:field-survey-knowledge-complex-refactor",
+        "target": "v:spec:field-survey",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00"
+      },
       "e:verification:field-survey-spec:spec-spec": {
-        "file": "01_edges/verification-field-survey-spec:spec-spec.md",
+        "file": "01_edges/verification-field-survey-spec_spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:field-survey-spec:spec-spec",
@@ -5094,6 +5584,27 @@
         "version": "1.0.0",
         "created": "2025-01-04T23:00:00+00:00",
         "modified": "2025-01-04T23:00:00+00:00"
+      },
+      "e:verification:functional-architecture-knowledge-complex-refactor:spec-functional-architecture": {
+        "file": "01_edges/verification-functional-architecture-knowledge-complex-refactor.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:functional-architecture-knowledge-complex-refactor:spec-functional-architecture",
+        "name": "Verification - Functional Architecture Knowledge Complex Refactor against Spec-for-Functional-Architecture",
+        "source": "v:doc:functional-architecture-knowledge-complex-refactor",
+        "target": "v:spec:functional-architecture",
+        "source_type": "vertex/doc",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "verifier": "verify_template_based.py",
+        "verification_method": "automated",
+        "tags": [
+          "edge",
+          "verification"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00"
       },
       "e:verification:guidance-guidance:spec-guidance": {
         "file": "01_edges/verification-guidance-guidance.md",
@@ -5134,7 +5645,7 @@
         "modified": "2025-12-27T20:51:00+00:00"
       },
       "e:verification:incose-paper-2026:spec-incose-paper": {
-        "file": "01_edges/verification-incose-paper-2026:spec-incose-paper.md",
+        "file": "01_edges/verification-incose-paper-2026_spec-incose-paper.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:incose-paper-2026:spec-incose-paper",
@@ -5157,7 +5668,7 @@
         ]
       },
       "e:verification:incose-paper-2026:spec-incose-self-demonstration": {
-        "file": "01_edges/verification-incose-paper-2026:spec-incose-self-demonstration.md",
+        "file": "01_edges/verification-incose-paper-2026_spec-incose-self-demonstration.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:incose-paper-2026:spec-incose-self-demonstration",
@@ -5180,7 +5691,7 @@
         ]
       },
       "e:verification:incose-paper-content:spec-incose-paper": {
-        "file": "01_edges/verification-incose-paper-content:spec-incose-paper.md",
+        "file": "01_edges/verification-incose-paper-content_spec-incose-paper.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:incose-paper-content:spec-incose-paper",
@@ -5199,7 +5710,7 @@
         "modified": "2025-12-30T12:15:00+00:00"
       },
       "e:verification:incose-paper-guidance:spec-guidance": {
-        "file": "01_edges/verification-incose-paper-guidance:spec-guidance.md",
+        "file": "01_edges/verification-incose-paper-guidance_spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:incose-paper-guidance:spec-guidance",
@@ -5218,7 +5729,7 @@
         "modified": "2025-12-30T11:20:00+00:00"
       },
       "e:verification:incose-paper-spec:spec-spec": {
-        "file": "01_edges/verification-incose-paper-spec:spec-spec.md",
+        "file": "01_edges/verification-incose-paper-spec_spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:incose-paper-spec:spec-spec",
@@ -5237,7 +5748,7 @@
         "modified": "2025-12-30T11:15:00+00:00"
       },
       "e:verification:incose-self-demonstration-guidance:spec-guidance": {
-        "file": "01_edges/verification-incose-self-demonstration-guidance:spec-guidance.md",
+        "file": "01_edges/verification-incose-self-demonstration-guidance_spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:incose-self-demonstration-guidance:spec-guidance",
@@ -5256,7 +5767,7 @@
         "modified": "2025-12-30T23:55:00+00:00"
       },
       "e:verification:incose-self-demonstration-spec:spec-spec": {
-        "file": "01_edges/verification-incose-self-demonstration-spec:spec-spec.md",
+        "file": "01_edges/verification-incose-self-demonstration-spec_spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:incose-self-demonstration-spec:spec-spec",
@@ -5275,7 +5786,7 @@
         "modified": "2025-12-30T23:55:00+00:00"
       },
       "e:verification:lifecycle-digital-transformation:spec-lifecycle": {
-        "file": "01_edges/verification-lifecycle-digital-transformation:spec-lifecycle.md",
+        "file": "01_edges/verification-lifecycle-digital-transformation_spec-lifecycle.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:lifecycle-digital-transformation:spec-lifecycle",
@@ -5298,7 +5809,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:verification:lifecycle-guidance:spec-guidance": {
-        "file": "01_edges/verification-lifecycle-guidance:spec-guidance.md",
+        "file": "01_edges/verification-lifecycle-guidance_spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:lifecycle-guidance:spec-guidance",
@@ -5321,7 +5832,7 @@
         "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:verification:lifecycle-incose:spec-lifecycle": {
-        "file": "01_edges/verification-lifecycle-incose:spec-lifecycle.md",
+        "file": "01_edges/verification-lifecycle-incose_spec-lifecycle.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:lifecycle-incose:spec-lifecycle",
@@ -5344,7 +5855,7 @@
         "modified": "2025-12-30T20:45:00+00:00"
       },
       "e:verification:lifecycle-spec:spec-spec": {
-        "file": "01_edges/verification-lifecycle-spec:spec-spec.md",
+        "file": "01_edges/verification-lifecycle-spec_spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:lifecycle-spec:spec-spec",
@@ -5367,7 +5878,7 @@
         "modified": "2025-01-04T21:00:00+00:00"
       },
       "e:verification:literature-review-guidance:spec-guidance": {
-        "file": "01_edges/verification-literature-review-guidance:spec-guidance.md",
+        "file": "01_edges/verification-literature-review-guidance_spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:literature-review-guidance:spec-guidance",
@@ -5390,7 +5901,7 @@
         "modified": "2025-12-30T19:00:00+00:00"
       },
       "e:verification:literature-review-incose:spec-incose-literature-review": {
-        "file": "01_edges/verification-literature-review-incose:spec-incose-literature-review.md",
+        "file": "01_edges/verification-literature-review-incose_spec-incose-literature-review.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:literature-review-incose:spec-incose-literature-review",
@@ -5413,7 +5924,7 @@
         "modified": "2025-12-30T21:00:00+00:00"
       },
       "e:verification:literature-review-spec:spec-spec": {
-        "file": "01_edges/verification-literature-review-spec:spec-spec.md",
+        "file": "01_edges/verification-literature-review-spec_spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:literature-review-spec:spec-spec",
@@ -5436,7 +5947,7 @@
         "modified": "2025-12-30T19:00:00+00:00"
       },
       "e:verification:novel-contributions-guidance:spec-guidance": {
-        "file": "01_edges/verification-novel-contributions-guidance:spec-guidance.md",
+        "file": "01_edges/verification-novel-contributions-guidance_spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:novel-contributions-guidance:spec-guidance",
@@ -5455,7 +5966,7 @@
         "modified": "2025-12-30T18:00:00+00:00"
       },
       "e:verification:novel-contributions-incose:spec-novel-contributions": {
-        "file": "01_edges/verification-novel-contributions-incose:spec-novel-contributions.md",
+        "file": "01_edges/verification-novel-contributions-incose_spec-novel-contributions.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:novel-contributions-incose:spec-novel-contributions",
@@ -5478,7 +5989,7 @@
         "modified": "2025-12-30T20:30:00+00:00"
       },
       "e:verification:novel-contributions-spec:spec-spec": {
-        "file": "01_edges/verification-novel-contributions-spec:spec-spec.md",
+        "file": "01_edges/verification-novel-contributions-spec_spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:novel-contributions-spec:spec-spec",
@@ -5497,7 +6008,7 @@
         "modified": "2025-12-30T18:00:00+00:00"
       },
       "e:verification:persona-claude:spec": {
-        "file": "01_edges/verification-persona-claude:spec.md",
+        "file": "01_edges/verification-persona-claude_spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:persona-claude:spec",
@@ -5524,7 +6035,7 @@
         "modified": "2025-12-28T00:35:00+00:00"
       },
       "e:verification:persona-guidance:guidance": {
-        "file": "01_edges/verification-persona-guidance:guidance.md",
+        "file": "01_edges/verification-persona-guidance_guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:persona-guidance:guidance",
@@ -5543,7 +6054,7 @@
         "modified": "2025-12-27T23:45:00+00:00"
       },
       "e:verification:persona:spec": {
-        "file": "01_edges/verification-persona:spec.md",
+        "file": "01_edges/verification-persona_spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:persona:spec",
@@ -5562,7 +6073,7 @@
         "modified": "2025-12-27T23:45:00+00:00"
       },
       "e:verification:program-memo-digital-transformation:spec-program-memo": {
-        "file": "01_edges/verification-program-memo-digital-transformation:spec-program-memo.md",
+        "file": "01_edges/verification-program-memo-digital-transformation_spec-program-memo.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:program-memo-digital-transformation:spec-program-memo",
@@ -5585,7 +6096,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:verification:program-memo-guidance:spec-guidance": {
-        "file": "01_edges/verification-program-memo-guidance:spec-guidance.md",
+        "file": "01_edges/verification-program-memo-guidance_spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:program-memo-guidance:spec-guidance",
@@ -5608,7 +6119,7 @@
         "modified": "2025-01-04T22:30:00+00:00"
       },
       "e:verification:program-memo-spec:spec-spec": {
-        "file": "01_edges/verification-program-memo-spec:spec-spec.md",
+        "file": "01_edges/verification-program-memo-spec_spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:program-memo-spec:spec-spec",
@@ -5631,7 +6142,7 @@
         "modified": "2025-01-04T22:30:00+00:00"
       },
       "e:verification:program-plan-digital-transformation:spec-program-plan": {
-        "file": "01_edges/verification-program-plan-digital-transformation:spec-program-plan.md",
+        "file": "01_edges/verification-program-plan-digital-transformation_spec-program-plan.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:program-plan-digital-transformation:spec-program-plan",
@@ -5654,7 +6165,7 @@
         "modified": "2026-01-05T12:00:00+00:00"
       },
       "e:verification:program-plan-guidance:spec-guidance": {
-        "file": "01_edges/verification-program-plan-guidance:spec-guidance.md",
+        "file": "01_edges/verification-program-plan-guidance_spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:program-plan-guidance:spec-guidance",
@@ -5677,7 +6188,7 @@
         "modified": "2025-01-04T22:00:00+00:00"
       },
       "e:verification:program-plan-spec:spec-spec": {
-        "file": "01_edges/verification-program-plan-spec:spec-spec.md",
+        "file": "01_edges/verification-program-plan-spec_spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:program-plan-spec:spec-spec",
@@ -5700,7 +6211,7 @@
         "modified": "2025-01-04T22:00:00+00:00"
       },
       "e:verification:protocol-claude:spec": {
-        "file": "01_edges/verification-protocol-claude:spec.md",
+        "file": "01_edges/verification-protocol-claude_spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:protocol-claude:spec",
@@ -5727,7 +6238,7 @@
         "modified": "2025-12-28T01:05:00+00:00"
       },
       "e:verification:protocol-guidance:guidance": {
-        "file": "01_edges/verification-protocol-guidance:guidance.md",
+        "file": "01_edges/verification-protocol-guidance_guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:protocol-guidance:guidance",
@@ -5746,7 +6257,7 @@
         "modified": "2025-12-27T23:45:00+00:00"
       },
       "e:verification:protocol:spec": {
-        "file": "01_edges/verification-protocol:spec.md",
+        "file": "01_edges/verification-protocol_spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:protocol:spec",
@@ -5765,7 +6276,7 @@
         "modified": "2025-12-27T23:45:00+00:00"
       },
       "e:verification:purpose-claude:spec": {
-        "file": "01_edges/verification-purpose-claude:spec.md",
+        "file": "01_edges/verification-purpose-claude_spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:purpose-claude:spec",
@@ -5792,7 +6303,7 @@
         "modified": "2025-12-28T00:50:00+00:00"
       },
       "e:verification:purpose-guidance:guidance": {
-        "file": "01_edges/verification-purpose-guidance:guidance.md",
+        "file": "01_edges/verification-purpose-guidance_guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:purpose-guidance:guidance",
@@ -5811,7 +6322,7 @@
         "modified": "2025-12-27T23:45:00+00:00"
       },
       "e:verification:purpose:spec": {
-        "file": "01_edges/verification-purpose:spec.md",
+        "file": "01_edges/verification-purpose_spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:purpose:spec",
@@ -5830,7 +6341,7 @@
         "modified": "2025-12-27T23:45:00+00:00"
       },
       "e:verification:runbook-guidance:spec-guidance": {
-        "file": "01_edges/verification-runbook-guidance:spec-guidance.md",
+        "file": "01_edges/verification-runbook-guidance_spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:runbook-guidance:spec-guidance",
@@ -5853,7 +6364,7 @@
         "modified": "2025-01-04T17:00:00+00:00"
       },
       "e:verification:runbook-llm-specialization:spec": {
-        "file": "01_edges/verification-runbook-llm-specialization:spec.md",
+        "file": "01_edges/verification-runbook-llm-specialization_spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:runbook-llm-specialization:spec",
@@ -5874,7 +6385,7 @@
         "verification_tool": "verify_template_based.py"
       },
       "e:verification:runbook-spec:spec-spec": {
-        "file": "01_edges/verification-runbook-spec:spec-spec.md",
+        "file": "01_edges/verification-runbook-spec_spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:runbook-spec:spec-spec",
@@ -5935,7 +6446,7 @@
         "modified": "2025-12-27T20:41:33+00:00"
       },
       "e:verification:system_prompt-compiled:spec": {
-        "file": "01_edges/verification-system_prompt-compiled:spec.md",
+        "file": "01_edges/verification-system_prompt-compiled_spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:system_prompt-compiled:spec",
@@ -5962,7 +6473,7 @@
         "modified": "2025-12-28T01:20:00+00:00"
       },
       "e:verification:system_prompt-guidance:guidance": {
-        "file": "01_edges/verification-system_prompt-guidance:guidance.md",
+        "file": "01_edges/verification-system_prompt-guidance_guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:system_prompt-guidance:guidance",
@@ -5981,7 +6492,7 @@
         "modified": "2025-12-27T23:45:00+00:00"
       },
       "e:verification:system_prompt:spec": {
-        "file": "01_edges/verification-system_prompt:spec.md",
+        "file": "01_edges/verification-system_prompt_spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:system_prompt:spec",
@@ -6278,6 +6789,42 @@
         "created": "2025-12-27T23:20:00+00:00",
         "modified": "2025-12-27T23:20:00+00:00"
       },
+      "f:assurance:conceptual-architecture-knowledge-complex-refactor": {
+        "file": "02_faces/assurance-conceptual-architecture-knowledge-complex-refactor.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:conceptual-architecture-knowledge-complex-refactor",
+        "name": "Assurance Face - Conceptual Architecture Knowledge Complex Refactor",
+        "description": "Complete assurance pattern for the knowledge complex repository refactor conceptual architecture",
+        "edges": [
+          "e:coupling:conceptual-architecture",
+          "e:verification:conceptual-architecture-knowledge-complex-refactor:spec-conceptual-architecture",
+          "e:validation:conceptual-architecture-knowledge-complex-refactor:guidance-conceptual-architecture"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:doc:conceptual-architecture-knowledge-complex-refactor",
+          "v:spec:conceptual-architecture",
+          "v:guidance:conceptual-architecture"
+        ],
+        "target": "v:doc:conceptual-architecture-knowledge-complex-refactor",
+        "spec": "v:spec:conceptual-architecture",
+        "guidance": "v:guidance:conceptual-architecture",
+        "coupling_edge": "e:coupling:conceptual-architecture",
+        "verification_edge": "e:verification:conceptual-architecture-knowledge-complex-refactor:spec-conceptual-architecture",
+        "validation_edge": "e:validation:conceptual-architecture-knowledge-complex-refactor:guidance-conceptual-architecture",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00"
+      },
       "f:assurance:field-survey-guidance": {
         "file": "02_faces/assurance-field-survey-guidance.md",
         "type": "face/assurance",
@@ -6314,6 +6861,42 @@
         "created": "2026-01-04T22:00:00+00:00",
         "modified": "2026-01-04T22:00:00+00:00"
       },
+      "f:assurance:field-survey-knowledge-complex-refactor": {
+        "file": "02_faces/assurance-field-survey-knowledge-complex-refactor.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:field-survey-knowledge-complex-refactor",
+        "name": "Assurance Face - Field Survey Knowledge Complex Refactor",
+        "description": "Complete assurance pattern for the knowledge complex repository refactor field survey",
+        "edges": [
+          "e:coupling:field-survey",
+          "e:verification:field-survey-knowledge-complex-refactor:spec-field-survey",
+          "e:validation:field-survey-knowledge-complex-refactor:guidance-field-survey"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:doc:field-survey-knowledge-complex-refactor",
+          "v:spec:field-survey",
+          "v:guidance:field-survey"
+        ],
+        "target": "v:doc:field-survey-knowledge-complex-refactor",
+        "spec": "v:spec:field-survey",
+        "guidance": "v:guidance:field-survey",
+        "coupling_edge": "e:coupling:field-survey",
+        "verification_edge": "e:verification:field-survey-knowledge-complex-refactor:spec-field-survey",
+        "validation_edge": "e:validation:field-survey-knowledge-complex-refactor:guidance-field-survey",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00"
+      },
       "f:assurance:field-survey-spec": {
         "file": "02_faces/assurance-field-survey-spec.md",
         "type": "face/assurance",
@@ -6349,6 +6932,42 @@
         "version": "1.0.0",
         "created": "2026-01-04T22:00:00+00:00",
         "modified": "2026-01-04T22:00:00+00:00"
+      },
+      "f:assurance:functional-architecture-knowledge-complex-refactor": {
+        "file": "02_faces/assurance-functional-architecture-knowledge-complex-refactor.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:functional-architecture-knowledge-complex-refactor",
+        "name": "Assurance Face - Functional Architecture Knowledge Complex Refactor",
+        "description": "Complete assurance pattern for the knowledge complex repository refactor functional architecture",
+        "edges": [
+          "e:coupling:functional-architecture",
+          "e:verification:functional-architecture-knowledge-complex-refactor:spec-functional-architecture",
+          "e:validation:functional-architecture-knowledge-complex-refactor:guidance-functional-architecture"
+        ],
+        "orientation": "oriented",
+        "vertices": [
+          "v:doc:functional-architecture-knowledge-complex-refactor",
+          "v:spec:functional-architecture",
+          "v:guidance:functional-architecture"
+        ],
+        "target": "v:doc:functional-architecture-knowledge-complex-refactor",
+        "spec": "v:spec:functional-architecture",
+        "guidance": "v:guidance:functional-architecture",
+        "coupling_edge": "e:coupling:functional-architecture",
+        "verification_edge": "e:verification:functional-architecture-knowledge-complex-refactor:spec-functional-architecture",
+        "validation_edge": "e:validation:functional-architecture-knowledge-complex-refactor:guidance-functional-architecture",
+        "assurer": "claude-opus-4-5-20251101",
+        "assurance_method": "llm-assisted",
+        "llm_model": "claude-opus-4-5-20251101",
+        "human_approver": "mzargham",
+        "tags": [
+          "face",
+          "assurance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00"
       },
       "f:assurance:guidance-guidance": {
         "file": "02_faces/assurance-guidance-guidance.md",
@@ -7004,7 +7623,7 @@
         "modified": "2025-12-28T00:45:00+00:00"
       },
       "f:assurance:persona-guidance:guidance": {
-        "file": "02_faces/assurance-persona-guidance:guidance.md",
+        "file": "02_faces/assurance-persona-guidance_guidance.md",
         "type": "face/assurance",
         "extends": "face",
         "id": "f:assurance:persona-guidance:guidance",
@@ -7041,7 +7660,7 @@
         "modified": "2025-12-27T23:59:00+00:00"
       },
       "f:assurance:persona:spec": {
-        "file": "02_faces/assurance-persona:spec.md",
+        "file": "02_faces/assurance-persona_spec.md",
         "type": "face/assurance",
         "extends": "face",
         "id": "f:assurance:persona:spec",
@@ -7255,7 +7874,7 @@
         "modified": "2025-12-28T02:20:00+00:00"
       },
       "f:assurance:protocol-guidance:guidance": {
-        "file": "02_faces/assurance-protocol-guidance:guidance.md",
+        "file": "02_faces/assurance-protocol-guidance_guidance.md",
         "type": "face/assurance",
         "extends": "face",
         "id": "f:assurance:protocol-guidance:guidance",
@@ -7292,7 +7911,7 @@
         "modified": "2025-12-27T23:59:00+00:00"
       },
       "f:assurance:protocol:spec": {
-        "file": "02_faces/assurance-protocol:spec.md",
+        "file": "02_faces/assurance-protocol_spec.md",
         "type": "face/assurance",
         "extends": "face",
         "id": "f:assurance:protocol:spec",
@@ -7362,7 +7981,7 @@
         "modified": "2025-12-28T01:00:00+00:00"
       },
       "f:assurance:purpose-guidance:guidance": {
-        "file": "02_faces/assurance-purpose-guidance:guidance.md",
+        "file": "02_faces/assurance-purpose-guidance_guidance.md",
         "type": "face/assurance",
         "extends": "face",
         "id": "f:assurance:purpose-guidance:guidance",
@@ -7399,7 +8018,7 @@
         "modified": "2025-12-27T23:59:00+00:00"
       },
       "f:assurance:purpose:spec": {
-        "file": "02_faces/assurance-purpose:spec.md",
+        "file": "02_faces/assurance-purpose_spec.md",
         "type": "face/assurance",
         "extends": "face",
         "id": "f:assurance:purpose:spec",
@@ -7615,7 +8234,7 @@
         "modified": "2025-12-28T02:30:00+00:00"
       },
       "f:assurance:system_prompt-guidance:guidance": {
-        "file": "02_faces/assurance-system_prompt-guidance:guidance.md",
+        "file": "02_faces/assurance-system_prompt-guidance_guidance.md",
         "type": "face/assurance",
         "extends": "face",
         "id": "f:assurance:system_prompt-guidance:guidance",
@@ -7652,7 +8271,7 @@
         "modified": "2025-12-27T23:59:00+00:00"
       },
       "f:assurance:system_prompt:spec": {
-        "file": "02_faces/assurance-system_prompt:spec.md",
+        "file": "02_faces/assurance-system_prompt_spec.md",
         "type": "face/assurance",
         "extends": "face",
         "id": "f:assurance:system_prompt:spec",
@@ -8852,10 +9471,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 76,
-    "edge_count": 192,
-    "face_count": 73,
+    "vertex_count": 89,
+    "edge_count": 203,
+    "face_count": 76,
     "chart_count": 3,
-    "euler_characteristic": -43
+    "euler_characteristic": -38
   }
 }
