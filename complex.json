@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-12T17:17:36.139407+00:00",
+  "generated": "2026-01-12T18:54:04.949965+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -406,6 +406,31 @@
         "created": "2025-12-27T16:00:00+00:00",
         "modified": "2025-12-27T16:00:00+00:00",
         "dependencies": []
+      },
+      "v:guidance:implementation-plan": {
+        "file": "00_vertices/guidance-for-implementation-plan.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:implementation-plan",
+        "name": "Guidance for Implementation Plan Documents",
+        "description": "Quality criteria and best practices for creating effective implementation plans that guide human-AI collaboration through development tasks",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-12T00:00:00+00:00",
+        "modified": "2025-01-12T00:00:00+00:00",
+        "dependencies": [],
+        "criteria": [
+          "objective-clarity",
+          "step-granularity",
+          "capability-accuracy",
+          "verification-coverage",
+          "rollback-completeness",
+          "actionability"
+        ]
       },
       "v:guidance:incose-literature-review": {
         "file": "00_vertices/guidance-for-incose-literature-review.md",
@@ -1397,6 +1422,23 @@
         "modified": "2025-12-27T16:00:00+00:00",
         "dependencies": []
       },
+      "v:spec:implementation-plan": {
+        "file": "00_vertices/spec-for-implementation-plan.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:implementation-plan",
+        "name": "Specification for Implementation Plan Documents",
+        "description": "Defines structural requirements for implementation plan documents that guide human-AI collaboration through single-use development tasks",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-12T00:00:00+00:00",
+        "modified": "2025-01-12T00:00:00+00:00",
+        "dependencies": []
+      },
       "v:spec:incose-literature-review": {
         "file": "00_vertices/spec-for-incose-literature-review.md",
         "type": "vertex/spec",
@@ -2315,6 +2357,25 @@
         "version": "1.0.0",
         "created": "2025-12-27T16:30:00+00:00",
         "modified": "2025-12-27T16:30:00+00:00"
+      },
+      "e:coupling:implementation-plan": {
+        "file": "01_edges/coupling-implementation-plan.md",
+        "type": "edge/coupling",
+        "extends": "edge",
+        "id": "e:coupling:implementation-plan",
+        "name": "Coupling - Spec-for-Implementation-Plan and Guidance-for-Implementation-Plan",
+        "source": "v:spec:implementation-plan",
+        "target": "v:guidance:implementation-plan",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "undirected",
+        "tags": [
+          "edge",
+          "coupling"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-12T00:00:00+00:00",
+        "modified": "2025-01-12T00:00:00+00:00"
       },
       "e:coupling:incose-literature-review": {
         "file": "01_edges/coupling-incose-literature-review.md",
@@ -9471,10 +9532,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 89,
-    "edge_count": 203,
+    "vertex_count": 91,
+    "edge_count": 204,
     "face_count": 76,
     "chart_count": 3,
-    "euler_characteristic": -38
+    "euler_characteristic": -37
   }
 }
