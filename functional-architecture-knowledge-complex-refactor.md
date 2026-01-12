@@ -8,24 +8,24 @@ tags:
   - vertex
   - doc
   - functional-architecture
-version: 0.1.0
+version: 0.2.0
 created: 2026-01-11T00:00:00Z
-modified: 2026-01-11T00:00:00Z
+modified: 2026-01-12T00:00:00Z
 system_name: Knowledge Complex Framework
 scope: Internal-first deployment enabling systematic documentation with verification, validation, and assurance for BlockScience client work
 conceptual_architecture_ref: v:doc:conceptual-architecture-knowledge-complex-refactor
-function_count: 24
+function_count: 31
 ---
 
 # Functional Architecture - Knowledge Complex Framework Refactor
 
 ## Purpose
 
-This functional architecture defines what the knowledge complex framework must DO to meet the acceptance criteria established in the conceptual architecture. The document specifies 24 technology-agnostic functions organized into 5 functional areas, with clear inputs and outputs for each function. The Function-Criterion Matrix traces how these functions address the 11 acceptance criteria, forming the foundation for subsequent logical and physical architecture documents.
+This functional architecture defines what the knowledge complex framework must DO to meet the acceptance criteria established in the conceptual architecture. The document specifies 31 technology-agnostic functions organized into 6 functional areas, with clear inputs and outputs for each function. The Function-Criterion Matrix traces how these functions address the 12 acceptance criteria, forming the foundation for subsequent logical and physical architecture documents.
 
 ## Overview
 
-The knowledge complex framework transforms how BlockScience manages knowledge-intensive work products. The conceptual architecture established 11 acceptance criteria addressing operator productivity (AC1, AC4), verification quality (AC2, AC3), approval process (AC5, AC6, AC10), workflow configuration (AC7, AC8), and strategic goals (AC9, AC11).
+The knowledge complex framework transforms how BlockScience manages knowledge-intensive work products. The conceptual architecture established 12 acceptance criteria addressing operator productivity (AC1, AC4), verification quality (AC2, AC3), approval process (AC5, AC6, AC10), workflow configuration (AC7, AC8), strategic goals (AC9, AC11), and runbook execution support (AC12).
 
 This functional architecture translates those criteria into system behaviors organized by usage pattern:
 
@@ -34,6 +34,7 @@ This functional architecture translates those criteria into system behaviors org
 3. **Knowledge Navigation (F10-F12)**: Functions enabling discovery and reuse of prior work
 4. **Approval & Accountability (F13-F18)**: Functions supporting the approval workflow and effectiveness tracking
 5. **Configuration & Meta (F19-F24)**: Functions enabling workflow builders to create new document types
+6. **Runbook Management (F25-F31)**: Functions enabling runbook authoring, validation, and execution
 
 Each function is specified with inputs, outputs, and behavior—without reference to implementation technology. The Function-Criterion Matrix shows how functions combine to achieve acceptance criteria.
 
@@ -56,6 +57,7 @@ Each function is specified with inputs, outputs, and behavior—without referenc
 | AC9 | Self-demonstration | 100% of framework docs verified and assured |
 | AC10 | Evaluation usefulness | >90% of approvers report evaluation scores useful |
 | AC11 | Client demonstration capability | At least 3 document types with production examples |
+| AC12 | Runbook execution support | 100% of runbook executions show current step, next step, and I/O requirements |
 
 ## Functional Architecture
 
@@ -87,6 +89,13 @@ Each function is specified with inputs, outputs, and behavior—without referenc
 | F22 | Coupling Edge Creation | Configuration & Meta | Spec, guidance | Coupling edge document |
 | F23 | Verification Edge Creation | Configuration & Meta | Document, spec, verification results | Verification edge document |
 | F24 | Assurance Face Construction | Configuration & Meta | Target, verification edge, validation edge, coupling | Assurance face, audit record |
+| F25 | Runbook Retrieval | Runbook Management | Task type, keywords | Matching runbooks, applicability scores |
+| F26 | Runbook Module Authoring | Runbook Management | Module definition, input types, output types | Module document |
+| F27 | Runbook Assembly | Runbook Management | Module list, ordering, effectiveness metrics | Runbook document |
+| F28 | Runbook I/O Validation | Runbook Management | Runbook | Chaining validity results, type match results |
+| F29 | Runbook Execution Instantiation | Runbook Management | Runbook, operator, context | Execution record, initial step |
+| F30 | Runbook Step Context Presentation | Runbook Management | Execution, current step | Step requirements, I/O types, next steps |
+| F31 | Runbook Execution Completion | Runbook Management | Execution, final outputs | Completion record, deliverable references |
 
 ### Functional Area 1: Document Authoring
 
@@ -438,36 +447,144 @@ Each function is specified with inputs, outputs, and behavior—without referenc
 
 **Behavior:** Creates assurance face conforming to spec-for-assurance. Validates all three edges form a proper triangle. Records assurance method, assurer, and human approver. Produces audit record linking all components. Marks document as fully assured.
 
+### Functional Area 6: Runbook Management
+
+#### F25: Runbook Retrieval
+
+**Purpose:** Help operators find the appropriate runbook for a given task.
+
+**Inputs:**
+- Task type: The kind of work to be done (e.g., "client audit", "system design")
+- Keywords: Terms describing the task context
+
+**Outputs:**
+- Matching runbooks: Runbooks applicable to the task type
+- Applicability scores: How well each runbook matches the task
+
+**Behavior:** Searches the runbook registry for runbooks matching the task type and keywords. Ranks results by applicability considering task type match, keyword relevance, and recency. Returns runbooks with descriptions and expected outputs. If no exact match, suggests closest alternatives.
+
+#### F26: Runbook Module Authoring
+
+**Purpose:** Create module (step) definitions for runbooks with typed inputs and outputs.
+
+**Inputs:**
+- Module definition: Name, purpose, description of the step
+- Input types: Document types required as inputs to this module
+- Output types: Document types produced by this module
+
+**Outputs:**
+- Module document: Module definition conforming to module spec
+
+**Behavior:** Creates a module document with typed I/O declarations. Validates input and output types exist in the type registry. Records the transformation this module performs. Enables the module to be composed into runbooks. Module is a first-class vertex in the knowledge complex.
+
+#### F27: Runbook Assembly
+
+**Purpose:** Compose modules into a complete runbook with ordering and effectiveness metrics.
+
+**Inputs:**
+- Module list: Ordered list of modules comprising the runbook
+- Ordering constraints: Precedence relationships between modules
+- Effectiveness metrics: Criteria for evaluating runbook success
+
+**Outputs:**
+- Runbook document: Complete runbook conforming to runbook spec
+
+**Behavior:** Assembles modules into a runbook structure. Creates `precedes` edges between modules based on ordering. Validates the module sequence forms a directed acyclic graph. Records effectiveness metrics for later evaluation. The runbook becomes a chart (subcomplex) in the knowledge complex.
+
+#### F28: Runbook I/O Validation
+
+**Purpose:** Validate that runbook module I/O types chain correctly.
+
+**Inputs:**
+- Runbook: The runbook to validate
+
+**Outputs:**
+- Chaining validity results: Whether output types of each module match input types of successor modules
+- Type match results: Specific matches and mismatches between modules
+
+**Behavior:** For each pair of adjacent modules in the runbook sequence, verifies that the output types of the predecessor are compatible with the input types of the successor. Reports any type mismatches that would break the chain. Ensures the runbook can be executed without type errors. This is a structural verification, not a runtime check.
+
+#### F29: Runbook Execution Instantiation
+
+**Purpose:** Start a new execution of a runbook, creating the execution context.
+
+**Inputs:**
+- Runbook: The runbook to execute
+- Operator: Person starting the execution
+- Context: Initial parameters and inputs for the execution
+
+**Outputs:**
+- Execution record: Timestamped record of the execution start
+- Initial step: The first module to execute
+
+**Behavior:** Creates an execution instance from the runbook definition. Records operator, start time, and initial context. Identifies the first module (entry point) in the runbook. Creates references to any input documents provided. Sets execution state to "in progress."
+
+#### F30: Runbook Step Context Presentation
+
+**Purpose:** Present the current step's requirements and context to the operator.
+
+**Inputs:**
+- Execution: The active runbook execution
+- Current step: The module currently being executed
+
+**Outputs:**
+- Step requirements: What the step requires (inputs, guidance, spec)
+- I/O types: Expected input and output document types for this step
+- Next steps: What comes after this step completes
+
+**Behavior:** Retrieves the module definition for the current step. Presents input requirements (document types needed), output expectations (document types to produce), and applicable guidance. Shows progress through the runbook (which steps completed, which remain). Identifies any blocking dependencies. Enables operator to understand exactly what is needed.
+
+#### F31: Runbook Execution Completion
+
+**Purpose:** Mark a runbook execution as complete and record final deliverables.
+
+**Inputs:**
+- Execution: The runbook execution being completed
+- Final outputs: Documents produced as final deliverables
+
+**Outputs:**
+- Completion record: Timestamped record of completion with metrics
+- Deliverable references: Links to all output documents from the execution
+
+**Behavior:** Validates all required steps have been completed. Collects final output documents as deliverables. Calculates execution metrics (total time, step times). Compares metrics against runbook's effectiveness criteria. Creates completion record with full audit trail. Updates execution state to "completed."
+
 ## Function-Criterion Matrix
 
 ### Matrix View
 
-|      | AC1 | AC2 | AC3 | AC4 | AC5 | AC6 | AC7 | AC8 | AC9 | AC10 | AC11 |
-|------|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|------|
-| F1   |  X  |     |     |     |     |     |     |     |     |      |      |
-| F2   |  X  |     |     |  X  |     |     |     |     |     |      |      |
-| F3   |  X  |     |     |     |     |     |     |     |     |      |  X   |
-| F4   |  X  |     |     |     |     |     |     |     |     |      |      |
-| F5   |     |  X  |  X  |     |     |     |     |     |     |      |      |
-| F6   |     |  X  |  X  |     |     |     |     |     |     |      |      |
-| F7   |     |  X  |  X  |     |     |     |     |     |     |      |      |
-| F8   |     |     |  X  |     |     |     |     |     |  X  |      |      |
-| F9   |     |     |     |     |     |     |     |     |     |  X   |      |
-| F10  |     |     |     |  X  |     |     |     |     |     |      |      |
-| F11  |     |     |     |  X  |     |     |     |     |     |      |      |
-| F12  |     |     |     |  X  |     |     |     |     |     |      |      |
-| F13  |     |     |     |     |  X  |     |     |     |     |      |      |
-| F14  |     |     |     |     |  X  |  X  |     |     |     |      |      |
-| F15  |     |     |     |     |  X  |  X  |     |     |     |  X   |      |
-| F16  |     |     |     |     |     |  X  |     |     |     |      |      |
-| F17  |     |     |     |     |     |     |  X  |     |     |      |      |
-| F18  |     |     |     |     |     |     |  X  |     |     |      |      |
-| F19  |     |     |     |     |     |     |     |  X  |     |      |      |
-| F20  |     |     |     |     |     |     |     |  X  |     |      |      |
-| F21  |     |     |     |     |     |     |     |  X  |     |      |      |
-| F22  |     |     |     |     |     |     |     |  X  |  X  |      |      |
-| F23  |     |     |     |     |     |     |     |     |  X  |      |      |
-| F24  |     |     |     |     |     |     |     |     |  X  |      |  X   |
+|      | AC1 | AC2 | AC3 | AC4 | AC5 | AC6 | AC7 | AC8 | AC9 | AC10 | AC11 | AC12 |
+|------|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|------|------|
+| F1   |  X  |     |     |     |     |     |     |     |     |      |      |      |
+| F2   |  X  |     |     |  X  |     |     |     |     |     |      |      |      |
+| F3   |  X  |     |     |     |     |     |     |     |     |      |  X   |      |
+| F4   |  X  |     |     |     |     |     |     |     |     |      |      |      |
+| F5   |     |  X  |  X  |     |     |     |     |     |     |      |      |      |
+| F6   |     |  X  |  X  |     |     |     |     |     |     |      |      |      |
+| F7   |     |  X  |  X  |     |     |     |     |     |     |      |      |      |
+| F8   |     |     |  X  |     |     |     |     |     |  X  |      |      |      |
+| F9   |     |     |     |     |     |     |     |     |     |  X   |      |      |
+| F10  |     |     |     |  X  |     |     |     |     |     |      |      |      |
+| F11  |     |     |     |  X  |     |     |     |     |     |      |      |      |
+| F12  |     |     |     |  X  |     |     |     |     |     |      |      |      |
+| F13  |     |     |     |     |  X  |     |     |     |     |      |      |      |
+| F14  |     |     |     |     |  X  |  X  |     |     |     |      |      |      |
+| F15  |     |     |     |     |  X  |  X  |     |     |     |  X   |      |      |
+| F16  |     |     |     |     |     |  X  |     |     |     |      |      |      |
+| F17  |     |     |     |     |     |     |  X  |     |     |      |      |  X   |
+| F18  |     |     |     |     |     |     |  X  |     |     |      |      |      |
+| F19  |     |     |     |     |     |     |     |  X  |     |      |      |      |
+| F20  |     |     |     |     |     |     |     |  X  |     |      |      |      |
+| F21  |     |     |     |     |     |     |     |  X  |     |      |      |      |
+| F22  |     |     |     |     |     |     |     |  X  |  X  |      |      |      |
+| F23  |     |     |     |     |     |     |     |     |  X  |      |      |      |
+| F24  |     |     |     |     |     |     |     |     |  X  |      |  X   |      |
+| F25  |     |     |     |  X  |     |     |     |     |     |      |      |  X   |
+| F26  |     |     |     |     |     |     |     |  X  |     |      |      |      |
+| F27  |     |     |     |     |     |     |  X  |  X  |     |      |      |      |
+| F28  |     |     |  X  |     |     |     |     |  X  |     |      |      |      |
+| F29  |     |     |     |     |     |     |     |     |     |      |      |  X   |
+| F30  |     |     |     |     |     |     |     |     |     |      |      |  X   |
+| F31  |     |     |     |     |     |     |  X  |     |     |      |      |  X   |
 
 ### Relationship Details
 
@@ -508,6 +625,17 @@ Each function is specified with inputs, outputs, and behavior—without referenc
 | F23 | AC9 | Primary Contributor | Verification edge is part of assurance triangle |
 | F24 | AC9 | Primary Contributor | Assurance face completes self-demonstration |
 | F24 | AC11 | Primary Contributor | Assured documents become production examples |
+| F25 | AC4 | Supporting | Runbook retrieval helps operators find relevant workflows |
+| F25 | AC12 | Primary Contributor | Runbook retrieval is entry point for execution support |
+| F26 | AC8 | Primary Contributor | Module authoring is part of runbook creation workflow |
+| F27 | AC7 | Primary Contributor | Runbook assembly includes effectiveness metrics definition |
+| F27 | AC8 | Primary Contributor | Runbook assembly is part of runbook creation workflow |
+| F28 | AC3 | Supporting | I/O validation catches structural errors in runbooks |
+| F28 | AC8 | Supporting | I/O validation ensures runbook quality before deployment |
+| F29 | AC12 | Primary Contributor | Execution instantiation starts guided runbook execution |
+| F30 | AC12 | Primary Contributor | Step context presentation is core execution guidance |
+| F31 | AC7 | Supporting | Execution completion records effectiveness metrics |
+| F31 | AC12 | Primary Contributor | Execution completion finalizes guided workflow |
 
 ### Key Traces
 
@@ -524,6 +652,10 @@ Each function is specified with inputs, outputs, and behavior—without referenc
 6. **Self-Demonstration Chain**: F22 (coupling) + F23 (verification edge) + F16 (validation edge) → F24 (assurance face) enables AC9 (100% framework docs assured). Triangle construction ensures all framework documents are fully assured.
 
 7. **Effectiveness Tracking Chain**: F17 (step tracking) + F18 (metrics collection) enables AC7 (100% runbooks have performance criteria). Tracking captures what was done; metrics capture how well it was done.
+
+8. **Runbook Authoring Chain**: F26 (module authoring) → F27 (runbook assembly) → F28 (I/O validation) enables AC8 (runbook creation). Module definition ensures typed I/O; assembly creates ordered workflow; validation ensures chaining correctness.
+
+9. **Runbook Execution Chain**: F25 (runbook retrieval) → F29 (execution instantiation) → F30 (step context presentation) → F17 (step tracking) → F31 (execution completion) enables AC12 (execution support). Each function guides operators through the workflow with clear context and requirements.
 
 ## System Testing Strategy
 
@@ -555,6 +687,13 @@ Each function is specified with inputs, outputs, and behavior—without referenc
 | F22 | Functional | Create couplings, verify spec compliance | 100% of couplings pass verification |
 | F23 | Functional | Create verification edges, verify spec compliance | 100% of edges pass verification |
 | F24 | Integration | Construct faces from edges, verify completeness | 100% of faces close valid triangles |
+| F25 | Functional | Search for runbooks by task type, verify relevance | 80% of trials find relevant runbook in top 3 results |
+| F26 | Functional | Author modules, verify against module spec | 100% of modules pass spec verification |
+| F27 | Functional | Assemble runbooks, verify structure and metrics | 100% of runbooks have valid structure and metrics |
+| F28 | Accuracy | Validate I/O chaining on known valid/invalid runbooks | <5% false positive, <5% false negative |
+| F29 | Functional | Instantiate executions, verify record creation | 100% of instantiations create valid records |
+| F30 | Usability | Operator survey on step context clarity | >80% rate context as "clear" or "very clear" |
+| F31 | Functional | Complete executions, verify deliverable tracking | 100% of completions record all deliverables |
 
 ## Traceability to Conceptual Architecture
 
@@ -564,19 +703,20 @@ Each function is specified with inputs, outputs, and behavior—without referenc
 |---------------------|-------------------|---------------------|
 | AC1: Document creation time | F1, F3 | F2, F4 |
 | AC2: Verification feedback speed | F5, F6, F7 | - |
-| AC3: Verification accuracy | F5, F6, F7, F8 | - |
-| AC4: Search effectiveness | F2, F10 | F11, F12 |
+| AC3: Verification accuracy | F5, F6, F7, F8 | F28 |
+| AC4: Search effectiveness | F2, F10 | F11, F12, F25 |
 | AC5: Approval efficiency | F13 | F14, F15 |
 | AC6: Approval confidence | F14, F15, F16 | - |
-| AC7: Effectiveness visibility | F17, F18 | - |
-| AC8: Workflow builder productivity | F19, F20, F21 | F22 |
+| AC7: Effectiveness visibility | F17, F18, F27 | F31 |
+| AC8: Workflow builder productivity | F19, F20, F21, F26, F27 | F22, F28 |
 | AC9: Self-demonstration | F8, F22, F23, F24 | - |
 | AC10: Evaluation usefulness | F9 | F15 |
 | AC11: Client demonstration | F3, F24 | - |
+| AC12: Runbook execution support | F25, F29, F30, F31 | F17 |
 
 ### Coverage Analysis
 
-All 11 acceptance criteria are addressed by at least one function:
+All 12 acceptance criteria are addressed by at least one function:
 - **Complete coverage**: Every criterion has at least one primary function
 - **Depth**: Most criteria have supporting functions that contribute
 - **Balance**: Functions distribute across criteria without excessive concentration
@@ -585,9 +725,9 @@ All 11 acceptance criteria are addressed by at least one function:
 
 | Stakeholder | Primary Functions | Rationale |
 |-------------|------------------|-----------|
-| A3 (Operators) | F1-F4, F10-F12 | Document creation and search |
+| A3 (Operators) | F1-F4, F10-F12, F25, F29-F31 | Document creation, search, and runbook execution |
 | A4 (Approvers) | F14-F16 | Review and approval workflow |
-| A5 (Workflow Builders) | F19-F22 | Type and workflow configuration |
+| A5 (Workflow Builders) | F19-F22, F26-F28 | Type configuration and runbook authoring |
 | A6 (Infrastructure Builders) | F5-F9, F23-F24 | Verification infrastructure and assurance |
 
 ## Constraints and Assumptions
