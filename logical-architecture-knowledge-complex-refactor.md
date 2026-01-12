@@ -85,34 +85,90 @@ The knowledge complex implements a **typed simplicial complex** where:
 
 All simplices have YAML frontmatter with type information:
 
-| Field | Purpose | Example |
-|-------|---------|---------|
-| `type` | Identifies simplex dimension and subtype | `vertex/spec`, `edge/verification`, `face/assurance` |
-| `extends` | Structural inheritance from parent type | `doc`, `edge`, `face` |
-| `tags` | Complete inheritance chain for type validation | `[vertex, doc, spec]` |
-| `id` | Unique identifier with type prefix | `v:spec:logical-architecture`, `e:verification:doc-to-spec` |
+| Field     | Purpose                                        | Example                                                     |
+| --------- | ---------------------------------------------- | ----------------------------------------------------------- |
+| `type`    | Identifies simplex dimension and subtype       | `vertex/spec`, `edge/verification`, `face/assurance`        |
+| `extends` | Structural inheritance from parent type        | `vertex`, `edge`, `face`                                    |
+| `tags`    | Complete inheritance chain for type validation | `[vertex, doc, spec]`                                       |
+| `id`      | Unique identifier with type prefix             | `v:spec:logical-architecture`, `e:verification:doc-to-spec` |
 
 **Type Hierarchy:**
 
-```
-vertex (0-simplex, abstract)
-├── doc → spec, guidance
-├── actor → individual → staff
-│         → group → team
-└── property → role
+The knowledge complex uses a three-level type system where each simplex dimension has its own inheritance hierarchy.
 
-edge (1-simplex, abstract)
-├── verification (doc → spec)
-├── validation (doc → guidance)
-├── coupling (spec ↔ guidance)
-├── inherits (spec → spec for domain specialization)
-└── dependency, signs, qualifies, cites
+**Vertex Types (0-simplices):**
 
-face (2-simplex, abstract)
-├── assurance (doc, spec, guidance triangle)
-├── signature (doc, guidance, signer triangle)
-└── b2 (boundary face with root for bootstrap)
 ```
+vertex (abstract base)
+├── doc (document - content artifacts)
+│   ├── spec (structural requirements)
+│   ├── guidance (quality criteria)
+│   ├── persona, purpose, protocol (PPP documents)
+│   ├── runbook (workflow specification with typed I/O)
+│   └── field-survey, conceptual-architecture, ... (domain docs)
+│
+├── actor (entities that can act)
+│   └── signer (actor with verified GitHub identity)
+│
+└── chart (collection of simplices)
+    └── assurance-audit (assured chart)
+```
+
+**Edge Types (1-simplices):**
+
+```
+edge (abstract base)
+│
+│  # Assurance edges (core triangle)
+├── verification (doc → spec, deterministic structural check)
+├── validation (doc → guidance, human quality assessment)
+├── coupling (spec ↔ guidance, undirected semantic alignment)
+│
+│  # Signature/accountability edges
+├── signs (signer → doc, attestation event)
+├── qualifies (signer → guidance, credential for validation authority)
+│
+│  # Document relationship edges
+├── inherits (spec → spec, domain specialization)
+├── dependency (doc → doc, prerequisite relationship)
+├── cites (doc → doc, reference relationship)
+│
+│  # I/O dependency edges (for runbook steps)
+├── requires-input (runbook-step → doc-type, input requirement)
+└── produces-output (runbook-step → doc-type, output specification)
+```
+
+**Face Types (2-simplices):**
+
+```
+face (abstract base)
+│
+│  # Assurance faces
+├── assurance (doc, spec, guidance)
+│   └── boundary: verification + validation + coupling
+│   └── local rule: must be adjacent to b2 face sharing coupling edge
+│
+├── signature (doc, guidance, signer)
+│   └── boundary: validation + signs + qualifies
+│   └── local rule: signer must have qualifies edge to guidance
+│   └── shares validation edge with assurance face
+│
+├── b2 (bootstrap boundary face)
+│   └── anchors assurance network to root vertex
+│
+│  # I/O dependency faces (for runbook traceability)
+└── io-dependency (input-doc, runbook-step, output-doc)
+    └── boundary: requires-input + produces-output + dependency
+    └── enables requirements traceability through process chains
+```
+
+**Local Rules as Qualification Constraints:**
+
+The `qualifies` edge encodes who can sign what. A signature face can only be constructed if:
+- The signer has a `qualifies` edge to the guidance being validated against
+- This is a **local rule**: checkable by examining the star of the signer vertex
+
+This pattern generalizes: any actor-role-action relationship can be constrained by requiring specific edges in the actor's star before allowing certain faces to be constructed.
 
 ### Global Coherence Rules
 
