@@ -195,4 +195,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print("Note: Direct script usage is deprecated. Use 'uv run aaa build' instead.", file=__import__('sys').stderr)
     exit(main())

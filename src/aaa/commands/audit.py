@@ -11,6 +11,8 @@ import click
 import sys
 from pathlib import Path
 
+from aaa.core import audit_chart
+
 
 @click.command()
 @click.argument('chart', required=True, type=click.Path())
@@ -30,10 +32,6 @@ def audit(ctx, chart, topology, verbose):
         aaa audit --topology charts/boundary-complex
     """
     repo_root = ctx.obj.get('repo_root', Path.cwd())
-
-    # Add scripts directory to path
-    scripts_dir = repo_root / 'scripts'
-    sys.path.insert(0, str(scripts_dir))
 
     # Resolve chart path
     chart_path = Path(chart)
@@ -61,10 +59,8 @@ def audit(ctx, chart, topology, verbose):
         click.echo(f"Error: Chart file not found: {chart_path}", err=True)
         sys.exit(1)
 
-    try:
-        from audit_assurance_chart import audit_chart
-    except ImportError as e:
-        click.echo(f"Error: Could not import audit module: {e}", err=True)
+    if audit_chart is None:
+        click.echo("Error: Could not import audit module.", err=True)
         sys.exit(1)
 
     # Change to repo root
@@ -78,17 +74,22 @@ def audit(ctx, chart, topology, verbose):
 
         result = audit_chart(chart_path)
 
-        if result.get('passed', False):
+        # Check status - the audit returns 'status': 'PASS' or 'FAIL'
+        if result.get('status') == 'PASS':
             click.echo(f"\n✓ Audit PASSED")
             if 'coverage' in result:
-                click.echo(f"  Coverage: {result['coverage']}")
+                click.echo(f"  Coverage: {result['coverage']}%")
             if 'vertices_assured' in result:
-                click.echo(f"  Vertices assured: {result['vertices_assured']}")
+                click.echo(f"  Vertices assured: {result['vertices_assured']}/{result.get('vertices_audited', '?')}")
+            if 'summary' in result:
+                click.echo(f"  {result['summary']}")
         else:
             click.echo(f"\n✗ Audit FAILED", err=True)
-            if 'errors' in result:
-                for error in result['errors']:
-                    click.echo(f"  - {error}", err=True)
+            if 'issues' in result and result['issues']:
+                for issue in result['issues']:
+                    click.echo(f"  - {issue}", err=True)
+            if 'summary' in result:
+                click.echo(f"  {result['summary']}", err=True)
             sys.exit(1)
 
         # Topology check if requested

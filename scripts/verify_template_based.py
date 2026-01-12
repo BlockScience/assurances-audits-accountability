@@ -247,4 +247,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print("Note: Direct script usage is deprecated. Use 'uv run aaa verify <file>' instead.", file=sys.stderr)
     sys.exit(main())

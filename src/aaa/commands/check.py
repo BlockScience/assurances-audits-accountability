@@ -11,6 +11,8 @@ import click
 import sys
 from pathlib import Path
 
+from aaa.core import TemplateBasedVerifier
+
 
 @click.group()
 @click.pass_context
@@ -42,7 +44,8 @@ def accountability(ctx, file, verbose):
     """
     repo_root = ctx.obj.get('repo_root', Path.cwd())
 
-    # Add scripts directory to path
+    # Add scripts directory to path for check_accountability
+    # (not yet in core module)
     scripts_dir = repo_root / 'scripts'
     sys.path.insert(0, str(scripts_dir))
 
@@ -96,7 +99,7 @@ def topology(ctx, chart, verbose):
     """
     repo_root = ctx.obj.get('repo_root', Path.cwd())
 
-    # Add scripts directory to path
+    # Add scripts directory to path for topology module
     scripts_dir = repo_root / 'scripts'
     sys.path.insert(0, str(scripts_dir))
 
@@ -118,7 +121,6 @@ def topology(ctx, chart, verbose):
 
     try:
         from topology import main as topology_main
-        import argparse
 
         click.echo(f"Checking topology: {chart_path.name}")
 
@@ -164,15 +166,17 @@ def ontology(ctx, verbose):
     """
     repo_root = ctx.obj.get('repo_root', Path.cwd())
 
-    # Add scripts directory to path
-    scripts_dir = repo_root / 'scripts'
-    sys.path.insert(0, str(scripts_dir))
-
     click.echo("Checking ontology integrity...")
 
-    # Find ontology files
+    # Find ontology files - check both design/ and 00_vertices/
+    ontology_files = []
+    design_dir = repo_root / 'design'
     vertices_dir = repo_root / '00_vertices'
-    ontology_files = list(vertices_dir.glob('ontology-*.md'))
+
+    if design_dir.exists():
+        ontology_files.extend(design_dir.glob('ontology-*.md'))
+    if vertices_dir.exists():
+        ontology_files.extend(vertices_dir.glob('ontology-*.md'))
 
     if not ontology_files:
         click.echo("Warning: No ontology files found", err=True)
@@ -180,24 +184,22 @@ def ontology(ctx, verbose):
 
     all_valid = True
 
-    try:
-        from verify_template_based import TemplateBasedVerifier
-        templates_path = repo_root / 'templates'
-        verifier = TemplateBasedVerifier(templates_path)
-
-        for ont_file in ontology_files:
-            click.echo(f"\n  Checking: {ont_file.name}")
-
-            passed = verifier.verify_element(ont_file)
-            if passed:
-                click.echo(f"    ✓ Valid")
-            else:
-                click.echo(f"    ✗ Invalid", err=True)
-                all_valid = False
-
-    except ImportError as e:
-        click.echo(f"Error: Could not import verification module: {e}", err=True)
+    if TemplateBasedVerifier is None:
+        click.echo("Error: Could not import verification module.", err=True)
         sys.exit(1)
+
+    templates_path = repo_root / 'templates'
+    verifier = TemplateBasedVerifier(templates_path)
+
+    for ont_file in ontology_files:
+        click.echo(f"\n  Checking: {ont_file.name}")
+
+        passed = verifier.verify_element(ont_file)
+        if passed:
+            click.echo(f"    ✓ Valid")
+        else:
+            click.echo(f"    ✗ Invalid", err=True)
+            all_valid = False
 
     if all_valid:
         click.echo(f"\n✓ All ontology files valid ({len(ontology_files)} checked)")
