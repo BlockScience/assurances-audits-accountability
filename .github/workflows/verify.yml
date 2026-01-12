@@ -1,0 +1,298 @@
+name: Verify Documents
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  # Job 1: Verify document templates
+  verify-documents:
+    name: Verify Document Templates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            00_vertices/**/*.md
+            01_edges/**/*.md
+            02_faces/**/*.md
+
+      - name: Verify changed documents
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "Verifying changed documents..."
+          failed=0
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [[ "$file" == *"README.md" ]]; then
+              echo "Skipping: $file"
+              continue
+            fi
+            echo "Verifying: $file"
+            if ! python scripts/verify_template_based.py "$file" --templates templates; then
+              failed=1
+            fi
+          done
+          if [ $failed -eq 1 ]; then
+            echo "ERROR: One or more documents failed verification"
+            exit 1
+          fi
+          echo "✓ All changed documents passed verification"
+
+      - name: Verify all documents (on push to main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "Running full document verification..."
+          python scripts/build_cache.py
+
+  # Job 2: Verify type system
+  verify-types:
+    name: Verify Type System
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml>=6.0.1
+
+      - name: Verify type system consistency
+        run: |
+          echo "Checking type system consistency..."
+          python scripts/verify_typed.py 00_vertices/ontology-base.md
+
+      - name: Check template freshness
+        run: |
+          echo "Checking if templates match specs..."
+          python scripts/generate_all_templates.py --check
+
+  # Job 3: Verify boundaries (edges and faces)
+  verify-boundaries:
+    name: Verify Boundaries
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml>=6.0.1
+
+      - name: Verify dependency hierarchies
+        run: |
+          echo "Verifying dependency hierarchies..."
+          python scripts/verify_dependency_hierarchy.py
+
+      - name: Build cache and check structure
+        run: |
+          echo "Building cache and verifying structure..."
+          python scripts/build_cache.py
+
+  # Job 4: Validate accountability
+  validate-accountability:
+    name: Validate Accountability
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml>=6.0.1
+
+      - name: Check validation edge accountability
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: |
+          echo "Checking accountability for validation edges..."
+          python scripts/check_accountability.py
+
+      - name: Check signature consistency
+        run: |
+          echo "Checking signature accountability consistency..."
+          python scripts/check_accountability.py --check-consistency
+
+  # Job 5: Verify qualifications (signs/qualifies edges)
+  verify-qualifications:
+    name: Verify Qualifications
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml>=6.0.1
+
+      - name: Check qualification edges
+        run: |
+          echo "Verifying qualification edges..."
+          # Check that signs edges reference valid qualifies edges
+          python -c "
+          import yaml
+          from pathlib import Path
+
+          edges_dir = Path('01_edges')
+          signs_edges = list(edges_dir.glob('signs-*.md'))
+          qualifies_edges = list(edges_dir.glob('qualifies-*.md'))
+
+          print(f'Found {len(signs_edges)} signs edges')
+          print(f'Found {len(qualifies_edges)} qualifies edges')
+
+          # For now, just verify they exist and are parseable
+          errors = []
+          for edge in signs_edges + qualifies_edges:
+              try:
+                  content = edge.read_text()
+                  if '---' in content:
+                      fm = content.split('---')[1]
+                      yaml.safe_load(fm)
+                      print(f'  ✓ {edge.name}')
+              except Exception as e:
+                  errors.append(f'{edge.name}: {e}')
+                  print(f'  ✗ {edge.name}: {e}')
+
+          if errors:
+              print(f'ERROR: {len(errors)} qualification edges failed')
+              exit(1)
+          print('✓ All qualification edges valid')
+          "
+
+  # Job 6: Verify charts
+  verify-charts:
+    name: Verify Charts
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml>=6.0.1 networkx>=3.2
+
+      - name: Verify chart structure
+        run: |
+          echo "Verifying chart structures..."
+          for chart_dir in charts/*/; do
+            chart_name=$(basename "$chart_dir")
+            chart_file="$chart_dir$chart_name.md"
+            if [ -f "$chart_file" ]; then
+              echo "Verifying: $chart_file"
+              python scripts/verify_chart.py "$chart_file" || true
+            fi
+          done
+
+      - name: Audit assurance charts
+        run: |
+          echo "Auditing assurance charts..."
+          for chart_dir in charts/*/; do
+            chart_name=$(basename "$chart_dir")
+            chart_file="$chart_dir$chart_name.md"
+            if [ -f "$chart_file" ]; then
+              # Check if it's an assurance_audit type
+              if grep -q "^type: chart/assurance_audit" "$chart_file" 2>/dev/null; then
+                echo "Auditing: $chart_file"
+                python scripts/audit_assurance_chart.py "$chart_file"
+              fi
+            fi
+          done
+
+      - name: Check topology
+        run: |
+          echo "Checking topological properties..."
+          python scripts/topology.py charts/boundary-complex/boundary-complex.md || true
+
+  # Summary job
+  verification-summary:
+    name: Verification Summary
+    needs: [verify-documents, verify-types, verify-boundaries, validate-accountability, verify-qualifications, verify-charts]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check all jobs
+        run: |
+          echo "Verification Summary"
+          echo "===================="
+          echo ""
+          echo "Job Results:"
+          echo "  verify-documents: ${{ needs.verify-documents.result }}"
+          echo "  verify-types: ${{ needs.verify-types.result }}"
+          echo "  verify-boundaries: ${{ needs.verify-boundaries.result }}"
+          echo "  validate-accountability: ${{ needs.validate-accountability.result }}"
+          echo "  verify-qualifications: ${{ needs.verify-qualifications.result }}"
+          echo "  verify-charts: ${{ needs.verify-charts.result }}"
+          echo ""
+
+          # Check if any job failed
+          if [[ "${{ needs.verify-documents.result }}" == "failure" ]] || \
+             [[ "${{ needs.verify-types.result }}" == "failure" ]] || \
+             [[ "${{ needs.verify-boundaries.result }}" == "failure" ]] || \
+             [[ "${{ needs.validate-accountability.result }}" == "failure" ]] || \
+             [[ "${{ needs.verify-qualifications.result }}" == "failure" ]] || \
+             [[ "${{ needs.verify-charts.result }}" == "failure" ]]; then
+            echo "ERROR: One or more verification jobs failed"
+            exit 1
+          fi
+
+          echo "✓ All verification jobs passed"

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-12T18:54:04.949965+00:00",
+  "generated": "2026-01-12T20:02:33.593884+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -46,6 +46,30 @@
           "Systems Engineers"
         ],
         "dependencies": []
+      },
+      "v:doc:impl-plan-physical-architecture-refactor": {
+        "file": "00_vertices/doc-impl-plan-physical-architecture-refactor.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:impl-plan-physical-architecture-refactor",
+        "name": "Implementation Plan - Physical Architecture Refactor",
+        "description": "Single-use execution plan for implementing the knowledge complex physical architecture to meet all RTM requirements",
+        "tags": [
+          "vertex",
+          "doc",
+          "implementation-plan"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-12T00:00:00+00:00",
+        "modified": "2025-01-12T00:00:00+00:00",
+        "status": "complete",
+        "plan_type": "refactor",
+        "target_chart": "charts/incose-paper-assurance",
+        "estimated_effort": "2-3 days",
+        "step_count": 8,
+        "dependencies": [],
+        "related_issues": [],
+        "risk_level": "medium"
       },
       "v:doc:incose-paper-2026": {
         "file": "00_vertices/doc-incose-paper-2026.md",
@@ -9532,10 +9556,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 91,
+    "vertex_count": 92,
     "edge_count": 204,
     "face_count": 76,
     "chart_count": 3,
-    "euler_characteristic": -37
+    "euler_characteristic": -36
   }
 }

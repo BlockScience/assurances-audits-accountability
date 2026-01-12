@@ -143,6 +143,46 @@ Before merging:
 - Run `python -m pytest tests/ --ignore=tests/archive` to execute the test suite
 - Ensure no regressions in existing verification checks
 
+### Ontology Protection
+
+Ontology files (`ontology-*.md`) are **load-bearing infrastructure** that define the type system for the entire knowledge complex. Changes to ontologies can cascade across all documents.
+
+**Protection Protocol:**
+
+1. **Change Justification Required:** All ontology changes MUST include written rationale explaining:
+   - Why the change is necessary
+   - What documents will be affected
+   - How backwards compatibility is maintained (or why breaking changes are acceptable)
+
+2. **Review Requirements:**
+   - Ontology changes require **maintainer approval**
+   - Changes affecting type definitions require review of all dependent document types
+   - Breaking changes require explicit acknowledgment in the PR description
+
+3. **Versioning:**
+   - Ontology files MUST use semantic versioning in frontmatter
+   - Breaking changes require major version increment
+   - Minor changes (additions) require minor version increment
+   - Patches (documentation, formatting) require patch increment
+
+4. **Verification:**
+   - Run `aaa check ontology` before submitting ontology changes
+   - Run `aaa build` to verify no documents are broken by changes
+   - All affected document types must pass verification after ontology changes
+
+5. **Change Types:**
+
+| Change Type | Examples | Requirements |
+|-------------|----------|--------------|
+| **Addition** | New type, new field | Minor version bump, no breaking changes |
+| **Modification** | Change field constraints | Major version bump if breaking, document migration path |
+| **Deprecation** | Mark type as deprecated | Document replacement, support for 1 major version |
+| **Removal** | Delete type or field | Major version bump, all dependents must be migrated first |
+
+**Protected Files:**
+- `00_vertices/ontology-base.md` - Core type definitions
+- Any future `ontology-*.md` files
+
 ### File Naming Requirements
 
 All files MUST use names compatible with all major operating systems:
