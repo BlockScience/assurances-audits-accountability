@@ -102,25 +102,22 @@ assurances-audits-accountability/
 ├── src/aaa/                           # Python CLI package
 │   ├── cli.py                        # Main CLI entry point
 │   ├── commands/                     # CLI subcommands
-│   └── core/                         # Core library (re-exports from scripts)
-├── design/                            # Framework design documents
-│   ├── ontology-base.md              # Core type system ontology
-│   ├── *-architecture-*.md           # Architecture documents
-│   └── impl-plans/                   # Implementation plans
-├── 00_vertices/                       # Framework specification vertices
-│   ├── spec-for-*.md                 # Type specifications
-│   ├── guidance-for-*.md             # Guidance documents
-│   └── runbook-*.md                  # Procedural runbooks
-├── 01_edges/                          # Framework relationship edges
-│   ├── verification-*.md             # Verification edges
-│   ├── validation-*.md               # Validation edges
-│   └── coupling-*.md                 # Spec-guidance coupling
-├── 02_faces/                          # Framework faces
-│   ├── assurance-*.md                # Assurance triangles
-│   └── signature-*.md                # Signature triangles
-├── charts/                            # Composed subcomplexes
-│   ├── boundary-complex/             # Foundational framework structure
-│   └── test-tetrahedron/             # Test fixture
+│   ├── core/                         # Core library
+│   ├── boundary/                     # Tier 0: Genesis bootstrap (SS, SG, GS, GG)
+│   └── foundation/                   # Tier 1: Ontology layer
+├── content/                           # Domain packs (organized by topic)
+│   ├── registry.yaml                 # Pack registry and dependencies
+│   ├── DOMAIN-PACKS.md              # Pack system design document
+│   ├── meta/                         # Tier 2: Charts, audits, runbooks
+│   ├── ppp/                          # Tier 3: Persona, Purpose, Protocol
+│   ├── rbac/                         # Tier 3: Signers, roles, authorization
+│   ├── learning/                     # Tier 3: Students, skills, modules
+│   ├── architecture/                 # Tier 3: Architecture documentation
+│   ├── planning/                     # Tier 4: Program plans, lifecycles
+│   └── misc/                         # Test fixtures
+├── 00_vertices/                       # Root boundary elements
+├── 01_edges/                          # Root boundary edges
+├── 02_faces/                          # Root boundary faces
 ├── examples/                          # Usage examples
 │   ├── incose-paper/                 # INCOSE paper self-demonstration
 │   └── programs/                     # Program development examples
@@ -129,18 +126,68 @@ assurances-audits-accountability/
 └── tests/                             # Test suite
 ```
 
+### Domain Pack Structure
+
+Each domain pack in `content/<domain>/` contains:
+
+```text
+content/<domain>/
+├── README.md           # Domain documentation
+├── pack.yaml           # Pack manifest (dependencies, ontology, rules)
+├── 00_vertices/        # Domain vertices (specs, guidances, instances)
+├── 01_edges/           # Domain edges
+├── 02_faces/           # Domain faces
+└── charts/             # Demo charts for this domain
+```
+
 ## Navigation
 
 **Central hub:** [[NAVIGATION]] — Start here for exploring the knowledge complex
 
 | Directory | Obsidian | GitHub/VS Code | Contents |
 |-----------|----------|----------------|----------|
-| Vertices | [[00_vertices/README]] | [00_vertices/](00_vertices/) | 56 document vertices |
-| Edges | [[01_edges/README]] | [01_edges/](01_edges/) | 148 relationship edges |
-| Faces | [[02_faces/README]] | [02_faces/](02_faces/) | 65 triangular faces |
-| Charts | [[charts/README]] | [charts/](charts/) | Composed subcomplexes |
-| Docs | [[docs/README]] | [docs/](docs/) | Concepts & use cases |
+| Content | [[content/DOMAIN-PACKS]] | [content/](content/) | Domain packs by topic |
 | Templates | [[templates/README]] | [templates/](templates/) | Type definitions |
+| Examples | [[examples/README]] | [examples/](examples/) | Usage demonstrations |
+
+## Domain Pack Hierarchy
+
+Content is organized into domain packs with a tiered dependency structure:
+
+```text
+boundary (Tier 0) - Genesis bootstrap
+    │               SS, SG, GS, GG (spec/guidance combinations)
+    │
+    └── foundation (Tier 1) - Ontology layer
+            │                 spec:ontology, guidance:ontology, ontology:base
+            │
+            └── meta (Tier 2) - Infrastructure specs
+                    │           chart, assurance-audit, runbook, factory
+                    │
+                    ├── ppp (Tier 3) ────────── Persona, Purpose, Protocol
+                    │
+                    ├── rbac (Tier 3) ───────── Signers, roles, authorization
+                    │
+                    ├── learning (Tier 3) ───── Students, skills, modules
+                    │
+                    ├── architecture (Tier 3) ─ Field-survey through physical
+                    │
+                    └── planning (Tier 4) ← architecture
+                                            Lifecycle, program-plan, memo
+```
+
+| Pack | Tier | Description |
+|------|------|-------------|
+| [boundary](src/aaa/boundary/) | 0 | Genesis bootstrap (SS, SG, GS, GG) |
+| [foundation](src/aaa/foundation/) | 1 | Ontology layer (type definitions) |
+| [meta](content/meta/) | 2 | Charts, audits, runbooks |
+| [ppp](content/ppp/) | 3 | Persona, Purpose, Protocol framework |
+| [rbac](content/rbac/) | 3 | Role-based access control, signatures |
+| [learning](content/learning/) | 3 | Educational content, skill tracking |
+| [architecture](content/architecture/) | 3 | Architecture documentation stack |
+| [planning](content/planning/) | 4 | Program plans, lifecycles (depends on architecture) |
+
+Each pack declares its dependencies in `pack.yaml`. Rules are factored across packs—e.g., RBAC introduces signature adjacency requirements that meta's assurance faces don't require on their own.
 
 ## Key Concepts Demonstrated
 

@@ -9,7 +9,9 @@ description: |
   for establishing human accountability in validation chains.
 
 dependencies:
-  - foundation
+  - boundary    # genesis bootstrap
+  - foundation  # ontology layer
+  - meta        # infrastructure specs (charts, assurance faces)
 
 ontology:
   vertex_types:

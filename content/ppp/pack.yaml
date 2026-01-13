@@ -9,7 +9,9 @@ description: |
   identity (persona), objectives (purpose), and operational procedures (protocol).
 
 dependencies:
-  - foundation  # requires base ontology and genesis elements
+  - boundary    # genesis bootstrap
+  - foundation  # ontology layer
+  - meta        # infrastructure specs (charts, factories)
 
 # Ontology extensions (vertex types this pack introduces)
 ontology:

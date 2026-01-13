@@ -1,4 +1,36 @@
-# Design Documents
+# Architecture Domain Pack
+
+This pack provides a structured approach to documenting system designs through a multi-level architecture stack.
+
+## Pack Info
+
+- **Dependencies:** boundary, foundation, meta
+- **Manifest:** [pack.yaml](pack.yaml)
+
+## Vertex Types
+
+| Type | Description |
+|------|-------------|
+| architecture | Top-level architecture overview |
+| conceptual-architecture | High-level concepts and stakeholder concerns |
+| functional-architecture | System functions and capabilities |
+| logical-architecture | Component structure and interfaces |
+| physical-architecture | Deployment and implementation details |
+| field-survey | Survey of existing solutions and prior art |
+| novel-contributions | What's new/different from prior art |
+| requirements-trace | Traceability from requirements to implementation |
+
+## Architecture Stack
+
+```text
+field-survey → conceptual → functional → logical → physical
+```
+
+Each level adds detail while maintaining traceability to higher levels.
+
+---
+
+## Design Documents
 
 This directory contains the design documentation for the AAA (Assurances, Audits, Accountability) framework.
 
