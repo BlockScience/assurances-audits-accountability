@@ -15,7 +15,7 @@ extends_ontology: null
 vertex_type_count: 14
 edge_type_count: 18
 face_type_count: 11
-local_rule_count: 15
+local_rule_count: 17
 chart_type_count: 4
 ---
 
@@ -1193,7 +1193,6 @@ This means charts are "flat" collections of simplices, not hierarchical containe
 **Local Rules:**
 
 - Assurance faces ≥ document vertices (every doc should be assured)
-- All assurance faces must trace to a b2 anchor
 
 **Required Fields:**
 
@@ -1465,37 +1464,94 @@ They share the signs edge, proving the signer validated both as module output an
 `f:assurance:(doc, spec, guidance)` also contains `e:validation:(doc → guidance)`
 They share the validation edge, connecting signature accountability to document assurance.
 
-### Assurance Requires B2 Anchor
+### Documents Have Assurance
 
 **Rule Type:** face-adjacency
-**Constraint Class:** semantic
-**Scope:** assurance faces
-**Constraint:** `f:assurance:` must be adjacent to `f:b2:` sharing `e:coupling:` edge
+**Constraint Class:** completeness
+**Scope:** document vertices
+**Constraint:** Every document vertex must have an assurance face (f:assurance: or f:b2:) where it is the target
+
+**Document Types:**
+- `vertex/doc` - general documents
+- `vertex/spec` - specification documents
+- `vertex/guidance` - guidance documents
+- `vertex/ontology` - ontology documents
+- `vertex/module` - module documents
+
+**Exempt Types:**
+- `vertex/signer` - governed by RBAC rules
+- `vertex/role` - governed by RBAC rules
+- `vertex/b0` - boundary anchor (self-exempt)
 
 **Verification:**
 
-1. Find the coupling edge in assurance face boundary
-2. Trace coupling edges until reaching a b2 face
-3. Verify chain terminates at b2 (no infinite regress)
+1. Collect all assurance faces (f:assurance: and f:b2:)
+2. Build set of assured document IDs from face targets
+3. For each document vertex, verify it appears in the assured set
 
 **Example:**
 
-`f:assurance:(doc-X, spec-Y, guidance-Z)` contains `e:coupling:(spec-Y ↔ guidance-Z)`
-Trace: spec-Y is assured by `f:assurance:(spec-Y, spec-for-spec, guidance-for-spec)`
-Continue until reaching `f:b2:spec-spec` which is self-anchoring.
+`v:spec:ontology` must be the target of either:
+- `f:assurance:spec:ontology` (standard assurance), OR
+- `f:b2:spec-ontology` (genesis assurance for foundational documents)
 
-**Structural Acyclicity Proof:**
+### Assurance Requires Signature
 
-The assurance network is acyclic by construction:
+**Rule Type:** face-adjacency
+**Constraint Class:** accountability
+**Scope:** assurance faces (standard, not b2)
+**Constraint:** Every standard assurance face must have a signature face sharing its validation edge
 
-1. Every assurance face requires a coupling edge to a (spec, guidance) pair
-2. That (spec, guidance) pair must itself be assured
-3. The only exception: b2 faces are self-anchoring (bootstrap)
-4. B2 faces exist only for meta-documents: spec-for-spec, guidance-for-guidance
-5. Since b2 faces don't require further ancestry, the recursion terminates
-6. No document can be its own spec or guidance (type constraints prevent this)
+**Purpose:** Ensures human accountability for every assurance - someone must sign off on the validation.
 
-Therefore: assurance chains form a finite DAG rooted at b2 bootstrap faces.
+**Verification:**
+
+1. For each f:assurance: face (excluding f:b2: genesis faces)
+2. Find the validation edge in the assurance face boundary
+3. Verify a signature face exists that shares this validation edge
+
+**Example:**
+
+`f:assurance:ontology:base` has boundary edge `e:validation:ontology:base:ontology`
+`f:signature:ontology:base:testuser` must also contain `e:validation:ontology:base:ontology`
+They share the validation edge, connecting human accountability to document assurance.
+
+### Signature Requires Authorization
+
+**Rule Type:** face-adjacency
+**Constraint Class:** authority
+**Scope:** signature faces
+**Constraint:** Every signature face must have an authorization face sharing its qualifies edge
+
+**Purpose:** Ensures signers have proper authority - you can't sign unless your role conveys the permission.
+
+**Verification:**
+
+1. For each f:signature: face
+2. Find the qualifies edge in the signature face boundary
+3. Verify an authorization face exists that shares this qualifies edge
+
+**Example:**
+
+`f:signature:ontology:base:testuser` has `e:qualifies:testuser:ontology` (signer → guidance)
+`f:authorization:testuser:admin:ontology` must also contain `e:qualifies:testuser:ontology`
+The authorization face proves why the signer is qualified (via their role).
+
+**RBAC Chain:**
+
+```text
+Authorization Face: (signer, role, guidance)
+    e:has-role (signer → role)      -- User Assignment (NIST)
+    e:conveys (role → guidance)     -- Permission Assignment (NIST)
+    e:qualifies (signer → guidance) -- Derived permission (SHARED)
+
+Signature Face: (doc, guidance, signer)
+    e:validation (doc → guidance)   -- Quality check edge
+    e:signs (signer → doc)          -- Attestation edge
+    e:qualifies (signer → guidance) -- SHARED with authorization
+```
+
+The shared `qualifies` edge links the RBAC proof (authorization) to the attestation (signature).
 
 ### Output Satisfaction Requires Output Type
 
@@ -1881,6 +1937,56 @@ The simplicial complex structure admits **homological analysis**:
 Holes in homology indicate gaps in assurance coverage. A knowledge complex with H₁ = 0 has complete edge coverage by faces, meaning every relationship is part of at least one assurance triangle.
 
 This interpretation enables automated gap detection in assurance networks using boundary operator analysis.
+
+## References
+
+### NIST RBAC Standard
+
+This ontology's access control model is based on the NIST Role-Based Access Control standard:
+
+> Sandhu, R., Ferraiolo, D., & Kuhn, R. (2000). The NIST Model for Role-Based Access Control: Towards a Unified Standard. *Proceedings of the 5th ACM Workshop on Role-Based Access Control*, pp. 47-63.
+
+**NIST RBAC Standard Document:**
+
+- NIST INCITS 359-2004: Information Technology - Role Based Access Control
+- ANSI INCITS 359-2012 (current revision)
+
+### NIST RBAC Terminology Mapping
+
+The following table maps this ontology's terminology to the NIST RBAC standard:
+
+| Ontology Term | NIST Standard | Mapping Notes |
+| ------------- | ------------- | ------------- |
+| `actor`, `signer` | User (U) | Broader than NIST - includes non-human actors |
+| `role` | Role (R) | Exact match |
+| `permission` | Permission (P) | Exact match - atomic unit of access control |
+| `has-role` edge | User Assignment (UA) | Semantically equivalent - assigns user to role |
+| `conveys` edge | Permission Assignment (PA) | Semantically equivalent - assigns permission to role |
+| `qualifies` edge | Derived Permission | Extension - records computed permission |
+| `authorization` face | Permission Derivation | NIST RBAC permission check pattern |
+| `role-assignment` face | Administrative RBAC | ARBAC97 can-assign pattern |
+| `assignment-signature` face | Assignment Attestation | Extension for accountability |
+
+### NIST Core RBAC Components
+
+The base ontology implements **Core RBAC** from the NIST standard:
+
+1. **Users (U)**: Mapped to `vertex/actor` and subtypes (`signer`)
+2. **Roles (R)**: Mapped to `vertex/role`
+3. **Permissions (P)**: Mapped to `vertex/permission` (or guidance vertices as permission targets)
+4. **Sessions (S)**: Not directly modeled (stateless permission checks)
+5. **User Assignment (UA)**: Mapped to `edge/has-role`
+6. **Permission Assignment (PA)**: Mapped to `edge/conveys`
+
+### ARBAC97 Extensions
+
+For administrative role management, the ontology includes patterns from ARBAC97:
+
+> Sandhu, R., Bhamidipati, V., & Munawer, Q. (1999). The ARBAC97 Model for Role-Based Administration of Roles. *ACM Transactions on Information and System Security*, 2(1), pp. 105-135.
+
+- `can-assign` edge: Maps to ARBAC97 can_assign relation
+- `role-assignment` face: Proves administrative authority to assign roles
+- `assignment-signature` face: Provides human accountability for role assignments
 
 ---
 

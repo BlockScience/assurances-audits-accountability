@@ -71,11 +71,16 @@ def build_cache(root_path: Path, output_path: Path = None) -> Dict[str, Any]:
     print(f"Building cache for: {root_path}")
 
     vertices_dir = root_path / '00_vertices'
+    design_dir = root_path / 'design'
     edges_dir = root_path / '01_edges'
     faces_dir = root_path / '02_faces'
     charts_dir = root_path / 'charts'
 
+    # Parse vertices from both 00_vertices/ and design/
     vertices = parse_directory(vertices_dir, 'vertex')
+    design_vertices = parse_directory(design_dir, 'vertex')
+    vertices.extend(design_vertices)
+
     edges = parse_directory(edges_dir, 'edge')
     faces = parse_directory(faces_dir, 'face')
     charts = parse_directory(charts_dir, 'chart')
