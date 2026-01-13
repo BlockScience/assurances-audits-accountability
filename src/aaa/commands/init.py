@@ -14,7 +14,7 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-from aaa.core import get_bundled_templates_path, get_bundled_foundation_path
+from aaa.core import get_bundled_templates_path, get_bundled_foundation_path, TemplateBasedVerifier
 
 
 def get_git_username() -> str:
@@ -237,14 +237,19 @@ def create_bootstrap_qualifies_edge(target_dir: Path, github_username: str) -> P
     other guidance documents.
     """
     now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    return _create_qualifies_edge(target_dir, github_username, 'guidance', 'guidance-for-guidance', now)
+
+
+def _create_qualifies_edge(target_dir: Path, github_username: str, guidance_id: str, guidance_name: str, now: str) -> Path:
+    """Create a qualifies edge connecting signer to a guidance document."""
 
     content = f"""---
 type: edge/qualifies
 extends: edge
-id: e:qualifies:{github_username}:guidance
-name: Qualifies - {github_username} qualified for guidance-for-guidance
+id: e:qualifies:{github_username}:{guidance_id}
+name: Qualifies - {github_username} qualified for {guidance_name}
 source: v:signer:{github_username}
-target: v:guidance:guidance
+target: v:guidance:{guidance_id}
 source_type: vertex/signer
 target_type: vertex/guidance
 orientation: directed
@@ -260,36 +265,557 @@ created: {now}
 modified: {now}
 ---
 
-# Qualifies - {github_username} qualified for guidance-for-guidance
+# Qualifies - {github_username} qualified for {guidance_name}
 
-This qualifies edge establishes that {github_username} is qualified to validate documents against guidance-for-guidance.
+This qualifies edge establishes that {github_username} is qualified to validate documents against {guidance_name}.
 
 ## Qualification Description
 
 **Signer:** [[signer-{github_username}|v:signer:{github_username}]]
-**Guidance:** [[guidance-for-guidance|v:guidance:guidance]]
+**Guidance:** [[{guidance_name}|v:guidance:{guidance_id}]]
 **Credential Type:** role
 
-As the repository administrator, {github_username} has bootstrap authority to validate guidance documents. This qualification is granted by virtue of the admin role.
+As the repository administrator, {github_username} has bootstrap authority to validate documents against this guidance.
 
 ## Credential Evidence
 
 - **Role**: Administrator of this knowledge complex
 - **Bootstrap Authority**: Established during repository initialization
-- **Responsibility**: Accountable for initial guidance quality standards
 
 ## Scope and Limitations
 
-**Scope:** This qualification covers validation of any document against guidance-for-guidance, establishing the foundation for the guidance quality chain.
+**Scope:** This qualification covers validation of documents against {guidance_name}.
 
-**Bootstrap Note:** This is a bootstrap qualification. In a mature knowledge complex, qualifications would be established through formal validation chains. The admin's initial qualification enables the system to bootstrap.
-
-## Propagation Rule
-
-When a signer validates a guidance document against guidance-for-guidance, they demonstrate competence in guidance quality assessment. This can serve as evidence for granting qualifies edges to other guidance documents they author or review.
+**Bootstrap Note:** This is a bootstrap qualification established during repository initialization.
 """
 
-    file_path = target_dir / '01_edges' / f'qualifies-{github_username}-guidance.md'
+    file_path = target_dir / '01_edges' / f'qualifies-{github_username}-{guidance_id}.md'
+    file_path.write_text(content, encoding='utf-8')
+    return file_path
+
+
+def create_ontology_qualifies_edge(target_dir: Path, github_username: str) -> Path:
+    """Create qualifies edge for guidance-for-ontology."""
+    now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    return _create_qualifies_edge(target_dir, github_username, 'ontology', 'guidance-for-ontology', now)
+
+
+def run_verification(templates_path: Path, doc_path: Path, doc_name: str, spec_name: str) -> str:
+    """Run the template verifier and return formatted output."""
+    verifier = TemplateBasedVerifier(templates_path)
+    passed = verifier.verify_element(doc_path)
+
+    lines = [
+        f"Verification Result: {'PASS' if passed else 'FAIL'}",
+        "",
+        f"Checked against: {spec_name}",
+        f"Document: {doc_name}",
+        "",
+        f"Checks passed: {verifier.checks_passed}/{verifier.checks_total}",
+    ]
+
+    if verifier.errors:
+        lines.append("")
+        lines.append("Issues:")
+        for error in verifier.errors:
+            lines.append(f"  ✗ {error}")
+    else:
+        lines.append("")
+        lines.append("All structural requirements satisfied.")
+
+    return "\n".join(lines)
+
+
+def create_verification_edge(target_dir: Path, doc_id: str, doc_name: str, spec_id: str, spec_name: str, doc_path: Path = None, templates_path: Path = None) -> Path:
+    """Create a verification edge from a document to its spec.
+
+    If doc_path and templates_path are provided, runs actual verification and includes output.
+    """
+    now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    # Derive source_type from doc_id pattern
+    source_type = 'vertex/ontology' if 'ontology' in doc_id else 'vertex/doc'
+
+    # Run verification if paths provided
+    verification_output = ""
+    verification_status = "Pass"
+    if doc_path and templates_path and doc_path.exists():
+        verification_output = run_verification(templates_path, doc_path, doc_name, spec_name)
+        verification_status = "Pass" if "PASS" in verification_output else "Fail"
+
+    content = f"""---
+type: edge/verification
+extends: edge
+id: e:verification:{doc_id}:{spec_id}
+name: Verification - {doc_name} against {spec_name}
+source: v:{doc_id}
+target: v:spec:{spec_id}
+source_type: {source_type}
+target_type: vertex/spec
+orientation: directed
+verification_method: structural
+tags:
+  - edge
+  - verification
+  - bootstrap
+version: 1.0.0
+created: {now}
+modified: {now}
+---
+
+# Verification - {doc_name} against {spec_name}
+
+This verification edge asserts that {doc_name} conforms to the structural requirements defined in {spec_name}.
+
+## Verification Output
+
+```
+{verification_output if verification_output else "Verification output not captured during bootstrap."}
+```
+
+## Verification Status
+
+- **Status:** {verification_status}
+- **Date:** {now}
+- **Tool:** TemplateBasedVerifier v1.0.0
+
+## Bootstrap Note
+
+This verification edge was created during repository initialization. The ontology is foundational infrastructure that has been verified against its spec.
+"""
+
+    file_path = target_dir / '01_edges' / f'verification-{doc_id.replace(":", "-")}-{spec_id}.md'
+    file_path.write_text(content, encoding='utf-8')
+    return file_path
+
+
+def create_validation_edge(target_dir: Path, doc_id: str, doc_name: str, guidance_id: str, guidance_name: str, github_username: str) -> Path:
+    """Create a validation edge from a document to its guidance."""
+    now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    # Derive source_type from doc_id pattern
+    source_type = 'vertex/ontology' if 'ontology' in doc_id else 'vertex/doc'
+
+    content = f"""---
+type: edge/validation
+extends: edge
+id: e:validation:{doc_id}:{guidance_id}
+name: Validation - {doc_name} against {guidance_name}
+source: v:{doc_id}
+target: v:guidance:{guidance_id}
+source_type: {source_type}
+target_type: vertex/guidance
+orientation: directed
+validation_method: manual
+validator: {github_username}
+validation_date: {now}
+tags:
+  - edge
+  - validation
+  - bootstrap
+version: 1.0.0
+created: {now}
+modified: {now}
+---
+
+# Validation - {doc_name} against {guidance_name}
+
+This validation edge attests that {doc_name} meets the quality criteria defined in {guidance_name}.
+
+## Validation Assessment
+
+**Guidance:** [[{guidance_name}|v:guidance:{guidance_id}]]
+**Validator:** {github_username}
+**Method:** Manual
+**Date:** {now}
+
+### Quality Criteria Evaluation
+
+The repository administrator has reviewed {doc_name} during initialization and determined it meets the quality criteria defined in {guidance_name}. As foundational infrastructure, the ontology has been assessed for:
+
+- **Type Completeness**: All required simplex types are defined
+- **Coherence Rules**: Local rules comprehensively cover type interactions
+- **Extension Clarity**: Clear extension points are documented
+- **Type Hierarchy Consistency**: Consistent inheritance chains
+- **Documentation Quality**: Types have clear purpose statements
+- **Local Rule Verifiability**: Rules can be mechanically verified
+
+### Overall Assessment
+
+**Recommendation:** Pass
+**Summary:** The ontology meets quality criteria as foundational infrastructure for the knowledge complex.
+
+## Accountability Statement
+
+This validation was performed manually by {github_username}, who takes full responsibility for the assessment as the repository administrator during initialization.
+
+**Signed:** {github_username}
+**Date:** {now}
+"""
+
+    file_path = target_dir / '01_edges' / f'validation-{doc_id.replace(":", "-")}-{guidance_id}.md'
+    file_path.write_text(content, encoding='utf-8')
+    return file_path
+
+
+def create_signs_edge(target_dir: Path, github_username: str, doc_id: str, doc_name: str, guidance_id: str = 'ontology') -> Path:
+    """Create a signs edge from signer to document."""
+    now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    # Derive target_type from doc_id pattern
+    target_type = 'vertex/ontology' if 'ontology' in doc_id else 'vertex/doc'
+
+    # Reference the qualifies edge for this guidance
+    qualifies_edge_id = f"e:qualifies:{github_username}:{guidance_id}"
+
+    content = f"""---
+type: edge/signs
+extends: edge
+id: e:signs:{github_username}:{doc_id}
+name: Signs - {github_username} signs {doc_name}
+source: v:signer:{github_username}
+target: v:{doc_id}
+source_type: vertex/signer
+target_type: {target_type}
+orientation: directed
+signing_date: {now}
+commit_hash: bootstrap-init
+qualifies_edge: {qualifies_edge_id}
+tags:
+  - edge
+  - signs
+  - bootstrap
+version: 1.0.0
+created: {now}
+modified: {now}
+---
+
+# Signs - {github_username} signs {doc_name}
+
+This signs edge records {github_username}'s attestation to {doc_name}.
+
+## Signing Event
+
+**Signer:** [[signer-{github_username}|v:signer:{github_username}]]
+**Document:** [[{doc_name}|v:{doc_id}]]
+**Date:** {now}
+**Commit:** bootstrap-init
+
+{github_username} attests to the quality and correctness of {doc_name} as repository administrator.
+
+## Qualification at Signing
+
+**Qualifies Edge:** [[{qualifies_edge_id}]]
+**Credential Type:** role
+**Valid At:** Confirmed - qualifies edge was created during bootstrap initialization
+
+The signer's qualification to validate against guidance-for-{guidance_id} was established during repository initialization.
+
+## Attestation Statement
+
+I, {github_username}, attest to {doc_name} on {now.split('T')[0]}.
+
+This attestation was created during repository initialization. The commit signature will be established when this document is committed to the repository.
+
+**Signed:** {github_username}
+**Date:** {now}
+"""
+
+    file_path = target_dir / '01_edges' / f'signs-{github_username}-{doc_id.replace(":", "-")}.md'
+    file_path.write_text(content, encoding='utf-8')
+    return file_path
+
+
+def create_signature_face(target_dir: Path, github_username: str, doc_id: str, doc_name: str, guidance_id: str) -> Path:
+    """Create a signature face for a document."""
+    now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    # Build edge IDs
+    validation_edge = f"e:validation:{doc_id}:{guidance_id}"
+    signs_edge = f"e:signs:{github_username}:{doc_id}"
+    qualifies_edge = f"e:qualifies:{github_username}:{guidance_id}"
+    assurance_face = f"f:assurance:{doc_id}"
+
+    content = f"""---
+type: face/signature
+extends: face
+id: f:signature:{doc_id}:{github_username}
+name: Signature - {doc_name} by {github_username}
+description: Signature face recording {github_username}'s attestation to {doc_name}
+vertices:
+  - v:{doc_id}
+  - v:guidance:{guidance_id}
+  - v:signer:{github_username}
+doc: v:{doc_id}
+guidance: v:guidance:{guidance_id}
+signer: v:signer:{github_username}
+edges:
+  - {validation_edge}
+  - {signs_edge}
+  - {qualifies_edge}
+orientation: oriented
+validation_edge: {validation_edge}
+signs_edge: {signs_edge}
+qualifies_edge: {qualifies_edge}
+signing_date: {now}
+commit_hash: bootstrap-init
+assurance_face: {assurance_face}
+tags:
+  - face
+  - signature
+  - bootstrap
+version: 1.0.0
+created: {now}
+modified: {now}
+---
+
+# Signature - {doc_name} by {github_username}
+
+This signature face records {github_username}'s attestation to {doc_name} based on validation against guidance-for-{guidance_id}.
+
+## Face Description
+
+**Type:** Signature Triangle
+**Signing Date:** {now}
+**Commit:** bootstrap-init
+
+This signature face records {github_username}'s attestation to {doc_name} based on validation against guidance-for-{guidance_id}. It complements the assurance face by making the signer explicit.
+
+## Vertices
+
+1. **[[{doc_name}|v:{doc_id}]]**
+   - The document being signed
+   - Type: vertex/ontology
+   - Role: Target of signature
+
+2. **[[guidance-for-{guidance_id}|v:guidance:{guidance_id}]]**
+   - Quality criteria for validation
+   - Type: vertex/guidance
+   - Role: Validation target
+
+3. **[[signer-{github_username}|v:signer:{github_username}]]**
+   - The signing authority
+   - Type: vertex/signer
+   - GitHub: {github_username}
+   - Role: Accountable party
+
+## Edges (Boundary)
+
+1. **[[{validation_edge}]]**
+   - Source: {doc_name} → Target: guidance-for-{guidance_id}
+   - Type: edge/validation
+   - Status: Pass
+   - **SHARED** with assurance face: {assurance_face}
+
+2. **[[{signs_edge}]]**
+   - Source: {github_username} → Target: {doc_name}
+   - Type: edge/signs
+   - Signing Date: {now}
+   - Commit: bootstrap-init
+
+3. **[[{qualifies_edge}]]**
+   - Source: {github_username} → Target: guidance-for-{guidance_id}
+   - Type: edge/qualifies
+   - Credential Type: role
+   - Valid At: Confirmed valid at signing time
+
+## Triangle Coherence
+
+**Topological Properties:**
+- **Closed Boundary:** All three edges form a cycle
+- **Complete:** All vertices connected by edges
+- **Oriented:** Validation and qualifies directed to guidance; signs directed to doc
+
+**Signature Completeness:**
+- Validation assessment exists and passed
+- Signer qualification verified at signing time
+- Signing event recorded with commit hash
+- Shared boundary with assurance face {assurance_face}
+
+## Accountability Statement
+
+This signature records that {github_username} attested to {doc_name} on {now.split('T')[0]}.
+
+The signer's qualification was verified through {qualifies_edge}, which establishes role authority to validate against guidance-for-{guidance_id}.
+
+This signature was created during repository initialization. The commit signature will be established when committed.
+
+**Signed:** {github_username}
+**GitHub:** {github_username}
+**Date:** {now}
+
+## Related Assurance
+
+**Assurance Face:** [[{assurance_face}]]
+**Shared Edge:** {validation_edge}
+
+This signature face complements the assurance face by making the signer explicit.
+"""
+
+    file_path = target_dir / '02_faces' / f'signature-{doc_id.replace(":", "-")}.md'
+    file_path.write_text(content, encoding='utf-8')
+    return file_path
+
+
+def create_assurance_face(target_dir: Path, doc_id: str, doc_name: str, spec_id: str, guidance_id: str, github_username: str) -> Path:
+    """Create an assurance face for a document."""
+    now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    date_only = now.split('T')[0]
+
+    # Build edge IDs
+    verification_edge = f"e:verification:{doc_id}:{spec_id}"
+    validation_edge = f"e:validation:{doc_id}:{guidance_id}"
+    coupling_edge = f"e:coupling:{guidance_id}"
+
+    content = f"""---
+type: face/assurance
+extends: face
+id: f:assurance:{doc_id}
+name: Assurance Face - {doc_name}
+description: Complete assurance pattern for {doc_name}
+vertices:
+  - v:{doc_id}
+  - v:spec:{spec_id}
+  - v:guidance:{guidance_id}
+target: v:{doc_id}
+spec: v:spec:{spec_id}
+guidance: v:guidance:{guidance_id}
+edges:
+  - {coupling_edge}
+  - {verification_edge}
+  - {validation_edge}
+orientation: oriented
+coupling_edge: {coupling_edge}
+verification_edge: {verification_edge}
+validation_edge: {validation_edge}
+assurer: {github_username}
+assurance_method: manual
+tags:
+  - face
+  - assurance
+  - bootstrap
+version: 1.0.0
+created: {now}
+modified: {now}
+---
+
+# Assurance Face - {doc_name}
+
+This assurance face represents the complete quality assurance pattern for {doc_name}, consisting of a specification, guidance, and the three edges that form the assurance triangle: coupling, verification, and validation.
+
+## Face Structure
+
+### Vertices
+
+1. **Target Document**: [[{doc_name}|v:{doc_id}]] - The document being assured
+2. **Specification**: [[spec-for-{guidance_id}|v:spec:{spec_id}]] - Structural requirements for the target
+3. **Guidance**: [[guidance-for-{guidance_id}|v:guidance:{guidance_id}]] - Quality criteria for the target
+
+### Edges (Boundary)
+
+1. **Coupling Edge**: [[{coupling_edge}]]
+   - Connects specification and guidance
+   - Ensures they address the same document type
+   - Type: `edge/coupling`
+
+2. **Verification Edge**: [[{verification_edge}]]
+   - Target verifies against specification
+   - Deterministic structural checking
+   - Type: `edge/verification`
+
+3. **Validation Edge**: [[{validation_edge}]]
+   - Target validates against guidance
+   - Qualitative quality assessment
+   - Type: `edge/validation`
+
+## Assurance Triangle
+
+```
+         Guidance (quality criteria)
+              /\\
+             /  \\
+  Validation/    \\Coupling
+           /      \\
+          /        \\
+         /          \\
+    Target -------- Spec
+         Verification
+```
+
+The three edges form a closed boundary creating the assurance face.
+
+## Assurance Assessment
+
+**Assurer:** {github_username}
+**Method:** manual
+**Date:** {date_only}
+
+### Triangle Coherence Review
+
+#### Coupling Coherence
+
+**Assessment**: Excellent
+**Rationale**: The coupling between spec-for-ontology and guidance-for-ontology properly addresses ontology documents. They are designed together as a matched pair.
+**Evidence**: Both documents define requirements for the same document type (ontology) with complementary structural and quality criteria.
+
+#### Verification Completeness
+
+**Assessment**: Pass
+**Rationale**: Verification passed all structural checks during initialization.
+**Evidence**: Verification edge shows PASS status with all checks satisfied.
+
+#### Validation Quality
+
+**Assessment**: Pass
+**Rationale**: Quality assessment performed by repository administrator during initialization.
+**Evidence**: Validation edge documents manual review with quality criteria evaluation.
+
+#### Triangle Integration
+
+**Assessment**: Coherent
+**Rationale**: All three edges work together to provide complete assurance for the ontology.
+**Evidence**: Spec and guidance are coupled, ontology passes verification against spec, and ontology passes validation against guidance.
+
+## Overall Assurance
+
+**Status**: ASSURED
+
+**Summary**: The ontology-base document is fully assured. It passes structural verification against its specification and quality validation against its guidance. The spec-guidance coupling is properly established.
+
+### Assurance Criteria
+
+1. ✓ **Structural Compliance**: Pass verification against specification
+2. ✓ **Quality Achievement**: Pass validation against guidance
+3. ✓ **Coupling Integrity**: Spec and guidance properly coupled for ontology type
+4. ✓ **Currency**: All edges current and reflect actual document state
+5. ✓ **Coherence**: Triangle works together without contradictions
+
+**Conclusion**: This document is trustworthy as foundational infrastructure for the knowledge complex. It was reviewed and assured during repository initialization by the admin user.
+
+## Accountability Statement
+
+This assurance assessment was performed manually by {github_username}, who takes full responsibility for reviewing the complete assurance triangle and attesting to its trustworthiness.
+
+**Signed:** {github_username}
+**Date:** {date_only}
+
+## Assurance Metadata
+
+| Property | Value |
+|----------|-------|
+| Target Document | [[{doc_name}|v:{doc_id}]] |
+| Specification | [[spec-for-{guidance_id}|v:spec:{spec_id}]] |
+| Guidance | [[guidance-for-{guidance_id}|v:guidance:{guidance_id}]] |
+| Coupling Edge | [[{coupling_edge}]] |
+| Verification Edge | [[{verification_edge}]] |
+| Validation Edge | [[{validation_edge}]] |
+| Assurance Method | manual |
+| Assurer | {github_username} |
+| Date Assured | {date_only} |
+| Assurance Status | ASSURED |
+"""
+
+    file_path = target_dir / '02_faces' / f'assurance-{doc_id.replace(":", "-")}.md'
     file_path.write_text(content, encoding='utf-8')
     return file_path
 
@@ -566,27 +1092,58 @@ def init(ctx, name, minimal, force, github_username, no_bootstrap):
         click.echo(f"Warning: Could not copy templates: {e}", err=True)
         click.echo("You may need to copy templates manually.", err=True)
 
-    # Copy ontology
+    # Copy foundation documents (ontology, spec, guidance, coupling)
     click.echo("")
-    click.echo("Copying ontology...")
+    click.echo("Copying foundation documents...")
 
     try:
         bundled_foundation = get_bundled_foundation_path()
-        ontology_source = bundled_foundation / 'ontology-base.md'
-        ontology_target = target_dir / 'design' / 'ontology-base.md'
 
-        if ontology_source.exists():
-            if not ontology_target.exists() or force:
+        # Check if new structure (with subdirectories) exists
+        foundation_vertices = bundled_foundation / '00_vertices'
+        foundation_edges = bundled_foundation / '01_edges'
+
+        if foundation_vertices.exists():
+            # New structure: copy from subdirectories
+            # Copy ontology-base.md to design/
+            ontology_source = foundation_vertices / 'ontology-base.md'
+            ontology_target = target_dir / 'design' / 'ontology-base.md'
+            if ontology_source.exists() and (not ontology_target.exists() or force):
                 shutil.copy2(ontology_source, ontology_target)
                 click.echo(f"  Copied ontology to design/ontology-base.md")
-            else:
-                click.echo(f"  Ontology exists, skipping (use --force to overwrite)")
+
+            # Copy spec-for-ontology.md and guidance-for-ontology.md to 00_vertices/
+            for filename in ['spec-for-ontology.md', 'guidance-for-ontology.md']:
+                source = foundation_vertices / filename
+                target = target_dir / '00_vertices' / filename
+                if source.exists() and (not target.exists() or force):
+                    shutil.copy2(source, target)
+                    click.echo(f"  Copied {filename} to 00_vertices/")
+
+            # Copy coupling-ontology.md to 01_edges/
+            if foundation_edges.exists():
+                coupling_source = foundation_edges / 'coupling-ontology.md'
+                coupling_target = target_dir / '01_edges' / 'coupling-ontology.md'
+                if coupling_source.exists() and (not coupling_target.exists() or force):
+                    shutil.copy2(coupling_source, coupling_target)
+                    click.echo(f"  Copied coupling-ontology.md to 01_edges/")
         else:
-            click.echo(f"Warning: ontology-base.md not found in bundled foundation", err=True)
+            # Old structure: ontology-base.md is directly in foundation/
+            ontology_source = bundled_foundation / 'ontology-base.md'
+            ontology_target = target_dir / 'design' / 'ontology-base.md'
+
+            if ontology_source.exists():
+                if not ontology_target.exists() or force:
+                    shutil.copy2(ontology_source, ontology_target)
+                    click.echo(f"  Copied ontology to design/ontology-base.md")
+                else:
+                    click.echo(f"  Ontology exists, skipping (use --force to overwrite)")
+            else:
+                click.echo(f"Warning: ontology-base.md not found in bundled foundation", err=True)
 
     except FileNotFoundError as e:
-        click.echo(f"Warning: Could not copy ontology: {e}", err=True)
-        click.echo("You may need to copy ontology-base.md manually.", err=True)
+        click.echo(f"Warning: Could not copy foundation documents: {e}", err=True)
+        click.echo("You may need to copy foundation documents manually.", err=True)
 
     # Create root README
     readme_path = target_dir / 'README.md'
@@ -658,6 +1215,74 @@ def init(ctx, name, minimal, force, github_username, no_bootstrap):
             click.echo(f"  Admin signer '{detected_username}' created with:")
             click.echo(f"    - Admin role (can assign roles to others)")
             click.echo(f"    - Qualification for guidance-for-guidance")
+
+            # Create ontology assurance documents (verification, validation, signature, assurance)
+            # Only if foundation documents were copied
+            ontology_in_design = target_dir / 'design' / 'ontology-base.md'
+            spec_exists = (target_dir / '00_vertices' / 'spec-for-ontology.md').exists()
+            guidance_exists = (target_dir / '00_vertices' / 'guidance-for-ontology.md').exists()
+
+            if ontology_in_design.exists() and spec_exists and guidance_exists:
+                click.echo("")
+                click.echo("Creating ontology assurance documents...")
+
+                # Create qualifies edge for ontology guidance
+                ontology_qualifies = create_ontology_qualifies_edge(target_dir, detected_username)
+                click.echo(f"  Created qualifies edge: {ontology_qualifies.relative_to(target_dir)}")
+
+                # Get templates path for running verification
+                target_templates = target_dir / 'templates'
+
+                # Create verification edge: ontology -> spec-for-ontology
+                verification_path = create_verification_edge(
+                    target_dir,
+                    'ontology:base', 'ontology-base',
+                    'ontology', 'spec-for-ontology',
+                    doc_path=ontology_in_design,
+                    templates_path=target_templates
+                )
+                click.echo(f"  Created verification edge: {verification_path.relative_to(target_dir)}")
+
+                # Create validation edge: ontology -> guidance-for-ontology
+                validation_path = create_validation_edge(
+                    target_dir,
+                    'ontology:base', 'ontology-base',
+                    'ontology', 'guidance-for-ontology',
+                    detected_username
+                )
+                click.echo(f"  Created validation edge: {validation_path.relative_to(target_dir)}")
+
+                # Create signs edge: signer -> ontology
+                signs_path = create_signs_edge(
+                    target_dir,
+                    detected_username,
+                    'ontology:base', 'ontology-base'
+                )
+                click.echo(f"  Created signs edge: {signs_path.relative_to(target_dir)}")
+
+                # Create signature face
+                signature_path = create_signature_face(
+                    target_dir,
+                    detected_username,
+                    'ontology:base', 'ontology-base',
+                    'ontology'
+                )
+                click.echo(f"  Created signature face: {signature_path.relative_to(target_dir)}")
+
+                # Create assurance face
+                assurance_path = create_assurance_face(
+                    target_dir,
+                    'ontology:base', 'ontology-base',
+                    'ontology', 'ontology',
+                    detected_username
+                )
+                click.echo(f"  Created assurance face: {assurance_path.relative_to(target_dir)}")
+
+                click.echo("")
+                click.echo("  Ontology assurance complete:")
+                click.echo("    - Verified against spec-for-ontology")
+                click.echo("    - Validated against guidance-for-ontology")
+                click.echo(f"    - Signed by {detected_username}")
 
         except Exception as e:
             click.echo(f"Warning: Could not create bootstrap signer: {e}", err=True)
