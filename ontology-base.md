@@ -27,7 +27,7 @@ This ontology defines the foundational type system for knowledge complexes focus
 
 The ontology covers three interlocking systems:
 
-1. **Role-Based Access Control (RBAC)**: Who can do what - actors, roles, authorities, and their relationships
+1. **Role-Based Access Control (RBAC)**: Who can do what - actors, roles, permissions, and their relationships
 2. **Modules & Runbooks**: Typed I/O transformations and their chains - specs for work products and the processes that produce them
 3. **Document Assurance**: Verification, validation, and signatures - the accountability infrastructure that makes documents trustworthy
 
@@ -207,7 +207,7 @@ Every authorization, transformation, or attestation is expressed as a **face (tr
 **Extends:** vertex
 **Tags:** [vertex, role]
 
-**Purpose:** Organizational position that conveys authorities. Roles are the intermediate layer between actors and authorities in RBAC.
+**Purpose:** Organizational position that conveys permissions. Roles are the intermediate layer between actors and permissions in RBAC.
 
 **Required Fields:**
 
@@ -219,34 +219,34 @@ Every authorization, transformation, or attestation is expressed as a **face (tr
 
 **Constraints:**
 
-- Must have at least one conveys edge to an authority
+- Must have at least one conveys edge to a permission
 - Actors receive role via has-role edge
 
 **Examples:** `v:role:approver`, `v:role:author`, `v:role:architect`
 
-#### authority
+#### permission
 
-**ID Pattern:** `v:authority:<name>`
+**ID Pattern:** `v:permission:<name>`
 **Extends:** vertex
-**Tags:** [vertex, authority]
+**Tags:** [vertex, permission]
 
-**Purpose:** Permission to perform specific actions. Authorities are the atomic units of access control - what a role allows an actor to do.
+**Purpose:** Authorization to perform specific operations. Permissions are the atomic units of access control in RBAC - what a role allows an actor to do. (NIST RBAC terminology)
 
 **Required Fields:**
 
 | Field | Type | Description |
 |-------|------|-------------|
-| type | string | Must be `vertex/authority` |
+| type | string | Must be `vertex/permission` |
 | extends | string | Must be `vertex` |
-| action | string | What action this authority permits |
-| scope | string | What this authority applies to |
+| operation | string | What operation this permission authorizes |
+| scope | string | What this permission applies to |
 
 **Constraints:**
 
 - Conveyed by roles via conveys edge
-- Required by actions via requires-authority edge
+- Required by actions via requires-permission edge
 
-**Examples:** `v:authority:validate-against:guidance-X`, `v:authority:approve-module:M`
+**Examples:** `v:permission:validate-against:guidance-X`, `v:permission:approve-module:M`
 
 ### Module Type
 
@@ -439,37 +439,43 @@ Every authorization, transformation, or attestation is expressed as a **face (tr
 **Extends:** edge
 **Tags:** [edge, conveys]
 
-**Purpose:** Role grants permission. Links a role to the authorities it bestows on actors holding that role.
+**Purpose:** Role grants permission or assignment authority. Links a role to what it authorizes. (NIST RBAC: Permission Assignment)
 
 **Endpoint Constraints:**
 
 | Property | Constraint |
 |----------|------------|
 | source_type | role |
-| target_type | authority |
+| target_type | permission OR guidance OR role |
 | direction | directed |
+
+**Target Type Semantics:**
+
+- **permission**: Role grants this permission to actors (standard RBAC PA)
+- **guidance**: Role grants authority to validate against this guidance (validation authority)
+- **role**: Role grants authority to assign this target role to actors (ARBAC97 can_assign)
 
 **Required Fields:**
 
 | Field | Type | Description |
 |-------|------|-------------|
 | source | string | Role vertex ID |
-| target | string | Authority vertex ID |
+| target | string | Permission, Guidance, or Role vertex ID |
 
-#### requires-authority
+#### requires-permission
 
-**ID Pattern:** `e:requires-authority:<name>`
+**ID Pattern:** `e:requires-permission:<name>`
 **Extends:** edge
-**Tags:** [edge, requires-authority]
+**Tags:** [edge, requires-permission]
 
-**Purpose:** Action requires permission. Links an action or document to the authority needed to perform or approve it.
+**Purpose:** Action requires permission. Links an action or document to the permission needed to perform or approve it. (NIST RBAC terminology)
 
 **Endpoint Constraints:**
 
 | Property | Constraint |
 |----------|------------|
 | source_type | vertex (any action-representing vertex) |
-| target_type | authority |
+| target_type | permission |
 | direction | directed |
 
 **Required Fields:**
@@ -477,7 +483,70 @@ Every authorization, transformation, or attestation is expressed as a **face (tr
 | Field | Type | Description |
 |-------|------|-------------|
 | source | string | Action vertex ID |
-| target | string | Authority vertex ID |
+| target | string | Permission vertex ID |
+
+#### can-assign
+
+**ID Pattern:** `e:can-assign:<name>`
+**Extends:** edge
+**Tags:** [edge, can-assign]
+
+**Purpose:** Authority to assign a role to actors. This edge represents the ARBAC97 `can_assign` relation - an actor holding an admin-role can assign the target role to other actors.
+
+**Endpoint Constraints:**
+
+| Property | Constraint |
+|----------|------------|
+| source_type | actor (or any actor subtype, typically signer) |
+| target_type | role |
+| direction | directed |
+
+**Required Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| source | string | Actor vertex ID (the assigner) |
+| target | string | Role vertex ID (the role being assigned) |
+
+**Constraints:**
+
+- Actor must hold an admin-role that conveys authority to assign this role
+- Creates role-assignment face when combined with has-role and conveys edges
+
+**Examples:** `e:can-assign:alice-reviewer` (Alice can assign Reviewer role)
+
+#### signs-assignment
+
+**ID Pattern:** `e:signs-assignment:<name>`
+**Extends:** edge
+**Tags:** [edge, signs-assignment]
+
+**Purpose:** Signature on a role assignment action. Records that an admin signed off on granting a role to another actor. Distinct from `signs` which is for document validation.
+
+**Endpoint Constraints:**
+
+| Property | Constraint |
+|----------|------------|
+| source_type | signer |
+| target_type | actor (or any actor subtype) |
+| direction | directed |
+
+**Required Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| source | string | Signer vertex ID (the admin doing the assignment) |
+| target | string | Actor vertex ID (receiving the role) |
+| role_assigned | string | Role vertex ID being assigned |
+| timestamp | datetime | When assignment was signed |
+| commit_hash | string | Git commit hash at signing time |
+
+**Constraints:**
+
+- Signer must have can-assign edge to the role being assigned
+- Creates assignment-signature face when combined with has-role and can-assign edges
+
+**Examples:** `e:signs-assignment:alice-assigns-bob` (Alice signs Bob's role assignment)
 
 ### Module I/O Edges
 
@@ -715,7 +784,7 @@ Every authorization, transformation, or attestation is expressed as a **face (tr
 **Extends:** face
 **Tags:** [face, authorization]
 
-**Purpose:** Actor authority derivation. Proves that an actor has a specific authority through their role assignment.
+**Purpose:** Actor permission derivation. Proves that an actor has a specific permission through their role assignment. (NIST RBAC: derives effective permissions from UA + PA)
 
 **Boundary Specification:**
 
@@ -723,25 +792,97 @@ Every authorization, transformation, or attestation is expressed as a **face (tr
 |--------|-----------------|
 | v1 | actor (or signer) |
 | v2 | role |
-| v3 | authority |
+| v3 | permission |
 
 | Edge | Type | Connects |
 |------|------|----------|
 | e1 | has-role | v1 → v2 |
 | e2 | conveys | v2 → v3 |
-| e3 | (derived) | v1 → v3 (actor has authority) |
+| e3 | (derived) | v1 → v3 (actor has permission) |
 
 **Local Rules:**
 
-- The authority must match action requirements for permissions to be valid
-- Actor-authority derivation is transitive through role
+- The permission must match action requirements for access to be granted
+- Actor-permission derivation is transitive through role
 
 **Required Fields:**
 
 | Field | Type | Description |
 |-------|------|-------------|
 | boundary_edges | array | IDs of [has-role, conveys, derived] edges |
-| boundary_vertices | array | IDs of [actor, role, authority] vertices |
+| boundary_vertices | array | IDs of [actor, role, permission] vertices |
+
+#### role-assignment
+
+**ID Pattern:** `f:role-assignment:<name>`
+**Extends:** face
+**Tags:** [face, role-assignment]
+
+**Purpose:** Role assignment authority derivation. Proves that an actor has authority to assign a specific role to other actors, derived through their admin-role. (ARBAC97: can_assign relation)
+
+**Boundary Specification:**
+
+| Vertex | Type Constraint |
+|--------|-----------------|
+| v1 | actor (or signer) - the assigner |
+| v2 | role (admin-role with assignment authority) |
+| v3 | role (target-role that can be assigned) |
+
+| Edge | Type | Connects |
+|------|------|----------|
+| e1 | has-role | v1 → v2 (actor holds admin-role) |
+| e2 | conveys | v2 → v3 (admin-role conveys assignment authority over target-role) |
+| e3 | can-assign | v1 → v3 (actor can assign target-role) |
+
+**Local Rules:**
+
+- Admin-role sits **opposite** the can-assign edge (pattern: role opposite the edge type it conveys authority to create)
+- Must share can-assign edge with assignment-signature face to prove signed assignment
+
+**Required Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| boundary_edges | array | IDs of [has-role, conveys, can-assign] edges |
+| boundary_vertices | array | IDs of [actor, admin-role, target-role] vertices |
+
+**Examples:** Alice (HR Admin) can assign the Reviewer role to new team members
+
+#### assignment-signature
+
+**ID Pattern:** `f:assignment-signature:<name>`
+**Extends:** face
+**Tags:** [face, assignment-signature]
+
+**Purpose:** Signed role assignment action. Proves that an admin with can-assign authority signed off on granting a role to another actor. (ARBAC97: signed assignment proof)
+
+**Boundary Specification:**
+
+| Vertex | Type Constraint |
+|--------|-----------------|
+| v1 | signer (the admin doing the assignment) |
+| v2 | actor (receiving the role) |
+| v3 | role (the role being assigned) |
+
+| Edge | Type | Connects |
+|------|------|----------|
+| e1 | signs-assignment | v1 → v2 (admin signs the assignment to target-actor) |
+| e2 | has-role | v2 → v3 (target-actor now has-role) |
+| e3 | can-assign | v1 → v3 (admin has can-assign authority) |
+
+**Local Rules:**
+
+- Must share can-assign edge with role-assignment face (proves authority to assign)
+- Parallel structure to signature face for document validation
+
+**Required Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| boundary_edges | array | IDs of [signs-assignment, has-role, can-assign] edges |
+| boundary_vertices | array | IDs of [admin-signer, target-actor, role] vertices |
+
+**Examples:** Alice (HR Admin) signs Bob's assignment to the Reviewer role
 
 ### Module I/O Faces
 
@@ -1230,19 +1371,19 @@ Edge `e:verification:doc-X-to-spec-Y`:
 
 **Rule Type:** star
 **Scope:** authorization faces
-**Constraint:** For an actor to have an authority, there must exist a complete authorization face
+**Constraint:** For an actor to have a permission, there must exist a complete authorization face
 
 **Verification:**
 
-1. For permission check: find authorization face (actor, role, authority)
+1. For permission check: find authorization face (actor, role, permission)
 2. Verify has-role edge from actor to role
-3. Verify conveys edge from role to authority
-4. Complete face proves actor has authority
+3. Verify conveys edge from role to permission
+4. Complete face proves actor has permission
 
 **Example:**
 
 Can signer S validate against guidance G?
-1. Need authority `v:authority:validate:G`
+1. Need permission `v:permission:validate:G`
 2. Find role R where `e:conveys:(R → validate:G)`
 3. Verify `e:has-role:(S → R)`
 4. If `f:authorization:(S, R, validate:G)` exists, S can validate against G
@@ -1319,14 +1460,14 @@ The following root-level namespaces are reserved by the base ontology:
 |-----------|-----------|--------------|
 | `spec`, `guidance`, `ontology`, `doc`, `module` | v | Document types |
 | `actor`, `signer` | v | Actor types |
-| `role`, `authority` | v | RBAC types |
+| `role`, `permission` | v | RBAC types |
 | `verification`, `validation`, `coupling` | e | Assurance edges |
 | `signs`, `qualifies` | e | Signature edges |
-| `has-role`, `conveys`, `requires-authority` | e | RBAC edges |
+| `has-role`, `conveys`, `requires-permission`, `can-assign`, `signs-assignment` | e | RBAC edges |
 | `precedes`, `feeds`, `yields` | e | Module I/O edges |
 | `inherits`, `instantiates` | e | Document relationship edges |
 | `assurance`, `signature`, `b2` | f | Assurance faces |
-| `authorization` | f | RBAC face |
+| `authorization`, `role-assignment`, `assignment-signature` | f | RBAC faces |
 | `input`, `output`, `input-satisfaction`, `output-satisfaction`, `module-signature` | f | Module faces |
 | `audit`, `module`, `runbook` | c | Chart types |
 

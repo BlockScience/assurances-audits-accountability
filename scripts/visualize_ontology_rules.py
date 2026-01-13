@@ -1077,6 +1077,289 @@ AUTHORIZATION_CHAIN_DEMOS = [
 ]
 
 
+# ============================================================
+# ROLE ASSIGNMENT CHAIN DEMOS (ARBAC97: role-assignment → assignment-signature)
+# ============================================================
+
+ROLE_ASSIGNMENT_DEMOS = [
+    RuleDemo(
+        name="Valid: Role-Assignment Face (Admin Can Assign Target Role)",
+        description="Role-assignment face with has-role, conveys, can-assign edges - admin has authority to assign a role",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:actor:admin': {'id': 'v:actor:admin', 'type': 'vertex/actor', 'name': 'Admin User'},
+                    'v:role:admin-role': {'id': 'v:role:admin-role', 'type': 'vertex/role', 'name': 'Admin Role'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                },
+                'edges': {
+                    'e:has-role:admin': {
+                        'id': 'e:has-role:admin',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:admin-role',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:admin-to-target': {
+                        'id': 'e:conveys:admin-to-target',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:admin-role',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:role-assignment:admin-target': {
+                        'id': 'f:role-assignment:admin-target',
+                        'type': 'face/role-assignment',
+                        'vertices': ['v:actor:admin', 'v:role:admin-role', 'v:role:target-role'],
+                        'edges': ['e:has-role:admin', 'e:conveys:admin-to-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                },
+            },
+        },
+        expected_violations=0,
+        rule_type="role_assignment_chain",
+        explanation="Role-assignment face proves that admin-role conveys authority to assign target-role. The admin holds admin-role (has-role), which conveys assignment authority (conveys → role), giving the admin can-assign authority."
+    ),
+    RuleDemo(
+        name="Valid: Role-Assignment + Assignment-Signature (Complete Chain)",
+        description="Role-assignment face with assignment-signature sharing can-assign edge",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:signer:admin': {'id': 'v:signer:admin', 'type': 'vertex/signer', 'name': 'Admin Signer'},
+                    'v:role:admin-role': {'id': 'v:role:admin-role', 'type': 'vertex/role', 'name': 'Admin Role'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                    'v:actor:bob': {'id': 'v:actor:bob', 'type': 'vertex/actor', 'name': 'Bob'},
+                },
+                'edges': {
+                    # Role-assignment edges
+                    'e:has-role:admin': {
+                        'id': 'e:has-role:admin',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:admin',
+                        'target': 'v:role:admin-role',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:admin-to-target': {
+                        'id': 'e:conveys:admin-to-target',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:admin-role',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    # SHARED can-assign edge (role-assignment ↔ assignment-signature)
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:signer:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    # Assignment-signature edges
+                    'e:signs-assignment:admin-bob': {
+                        'id': 'e:signs-assignment:admin-bob',
+                        'type': 'edge/signs-assignment',
+                        'source': 'v:signer:admin',
+                        'target': 'v:actor:bob',
+                        'orientation': 'directed',
+                    },
+                    'e:has-role:bob-target': {
+                        'id': 'e:has-role:bob-target',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:bob',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:role-assignment:admin-target': {
+                        'id': 'f:role-assignment:admin-target',
+                        'type': 'face/role-assignment',
+                        'vertices': ['v:signer:admin', 'v:role:admin-role', 'v:role:target-role'],
+                        'edges': ['e:has-role:admin', 'e:conveys:admin-to-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                    'f:assignment-signature:bob': {
+                        'id': 'f:assignment-signature:bob',
+                        'type': 'face/assignment-signature',
+                        'vertices': ['v:signer:admin', 'v:actor:bob', 'v:role:target-role'],
+                        # SHARES can-assign edge with role-assignment face
+                        'edges': ['e:signs-assignment:admin-bob', 'e:has-role:bob-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                },
+            },
+        },
+        expected_violations=0,
+        rule_type="role_assignment_chain",
+        explanation="Complete ARBAC97 chain: role-assignment → assignment-signature. The admin's role gives can-assign authority (role-assignment), which backs their signature on Bob's role assignment (assignment-signature)."
+    ),
+    RuleDemo(
+        name="Invalid: Assignment-Signature Without Role-Assignment",
+        description="Assignment-signature face exists without role-assignment face sharing can-assign edge - NOT allowed!",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:signer:admin': {'id': 'v:signer:admin', 'type': 'vertex/signer', 'name': 'Admin Signer'},
+                    'v:actor:bob': {'id': 'v:actor:bob', 'type': 'vertex/actor', 'name': 'Bob'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                },
+                'edges': {
+                    'e:signs-assignment:admin-bob': {
+                        'id': 'e:signs-assignment:admin-bob',
+                        'type': 'edge/signs-assignment',
+                        'source': 'v:signer:admin',
+                        'target': 'v:actor:bob',
+                        'orientation': 'directed',
+                    },
+                    'e:has-role:bob-target': {
+                        'id': 'e:has-role:bob-target',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:bob',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:signer:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    # Assignment-signature WITHOUT corresponding role-assignment face
+                    'f:assignment-signature:orphan': {
+                        'id': 'f:assignment-signature:orphan',
+                        'type': 'face/assignment-signature',
+                        'vertices': ['v:signer:admin', 'v:actor:bob', 'v:role:target-role'],
+                        'edges': ['e:signs-assignment:admin-bob', 'e:has-role:bob-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                },
+            },
+        },
+        expected_violations=1,
+        rule_type="role_assignment_chain",
+        explanation="VIOLATION: Assignment-signature face exists without a corresponding role-assignment face sharing the can-assign edge. You can't sign a role assignment without role-based authority."
+    ),
+    RuleDemo(
+        name="Invalid: Role-Assignment Missing Conveys Edge",
+        description="Role-assignment face missing conveys edge - required edge type missing",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:actor:admin': {'id': 'v:actor:admin', 'type': 'vertex/actor', 'name': 'Admin User'},
+                    'v:role:admin-role': {'id': 'v:role:admin-role', 'type': 'vertex/role', 'name': 'Admin Role'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                },
+                'edges': {
+                    'e:has-role:admin': {
+                        'id': 'e:has-role:admin',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:admin-role',
+                        'orientation': 'directed',
+                    },
+                    # Missing conveys edge! Using 'other' instead
+                    'e:other:placeholder': {
+                        'id': 'e:other:placeholder',
+                        'type': 'edge/other',
+                        'source': 'v:role:admin-role',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:role-assignment:bad': {
+                        'id': 'f:role-assignment:bad',
+                        'type': 'face/role-assignment',
+                        'vertices': ['v:actor:admin', 'v:role:admin-role', 'v:role:target-role'],
+                        # Missing conveys, has 'other' instead
+                        'edges': ['e:has-role:admin', 'e:other:placeholder', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+        },
+        expected_violations=1,
+        rule_type="role_assignment_chain",
+        explanation="VIOLATION: Role-assignment face is missing the 'conveys' edge. It must have has-role, conveys, and can-assign edges."
+    ),
+    RuleDemo(
+        name="Valid: Role-Assignment Alone (Authority Pre-exists Assignment)",
+        description="Role-assignment face exists alone - VALID (authority can pre-exist actual assignment)",
+        cache={
+            'elements': {
+                'vertices': {
+                    'v:actor:admin': {'id': 'v:actor:admin', 'type': 'vertex/actor', 'name': 'Admin User'},
+                    'v:role:admin-role': {'id': 'v:role:admin-role', 'type': 'vertex/role', 'name': 'Admin Role'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                },
+                'edges': {
+                    'e:has-role:admin': {
+                        'id': 'e:has-role:admin',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:admin-role',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:admin-to-target': {
+                        'id': 'e:conveys:admin-to-target',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:admin-role',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    # Role-assignment face alone - this is VALID!
+                    'f:role-assignment:standalone': {
+                        'id': 'f:role-assignment:standalone',
+                        'type': 'face/role-assignment',
+                        'vertices': ['v:actor:admin', 'v:role:admin-role', 'v:role:target-role'],
+                        'edges': ['e:has-role:admin', 'e:conveys:admin-to-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                },
+            },
+        },
+        expected_violations=0,
+        rule_type="role_assignment_chain",
+        explanation="Role-assignment faces CAN exist without assignment-signature faces. They represent can-assign authority that pre-exists any actual role assignment signatures."
+    ),
+]
+
+
 def run_demo(demo: RuleDemo) -> Dict[str, Any]:
     """Run a single demonstration and collect results."""
     complex = SimplicialComplex.from_cache(demo.cache)
@@ -1110,6 +1393,12 @@ def run_demo(demo: RuleDemo) -> Dict[str, Any]:
         # This checks both authorization boundary types and signature-requires-authorization
         engine._check_authorization_boundary_types()
         engine._check_signature_requires_authorization()
+    elif demo.rule_type == "role_assignment_chain":
+        # Role assignment chain rules (ARBAC97): role-assignment → assignment-signature
+        # This checks role-assignment boundary types and assignment-signature-requires-role-assignment
+        engine._check_role_assignment_boundary_types()
+        engine._check_assignment_signature_boundary_types()
+        engine._check_assignment_signature_requires_role_assignment()
 
     violations = engine.violations
 
@@ -1374,8 +1663,14 @@ def main():
     print(generate_text_report(auth_results, "Authorization Chain (authorization → signature → assurance)"))
     generate_html_report(auth_results, "Authorization Chain (authorization → signature → assurance)", OUTPUT_DIR / "rule_authorization_chain.html")
 
+    # Run role assignment chain demos (ARBAC97: role-assignment → assignment-signature)
+    print("\n=== Role Assignment Chain Rules (ARBAC97) ===")
+    role_assign_results = [run_demo(demo) for demo in ROLE_ASSIGNMENT_DEMOS]
+    print(generate_text_report(role_assign_results, "Role Assignment Chain (ARBAC97: role-assignment → assignment-signature)"))
+    generate_html_report(role_assign_results, "Role Assignment Chain (ARBAC97: role-assignment → assignment-signature)", OUTPUT_DIR / "rule_role_assignment.html")
+
     # Generate summary
-    all_results = edge_results + degree_results + face_results + adjacency_results + auth_results
+    all_results = edge_results + degree_results + face_results + adjacency_results + auth_results + role_assign_results
     total_passed = sum(1 for r in all_results if r['passed'])
 
     summary_html = f"""<!DOCTYPE html>
@@ -1441,6 +1736,12 @@ def main():
                 <td class="{'pass' if all(r['passed'] for r in auth_results) else 'fail'}">{sum(1 for r in auth_results if r['passed'])}/{len(auth_results)}</td>
                 <td><a href="rule_authorization_chain.html">View Details</a></td>
             </tr>
+            <tr>
+                <td>Role Assignment Chain (ARBAC97: role-assignment → assignment-signature)</td>
+                <td>{len(role_assign_results)}</td>
+                <td class="{'pass' if all(r['passed'] for r in role_assign_results) else 'fail'}">{sum(1 for r in role_assign_results if r['passed'])}/{len(role_assign_results)}</td>
+                <td><a href="rule_role_assignment.html">View Details</a></td>
+            </tr>
         </table>
     </div>
 
@@ -1489,6 +1790,16 @@ def main():
             <li><strong>authorization-can-pre-exist:</strong> authorization faces CAN exist without signature faces (role assignments pre-exist signing)</li>
         </ul>
         <p><em>Key insight: The chain authorization → signature → assurance establishes complete accountability. A signer's authority comes from their role (authorization), which backs their signature, which backs the assurance.</em></p>
+
+        <h3>Role Assignment Chain Rules (ARBAC97: role-assignment → assignment-signature)</h3>
+        <p>These rules implement ARBAC97 administrative role-based access control for role assignment authority:</p>
+        <ul>
+            <li><strong>role-assignment:</strong> face with actor, admin-role, target-role connected by has-role, conveys, can-assign edges</li>
+            <li><strong>assignment-signature:</strong> face with admin-signer, target-actor, target-role connected by signs-assignment, has-role, can-assign edges</li>
+            <li><strong>assignment-signature-requires-role-assignment:</strong> assignment-signature face must have role-assignment face sharing the can-assign edge</li>
+            <li><strong>role-assignment-can-pre-exist:</strong> role-assignment faces CAN exist without assignment-signature faces (authority pre-exists assignments)</li>
+        </ul>
+        <p><em>Key insight: This implements ARBAC97's can_assign relation. An admin's role conveys authority to assign other roles. The chain role-assignment → assignment-signature establishes who has authority to assign roles and tracks role assignments with human sign-off.</em></p>
     </div>
 </body>
 </html>

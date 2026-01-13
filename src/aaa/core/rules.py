@@ -342,15 +342,23 @@ class OntologyRuleEngine:
         'validation': (['vertex/doc', 'vertex/spec', 'vertex/guidance'],
                       ['vertex/guidance']),
         'coupling': (['vertex/spec'], ['vertex/guidance']),
-        'signs': (['vertex/signer'], ['vertex/doc', 'vertex/spec', 'vertex/guidance']),
-        'qualifies': (['vertex/signer'], ['vertex/guidance', 'vertex/module']),
-        'has-role': (['vertex/actor'], ['vertex/role']),
-        # conveys: role grants authority to sign validations against a guidance
-        # The target is guidance (not generic authority) because this edge participates
-        # in authorization faces which share the qualifies edge with signature faces.
-        # This creates the chain: authorization → signature → assurance
-        'conveys': (['vertex/role'], ['vertex/guidance']),
-        'requires-authority': (['vertex/action'], ['vertex/authority']),
+        # signs/qualifies: signer or b0 (boundary bootstrap) can sign/qualify
+        'signs': (['vertex/signer', 'vertex/b0'], ['vertex/doc', 'vertex/spec', 'vertex/guidance']),
+        'qualifies': (['vertex/signer', 'vertex/b0'], ['vertex/guidance', 'vertex/module']),
+        # has-role: actor or signer (signer extends actor) holds a role
+        'has-role': (['vertex/actor', 'vertex/signer'], ['vertex/role']),
+        # conveys: role grants permission to sign validations against a guidance,
+        # or grants authority to assign another role (ARBAC97 can_assign)
+        # Target types:
+        # - guidance: authority to validate against this guidance
+        # - role: authority to assign this role (ARBAC97)
+        # - permission: generic permission (NIST RBAC PA)
+        # (NIST RBAC: Permission Assignment)
+        'conveys': (['vertex/role'], ['vertex/guidance', 'vertex/role', 'vertex/permission']),
+        'requires-permission': (['vertex/action'], ['vertex/permission']),
+        # ARBAC97 role assignment edges (signer extends actor)
+        'can-assign': (['vertex/actor', 'vertex/signer'], ['vertex/role']),
+        'signs-assignment': (['vertex/signer'], ['vertex/actor']),
         'precedes': (['vertex/module'], ['vertex/module']),
         'feeds': (['vertex/doc'], ['vertex/module']),
         'yields': (['vertex/module'], ['vertex/doc']),
@@ -415,6 +423,11 @@ class OntologyRuleEngine:
         # Authorization rules (authorization → signature → assurance chain)
         self._check_authorization_boundary_types()
         self._check_signature_requires_authorization()
+
+        # Role assignment rules (role-assignment → assignment-signature chain)
+        self._check_role_assignment_boundary_types()
+        self._check_assignment_signature_boundary_types()
+        self._check_assignment_signature_requires_role_assignment()
 
         # Signature and assurance rules
         self._check_signature_requires_qualification()
@@ -793,6 +806,147 @@ class OntologyRuleEngine:
                     element_type="face",
                     message=f"No authorization face shares qualifies edge '{qualifies_edge_id}' - signer must have role-based authority",
                     details={'qualifies_edge': qualifies_edge_id}
+                )
+
+    # ========== Role Assignment Boundary Types (ARBAC97) ==========
+
+    def _check_role_assignment_boundary_types(self):
+        """
+        Check that role-assignment faces have required edge types in boundary.
+
+        Rule: f:role-assignment:(actor, admin-role, target-role) must have:
+        - e:has-role: (actor → admin-role)
+        - e:conveys: (admin-role → target-role)
+        - e:can-assign: (actor → target-role)
+
+        The role-assignment face proves WHY an actor can assign a role: they hold
+        an admin-role that conveys authority to assign the target role.
+        """
+        for fid in self.graph.get_faces_by_type('role-assignment'):
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            # Check for required edge types in boundary
+            edge_types_found = set()
+            for eid in face.edges:
+                edge = self.graph.get_edge(eid)
+                if edge:
+                    edge_type = edge.type.replace('edge/', '') if edge.type.startswith('edge/') else edge.type
+                    edge_types_found.add(edge_type)
+
+            required_types = {'has-role', 'conveys', 'can-assign'}
+            missing = required_types - edge_types_found
+
+            if missing:
+                self._add_violation(
+                    rule_name="role_assignment_boundary_types",
+                    rule_type=RuleType.FACE_BOUNDARY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"Role-assignment face missing required edge types: {missing}",
+                    details={
+                        'required': list(required_types),
+                        'found': list(edge_types_found),
+                        'missing': list(missing)
+                    }
+                )
+
+    # ========== Assignment Signature Boundary Types (ARBAC97) ==========
+
+    def _check_assignment_signature_boundary_types(self):
+        """
+        Check that assignment-signature faces have required edge types in boundary.
+
+        Rule: f:assignment-signature:(admin-signer, target-actor, role) must have:
+        - e:signs-assignment: (admin-signer → target-actor)
+        - e:has-role: (target-actor → role)
+        - e:can-assign: (admin-signer → role)
+
+        The assignment-signature face proves the admin signed the role assignment.
+        """
+        for fid in self.graph.get_faces_by_type('assignment-signature'):
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            # Check for required edge types in boundary
+            edge_types_found = set()
+            for eid in face.edges:
+                edge = self.graph.get_edge(eid)
+                if edge:
+                    edge_type = edge.type.replace('edge/', '') if edge.type.startswith('edge/') else edge.type
+                    edge_types_found.add(edge_type)
+
+            required_types = {'signs-assignment', 'has-role', 'can-assign'}
+            missing = required_types - edge_types_found
+
+            if missing:
+                self._add_violation(
+                    rule_name="assignment_signature_boundary_types",
+                    rule_type=RuleType.FACE_BOUNDARY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"Assignment-signature face missing required edge types: {missing}",
+                    details={
+                        'required': list(required_types),
+                        'found': list(edge_types_found),
+                        'missing': list(missing)
+                    }
+                )
+
+    # ========== Assignment Signature Requires Role Assignment (Face Adjacency) ==========
+
+    def _check_assignment_signature_requires_role_assignment(self):
+        """
+        Check that assignment-signature faces have a role-assignment face sharing their can-assign edge.
+
+        Rule: f:assignment-signature: must have f:role-assignment: sharing e:can-assign: edge.
+
+        This establishes the chain: role-assignment → assignment-signature → has-role (result)
+
+        Parallel to: authorization → signature → assurance
+        """
+        for fid in self.graph.get_faces_by_type('assignment-signature'):
+            face = self.graph.get_face(fid)
+            if not face:
+                continue
+
+            # Find can-assign edge in boundary
+            can_assign_edge_id = face.data.get('can_assign_edge')
+            if not can_assign_edge_id:
+                # Try to find can-assign edge in boundary
+                for eid in face.edges:
+                    if self.graph._edge_matches_type(eid, 'can-assign'):
+                        can_assign_edge_id = eid
+                        break
+
+            if not can_assign_edge_id:
+                self._add_violation(
+                    rule_name="assignment_signature_requires_role_assignment",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message="Assignment-signature face has no can-assign edge in boundary",
+                    details={'edges': face.edges}
+                )
+                continue
+
+            # Check if any role-assignment face shares this can-assign edge
+            role_assignment_faces = self.graph.get_faces_containing_edge(can_assign_edge_id, 'role-assignment')
+
+            if not role_assignment_faces:
+                self._add_violation(
+                    rule_name="assignment_signature_requires_role_assignment",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.ERROR,
+                    element_id=fid,
+                    element_type="face",
+                    message=f"No role-assignment face shares can-assign edge '{can_assign_edge_id}' - admin must have assignment authority",
+                    details={'can_assign_edge': can_assign_edge_id}
                 )
 
     # ========== Assurance Requires B2 Anchor (Rule 6) ==========
