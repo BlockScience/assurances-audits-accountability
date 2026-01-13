@@ -1,0 +1,164 @@
+{
+  "chart_id": "c:foundation",
+  "name": "Foundation Chart - Complete Genesis Complex",
+  "description": "The foundation chart containing all genesis elements including ontology layer with full RBAC",
+  "type": "chart/chart",
+  "constructed_by": "genesis",
+  "construction_method": "foundation",
+  "purpose": "Verify that the bundled foundation elements form a valid simplicial complex with full RBAC",
+  "scope": "Complete foundation with boundary complex + ontology layer + RBAC",
+  "element_counts": {
+    "vertices": 5,
+    "edges": 13,
+    "faces": 0
+  },
+  "topology": {
+    "euler_characteristic": -8,
+    "dimension": 1
+  },
+  "elements": {
+    "vertices": [
+      {
+        "id": "b0:root",
+        "name": "Root - Boundary Anchor",
+        "type": "vertex/b0",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:spec",
+        "name": "Specification for Specifications",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:guidance",
+        "name": "Specification for Guidance Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:spec",
+        "name": "Guidance for Specifications",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:guidance",
+        "name": "Guidance for Guidance Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e:coupling:spec",
+        "name": "Coupling - Spec-for-Spec and Guidance-for-Spec",
+        "type": "edge/coupling",
+        "source": "v:spec:spec",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:guidance",
+        "name": "Coupling - Spec-for-Guidance and Guidance-for-Guidance",
+        "type": "edge/coupling",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:coupling:ontology",
+        "name": "Coupling - Ontology Spec and Guidance",
+        "type": "edge/coupling",
+        "source": "v:spec:ontology",
+        "target": "v:guidance:ontology",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:self-verification",
+        "name": "Boundary Edge - Self-Verification of Spec-for-Spec",
+        "type": "edge/b1",
+        "source": "v:spec:spec",
+        "target": "b0:root",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:self-validation",
+        "name": "Boundary Edge - Self-Validation of Guidance-for-Guidance",
+        "type": "edge/b1",
+        "source": "v:guidance:guidance",
+        "target": "b0:root",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:couples-GS-root",
+        "name": "Boundary Edge - Couples Guidance-for-Spec to Root",
+        "type": "edge/b1",
+        "source": "b0:root",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "b1:couples-SG-root",
+        "name": "Boundary Edge - Couples Spec-for-Guidance to Root",
+        "type": "edge/b1",
+        "source": "b0:root",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:spec-guidance:spec-spec",
+        "name": "Verification - Spec-for-Guidance verifies against Spec-for-Spec",
+        "type": "edge/verification",
+        "source": "v:spec:guidance",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-guidance:guidance-spec",
+        "name": "Validation - spec-for-guidance against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:guidance",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-spec:spec-guidance",
+        "name": "Verification - guidance-for-spec against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:spec",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:guidance-spec:guidance-guidance",
+        "name": "Validation - guidance-for-spec against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:spec",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-spec:guidance-spec",
+        "name": "Validation - Spec-for-Spec validates against Guidance-for-Spec",
+        "type": "edge/validation",
+        "source": "v:spec:spec",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-guidance:spec-guidance",
+        "name": "Verification - Guidance-for-Guidance verifies against Spec-for-Guidance (Self-Verification)",
+        "type": "edge/verification",
+        "source": "v:guidance:guidance",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      }
+    ],
+    "faces": []
+  },
+  "metadata": {
+    "exported": "2026-01-12T23:06:33.879602",
+    "source_file": "charts/foundation/foundation.md"
+  }
+}
