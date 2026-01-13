@@ -75,7 +75,7 @@ boundary (Tier 0) - Genesis bootstrap
 - **Provides:** spec:ontology, guidance:ontology, ontology:base
 - **Rules:** Ontology rules (types are valid, extend correctly)
 
-### Tier 2: Meta
+### Tier 2: Meta (bundled)
 
 - **Dependencies:** boundary, foundation
 - **Provides:**
