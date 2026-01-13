@@ -146,6 +146,15 @@ def export_chart(chart_path: Path, search_dirs: List[Path] = None) -> Dict[str, 
     # Build element index with additional search directories
     element_index = build_element_index(base_path, search_dirs)
 
+    # Also search foundation directories if they exist
+    foundation_base = base_path / 'src' / 'aaa' / 'foundation'
+    if foundation_base.exists():
+        foundation_index = build_element_index(foundation_base)
+        # Add foundation elements (don't override existing)
+        for elem_id, elem_path in foundation_index.items():
+            if elem_id not in element_index:
+                element_index[elem_id] = elem_path
+
     # Read chart
     with open(chart_path, 'r', encoding='utf-8') as f:
         content = f.read()
