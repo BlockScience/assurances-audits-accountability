@@ -62,12 +62,12 @@ The framework transforms implicit workflows into explicit runbooks. When operato
 
 ### Stakeholders Used
 
-| ID | Name | Type | Role in This Architecture |
-|----|------|------|---------------------------|
-| A3 | Operators | Role | Primary hands-on users who produce documents and follow workflows; success depends on their daily adoption |
-| A4 | Approvers | Role | Domain experts who sign off on deliverables; must trust the system and efficiently review work |
-| A5 | Workflow Builders | Role | Configure document types, templates, and runbooks; enable operators and approvers to succeed |
-| A6 | Infrastructure Builders | Organization | BlockScience team developing the core framework; must deliver usable tooling |
+| ID  | Name                    | Type         | Role in This Architecture                                                                                  |
+| --- | ----------------------- | ------------ | ---------------------------------------------------------------------------------------------------------- |
+| A3  | Operators               | Role         | Primary hands-on users who produce documents and follow workflows; success depends on their daily adoption |
+| A4  | Approvers               | Role         | Domain experts who sign off on deliverables; must trust the system and efficiently review work             |
+| A5  | Workflow Builders       | Role         | Configure document types, templates, and runbooks; enable operators and approvers to succeed               |
+| A6  | Infrastructure Builders | Organization | BlockScience team developing the core framework; must deliver usable tooling                               |
 
 **Stakeholder Selection Rationale:** For internal-first deployment, we focus on the actors directly involved in producing and approving work products (A3, A4) and those who enable them (A5, A6). Regulators (A1) and Compliance Officers (A2) are important for the full product vision but are not primary stakeholders for internal adoption. Their needs will be addressed in subsequent architecture iterations.
 
