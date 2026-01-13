@@ -526,6 +526,168 @@ This attestation was created during repository initialization. The commit signat
     return file_path
 
 
+def create_conveys_edge(target_dir: Path, role_id: str, role_name: str, guidance_id: str, guidance_name: str) -> Path:
+    """Create a conveys edge from role to guidance (Permission Assignment)."""
+    now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    content = f"""---
+type: edge/conveys
+extends: edge
+id: e:conveys:{role_id}:{guidance_id}
+name: Conveys - {role_name} conveys validation authority for {guidance_name}
+source: v:role:{role_id}
+target: v:guidance:{guidance_id}
+source_type: vertex/role
+target_type: vertex/guidance
+orientation: directed
+permission_type: validate
+tags:
+  - edge
+  - conveys
+  - bootstrap
+version: 1.0.0
+created: {now}
+modified: {now}
+---
+
+# Conveys - {role_name} conveys validation authority for {guidance_name}
+
+This conveys edge establishes that the {role_name} role grants validation authority against {guidance_name}.
+
+## Permission Assignment (NIST RBAC)
+
+**Role:** [[role-{role_id}|v:role:{role_id}]]
+**Permission Target:** [[{guidance_name}|v:guidance:{guidance_id}]]
+**Permission Type:** validate
+
+## Authority Granted
+
+Actors holding the {role_name} role can:
+- Validate documents against {guidance_name}
+- Create qualifies edges for this guidance
+
+## Bootstrap Note
+
+This conveys edge was created during repository initialization to establish the admin role's validation authority.
+"""
+
+    file_path = target_dir / '01_edges' / f'conveys-{role_id}-{guidance_id}.md'
+    file_path.write_text(content, encoding='utf-8')
+    return file_path
+
+
+def create_authorization_face(target_dir: Path, github_username: str, role_id: str, role_name: str, guidance_id: str, guidance_name: str) -> Path:
+    """Create an authorization face proving actor has permission through role."""
+    now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    # Build IDs
+    has_role_edge = f"e:has-role:{github_username}:{role_id}"
+    conveys_edge = f"e:conveys:{role_id}:{guidance_id}"
+    qualifies_edge = f"e:qualifies:{github_username}:{guidance_id}"
+
+    content = f"""---
+type: face/authorization
+extends: face
+id: f:authorization:{github_username}:{role_id}:{guidance_id}
+name: Authorization - {github_username} as {role_name} for {guidance_name}
+description: Proves {github_username} can validate against {guidance_name} through {role_name} role
+vertices:
+  - v:signer:{github_username}
+  - v:role:{role_id}
+  - v:guidance:{guidance_id}
+actor: v:signer:{github_username}
+role: v:role:{role_id}
+permission: v:guidance:{guidance_id}
+edges:
+  - {has_role_edge}
+  - {conveys_edge}
+  - {qualifies_edge}
+orientation: oriented
+has_role_edge: {has_role_edge}
+conveys_edge: {conveys_edge}
+qualifies_edge: {qualifies_edge}
+tags:
+  - face
+  - authorization
+  - bootstrap
+version: 1.0.0
+created: {now}
+modified: {now}
+---
+
+# Authorization - {github_username} as {role_name} for {guidance_name}
+
+This authorization face proves that {github_username} has permission to validate documents against {guidance_name} through their {role_name} role assignment.
+
+## Face Description
+
+**Type:** Authorization Triangle (NIST RBAC)
+**Purpose:** Permission derivation through role assignment
+
+This face implements the NIST RBAC pattern where:
+- User Assignment (UA): {github_username} has-role {role_name}
+- Permission Assignment (PA): {role_name} conveys validate-permission for {guidance_name}
+- Derived: {github_username} qualifies-for {guidance_name}
+
+## Vertices
+
+1. **[[signer-{github_username}|v:signer:{github_username}]]**
+   - The actor seeking permission
+   - Type: vertex/signer
+   - Role in face: Permission holder
+
+2. **[[role-{role_id}|v:role:{role_id}]]**
+   - The role granting permission
+   - Type: vertex/role
+   - Role in face: Permission mediator
+
+3. **[[{guidance_name}|v:guidance:{guidance_id}]]**
+   - The permission target (validation authority)
+   - Type: vertex/guidance
+   - Role in face: Permission scope
+
+## Edges (Boundary)
+
+1. **[[{has_role_edge}]]**
+   - Source: {github_username} → Target: {role_name}
+   - Type: edge/has-role
+   - NIST: User Assignment (UA)
+
+2. **[[{conveys_edge}]]**
+   - Source: {role_name} → Target: {guidance_name}
+   - Type: edge/conveys
+   - NIST: Permission Assignment (PA)
+
+3. **[[{qualifies_edge}]]**
+   - Source: {github_username} → Target: {guidance_name}
+   - Type: edge/qualifies
+   - NIST: Derived permission
+
+## Triangle Coherence
+
+**RBAC Chain Verification:**
+- ✓ Actor has role assignment (UA exists)
+- ✓ Role conveys permission (PA exists)
+- ✓ Derived permission recorded (qualifies edge exists)
+
+## Permission Derivation
+
+**NIST RBAC Logic:**
+```
+has-role({github_username}, {role_name}) ∧ conveys({role_name}, {guidance_name})
+  ⟹ qualifies({github_username}, {guidance_name})
+```
+
+## Bootstrap Note
+
+This authorization face was created during repository initialization to establish the admin's validation authority chain.
+"""
+
+    file_path = target_dir / '02_faces' / f'authorization-{github_username}-{role_id}-{guidance_id}.md'
+    file_path.write_text(content, encoding='utf-8')
+    return file_path
+
+
 def create_signature_face(target_dir: Path, github_username: str, doc_id: str, doc_name: str, guidance_id: str) -> Path:
     """Create a signature face for a document."""
     now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
@@ -1226,9 +1388,26 @@ def init(ctx, name, minimal, force, github_username, no_bootstrap):
                 click.echo("")
                 click.echo("Creating ontology assurance documents...")
 
+                # Create conveys edge: admin role -> ontology guidance (Permission Assignment)
+                conveys_path = create_conveys_edge(
+                    target_dir,
+                    'admin', 'Administrator',
+                    'ontology', 'guidance-for-ontology'
+                )
+                click.echo(f"  Created conveys edge: {conveys_path.relative_to(target_dir)}")
+
                 # Create qualifies edge for ontology guidance
                 ontology_qualifies = create_ontology_qualifies_edge(target_dir, detected_username)
                 click.echo(f"  Created qualifies edge: {ontology_qualifies.relative_to(target_dir)}")
+
+                # Create authorization face: proves signer can validate via role
+                authorization_path = create_authorization_face(
+                    target_dir,
+                    detected_username,
+                    'admin', 'Administrator',
+                    'ontology', 'guidance-for-ontology'
+                )
+                click.echo(f"  Created authorization face: {authorization_path.relative_to(target_dir)}")
 
                 # Get templates path for running verification
                 target_templates = target_dir / 'templates'
