@@ -8,13 +8,13 @@
   "purpose": "Verify that the bundled foundation elements form a valid simplicial complex with full RBAC",
   "scope": "Complete foundation with boundary complex + ontology layer + RBAC",
   "element_counts": {
-    "vertices": 5,
-    "edges": 13,
-    "faces": 0
+    "vertices": 10,
+    "edges": 29,
+    "faces": 13
   },
   "topology": {
-    "euler_characteristic": -8,
-    "dimension": 1
+    "euler_characteristic": -6,
+    "dimension": 2
   },
   "elements": {
     "vertices": [
@@ -46,6 +46,36 @@
         "id": "v:guidance:guidance",
         "name": "Guidance for Guidance Documents",
         "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:spec:ontology",
+        "name": "Specification for Ontology Documents",
+        "type": "vertex/spec",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:guidance:ontology",
+        "name": "Guidance for Ontology Documents",
+        "type": "vertex/guidance",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:ontology:base",
+        "name": "Base Ontology for Knowledge Complexes",
+        "type": "vertex/ontology",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:signer:admin",
+        "name": "Bootstrap Administrator Signer",
+        "type": "vertex/signer",
+        "element_type": "vertex"
+      },
+      {
+        "id": "v:role:admin",
+        "name": "Administrator",
+        "type": "vertex/role",
         "element_type": "vertex"
       }
     ],
@@ -153,12 +183,297 @@
         "source": "v:guidance:guidance",
         "target": "v:spec:guidance",
         "element_type": "edge"
+      },
+      {
+        "id": "e:verification:spec-ontology:spec-spec",
+        "name": "Verification - spec-for-ontology against spec-for-spec",
+        "type": "edge/verification",
+        "source": "v:spec:ontology",
+        "target": "v:spec:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:spec-ontology:guidance-spec",
+        "name": "Validation - spec-for-ontology against guidance-for-spec",
+        "type": "edge/validation",
+        "source": "v:spec:ontology",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:guidance-ontology:spec-guidance",
+        "name": "Verification - guidance-for-ontology against spec-for-guidance",
+        "type": "edge/verification",
+        "source": "v:guidance:ontology",
+        "target": "v:spec:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:guidance-ontology:guidance-guidance",
+        "name": "Validation - guidance-for-ontology against guidance-for-guidance",
+        "type": "edge/validation",
+        "source": "v:guidance:ontology",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:verification:ontology-base:spec-ontology",
+        "name": "Verification - ontology-base against spec-for-ontology",
+        "type": "edge/verification",
+        "source": "v:ontology:base",
+        "target": "v:spec:ontology",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:validation:ontology-base:guidance-ontology",
+        "name": "Validation - ontology-base against guidance-for-ontology",
+        "type": "edge/validation",
+        "source": "v:ontology:base",
+        "target": "v:guidance:ontology",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:has-role:admin:admin",
+        "name": "Has Role - admin signer holds admin role",
+        "type": "edge/has-role",
+        "source": "v:signer:admin",
+        "target": "v:role:admin",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:conveys:admin:guidance-spec",
+        "name": "Conveys - admin role conveys authority for guidance-spec",
+        "type": "edge/conveys",
+        "source": "v:role:admin",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:conveys:admin:guidance-guidance",
+        "name": "Conveys - admin role conveys authority for guidance-guidance",
+        "type": "edge/conveys",
+        "source": "v:role:admin",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:conveys:admin:guidance-ontology",
+        "name": "Conveys - admin role conveys authority for guidance-ontology",
+        "type": "edge/conveys",
+        "source": "v:role:admin",
+        "target": "v:guidance:ontology",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:admin:guidance-spec",
+        "name": "Qualifies - admin for guidance-spec",
+        "type": "edge/qualifies",
+        "source": "v:signer:admin",
+        "target": "v:guidance:spec",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:admin:guidance-guidance",
+        "name": "Qualifies - admin for guidance-guidance",
+        "type": "edge/qualifies",
+        "source": "v:signer:admin",
+        "target": "v:guidance:guidance",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:qualifies:admin:guidance-ontology",
+        "name": "Qualifies - admin for guidance-ontology",
+        "type": "edge/qualifies",
+        "source": "v:signer:admin",
+        "target": "v:guidance:ontology",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:admin:spec-ontology",
+        "name": "Signs - admin signs spec-for-ontology",
+        "type": "edge/signs",
+        "source": "v:signer:admin",
+        "target": "v:spec:ontology",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:admin:guidance-ontology",
+        "name": "Signs - admin signs guidance-for-ontology",
+        "type": "edge/signs",
+        "source": "v:signer:admin",
+        "target": "v:guidance:ontology",
+        "element_type": "edge"
+      },
+      {
+        "id": "e:signs:admin:ontology-base",
+        "name": "Signs - admin signs ontology-base",
+        "type": "edge/signs",
+        "source": "v:signer:admin",
+        "target": "v:ontology:base",
+        "element_type": "edge"
       }
     ],
-    "faces": []
+    "faces": [
+      {
+        "id": "b2:spec-spec",
+        "name": "Boundary Face - Spec-for-Spec Self-Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "b0:root",
+          "v:guidance:spec",
+          "v:spec:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "b2:guidance-guidance",
+        "name": "Boundary Face - Guidance-for-Guidance Self-Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "b0:root",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "b2:spec-guidance",
+        "name": "Boundary Face - Spec-for-Guidance Genesis Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "v:spec:guidance",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "b2:guidance-spec",
+        "name": "Boundary Face - Guidance-for-Spec Genesis Assurance",
+        "type": "face/b2",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:spec",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:spec-ontology",
+        "name": "Assurance Face - spec-for-ontology",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:spec:ontology",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:guidance-ontology",
+        "name": "Assurance Face - guidance-for-ontology",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:ontology",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:assurance:ontology-base",
+        "name": "Assurance Face - ontology-base",
+        "type": "face/assurance",
+        "boundary": [],
+        "vertices": [
+          "v:ontology:base",
+          "v:spec:ontology",
+          "v:guidance:ontology"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:spec-ontology",
+        "name": "Signature Face - spec-for-ontology",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:spec:ontology",
+          "v:guidance:spec",
+          "v:signer:admin"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:guidance-ontology",
+        "name": "Signature Face - guidance-for-ontology",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:guidance:ontology",
+          "v:guidance:guidance",
+          "v:signer:admin"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:signature:ontology-base",
+        "name": "Signature Face - ontology-base",
+        "type": "face/signature",
+        "boundary": [],
+        "vertices": [
+          "v:ontology:base",
+          "v:guidance:ontology",
+          "v:signer:admin"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:authorization:admin:guidance-spec",
+        "name": "Authorization Face - admin for guidance-spec",
+        "type": "face/authorization",
+        "boundary": [],
+        "vertices": [
+          "v:signer:admin",
+          "v:role:admin",
+          "v:guidance:spec"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:authorization:admin:guidance-guidance",
+        "name": "Authorization Face - admin for guidance-guidance",
+        "type": "face/authorization",
+        "boundary": [],
+        "vertices": [
+          "v:signer:admin",
+          "v:role:admin",
+          "v:guidance:guidance"
+        ],
+        "element_type": "face"
+      },
+      {
+        "id": "f:authorization:admin:guidance-ontology",
+        "name": "Authorization Face - admin for guidance-ontology",
+        "type": "face/authorization",
+        "boundary": [],
+        "vertices": [
+          "v:signer:admin",
+          "v:role:admin",
+          "v:guidance:ontology"
+        ],
+        "element_type": "face"
+      }
+    ]
   },
   "metadata": {
-    "exported": "2026-01-12T23:06:33.879602",
+    "exported": "2026-01-12T23:08:05.274654",
     "source_file": "charts/foundation/foundation.md"
   }
 }
