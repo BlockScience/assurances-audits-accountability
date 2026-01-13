@@ -103,26 +103,21 @@ assurances-audits-accountability/
 │   ├── cli.py                        # Main CLI entry point
 │   ├── commands/                     # CLI subcommands
 │   ├── core/                         # Core library
-│   ├── boundary/                     # Tier 0: Genesis bootstrap (SS, SG, GS, GG)
-│   └── foundation/                   # Tier 1: Ontology layer
-├── content/                           # Domain packs (organized by topic)
+│   ├── boundary/                     # Tier 0: Genesis bootstrap (auto-builds)
+│   ├── foundation/                   # Tier 1: Ontology layer (auto-builds)
+│   ├── meta/                         # Tier 2: Infrastructure specs (auto-builds)
+│   ├── ppp/                          # Tier 3: Persona, Purpose, Protocol (optional)
+│   ├── rbac/                         # Tier 3: Role-based access control (optional)
+│   ├── learning/                     # Tier 3: Educational content (optional)
+│   ├── architecture/                 # Tier 3: Architecture docs (optional)
+│   └── planning/                     # Tier 4: Program planning (optional)
+├── content/                           # Development content for this repo
 │   ├── registry.yaml                 # Pack registry and dependencies
-│   ├── DOMAIN-PACKS.md              # Pack system design document
-│   ├── meta/                         # Tier 2: Charts, audits, runbooks
-│   ├── ppp/                          # Tier 3: Persona, Purpose, Protocol
-│   ├── rbac/                         # Tier 3: Signers, roles, authorization
-│   ├── learning/                     # Tier 3: Students, skills, modules
-│   ├── architecture/                 # Tier 3: Architecture documentation
-│   ├── planning/                     # Tier 4: Program plans, lifecycles
-│   └── misc/                         # Test fixtures
-├── 00_vertices/                       # Root boundary elements
-├── 01_edges/                          # Root boundary edges
-├── 02_faces/                          # Root boundary faces
-├── examples/                          # Usage examples
-│   ├── incose-paper/                 # INCOSE paper self-demonstration
-│   └── programs/                     # Program development examples
-├── templates/                         # Type template definitions
-├── scripts/                           # Verification scripts (legacy)
+│   └── DOMAIN-PACKS.md              # Pack system design document
+├── 00_vertices/                       # User-defined vertices
+├── 01_edges/                          # User-defined edges
+├── 02_faces/                          # User-defined faces
+├── scripts/                           # Verification scripts (deprecated, use CLI)
 └── tests/                             # Test suite
 ```
 
@@ -137,7 +132,9 @@ content/<domain>/
 ├── 00_vertices/        # Domain vertices (specs, guidances, instances)
 ├── 01_edges/           # Domain edges
 ├── 02_faces/           # Domain faces
-└── charts/             # Demo charts for this domain
+├── charts/             # Demo charts for this domain
+├── examples/           # Usage examples for this domain
+└── templates/          # Type templates for this domain
 ```
 
 ## Navigation
@@ -155,37 +152,43 @@ content/<domain>/
 Content is organized into domain packs with a tiered dependency structure:
 
 ```text
-boundary (Tier 0) - Genesis bootstrap
-    │               SS, SG, GS, GG (spec/guidance combinations)
-    │
-    └── foundation (Tier 1) - Ontology layer
-            │                 spec:ontology, guidance:ontology, ontology:base
-            │
-            └── meta (Tier 2) - Infrastructure specs
-                    │           chart, assurance-audit, runbook, factory
+boundary (Tier 0) - Genesis bootstrap        ─┐
+    │               SS, SG, GS, GG            │ Auto-builds on
+    │                                         │ `aaa init`
+    └── foundation (Tier 1) - Ontology layer  │
+            │                                 │
+            └── meta (Tier 2) - Infrastructure─┘
+                    │           chart, assurance-audit, runbook
                     │
-                    ├── ppp (Tier 3) ────────── Persona, Purpose, Protocol
-                    │
-                    ├── rbac (Tier 3) ───────── Signers, roles, authorization
-                    │
-                    ├── learning (Tier 3) ───── Students, skills, modules
-                    │
-                    ├── architecture (Tier 3) ─ Field-survey through physical
-                    │
-                    └── planning (Tier 4) ← architecture
-                                            Lifecycle, program-plan, memo
+                    ├── ppp (Tier 3) ────────── Persona, Purpose, Protocol  ─┐
+                    │                                                        │
+                    ├── rbac (Tier 3) ───────── Signers, roles, signatures   │ Optional
+                    │                                                        │ submodules
+                    ├── learning (Tier 3) ───── Students, skills, modules    │
+                    │                                                        │
+                    ├── architecture (Tier 3) ─ Field-survey → physical      │
+                    │                                                        │
+                    └── planning (Tier 4) ───── Lifecycle, program-plan     ─┘
+                                                (depends on architecture)
 ```
+
+**Core packs (auto-build):**
 
 | Pack | Tier | Description |
 |------|------|-------------|
 | [boundary](src/aaa/boundary/) | 0 | Genesis bootstrap (SS, SG, GS, GG) |
 | [foundation](src/aaa/foundation/) | 1 | Ontology layer (type definitions) |
-| [meta](content/meta/) | 2 | Charts, audits, runbooks |
-| [ppp](content/ppp/) | 3 | Persona, Purpose, Protocol framework |
-| [rbac](content/rbac/) | 3 | Role-based access control, signatures |
-| [learning](content/learning/) | 3 | Educational content, skill tracking |
-| [architecture](content/architecture/) | 3 | Architecture documentation stack |
-| [planning](content/planning/) | 4 | Program plans, lifecycles (depends on architecture) |
+| [meta](src/aaa/meta/) | 2 | Charts, audits, runbooks |
+
+**Optional packs (install on request):**
+
+| Pack | Tier | Description |
+|------|------|-------------|
+| [ppp](src/aaa/ppp/) | 3 | Persona, Purpose, Protocol framework |
+| [rbac](src/aaa/rbac/) | 3 | Role-based access control, signatures |
+| [learning](src/aaa/learning/) | 3 | Educational content, skill tracking |
+| [architecture](src/aaa/architecture/) | 3 | Architecture documentation stack |
+| [planning](src/aaa/planning/) | 4 | Program plans, lifecycles (depends on architecture) |
 
 Each pack declares its dependencies in `pack.yaml`. Rules are factored across packs—e.g., RBAC introduces signature adjacency requirements that meta's assurance faces don't require on their own.
 
