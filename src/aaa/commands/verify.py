@@ -62,6 +62,7 @@ def verify(ctx, file, verify_all, templates, verbose):
     if verify_all:
         # Verify all documents
         all_passed = True
+        failed_files = []
         dirs_to_check = ['00_vertices', '01_edges', '02_faces']
 
         for dir_name in dirs_to_check:
@@ -76,12 +77,20 @@ def verify(ctx, file, verify_all, templates, verbose):
                 passed = verifier.verify_element(md_file)
                 if not passed:
                     all_passed = False
+                    failed_files.append((md_file.relative_to(repo_root), verifier.errors.copy()))
 
         if all_passed:
             click.echo("\n✓ All documents passed verification")
             sys.exit(0)
         else:
             click.echo("\n✗ Some documents failed verification", err=True)
+            click.echo("")
+            for file_path, errors in failed_files:
+                click.echo(f"FAILED: {file_path}", err=True)
+                for error in errors:
+                    click.echo(f"  - {error}", err=True)
+            click.echo("")
+            click.echo(f"Total: {len(failed_files)} file(s) failed", err=True)
             sys.exit(1)
 
     elif file:
