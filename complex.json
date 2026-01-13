@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-13T00:19:57.359595+00:00",
+  "generated": "2026-01-13T02:27:38.621516+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -909,7 +909,7 @@
       "v:signer:mzargham": {
         "file": "00_vertices/signer-mzargham.md",
         "type": "vertex/signer",
-        "extends": "vertex/actor",
+        "extends": "actor",
         "id": "v:signer:mzargham",
         "name": "Signer - mzargham",
         "description": "Human signer with verified GitHub identity for accountability attestations",
@@ -1590,6 +1590,195 @@
           "v:spec:purpose",
           "v:spec:protocol"
         ]
+      },
+      "v:doc:architecture-knowledge-complex-refactor": {
+        "file": "design/architecture-knowledge-complex-refactor.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:architecture-knowledge-complex-refactor",
+        "name": "Architecture - Knowledge Complex Framework Refactor",
+        "description": "Capstone architecture document synthesizing the extended architecture chain for the Knowledge Complex Framework",
+        "tags": [
+          "vertex",
+          "doc",
+          "architecture"
+        ],
+        "version": "1.2.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-12T00:00:00+00:00",
+        "system_name": "Knowledge Complex Framework",
+        "scope": "Internal-first deployment enabling systematic documentation with verification, validation, and assurance for BlockScience client work",
+        "field_survey_ref": "v:doc:field-survey-knowledge-complex-refactor",
+        "conceptual_architecture_ref": "v:doc:conceptual-architecture-knowledge-complex-refactor",
+        "functional_architecture_ref": "v:doc:functional-architecture-knowledge-complex-refactor",
+        "logical_architecture_ref": "v:doc:logical-architecture-knowledge-complex-refactor",
+        "physical_architecture_ref": "v:doc:physical-architecture-knowledge-complex-refactor",
+        "requirements_trace_ref": "v:doc:requirements-trace-knowledge-complex-refactor",
+        "stakeholders": [
+          "A3 Operators",
+          "A4 Approvers",
+          "A5 Workflow Builders",
+          "A6 Infrastructure Builders"
+        ]
+      },
+      "v:doc:conceptual-architecture-knowledge-complex-refactor": {
+        "file": "design/conceptual-architecture-knowledge-complex-refactor.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:conceptual-architecture-knowledge-complex-refactor",
+        "name": "Conceptual Architecture - Knowledge Complex Framework Refactor",
+        "description": "Stakeholder needs, acceptance criteria, and stakeholder-criterion matrix for the knowledge complex framework refactor",
+        "tags": [
+          "vertex",
+          "doc",
+          "conceptual-architecture"
+        ],
+        "version": "0.2.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-12T00:00:00+00:00",
+        "system_name": "Knowledge Complex Framework",
+        "scope": "Internal-first deployment enabling systematic documentation with verification, validation, and assurance for BlockScience client work",
+        "field_survey_ref": "v:doc:field-survey-knowledge-complex-refactor",
+        "stakeholder_count": 4,
+        "criterion_count": 12,
+        "stakeholders": [
+          "A3",
+          "A4",
+          "A5",
+          "A6"
+        ]
+      },
+      "v:doc:field-survey-knowledge-complex-refactor": {
+        "file": "design/field-survey-knowledge-complex-refactor.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:field-survey-knowledge-complex-refactor",
+        "name": "Field Survey for Knowledge Complex Repository Refactor",
+        "description": "Maps stakeholders and resources for refactoring this repository to serve BlockScience team members, collaborators, and clients",
+        "tags": [
+          "vertex",
+          "doc",
+          "field-survey"
+        ],
+        "version": "0.1.0",
+        "created": "2025-01-11T00:00:00+00:00",
+        "modified": "2025-01-11T00:00:00+00:00",
+        "survey_scope": "BlockScience knowledge complex repository and its intended user communities",
+        "actor_count": 6,
+        "resource_count": 15,
+        "relationship_count": 28
+      },
+      "v:doc:functional-architecture-knowledge-complex-refactor": {
+        "file": "design/functional-architecture-knowledge-complex-refactor.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:functional-architecture-knowledge-complex-refactor",
+        "name": "Functional Architecture - Knowledge Complex Framework Refactor",
+        "description": "System functions, inputs/outputs, and function-criterion matrix for the knowledge complex framework refactor",
+        "tags": [
+          "vertex",
+          "doc",
+          "functional-architecture"
+        ],
+        "version": "0.2.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-12T00:00:00+00:00",
+        "system_name": "Knowledge Complex Framework",
+        "scope": "Internal-first deployment enabling systematic documentation with verification, validation, and assurance for BlockScience client work",
+        "conceptual_architecture_ref": "v:doc:conceptual-architecture-knowledge-complex-refactor",
+        "function_count": 31
+      },
+      "v:doc:logical-architecture-knowledge-complex-refactor": {
+        "file": "design/logical-architecture-knowledge-complex-refactor.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:logical-architecture-knowledge-complex-refactor",
+        "name": "Logical Architecture - Knowledge Complex Framework Refactor",
+        "description": "System components, interfaces, and component-function matrix for the knowledge complex framework refactor",
+        "tags": [
+          "vertex",
+          "doc",
+          "logical-architecture"
+        ],
+        "version": "0.3.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-12T00:00:00+00:00",
+        "system_name": "Knowledge Complex Framework",
+        "scope": "Internal-first deployment enabling systematic documentation with verification, validation, and assurance",
+        "functional_architecture_ref": "v:doc:functional-architecture-knowledge-complex-refactor",
+        "ontology_ref": "v:ontology:base",
+        "component_count": 14,
+        "interface_count": 40
+      },
+      "v:ontology:base": {
+        "file": "design/ontology-base.md",
+        "type": "vertex/ontology",
+        "extends": "doc",
+        "id": "v:ontology:base",
+        "name": "Base Ontology for Knowledge Complexes",
+        "tags": [
+          "vertex",
+          "doc",
+          "ontology"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00",
+        "description": "Foundational type ontology for accountability, traceability, and auditing in knowledge complexes",
+        "extends_ontology": null,
+        "vertex_type_count": 14,
+        "edge_type_count": 18,
+        "face_type_count": 11,
+        "local_rule_count": 15,
+        "chart_type_count": 4
+      },
+      "v:doc:physical-architecture-knowledge-complex-refactor": {
+        "file": "design/physical-architecture-knowledge-complex-refactor.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:physical-architecture-knowledge-complex-refactor",
+        "name": "Physical Architecture - Knowledge Complex Framework Refactor",
+        "description": "Physical elements, technology choices, and element-component matrix for the knowledge complex framework refactor",
+        "tags": [
+          "vertex",
+          "doc",
+          "physical-architecture"
+        ],
+        "version": "0.2.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-12T00:00:00+00:00",
+        "system_name": "Knowledge Complex Framework",
+        "scope": "Internal-first deployment using file-based storage with git version control and Python tooling",
+        "logical_architecture_ref": "v:doc:logical-architecture-knowledge-complex-refactor",
+        "element_count": 12
+      },
+      "v:doc:requirements-trace-knowledge-complex-refactor": {
+        "file": "design/requirements-trace-knowledge-complex-refactor.md",
+        "type": "vertex/doc",
+        "extends": "doc",
+        "id": "v:doc:requirements-trace-knowledge-complex-refactor",
+        "name": "Requirements Traceability Report - Knowledge Complex Framework",
+        "description": "Bidirectional requirements traceability analysis across the four-layer architecture chain",
+        "tags": [
+          "vertex",
+          "doc",
+          "requirements-trace"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-12T00:00:00+00:00",
+        "modified": "2026-01-12T00:00:00+00:00",
+        "architecture_ref": "v:doc:architecture-knowledge-complex-refactor",
+        "conceptual_ref": "v:doc:conceptual-architecture-knowledge-complex-refactor",
+        "functional_ref": "v:doc:functional-architecture-knowledge-complex-refactor",
+        "logical_ref": "v:doc:logical-architecture-knowledge-complex-refactor",
+        "physical_ref": "v:doc:physical-architecture-knowledge-complex-refactor",
+        "stakeholder_count": 4,
+        "criteria_count": 12,
+        "function_count": 31,
+        "component_count": 14,
+        "element_count": 12,
+        "coverage_status": "complete",
+        "trace_date": "2026-01-12T00:00:00+00:00"
       }
     },
     "edges": {
@@ -6914,10 +7103,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 74,
+    "vertex_count": 82,
     "edge_count": 149,
     "face_count": 55,
     "chart_count": 2,
-    "euler_characteristic": -20
+    "euler_characteristic": -12
   }
 }

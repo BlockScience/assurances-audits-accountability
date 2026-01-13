@@ -1274,21 +1274,63 @@ def init(ctx, name, minimal, force, github_username, no_bootstrap):
                 shutil.copy2(ontology_source, ontology_target)
                 click.echo(f"  Copied ontology to design/ontology-base.md")
 
-            # Copy spec-for-ontology.md and guidance-for-ontology.md to 00_vertices/
-            for filename in ['spec-for-ontology.md', 'guidance-for-ontology.md']:
+            # Copy all foundation vertices (b0-root, SS, GS, SG, GG, spec/guidance for ontology)
+            foundation_vertex_files = [
+                'b0-root.md',
+                'spec-for-spec.md',
+                'guidance-for-spec.md',
+                'spec-for-guidance.md',
+                'guidance-for-guidance.md',
+                'spec-for-ontology.md',
+                'guidance-for-ontology.md',
+            ]
+            for filename in foundation_vertex_files:
                 source = foundation_vertices / filename
                 target = target_dir / '00_vertices' / filename
                 if source.exists() and (not target.exists() or force):
                     shutil.copy2(source, target)
                     click.echo(f"  Copied {filename} to 00_vertices/")
 
-            # Copy coupling-ontology.md to 01_edges/
+            # Copy all foundation edges (coupling, b1 boundary edges, genesis verification/validation)
             if foundation_edges.exists():
-                coupling_source = foundation_edges / 'coupling-ontology.md'
-                coupling_target = target_dir / '01_edges' / 'coupling-ontology.md'
-                if coupling_source.exists() and (not coupling_target.exists() or force):
-                    shutil.copy2(coupling_source, coupling_target)
-                    click.echo(f"  Copied coupling-ontology.md to 01_edges/")
+                foundation_edge_files = [
+                    # Coupling edges
+                    'coupling-spec.md',
+                    'coupling-guidance.md',
+                    'coupling-ontology.md',
+                    # Boundary edges (b1) for b2 faces
+                    'b1-couples-GS-root.md',
+                    'b1-couples-SG-root.md',
+                    'b1-self-validation.md',
+                    'b1-self-verification.md',
+                    # Genesis verification/validation edges for SG and GS
+                    'verification-spec-guidance-spec-spec.md',
+                    'validation-spec-guidance-guidance-spec.md',
+                    'verification-guidance-spec-spec-guidance.md',
+                    'validation-guidance-spec-guidance-guidance.md',
+                ]
+                for filename in foundation_edge_files:
+                    source = foundation_edges / filename
+                    target = target_dir / '01_edges' / filename
+                    if source.exists() and (not target.exists() or force):
+                        shutil.copy2(source, target)
+                        click.echo(f"  Copied {filename} to 01_edges/")
+
+            # Copy all foundation faces (all 4 b2 genesis faces)
+            foundation_faces = bundled_foundation / '02_faces'
+            if foundation_faces.exists():
+                foundation_face_files = [
+                    'b2-spec-spec.md',
+                    'b2-guidance-guidance.md',
+                    'b2-spec-guidance.md',
+                    'b2-guidance-spec.md',
+                ]
+                for filename in foundation_face_files:
+                    source = foundation_faces / filename
+                    target = target_dir / '02_faces' / filename
+                    if source.exists() and (not target.exists() or force):
+                        shutil.copy2(source, target)
+                        click.echo(f"  Copied {filename} to 02_faces/")
         else:
             # Old structure: ontology-base.md is directly in foundation/
             ontology_source = bundled_foundation / 'ontology-base.md'
@@ -1386,8 +1428,137 @@ def init(ctx, name, minimal, force, github_username, no_bootstrap):
 
             if ontology_in_design.exists() and spec_exists and guidance_exists:
                 click.echo("")
-                click.echo("Creating ontology assurance documents...")
+                click.echo("Creating ontology layer assurance documents...")
 
+                # First, create RBAC for guidance-for-spec (needed to sign spec-for-ontology)
+                conveys_spec_path = create_conveys_edge(
+                    target_dir,
+                    'admin', 'Administrator',
+                    'spec', 'guidance-for-spec'
+                )
+                click.echo(f"  Created conveys edge: {conveys_spec_path.relative_to(target_dir)}")
+
+                qualifies_spec = _create_qualifies_edge(
+                    target_dir, detected_username, 'spec', 'guidance-for-spec',
+                    datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+                )
+                click.echo(f"  Created qualifies edge: {qualifies_spec.relative_to(target_dir)}")
+
+                auth_spec_path = create_authorization_face(
+                    target_dir,
+                    detected_username,
+                    'admin', 'Administrator',
+                    'spec', 'guidance-for-spec'
+                )
+                click.echo(f"  Created authorization face: {auth_spec_path.relative_to(target_dir)}")
+
+                # Create RBAC for guidance-for-guidance (needed to sign guidance-for-ontology)
+                conveys_guidance_path = create_conveys_edge(
+                    target_dir,
+                    'admin', 'Administrator',
+                    'guidance', 'guidance-for-guidance'
+                )
+                click.echo(f"  Created conveys edge: {conveys_guidance_path.relative_to(target_dir)}")
+
+                auth_guidance_path = create_authorization_face(
+                    target_dir,
+                    detected_username,
+                    'admin', 'Administrator',
+                    'guidance', 'guidance-for-guidance'
+                )
+                click.echo(f"  Created authorization face: {auth_guidance_path.relative_to(target_dir)}")
+
+                # === spec-for-ontology assurance ===
+                # Verification: spec-for-ontology -> spec-for-spec
+                verification_spec_ontology = create_verification_edge(
+                    target_dir,
+                    'spec:ontology', 'spec-for-ontology',
+                    'spec', 'spec-for-spec'
+                )
+                click.echo(f"  Created verification edge: {verification_spec_ontology.relative_to(target_dir)}")
+
+                # Validation: spec-for-ontology -> guidance-for-spec
+                validation_spec_ontology = create_validation_edge(
+                    target_dir,
+                    'spec:ontology', 'spec-for-ontology',
+                    'spec', 'guidance-for-spec',
+                    detected_username
+                )
+                click.echo(f"  Created validation edge: {validation_spec_ontology.relative_to(target_dir)}")
+
+                # Assurance face for spec-for-ontology
+                assurance_spec_ontology = create_assurance_face(
+                    target_dir,
+                    'spec:ontology', 'spec-for-ontology',
+                    'spec', 'spec',
+                    detected_username
+                )
+                click.echo(f"  Created assurance face: {assurance_spec_ontology.relative_to(target_dir)}")
+
+                # Signs edge for spec-for-ontology
+                signs_spec_ontology = create_signs_edge(
+                    target_dir,
+                    detected_username,
+                    'spec:ontology', 'spec-for-ontology',
+                    guidance_id='spec'
+                )
+                click.echo(f"  Created signs edge: {signs_spec_ontology.relative_to(target_dir)}")
+
+                # Signature face for spec-for-ontology
+                signature_spec_ontology = create_signature_face(
+                    target_dir,
+                    detected_username,
+                    'spec:ontology', 'spec-for-ontology',
+                    'spec'
+                )
+                click.echo(f"  Created signature face: {signature_spec_ontology.relative_to(target_dir)}")
+
+                # === guidance-for-ontology assurance ===
+                # Verification: guidance-for-ontology -> spec-for-guidance
+                verification_guidance_ontology = create_verification_edge(
+                    target_dir,
+                    'guidance:ontology', 'guidance-for-ontology',
+                    'guidance', 'spec-for-guidance'
+                )
+                click.echo(f"  Created verification edge: {verification_guidance_ontology.relative_to(target_dir)}")
+
+                # Validation: guidance-for-ontology -> guidance-for-guidance
+                validation_guidance_ontology = create_validation_edge(
+                    target_dir,
+                    'guidance:ontology', 'guidance-for-ontology',
+                    'guidance', 'guidance-for-guidance',
+                    detected_username
+                )
+                click.echo(f"  Created validation edge: {validation_guidance_ontology.relative_to(target_dir)}")
+
+                # Assurance face for guidance-for-ontology
+                assurance_guidance_ontology = create_assurance_face(
+                    target_dir,
+                    'guidance:ontology', 'guidance-for-ontology',
+                    'guidance', 'guidance',
+                    detected_username
+                )
+                click.echo(f"  Created assurance face: {assurance_guidance_ontology.relative_to(target_dir)}")
+
+                # Signs edge for guidance-for-ontology
+                signs_guidance_ontology = create_signs_edge(
+                    target_dir,
+                    detected_username,
+                    'guidance:ontology', 'guidance-for-ontology',
+                    guidance_id='guidance'
+                )
+                click.echo(f"  Created signs edge: {signs_guidance_ontology.relative_to(target_dir)}")
+
+                # Signature face for guidance-for-ontology
+                signature_guidance_ontology = create_signature_face(
+                    target_dir,
+                    detected_username,
+                    'guidance:ontology', 'guidance-for-ontology',
+                    'guidance'
+                )
+                click.echo(f"  Created signature face: {signature_guidance_ontology.relative_to(target_dir)}")
+
+                # === ontology-base assurance ===
                 # Create conveys edge: admin role -> ontology guidance (Permission Assignment)
                 conveys_path = create_conveys_edge(
                     target_dir,

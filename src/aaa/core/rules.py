@@ -337,13 +337,13 @@ class OntologyRuleEngine:
     # Format: edge_type -> (source_types, target_types)
     # source_types/target_types are lists of allowed vertex type prefixes
     EDGE_ENDPOINT_CONSTRAINTS = {
-        'verification': (['vertex/doc', 'vertex/spec', 'vertex/guidance', 'vertex/module'],
+        'verification': (['vertex/doc', 'vertex/spec', 'vertex/guidance', 'vertex/module', 'vertex/ontology'],
                         ['vertex/spec']),
-        'validation': (['vertex/doc', 'vertex/spec', 'vertex/guidance'],
+        'validation': (['vertex/doc', 'vertex/spec', 'vertex/guidance', 'vertex/ontology'],
                       ['vertex/guidance']),
         'coupling': (['vertex/spec'], ['vertex/guidance']),
         # signs/qualifies: signer or b0 (boundary bootstrap) can sign/qualify
-        'signs': (['vertex/signer', 'vertex/b0'], ['vertex/doc', 'vertex/spec', 'vertex/guidance']),
+        'signs': (['vertex/signer', 'vertex/b0'], ['vertex/doc', 'vertex/spec', 'vertex/guidance', 'vertex/ontology']),
         'qualifies': (['vertex/signer', 'vertex/b0'], ['vertex/guidance', 'vertex/module']),
         # has-role: actor or signer (signer extends actor) holds a role
         'has-role': (['vertex/actor', 'vertex/signer'], ['vertex/role']),
@@ -432,7 +432,7 @@ class OntologyRuleEngine:
         # Signature and assurance rules
         self._check_signature_requires_qualification()
         self._check_signature_shares_edge_with_assurance()
-        self._check_assurance_requires_b2_anchor()
+        self._check_documents_have_assurance()
 
         # Module rules
         self._check_module_qualification_cascade()
@@ -704,6 +704,57 @@ class OntologyRuleEngine:
         """Backward compatibility alias - calls _check_assurance_requires_signature."""
         self._check_assurance_requires_signature()
 
+    # ========== Documents Have Assurance ==========
+
+    def _check_documents_have_assurance(self):
+        """
+        Check that all document vertices have assurance faces.
+
+        Rule: Every document vertex (spec, guidance, ontology, doc, module) must
+        have an assurance face (f:assurance: or f:b2:) where it is the target.
+
+        Note: Actor vertices (signer, role, etc.) are governed by RBAC rules,
+        not V&V assurance. The b0:root vertex is also exempt.
+        """
+        # Document types that require assurance
+        doc_types = {'vertex/doc', 'vertex/spec', 'vertex/guidance',
+                     'vertex/ontology', 'vertex/module'}
+
+        # Get all assurance and b2 faces
+        assurance_faces = set(self.graph.get_faces_by_type('assurance'))
+        b2_faces = set(self.graph.get_faces_by_type('b2'))
+        all_assurance_faces = assurance_faces | b2_faces
+
+        # Build set of assured document IDs (targets of assurance faces)
+        assured_docs = set()
+        for fid in all_assurance_faces:
+            face = self.graph.get_face(fid)
+            if face:
+                target = face.data.get('target')
+                if target:
+                    assured_docs.add(target)
+
+        # Check each document vertex
+        for vid in self.graph.get_all_vertices():
+            vertex = self.graph.get_vertex(vid)
+            if not vertex:
+                continue
+
+            # Check if this is a document type
+            vtype = vertex.type
+            is_doc = any(vtype == dt or vtype.startswith(dt + '/') for dt in doc_types)
+
+            if is_doc and vid not in assured_docs:
+                self._add_violation(
+                    rule_name="documents_have_assurance",
+                    rule_type=RuleType.FACE_ADJACENCY,
+                    severity=Severity.WARNING,
+                    element_id=vid,
+                    element_type="vertex",
+                    message=f"Document vertex has no assurance face (assurance or b2)",
+                    details={'vertex_type': vtype, 'assured_docs': list(assured_docs)}
+                )
+
     # ========== Authorization Face Boundary Types ==========
 
     def _check_authorization_boundary_types(self):
@@ -948,110 +999,6 @@ class OntologyRuleEngine:
                     message=f"No role-assignment face shares can-assign edge '{can_assign_edge_id}' - admin must have assignment authority",
                     details={'can_assign_edge': can_assign_edge_id}
                 )
-
-    # ========== Assurance Requires B2 Anchor (Rule 6) ==========
-
-    def _check_assurance_requires_b2_anchor(self):
-        """
-        Check that assurance faces can trace to b2 anchor.
-
-        Rule: f:assurance: must be adjacent to f:b2: sharing e:coupling: edge.
-        The assurance chain must terminate at a b2 face (no infinite regress).
-        """
-        # Get all assurance and b2 faces
-        assurance_faces = set(self.graph.get_faces_by_type('assurance'))
-        b2_faces = set(self.graph.get_faces_by_type('b2'))
-
-        # B2 faces are self-anchoring (bootstrap)
-        # For each non-b2 assurance face, trace to b2
-
-        for fid in assurance_faces:
-            if fid in b2_faces:
-                continue  # B2 faces don't need further anchoring
-
-            face = self.graph.get_face(fid)
-            if not face:
-                continue
-
-            # Find coupling edge
-            coupling_edge_id = face.data.get('coupling_edge')
-            if not coupling_edge_id:
-                for eid in face.edges:
-                    if self.graph._edge_matches_type(eid, 'coupling'):
-                        coupling_edge_id = eid
-                        break
-
-            if not coupling_edge_id:
-                self._add_violation(
-                    rule_name="assurance_requires_b2_anchor",
-                    rule_type=RuleType.FACE_ADJACENCY,
-                    severity=Severity.ERROR,
-                    element_id=fid,
-                    element_type="face",
-                    message="Assurance face has no coupling edge",
-                    details={'edges': face.edges}
-                )
-                continue
-
-            # Trace coupling edges to find b2 anchor
-            visited = {fid}
-            found_b2 = self._trace_to_b2(fid, coupling_edge_id, visited, b2_faces)
-
-            if not found_b2:
-                self._add_violation(
-                    rule_name="assurance_requires_b2_anchor",
-                    rule_type=RuleType.FACE_ADJACENCY,
-                    severity=Severity.WARNING,  # Warning because chain might be incomplete
-                    element_id=fid,
-                    element_type="face",
-                    message="Assurance face cannot trace to b2 anchor through coupling edges",
-                    details={'coupling_edge': coupling_edge_id, 'visited': list(visited)}
-                )
-
-    def _trace_to_b2(
-        self,
-        face_id: str,
-        coupling_edge_id: str,
-        visited: set,
-        b2_faces: set,
-        max_depth: int = 20
-    ) -> bool:
-        """
-        Recursively trace coupling edges to find b2 anchor.
-
-        Returns True if b2 face found, False otherwise.
-        """
-        if len(visited) > max_depth:
-            return False
-
-        # Get faces sharing the coupling edge
-        adjacent_faces = self.graph.get_faces_containing_edge(coupling_edge_id)
-
-        for adj_fid in adjacent_faces:
-            if adj_fid == face_id or adj_fid in visited:
-                continue
-
-            # Check if it's a b2 face
-            if adj_fid in b2_faces:
-                return True
-
-            visited.add(adj_fid)
-
-            # If it's an assurance face, trace further
-            adj_face = self.graph.get_face(adj_fid)
-            if adj_face and self.graph._face_matches_type(adj_fid, 'assurance'):
-                # Find its coupling edge
-                next_coupling = None
-                for eid in adj_face.edges:
-                    if self.graph._edge_matches_type(eid, 'coupling') and eid != coupling_edge_id:
-                        next_coupling = eid
-                        break
-
-                if next_coupling:
-                    if self._trace_to_b2(adj_fid, next_coupling, visited, b2_faces, max_depth):
-                        return True
-
-        return False
 
     # ========== Module Qualification Cascade (Rule 2) ==========
 
