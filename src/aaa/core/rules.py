@@ -342,9 +342,9 @@ class OntologyRuleEngine:
         'validation': (['vertex/doc', 'vertex/spec', 'vertex/guidance', 'vertex/ontology'],
                       ['vertex/guidance']),
         'coupling': (['vertex/spec'], ['vertex/guidance']),
-        # signs/qualifies: signer or b0 (boundary bootstrap) can sign/qualify
-        'signs': (['vertex/signer', 'vertex/b0'], ['vertex/doc', 'vertex/spec', 'vertex/guidance', 'vertex/ontology']),
-        'qualifies': (['vertex/signer', 'vertex/b0'], ['vertex/guidance', 'vertex/module']),
+        # signs/qualifies: only actual signers can sign/qualify (b0 cannot sign)
+        'signs': (['vertex/signer'], ['vertex/doc', 'vertex/spec', 'vertex/guidance', 'vertex/ontology']),
+        'qualifies': (['vertex/signer'], ['vertex/guidance', 'vertex/module']),
         # has-role: actor or signer (signer extends actor) holds a role
         'has-role': (['vertex/actor', 'vertex/signer'], ['vertex/role']),
         # conveys: role grants permission to sign validations against a guidance,

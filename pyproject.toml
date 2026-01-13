@@ -57,6 +57,7 @@ packages = ["src/aaa"]
 [tool.hatch.build.targets.wheel.force-include]
 "src/aaa/templates" = "aaa/templates"
 "src/aaa/foundation" = "aaa/foundation"
+# Charts are included via foundation directory
 
 # Ensure templates are included as package data
 [tool.hatch.build.targets.sdist]

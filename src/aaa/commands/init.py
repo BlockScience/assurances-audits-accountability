@@ -1316,10 +1316,11 @@ def init(ctx, name, minimal, force, github_username, no_bootstrap):
                         shutil.copy2(source, target)
                         click.echo(f"  Copied {filename} to 01_edges/")
 
-            # Copy all foundation faces (all 4 b2 genesis faces)
+            # Copy all foundation faces (b2 genesis faces)
             foundation_faces = bundled_foundation / '02_faces'
             if foundation_faces.exists():
                 foundation_face_files = [
+                    # b2 boundary assurance faces
                     'b2-spec-spec.md',
                     'b2-guidance-guidance.md',
                     'b2-spec-guidance.md',

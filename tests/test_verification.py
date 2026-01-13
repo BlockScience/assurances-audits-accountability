@@ -19,12 +19,16 @@ def get_templates_dir():
 
 
 def test_validation_edges():
-    """Test that all boundary complex validation edges verify successfully."""
+    """Test that all validation edges verify successfully."""
     repo_root = Path(__file__).parent.parent
     templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
+    # Scan both root and foundation directories
     validation_edges = list((repo_root / '01_edges').glob('validation-*.md'))
+    foundation_edges = list((repo_root / 'src' / 'aaa' / 'foundation' / '01_edges').glob('validation-*.md'))
+    validation_edges.extend(foundation_edges)
+
     assert len(validation_edges) >= 4, f"Expected at least 4 validation edges, found {len(validation_edges)}"
 
     for edge_path in validation_edges:
@@ -36,12 +40,16 @@ def test_validation_edges():
 
 
 def test_verification_edges():
-    """Test that all boundary complex verification edges verify successfully."""
+    """Test that all verification edges verify successfully."""
     repo_root = Path(__file__).parent.parent
     templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
+    # Scan both root and foundation directories
     verification_edges = list((repo_root / '01_edges').glob('verification-*.md'))
+    foundation_edges = list((repo_root / 'src' / 'aaa' / 'foundation' / '01_edges').glob('verification-*.md'))
+    verification_edges.extend(foundation_edges)
+
     assert len(verification_edges) >= 4, f"Expected at least 4 verification edges, found {len(verification_edges)}"
 
     for edge_path in verification_edges:

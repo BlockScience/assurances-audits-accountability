@@ -1,11 +1,11 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-13T02:27:38.621516+00:00",
+  "generated": "2026-01-13T04:05:38.551186+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
       "b0:root": {
-        "file": "00_vertices/b0-root.md",
+        "file": "src/aaa/foundation/00_vertices/b0-root.md",
         "type": "vertex/b0",
         "extends": "vertex",
         "id": "b0:root",
@@ -195,7 +195,7 @@
         ]
       },
       "v:guidance:guidance": {
-        "file": "00_vertices/guidance-for-guidance.md",
+        "file": "src/aaa/foundation/00_vertices/guidance-for-guidance.md",
         "type": "vertex/guidance",
         "extends": "doc",
         "id": "v:guidance:guidance",
@@ -329,33 +329,6 @@
           "intellectual-honesty"
         ],
         "dependencies": []
-      },
-      "v:guidance:ontology": {
-        "file": "00_vertices/guidance-for-ontology.md",
-        "type": "vertex/guidance",
-        "extends": "doc",
-        "id": "v:guidance:ontology",
-        "name": "Guidance for Ontology Documents",
-        "tags": [
-          "vertex",
-          "doc",
-          "guidance"
-        ],
-        "version": "1.0.0",
-        "created": "2026-01-11T00:00:00+00:00",
-        "modified": "2026-01-11T00:00:00+00:00",
-        "description": "Quality criteria for evaluating knowledge complex ontology documents",
-        "criteria": [
-          "Type Completeness",
-          "Coherence Rules",
-          "Extension Clarity",
-          "Type Hierarchy Consistency",
-          "Documentation Quality",
-          "Local Rule Verifiability",
-          "Chart Design Quality",
-          "Assurance Completeness"
-        ],
-        "rubric": "excellent/good/needs-improvement"
       },
       "v:guidance:organization": {
         "file": "00_vertices/guidance-for-organization.md",
@@ -620,7 +593,7 @@
         ]
       },
       "v:guidance:spec": {
-        "file": "00_vertices/guidance-for-spec.md",
+        "file": "src/aaa/foundation/00_vertices/guidance-for-spec.md",
         "type": "vertex/guidance",
         "extends": "doc",
         "id": "v:guidance:spec",
@@ -695,24 +668,6 @@
           "v:guidance:purpose",
           "v:guidance:protocol"
         ]
-      },
-      "v:role:admin": {
-        "file": "00_vertices/role-admin.md",
-        "type": "vertex/role",
-        "extends": "property",
-        "id": "v:role:admin",
-        "name": "Administrator",
-        "description": "Role with authority to assign other roles and manage the knowledge complex",
-        "tags": [
-          "vertex",
-          "property",
-          "role",
-          "admin"
-        ],
-        "version": "1.0.0",
-        "created": "2026-01-13T00:20:00+00:00",
-        "modified": "2026-01-13T00:20:00+00:00",
-        "dependencies": []
       },
       "v:doc:runbook-assurance-audit-chart": {
         "file": "00_vertices/runbook-assurance-audit-chart.md",
@@ -1078,7 +1033,7 @@
         ]
       },
       "v:spec:guidance": {
-        "file": "00_vertices/spec-for-guidance.md",
+        "file": "src/aaa/foundation/00_vertices/spec-for-guidance.md",
         "type": "vertex/spec",
         "extends": "doc",
         "id": "v:spec:guidance",
@@ -1201,24 +1156,6 @@
         "created": "2025-12-30T18:00:00+00:00",
         "modified": "2025-12-30T18:00:00+00:00",
         "dependencies": []
-      },
-      "v:spec:ontology": {
-        "file": "00_vertices/spec-for-ontology.md",
-        "type": "vertex/spec",
-        "extends": "doc",
-        "id": "v:spec:ontology",
-        "name": "Specification for Ontology Documents",
-        "tags": [
-          "vertex",
-          "doc",
-          "spec"
-        ],
-        "version": "1.0.0",
-        "created": "2026-01-11T00:00:00+00:00",
-        "modified": "2026-01-11T00:00:00+00:00",
-        "description": "Defines structural requirements for knowledge complex type ontology documents",
-        "schema_type": "yaml",
-        "strictness": "required"
       },
       "v:spec:organization": {
         "file": "00_vertices/spec-for-organization.md",
@@ -1515,7 +1452,7 @@
         ]
       },
       "v:spec:spec": {
-        "file": "00_vertices/spec-for-spec.md",
+        "file": "src/aaa/foundation/00_vertices/spec-for-spec.md",
         "type": "vertex/spec",
         "extends": "doc",
         "id": "v:spec:spec",
@@ -1711,7 +1648,7 @@
         "interface_count": 40
       },
       "v:ontology:base": {
-        "file": "design/ontology-base.md",
+        "file": "src/aaa/foundation/00_vertices/ontology-base.md",
         "type": "vertex/ontology",
         "extends": "doc",
         "id": "v:ontology:base",
@@ -1729,7 +1666,7 @@
         "vertex_type_count": 14,
         "edge_type_count": 18,
         "face_type_count": 11,
-        "local_rule_count": 15,
+        "local_rule_count": 17,
         "chart_type_count": 4
       },
       "v:doc:physical-architecture-knowledge-complex-refactor": {
@@ -1779,11 +1716,95 @@
         "element_count": 12,
         "coverage_status": "complete",
         "trace_date": "2026-01-12T00:00:00+00:00"
+      },
+      "v:guidance:ontology": {
+        "file": "src/aaa/foundation/00_vertices/guidance-for-ontology.md",
+        "type": "vertex/guidance",
+        "extends": "doc",
+        "id": "v:guidance:ontology",
+        "name": "Guidance for Ontology Documents",
+        "tags": [
+          "vertex",
+          "doc",
+          "guidance"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00",
+        "description": "Quality criteria for evaluating knowledge complex ontology documents",
+        "criteria": [
+          "Type Completeness",
+          "Coherence Rules",
+          "Extension Clarity",
+          "Type Hierarchy Consistency",
+          "Documentation Quality",
+          "Local Rule Verifiability",
+          "Chart Design Quality",
+          "Assurance Completeness"
+        ],
+        "rubric": "excellent/good/needs-improvement"
+      },
+      "v:role:admin": {
+        "file": "src/aaa/foundation/00_vertices/role-admin.md",
+        "type": "vertex/role",
+        "extends": "property",
+        "id": "v:role:admin",
+        "name": "Administrator",
+        "description": "Bootstrap administrator role with authority to manage the knowledge complex",
+        "tags": [
+          "vertex",
+          "property",
+          "role",
+          "admin",
+          "genesis"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00",
+        "dependencies": []
+      },
+      "v:signer:admin": {
+        "file": "src/aaa/foundation/00_vertices/signer-admin.md",
+        "type": "vertex/signer",
+        "extends": "actor",
+        "id": "v:signer:admin",
+        "name": "Bootstrap Administrator Signer",
+        "description": "Placeholder signer for foundation - replaced by actual admin during aaa init",
+        "github_username": "ADMIN_USERNAME",
+        "tags": [
+          "vertex",
+          "actor",
+          "signer",
+          "admin",
+          "genesis"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00",
+        "dependencies": []
+      },
+      "v:spec:ontology": {
+        "file": "src/aaa/foundation/00_vertices/spec-for-ontology.md",
+        "type": "vertex/spec",
+        "extends": "doc",
+        "id": "v:spec:ontology",
+        "name": "Specification for Ontology Documents",
+        "tags": [
+          "vertex",
+          "doc",
+          "spec"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-11T00:00:00+00:00",
+        "modified": "2026-01-11T00:00:00+00:00",
+        "description": "Defines structural requirements for knowledge complex type ontology documents",
+        "schema_type": "yaml",
+        "strictness": "required"
       }
     },
     "edges": {
       "b1:couples-GS-root": {
-        "file": "01_edges/b1-couples-GS-root.md",
+        "file": "src/aaa/foundation/01_edges/b1-couples-GS-root.md",
         "type": "edge/b1",
         "extends": "edge",
         "id": "b1:couples-GS-root",
@@ -1805,7 +1826,7 @@
         "modified": "2025-12-27T22:15:00+00:00"
       },
       "b1:couples-SG-root": {
-        "file": "01_edges/b1-couples-SG-root.md",
+        "file": "src/aaa/foundation/01_edges/b1-couples-SG-root.md",
         "type": "edge/b1",
         "extends": "edge",
         "id": "b1:couples-SG-root",
@@ -1827,7 +1848,7 @@
         "modified": "2025-12-27T22:15:00+00:00"
       },
       "b1:self-validation": {
-        "file": "01_edges/b1-self-validation.md",
+        "file": "src/aaa/foundation/01_edges/b1-self-validation.md",
         "type": "edge/b1",
         "extends": "edge",
         "id": "b1:self-validation",
@@ -1849,7 +1870,7 @@
         "modified": "2025-12-27T22:15:00+00:00"
       },
       "b1:self-verification": {
-        "file": "01_edges/b1-self-verification.md",
+        "file": "src/aaa/foundation/01_edges/b1-self-verification.md",
         "type": "edge/b1",
         "extends": "edge",
         "id": "b1:self-verification",
@@ -2006,7 +2027,7 @@
         "modified": "2025-01-11T00:00:00+00:00"
       },
       "e:coupling:guidance": {
-        "file": "01_edges/coupling-guidance.md",
+        "file": "src/aaa/foundation/01_edges/coupling-guidance.md",
         "type": "edge/coupling",
         "extends": "edge",
         "id": "e:coupling:guidance",
@@ -2101,7 +2122,7 @@
         "modified": "2025-12-30T18:00:00+00:00"
       },
       "e:coupling:ontology": {
-        "file": "01_edges/coupling-ontology.md",
+        "file": "src/aaa/foundation/01_edges/coupling-ontology.md",
         "type": "edge/coupling",
         "extends": "edge",
         "id": "e:coupling:ontology",
@@ -2293,7 +2314,7 @@
         "modified": "2025-12-27T16:00:00+00:00"
       },
       "e:coupling:spec": {
-        "file": "01_edges/coupling-spec.md",
+        "file": "src/aaa/foundation/01_edges/coupling-spec.md",
         "type": "edge/coupling",
         "extends": "edge",
         "id": "e:coupling:spec",
@@ -2686,6 +2707,9 @@
         "source_type": "vertex/b0",
         "target_type": "vertex/guidance",
         "orientation": "directed",
+        "credential_type": "axiom",
+        "granted_by": "genesis",
+        "granted_date": "2025-12-27T00:00:00+00:00",
         "tags": [
           "edge",
           "qualifies",
@@ -2708,6 +2732,9 @@
         "source_type": "vertex/b0",
         "target_type": "vertex/guidance",
         "orientation": "directed",
+        "credential_type": "axiom",
+        "granted_by": "genesis",
+        "granted_date": "2025-12-27T00:00:00+00:00",
         "tags": [
           "edge",
           "qualifies",
@@ -3305,26 +3332,27 @@
         "modified": "2025-12-27T21:30:00+00:00"
       },
       "e:validation:guidance-spec:guidance-guidance": {
-        "file": "01_edges/validation-guidance-spec.md",
+        "file": "src/aaa/foundation/01_edges/validation-guidance-spec-guidance-guidance.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:guidance-spec:guidance-guidance",
-        "name": "Validation - Guidance-for-Spec validates against Guidance-for-Guidance",
+        "name": "Validation - guidance-for-spec against guidance-for-guidance",
+        "description": "Guidance-for-spec validates quality against guidance-for-guidance",
         "source": "v:guidance:spec",
         "target": "v:guidance:guidance",
         "source_type": "vertex/guidance",
         "target_type": "vertex/guidance",
         "orientation": "directed",
-        "validator": "guidance-validation-system v1.0.0",
-        "validation_method": "automated",
-        "human_approver": "mzargham",
+        "validation_method": "manual",
+        "validator": "genesis-system",
         "tags": [
           "edge",
-          "validation"
+          "validation",
+          "genesis"
         ],
         "version": "1.0.0",
-        "created": "2025-12-27T21:30:00+00:00",
-        "modified": "2025-12-27T21:30:00+00:00"
+        "created": "2025-12-27T22:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
       },
       "e:validation:lifecycle-guidance:guidance-guidance": {
         "file": "01_edges/validation-lifecycle-guidance_guidance-guidance.md",
@@ -3917,48 +3945,50 @@
         "modified": "2025-01-04T17:00:00+00:00"
       },
       "e:validation:spec-guidance:guidance-spec": {
-        "file": "01_edges/validation-spec-guidance.md",
+        "file": "src/aaa/foundation/01_edges/validation-spec-guidance-guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:spec-guidance:guidance-spec",
-        "name": "Validation - Spec-for-Guidance validates against Guidance-for-Spec",
+        "name": "Validation - spec-for-guidance against guidance-for-spec",
+        "description": "Spec-for-guidance validates quality against guidance-for-spec",
         "source": "v:spec:guidance",
         "target": "v:guidance:spec",
         "source_type": "vertex/spec",
         "target_type": "vertex/guidance",
         "orientation": "directed",
-        "validator": "claude-sonnet-4.5-20250929",
-        "validation_method": "llm-assisted",
-        "llm_model": "claude-sonnet-4.5-20250929",
-        "human_approver": "mzargham",
+        "validation_method": "manual",
+        "validator": "genesis-system",
         "tags": [
           "edge",
-          "validation"
+          "validation",
+          "genesis"
         ],
         "version": "1.0.0",
-        "created": "2025-12-27T21:30:00+00:00",
-        "modified": "2025-12-27T21:30:00+00:00"
+        "created": "2025-12-27T22:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
       },
       "e:validation:spec-spec:guidance-spec": {
-        "file": "01_edges/validation-spec-spec.md",
+        "file": "src/aaa/foundation/01_edges/validation-spec-spec-guidance-spec.md",
         "type": "edge/validation",
         "extends": "edge",
         "id": "e:validation:spec-spec:guidance-spec",
-        "name": "Validation - Spec-for-Spec validates against Guidance-for-Spec",
+        "name": "Validation - spec-for-spec against guidance-for-spec",
+        "description": "Spec-for-spec validates quality against guidance-for-spec",
         "source": "v:spec:spec",
         "target": "v:guidance:spec",
         "source_type": "vertex/spec",
         "target_type": "vertex/guidance",
         "orientation": "directed",
-        "validator": "mzargham",
+        "validator": "genesis",
         "validation_method": "manual",
         "tags": [
           "edge",
-          "validation"
+          "validation",
+          "genesis"
         ],
         "version": "1.0.0",
-        "created": "2025-12-27T21:30:00+00:00",
-        "modified": "2025-12-27T21:30:00+00:00"
+        "created": "2025-12-27T22:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
       },
       "e:validation:system_prompt-compiled:guidance": {
         "file": "01_edges/validation-system_prompt-compiled_guidance.md",
@@ -4362,11 +4392,12 @@
         "modified": "2026-01-11T00:00:00+00:00"
       },
       "e:verification:guidance-guidance:spec-guidance": {
-        "file": "01_edges/verification-guidance-guidance.md",
+        "file": "src/aaa/foundation/01_edges/verification-guidance-guidance-spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:guidance-guidance:spec-guidance",
-        "name": "Verification - Guidance-for-Guidance verifies against Spec-for-Guidance (Self-Verification)",
+        "name": "Verification - guidance-for-guidance against spec-for-guidance",
+        "description": "Guidance-for-guidance verifies structural compliance against spec-for-guidance",
         "source": "v:guidance:guidance",
         "target": "v:spec:guidance",
         "source_type": "vertex/guidance",
@@ -4374,18 +4405,20 @@
         "orientation": "directed",
         "tags": [
           "edge",
-          "verification"
+          "verification",
+          "genesis"
         ],
         "version": "1.0.0",
-        "created": "2025-12-27T20:51:00+00:00",
-        "modified": "2025-12-27T20:51:00+00:00"
+        "created": "2025-12-27T22:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
       },
       "e:verification:guidance-spec:spec-guidance": {
-        "file": "01_edges/verification-guidance-spec.md",
+        "file": "src/aaa/foundation/01_edges/verification-guidance-spec-spec-guidance.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:guidance-spec:spec-guidance",
-        "name": "Verification - Guidance-for-Spec verifies against Spec-for-Guidance",
+        "name": "Verification - guidance-for-spec against spec-for-guidance",
+        "description": "Guidance-for-spec verifies structural compliance against spec-for-guidance",
         "source": "v:guidance:spec",
         "target": "v:spec:guidance",
         "source_type": "vertex/guidance",
@@ -4393,11 +4426,12 @@
         "orientation": "directed",
         "tags": [
           "edge",
-          "verification"
+          "verification",
+          "genesis"
         ],
         "version": "1.0.0",
-        "created": "2025-12-27T20:51:00+00:00",
-        "modified": "2025-12-27T20:51:00+00:00"
+        "created": "2025-12-27T22:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
       },
       "e:verification:lifecycle-digital-transformation:spec-lifecycle": {
         "file": "01_edges/verification-lifecycle-digital-transformation_spec-lifecycle.md",
@@ -4953,11 +4987,12 @@
         "modified": "2025-01-04T17:00:00+00:00"
       },
       "e:verification:spec-guidance:spec-spec": {
-        "file": "01_edges/verification-spec-guidance.md",
+        "file": "src/aaa/foundation/01_edges/verification-spec-guidance-spec-spec.md",
         "type": "edge/verification",
         "extends": "edge",
         "id": "e:verification:spec-guidance:spec-spec",
-        "name": "Verification - Spec-for-Guidance verifies against Spec-for-Spec",
+        "name": "Verification - spec-for-guidance against spec-for-spec",
+        "description": "Spec-for-guidance verifies structural compliance against spec-for-spec",
         "source": "v:spec:guidance",
         "target": "v:spec:spec",
         "source_type": "vertex/spec",
@@ -4965,11 +5000,12 @@
         "orientation": "directed",
         "tags": [
           "edge",
-          "verification"
+          "verification",
+          "genesis"
         ],
         "version": "1.0.0",
-        "created": "2025-12-27T20:51:00+00:00",
-        "modified": "2025-12-27T20:51:00+00:00"
+        "created": "2025-12-27T22:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
       },
       "e:verification:spec-spec:spec-spec": {
         "file": "01_edges/verification-spec-spec.md",
@@ -5073,6 +5109,372 @@
         "version": "1.0.0",
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00"
+      },
+      "e:conveys:admin:guidance-guidance": {
+        "file": "src/aaa/foundation/01_edges/conveys-admin-guidance-guidance.md",
+        "type": "edge/conveys",
+        "extends": "edge",
+        "id": "e:conveys:admin:guidance-guidance",
+        "name": "Conveys - admin role conveys authority for guidance-guidance",
+        "description": "Admin role conveys authority to validate against guidance-for-guidance",
+        "source": "v:role:admin",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/role",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "conveys",
+          "rbac",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:conveys:admin:guidance-ontology": {
+        "file": "src/aaa/foundation/01_edges/conveys-admin-guidance-ontology.md",
+        "type": "edge/conveys",
+        "extends": "edge",
+        "id": "e:conveys:admin:guidance-ontology",
+        "name": "Conveys - admin role conveys authority for guidance-ontology",
+        "description": "Admin role conveys authority to validate against guidance-for-ontology",
+        "source": "v:role:admin",
+        "target": "v:guidance:ontology",
+        "source_type": "vertex/role",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "conveys",
+          "rbac",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:conveys:admin:guidance-spec": {
+        "file": "src/aaa/foundation/01_edges/conveys-admin-guidance-spec.md",
+        "type": "edge/conveys",
+        "extends": "edge",
+        "id": "e:conveys:admin:guidance-spec",
+        "name": "Conveys - admin role conveys authority for guidance-spec",
+        "description": "Admin role conveys authority to validate against guidance-for-spec",
+        "source": "v:role:admin",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/role",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "conveys",
+          "rbac",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:has-role:admin:admin": {
+        "file": "src/aaa/foundation/01_edges/has-role-admin-admin.md",
+        "type": "edge/has-role",
+        "extends": "edge",
+        "id": "e:has-role:admin:admin",
+        "name": "Has Role - admin signer holds admin role",
+        "description": "Bootstrap admin signer holds the admin role",
+        "source": "v:signer:admin",
+        "target": "v:role:admin",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/role",
+        "orientation": "directed",
+        "granted_by": "genesis",
+        "granted_date": "2026-01-13T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "has-role",
+          "rbac",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:qualifies:admin:guidance-guidance": {
+        "file": "src/aaa/foundation/01_edges/qualifies-admin-guidance-guidance.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:admin:guidance-guidance",
+        "name": "Qualifies - admin for guidance-guidance",
+        "description": "Admin signer is qualified to validate against guidance-for-guidance",
+        "source": "v:signer:admin",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "role",
+        "granted_by": "v:role:admin",
+        "granted_date": "2026-01-13T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies",
+          "rbac",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:qualifies:admin:guidance-ontology": {
+        "file": "src/aaa/foundation/01_edges/qualifies-admin-guidance-ontology.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:admin:guidance-ontology",
+        "name": "Qualifies - admin for guidance-ontology",
+        "description": "Admin signer is qualified to validate against guidance-for-ontology",
+        "source": "v:signer:admin",
+        "target": "v:guidance:ontology",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "role",
+        "granted_by": "v:role:admin",
+        "granted_date": "2026-01-13T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies",
+          "rbac",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:qualifies:admin:guidance-spec": {
+        "file": "src/aaa/foundation/01_edges/qualifies-admin-guidance-spec.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:admin:guidance-spec",
+        "name": "Qualifies - admin for guidance-spec",
+        "description": "Admin signer is qualified to validate against guidance-for-spec",
+        "source": "v:signer:admin",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "role",
+        "granted_by": "v:role:admin",
+        "granted_date": "2026-01-13T00:00:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies",
+          "rbac",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:signs:admin:guidance-ontology": {
+        "file": "src/aaa/foundation/01_edges/signs-admin-guidance-ontology.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:admin:guidance-ontology",
+        "name": "Signs - admin signs guidance-for-ontology",
+        "description": "Admin signer signs the guidance-for-ontology validation",
+        "source": "v:signer:admin",
+        "target": "v:guidance:ontology",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "signing_date": "2026-01-13T00:00:00+00:00",
+        "commit_hash": "foundation",
+        "tags": [
+          "edge",
+          "signs",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:signs:admin:ontology-base": {
+        "file": "src/aaa/foundation/01_edges/signs-admin-ontology-base.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:admin:ontology-base",
+        "name": "Signs - admin signs ontology-base",
+        "description": "Admin signer signs the ontology-base validation",
+        "source": "v:signer:admin",
+        "target": "v:ontology:base",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/ontology",
+        "orientation": "directed",
+        "signing_date": "2026-01-13T00:00:00+00:00",
+        "commit_hash": "foundation",
+        "tags": [
+          "edge",
+          "signs",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:signs:admin:spec-ontology": {
+        "file": "src/aaa/foundation/01_edges/signs-admin-spec-ontology.md",
+        "type": "edge/signs",
+        "extends": "edge",
+        "id": "e:signs:admin:spec-ontology",
+        "name": "Signs - admin signs spec-for-ontology",
+        "description": "Admin signer signs the spec-for-ontology validation",
+        "source": "v:signer:admin",
+        "target": "v:spec:ontology",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "signing_date": "2026-01-13T00:00:00+00:00",
+        "commit_hash": "foundation",
+        "tags": [
+          "edge",
+          "signs",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:validation:guidance-ontology:guidance-guidance": {
+        "file": "src/aaa/foundation/01_edges/validation-guidance-ontology-guidance-guidance.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:guidance-ontology:guidance-guidance",
+        "name": "Validation - guidance-for-ontology against guidance-for-guidance",
+        "description": "Guidance-for-ontology validates against guidance-for-guidance quality criteria",
+        "source": "v:guidance:ontology",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "genesis",
+        "validation_method": "manual",
+        "tags": [
+          "edge",
+          "validation",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:validation:ontology-base:guidance-ontology": {
+        "file": "src/aaa/foundation/01_edges/validation-ontology-base-guidance-ontology.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:ontology-base:guidance-ontology",
+        "name": "Validation - ontology-base against guidance-for-ontology",
+        "description": "Ontology-base validates against guidance-for-ontology quality criteria",
+        "source": "v:ontology:base",
+        "target": "v:guidance:ontology",
+        "source_type": "vertex/ontology",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "genesis",
+        "validation_method": "manual",
+        "tags": [
+          "edge",
+          "validation",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:validation:spec-ontology:guidance-spec": {
+        "file": "src/aaa/foundation/01_edges/validation-spec-ontology-guidance-spec.md",
+        "type": "edge/validation",
+        "extends": "edge",
+        "id": "e:validation:spec-ontology:guidance-spec",
+        "name": "Validation - spec-for-ontology against guidance-for-spec",
+        "description": "Spec-for-ontology validates against guidance-for-spec quality criteria",
+        "source": "v:spec:ontology",
+        "target": "v:guidance:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "validator": "genesis",
+        "validation_method": "manual",
+        "tags": [
+          "edge",
+          "validation",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:verification:guidance-ontology:spec-guidance": {
+        "file": "src/aaa/foundation/01_edges/verification-guidance-ontology-spec-guidance.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:guidance-ontology:spec-guidance",
+        "name": "Verification - guidance-for-ontology against spec-for-guidance",
+        "description": "Guidance-for-ontology verifies structural compliance against spec-for-guidance",
+        "source": "v:guidance:ontology",
+        "target": "v:spec:guidance",
+        "source_type": "vertex/guidance",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:verification:ontology-base:spec-ontology": {
+        "file": "src/aaa/foundation/01_edges/verification-ontology-base-spec-ontology.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:ontology-base:spec-ontology",
+        "name": "Verification - ontology-base against spec-for-ontology",
+        "description": "Ontology-base verifies structural compliance against spec-for-ontology",
+        "source": "v:ontology:base",
+        "target": "v:spec:ontology",
+        "source_type": "vertex/ontology",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "e:verification:spec-ontology:spec-spec": {
+        "file": "src/aaa/foundation/01_edges/verification-spec-ontology-spec-spec.md",
+        "type": "edge/verification",
+        "extends": "edge",
+        "id": "e:verification:spec-ontology:spec-spec",
+        "name": "Verification - spec-for-ontology against spec-for-spec",
+        "description": "Spec-for-ontology verifies structural compliance against spec-for-spec",
+        "source": "v:spec:ontology",
+        "target": "v:spec:spec",
+        "source_type": "vertex/spec",
+        "target_type": "vertex/spec",
+        "orientation": "directed",
+        "tags": [
+          "edge",
+          "verification",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
       }
     },
     "faces": {
@@ -6520,68 +6922,6 @@
         "created": "2025-12-27T20:00:00+00:00",
         "modified": "2025-12-27T20:00:00+00:00"
       },
-      "b2:guidance-guidance": {
-        "file": "02_faces/b2-guidance-guidance.md",
-        "type": "face/b2",
-        "extends": "face",
-        "id": "b2:guidance-guidance",
-        "name": "Boundary Face - Guidance-for-Guidance Self-Assurance",
-        "description": "Boundary assurance triangle for guidance-for-guidance using root vertex to resolve self-referential paradox",
-        "vertices": [
-          "b0:root",
-          "v:spec:guidance",
-          "v:guidance:guidance"
-        ],
-        "edges": [
-          "b1:couples-SG-root",
-          "b1:self-validation",
-          "e:verification:guidance-guidance:spec-guidance"
-        ],
-        "orientation": "oriented",
-        "target": "v:guidance:guidance",
-        "status": "ASSURED",
-        "tags": [
-          "face",
-          "boundary",
-          "b2",
-          "assurance",
-          "self-referential"
-        ],
-        "version": "1.0.0",
-        "created": "2025-12-27T22:20:00+00:00",
-        "modified": "2025-12-27T22:20:00+00:00"
-      },
-      "b2:spec-spec": {
-        "file": "02_faces/b2-spec-spec.md",
-        "type": "face/b2",
-        "extends": "face",
-        "id": "b2:spec-spec",
-        "name": "Boundary Face - Spec-for-Spec Self-Assurance",
-        "description": "Boundary assurance triangle for spec-for-spec using root vertex to resolve self-referential paradox",
-        "vertices": [
-          "b0:root",
-          "v:guidance:spec",
-          "v:spec:spec"
-        ],
-        "edges": [
-          "b1:couples-GS-root",
-          "b1:self-verification",
-          "e:validation:spec-spec:guidance-spec"
-        ],
-        "orientation": "oriented",
-        "target": "v:spec:spec",
-        "status": "ASSURED",
-        "tags": [
-          "face",
-          "boundary",
-          "b2",
-          "assurance",
-          "self-referential"
-        ],
-        "version": "1.0.0",
-        "created": "2025-12-27T22:20:00+00:00",
-        "modified": "2025-12-27T22:20:00+00:00"
-      },
       "f:signature:architecture-guidance": {
         "file": "02_faces/signature-architecture-guidance.md",
         "type": "face/signature",
@@ -6993,6 +7333,455 @@
         "version": "1.0.0",
         "created": "2025-12-27T00:00:00+00:00",
         "modified": "2025-12-30T00:00:00+00:00"
+      },
+      "f:assurance:guidance-ontology": {
+        "file": "src/aaa/foundation/02_faces/assurance-guidance-ontology.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:guidance-ontology",
+        "name": "Assurance Face - guidance-for-ontology",
+        "description": "Complete assurance for guidance-for-ontology",
+        "vertices": [
+          "v:guidance:ontology",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "edges": [
+          "e:verification:guidance-ontology:spec-guidance",
+          "e:validation:guidance-ontology:guidance-guidance",
+          "e:coupling:guidance"
+        ],
+        "doc": "v:guidance:ontology",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "verification_edge": "e:verification:guidance-ontology:spec-guidance",
+        "validation_edge": "e:validation:guidance-ontology:guidance-guidance",
+        "coupling_edge": "e:coupling:guidance",
+        "target": "v:guidance:ontology",
+        "orientation": "oriented",
+        "status": "ASSURED",
+        "tags": [
+          "face",
+          "assurance",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "f:assurance:ontology-base": {
+        "file": "src/aaa/foundation/02_faces/assurance-ontology-base.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:ontology-base",
+        "name": "Assurance Face - ontology-base",
+        "description": "Complete assurance for ontology-base",
+        "vertices": [
+          "v:ontology:base",
+          "v:spec:ontology",
+          "v:guidance:ontology"
+        ],
+        "edges": [
+          "e:verification:ontology-base:spec-ontology",
+          "e:validation:ontology-base:guidance-ontology",
+          "e:coupling:ontology"
+        ],
+        "doc": "v:ontology:base",
+        "spec": "v:spec:ontology",
+        "guidance": "v:guidance:ontology",
+        "verification_edge": "e:verification:ontology-base:spec-ontology",
+        "validation_edge": "e:validation:ontology-base:guidance-ontology",
+        "coupling_edge": "e:coupling:ontology",
+        "target": "v:ontology:base",
+        "orientation": "oriented",
+        "status": "ASSURED",
+        "tags": [
+          "face",
+          "assurance",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "f:assurance:spec-ontology": {
+        "file": "src/aaa/foundation/02_faces/assurance-spec-ontology.md",
+        "type": "face/assurance",
+        "extends": "face",
+        "id": "f:assurance:spec-ontology",
+        "name": "Assurance Face - spec-for-ontology",
+        "description": "Complete assurance for spec-for-ontology",
+        "vertices": [
+          "v:spec:ontology",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "edges": [
+          "e:verification:spec-ontology:spec-spec",
+          "e:validation:spec-ontology:guidance-spec",
+          "e:coupling:spec"
+        ],
+        "doc": "v:spec:ontology",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "verification_edge": "e:verification:spec-ontology:spec-spec",
+        "validation_edge": "e:validation:spec-ontology:guidance-spec",
+        "coupling_edge": "e:coupling:spec",
+        "target": "v:spec:ontology",
+        "orientation": "oriented",
+        "status": "ASSURED",
+        "tags": [
+          "face",
+          "assurance",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "f:authorization:admin:guidance-guidance": {
+        "file": "src/aaa/foundation/02_faces/authorization-admin-guidance-guidance.md",
+        "type": "face/authorization",
+        "extends": "face",
+        "id": "f:authorization:admin:guidance-guidance",
+        "name": "Authorization Face - admin for guidance-guidance",
+        "description": "Proves admin's qualification for guidance-guidance via admin role",
+        "vertices": [
+          "v:signer:admin",
+          "v:role:admin",
+          "v:guidance:guidance"
+        ],
+        "edges": [
+          "e:has-role:admin:admin",
+          "e:conveys:admin:guidance-guidance",
+          "e:qualifies:admin:guidance-guidance"
+        ],
+        "has_role_edge": "e:has-role:admin:admin",
+        "conveys_edge": "e:conveys:admin:guidance-guidance",
+        "qualifies_edge": "e:qualifies:admin:guidance-guidance",
+        "signer": "v:signer:admin",
+        "role": "v:role:admin",
+        "guidance": "v:guidance:guidance",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "authorization",
+          "rbac",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "f:authorization:admin:guidance-ontology": {
+        "file": "src/aaa/foundation/02_faces/authorization-admin-guidance-ontology.md",
+        "type": "face/authorization",
+        "extends": "face",
+        "id": "f:authorization:admin:guidance-ontology",
+        "name": "Authorization Face - admin for guidance-ontology",
+        "description": "Proves admin's qualification for guidance-ontology via admin role",
+        "vertices": [
+          "v:signer:admin",
+          "v:role:admin",
+          "v:guidance:ontology"
+        ],
+        "edges": [
+          "e:has-role:admin:admin",
+          "e:conveys:admin:guidance-ontology",
+          "e:qualifies:admin:guidance-ontology"
+        ],
+        "has_role_edge": "e:has-role:admin:admin",
+        "conveys_edge": "e:conveys:admin:guidance-ontology",
+        "qualifies_edge": "e:qualifies:admin:guidance-ontology",
+        "signer": "v:signer:admin",
+        "role": "v:role:admin",
+        "guidance": "v:guidance:ontology",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "authorization",
+          "rbac",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "f:authorization:admin:guidance-spec": {
+        "file": "src/aaa/foundation/02_faces/authorization-admin-guidance-spec.md",
+        "type": "face/authorization",
+        "extends": "face",
+        "id": "f:authorization:admin:guidance-spec",
+        "name": "Authorization Face - admin for guidance-spec",
+        "description": "Proves admin's qualification for guidance-spec via admin role",
+        "vertices": [
+          "v:signer:admin",
+          "v:role:admin",
+          "v:guidance:spec"
+        ],
+        "edges": [
+          "e:has-role:admin:admin",
+          "e:conveys:admin:guidance-spec",
+          "e:qualifies:admin:guidance-spec"
+        ],
+        "has_role_edge": "e:has-role:admin:admin",
+        "conveys_edge": "e:conveys:admin:guidance-spec",
+        "qualifies_edge": "e:qualifies:admin:guidance-spec",
+        "signer": "v:signer:admin",
+        "role": "v:role:admin",
+        "guidance": "v:guidance:spec",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "authorization",
+          "rbac",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "b2:guidance-guidance": {
+        "file": "src/aaa/foundation/02_faces/b2-guidance-guidance.md",
+        "type": "face/b2",
+        "extends": "face",
+        "id": "b2:guidance-guidance",
+        "name": "Boundary Face - Guidance-for-Guidance Self-Assurance",
+        "description": "Boundary assurance triangle for guidance-for-guidance using root vertex to resolve self-referential paradox",
+        "vertices": [
+          "b0:root",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "edges": [
+          "b1:couples-SG-root",
+          "b1:self-validation",
+          "e:verification:guidance-guidance:spec-guidance"
+        ],
+        "orientation": "oriented",
+        "target": "v:guidance:guidance",
+        "status": "ASSURED",
+        "tags": [
+          "face",
+          "boundary",
+          "b2",
+          "assurance",
+          "self-referential"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T22:20:00+00:00",
+        "modified": "2025-12-27T22:20:00+00:00"
+      },
+      "b2:guidance-spec": {
+        "file": "src/aaa/foundation/02_faces/b2-guidance-spec.md",
+        "type": "face/b2",
+        "extends": "face",
+        "id": "b2:guidance-spec",
+        "name": "Boundary Face - Guidance-for-Spec Genesis Assurance",
+        "description": "Genesis assurance for guidance-for-spec - foundational document exempt from signature requirements",
+        "vertices": [
+          "v:guidance:spec",
+          "v:spec:guidance",
+          "v:guidance:guidance"
+        ],
+        "edges": [
+          "e:coupling:guidance",
+          "e:verification:guidance-spec:spec-guidance",
+          "e:validation:guidance-spec:guidance-guidance"
+        ],
+        "orientation": "oriented",
+        "target": "v:guidance:spec",
+        "spec": "v:spec:guidance",
+        "guidance": "v:guidance:guidance",
+        "coupling_edge": "e:coupling:guidance",
+        "verification_edge": "e:verification:guidance-spec:spec-guidance",
+        "validation_edge": "e:validation:guidance-spec:guidance-guidance",
+        "status": "ASSURED",
+        "tags": [
+          "face",
+          "boundary",
+          "b2",
+          "assurance",
+          "genesis"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T22:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "b2:spec-guidance": {
+        "file": "src/aaa/foundation/02_faces/b2-spec-guidance.md",
+        "type": "face/b2",
+        "extends": "face",
+        "id": "b2:spec-guidance",
+        "name": "Boundary Face - Spec-for-Guidance Genesis Assurance",
+        "description": "Genesis assurance for spec-for-guidance - foundational document exempt from signature requirements",
+        "vertices": [
+          "v:spec:guidance",
+          "v:spec:spec",
+          "v:guidance:spec"
+        ],
+        "edges": [
+          "e:coupling:spec",
+          "e:verification:spec-guidance:spec-spec",
+          "e:validation:spec-guidance:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "target": "v:spec:guidance",
+        "spec": "v:spec:spec",
+        "guidance": "v:guidance:spec",
+        "coupling_edge": "e:coupling:spec",
+        "verification_edge": "e:verification:spec-guidance:spec-spec",
+        "validation_edge": "e:validation:spec-guidance:guidance-spec",
+        "status": "ASSURED",
+        "tags": [
+          "face",
+          "boundary",
+          "b2",
+          "assurance",
+          "genesis"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T22:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "b2:spec-spec": {
+        "file": "src/aaa/foundation/02_faces/b2-spec-spec.md",
+        "type": "face/b2",
+        "extends": "face",
+        "id": "b2:spec-spec",
+        "name": "Boundary Face - Spec-for-Spec Self-Assurance",
+        "description": "Boundary assurance triangle for spec-for-spec using root vertex to resolve self-referential paradox",
+        "vertices": [
+          "b0:root",
+          "v:guidance:spec",
+          "v:spec:spec"
+        ],
+        "edges": [
+          "b1:couples-GS-root",
+          "b1:self-verification",
+          "e:validation:spec-spec:guidance-spec"
+        ],
+        "orientation": "oriented",
+        "target": "v:spec:spec",
+        "status": "ASSURED",
+        "tags": [
+          "face",
+          "boundary",
+          "b2",
+          "assurance",
+          "self-referential"
+        ],
+        "version": "1.0.0",
+        "created": "2025-12-27T22:20:00+00:00",
+        "modified": "2025-12-27T22:20:00+00:00"
+      },
+      "f:signature:guidance-ontology": {
+        "file": "src/aaa/foundation/02_faces/signature-guidance-ontology.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:guidance-ontology",
+        "name": "Signature Face - guidance-for-ontology",
+        "description": "Admin signature for guidance-for-ontology validation",
+        "vertices": [
+          "v:guidance:ontology",
+          "v:guidance:guidance",
+          "v:signer:admin"
+        ],
+        "doc": "v:guidance:ontology",
+        "guidance": "v:guidance:guidance",
+        "signer": "v:signer:admin",
+        "edges": [
+          "e:validation:guidance-ontology:guidance-guidance",
+          "e:qualifies:admin:guidance-guidance",
+          "e:signs:admin:guidance-ontology"
+        ],
+        "validation_edge": "e:validation:guidance-ontology:guidance-guidance",
+        "qualifies_edge": "e:qualifies:admin:guidance-guidance",
+        "signs_edge": "e:signs:admin:guidance-ontology",
+        "signing_date": "2026-01-13T00:00:00+00:00",
+        "commit_hash": "foundation",
+        "assurance_face": "f:assurance:guidance-ontology",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "f:signature:ontology-base": {
+        "file": "src/aaa/foundation/02_faces/signature-ontology-base.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:ontology-base",
+        "name": "Signature Face - ontology-base",
+        "description": "Admin signature for ontology-base validation",
+        "vertices": [
+          "v:ontology:base",
+          "v:guidance:ontology",
+          "v:signer:admin"
+        ],
+        "doc": "v:ontology:base",
+        "guidance": "v:guidance:ontology",
+        "signer": "v:signer:admin",
+        "edges": [
+          "e:validation:ontology-base:guidance-ontology",
+          "e:qualifies:admin:guidance-ontology",
+          "e:signs:admin:ontology-base"
+        ],
+        "validation_edge": "e:validation:ontology-base:guidance-ontology",
+        "qualifies_edge": "e:qualifies:admin:guidance-ontology",
+        "signs_edge": "e:signs:admin:ontology-base",
+        "signing_date": "2026-01-13T00:00:00+00:00",
+        "commit_hash": "foundation",
+        "assurance_face": "f:assurance:ontology-base",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "f:signature:spec-ontology": {
+        "file": "src/aaa/foundation/02_faces/signature-spec-ontology.md",
+        "type": "face/signature",
+        "extends": "face",
+        "id": "f:signature:spec-ontology",
+        "name": "Signature Face - spec-for-ontology",
+        "description": "Admin signature for spec-for-ontology validation",
+        "vertices": [
+          "v:spec:ontology",
+          "v:guidance:spec",
+          "v:signer:admin"
+        ],
+        "doc": "v:spec:ontology",
+        "guidance": "v:guidance:spec",
+        "signer": "v:signer:admin",
+        "edges": [
+          "e:validation:spec-ontology:guidance-spec",
+          "e:qualifies:admin:guidance-spec",
+          "e:signs:admin:spec-ontology"
+        ],
+        "validation_edge": "e:validation:spec-ontology:guidance-spec",
+        "qualifies_edge": "e:qualifies:admin:guidance-spec",
+        "signs_edge": "e:signs:admin:spec-ontology",
+        "signing_date": "2026-01-13T00:00:00+00:00",
+        "commit_hash": "foundation",
+        "assurance_face": "f:assurance:spec-ontology",
+        "orientation": "oriented",
+        "tags": [
+          "face",
+          "signature",
+          "foundation"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
       }
     },
     "charts": {
@@ -7060,6 +7849,142 @@
         "created": "2025-12-27T22:00:00+00:00",
         "modified": "2025-12-27T22:30:00+00:00"
       },
+      "c:foundation": {
+        "file": "charts/foundation/foundation.md",
+        "type": "chart/chart",
+        "extends": "doc",
+        "id": "c:foundation",
+        "name": "Foundation Chart - Complete Genesis Complex",
+        "description": "The foundation chart containing all genesis elements including ontology layer with full RBAC",
+        "constructed_by": "genesis",
+        "construction_method": "foundation",
+        "construction_date": "2026-01-13T00:00:00+00:00",
+        "purpose": "Verify that the bundled foundation elements form a valid simplicial complex with full RBAC",
+        "scope": "Complete foundation with boundary complex + ontology layer + RBAC",
+        "elements": {
+          "vertices": [
+            "b0:root",
+            "v:spec:spec",
+            "v:spec:guidance",
+            "v:guidance:spec",
+            "v:guidance:guidance",
+            "v:spec:ontology",
+            "v:guidance:ontology",
+            "v:ontology:base",
+            "v:signer:admin",
+            "v:role:admin"
+          ],
+          "edges": [
+            "e:coupling:spec",
+            "e:coupling:guidance",
+            "e:coupling:ontology",
+            "b1:self-verification",
+            "b1:self-validation",
+            "b1:couples-GS-root",
+            "b1:couples-SG-root",
+            "e:verification:spec-guidance:spec-spec",
+            "e:validation:spec-guidance:guidance-spec",
+            "e:verification:guidance-spec:spec-guidance",
+            "e:validation:guidance-spec:guidance-guidance",
+            "e:validation:spec-spec:guidance-spec",
+            "e:verification:guidance-guidance:spec-guidance",
+            "e:verification:spec-ontology:spec-spec",
+            "e:validation:spec-ontology:guidance-spec",
+            "e:verification:guidance-ontology:spec-guidance",
+            "e:validation:guidance-ontology:guidance-guidance",
+            "e:verification:ontology-base:spec-ontology",
+            "e:validation:ontology-base:guidance-ontology",
+            "e:has-role:admin:admin",
+            "e:conveys:admin:guidance-spec",
+            "e:conveys:admin:guidance-guidance",
+            "e:conveys:admin:guidance-ontology",
+            "e:qualifies:admin:guidance-spec",
+            "e:qualifies:admin:guidance-guidance",
+            "e:qualifies:admin:guidance-ontology",
+            "e:signs:admin:spec-ontology",
+            "e:signs:admin:guidance-ontology",
+            "e:signs:admin:ontology-base"
+          ],
+          "faces": [
+            "b2:spec-spec",
+            "b2:guidance-guidance",
+            "b2:spec-guidance",
+            "b2:guidance-spec",
+            "f:assurance:spec-ontology",
+            "f:assurance:guidance-ontology",
+            "f:assurance:ontology-base",
+            "f:signature:spec-ontology",
+            "f:signature:guidance-ontology",
+            "f:signature:ontology-base",
+            "f:authorization:admin:guidance-spec",
+            "f:authorization:admin:guidance-guidance",
+            "f:authorization:admin:guidance-ontology"
+          ]
+        },
+        "tags": [
+          "chart",
+          "foundation",
+          "genesis",
+          "ontology",
+          "rbac"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:00:00+00:00",
+        "modified": "2026-01-13T00:00:00+00:00"
+      },
+      "c:genesis-complex": {
+        "file": "charts/genesis-complex/genesis-complex.md",
+        "type": "chart/chart",
+        "extends": "doc",
+        "id": "c:genesis-complex",
+        "name": "Genesis Complex - Foundation Boundary Complex",
+        "description": "The minimal foundation seed complex containing boundary vertices, edges, and faces that resolve self-referential assurance",
+        "constructed_by": "genesis",
+        "construction_method": "foundation",
+        "construction_date": "2025-01-01T00:00:00+00:00",
+        "purpose": "Provide the foundational seed complex that enables self-referential spec and guidance documents to be assured without circular dependencies",
+        "scope": "7 vertices (root + 4 boundary + 2 ontology), 11 edges (3 coupling + 4 boundary b1 + 4 genesis), 4 faces (4 boundary b2)",
+        "elements": {
+          "vertices": [
+            "b0:root",
+            "v:spec:spec",
+            "v:guidance:spec",
+            "v:spec:guidance",
+            "v:guidance:guidance",
+            "v:spec:ontology",
+            "v:guidance:ontology"
+          ],
+          "edges": [
+            "e:coupling:spec",
+            "e:coupling:guidance",
+            "e:coupling:ontology",
+            "b1:self-verification",
+            "b1:self-validation",
+            "b1:couples-GS-root",
+            "b1:couples-SG-root",
+            "e:verification:spec-guidance:spec-spec",
+            "e:validation:spec-guidance:guidance-spec",
+            "e:verification:guidance-spec:spec-guidance",
+            "e:validation:guidance-spec:guidance-guidance"
+          ],
+          "faces": [
+            "b2:spec-spec",
+            "b2:guidance-guidance",
+            "b2:spec-guidance",
+            "b2:guidance-spec"
+          ]
+        },
+        "tags": [
+          "chart",
+          "genesis",
+          "foundation",
+          "boundary-complex",
+          "seed"
+        ],
+        "version": "1.0.0",
+        "created": "2025-01-01T00:00:00+00:00",
+        "modified": "2025-01-01T00:00:00+00:00"
+      },
       "c:test-tetrahedron": {
         "file": "charts/test-tetrahedron/test-tetrahedron.md",
         "type": "chart/chart",
@@ -7103,10 +8028,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 82,
-    "edge_count": 149,
-    "face_count": 55,
-    "chart_count": 2,
-    "euler_characteristic": -12
+    "vertex_count": 89,
+    "edge_count": 182,
+    "face_count": 66,
+    "chart_count": 4,
+    "euler_characteristic": -27
   }
 }

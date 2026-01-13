@@ -50,13 +50,18 @@ def calculate_euler_characteristic(vertices: List, edges: List, faces: List) -> 
     return len(vertices) - len(edges) + len(faces)
 
 
-def build_cache(root_path: Path, output_path: Path = None) -> Dict[str, Any]:
+def build_cache(root_path: Path, output_path: Path = None, include_foundation: bool = True) -> Dict[str, Any]:
     """
     Build complex.json cache from directory structure.
+
+    Scans multiple source directories:
+    - Root directories: 00_vertices/, 01_edges/, 02_faces/, charts/, design/
+    - Foundation directory (if include_foundation=True): src/aaa/foundation/
 
     Args:
         root_path: Root directory containing element directories
         output_path: Optional path for complex.json (defaults to root_path/complex.json)
+        include_foundation: Whether to include bundled foundation elements (default True)
 
     Returns:
         Cache dictionary
@@ -70,19 +75,39 @@ def build_cache(root_path: Path, output_path: Path = None) -> Dict[str, Any]:
     # Parse all directories
     print(f"Building cache for: {root_path}")
 
+    # Root directories
     vertices_dir = root_path / '00_vertices'
     design_dir = root_path / 'design'
     edges_dir = root_path / '01_edges'
     faces_dir = root_path / '02_faces'
     charts_dir = root_path / 'charts'
 
-    # Parse vertices from both 00_vertices/ and design/
+    # Foundation directories (bundled with package)
+    foundation_dir = root_path / 'src' / 'aaa' / 'foundation'
+    foundation_vertices_dir = foundation_dir / '00_vertices'
+    foundation_edges_dir = foundation_dir / '01_edges'
+    foundation_faces_dir = foundation_dir / '02_faces'
+
+    # Parse vertices from root, design, and optionally foundation
     vertices = parse_directory(vertices_dir, 'vertex')
     design_vertices = parse_directory(design_dir, 'vertex')
     vertices.extend(design_vertices)
+    if include_foundation and foundation_vertices_dir.exists():
+        foundation_vertices = parse_directory(foundation_vertices_dir, 'vertex')
+        vertices.extend(foundation_vertices)
 
+    # Parse edges from root and optionally foundation
     edges = parse_directory(edges_dir, 'edge')
+    if include_foundation and foundation_edges_dir.exists():
+        foundation_edges = parse_directory(foundation_edges_dir, 'edge')
+        edges.extend(foundation_edges)
+
+    # Parse faces from root and optionally foundation
     faces = parse_directory(faces_dir, 'face')
+    if include_foundation and foundation_faces_dir.exists():
+        foundation_faces = parse_directory(foundation_faces_dir, 'face')
+        faces.extend(foundation_faces)
+
     charts = parse_directory(charts_dir, 'chart')
 
     print(f"  Parsed {len(vertices)} vertices")

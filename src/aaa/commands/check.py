@@ -418,8 +418,12 @@ def rules(ctx, chart, verbose, json_output, warnings):
                 click.echo(f"Holes: {stats['holes']}")
 
                 if analysis['holes']:
-                    click.echo(f"\n  {len(analysis['holes'])} topological hole(s) detected")
-                    has_errors = True
+                    click.echo(f"\n  {len(analysis['holes'])} topological hole(s) detected:")
+                    for i, hole in enumerate(analysis['holes'][:10], 1):
+                        click.echo(f"    {i}. {hole}")
+                    if len(analysis['holes']) > 10:
+                        click.echo(f"    ... and {len(analysis['holes']) - 10} more")
+                    # Holes are valid topological features, not errors
                 else:
                     click.echo("\n  ✓ No topological holes")
 

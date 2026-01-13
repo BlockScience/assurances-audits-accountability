@@ -17,18 +17,23 @@ from aaa.core import build_cache as do_build_cache
 @click.command()
 @click.argument('path', required=False, type=click.Path(exists=True))
 @click.option('--output', '-o', default='complex.json', help='Output file path')
+@click.option('--no-foundation', is_flag=True, help='Exclude bundled foundation elements')
 @click.option('--verbose', '-v', is_flag=True, help='Show detailed output')
 @click.pass_context
-def build(ctx, path, output, verbose):
+def build(ctx, path, output, no_foundation, verbose):
     """Build the complex.json cache from markdown files.
 
     Scans the specified path (or repository root) for vertices, edges, faces,
     and charts, parses them, and generates a JSON cache file.
 
+    By default, includes bundled foundation elements from src/aaa/foundation/.
+    Use --no-foundation to exclude them.
+
     \b
     Examples:
         aaa build                        # Build cache for repo root
         aaa build -o my-cache.json       # Custom output path
+        aaa build --no-foundation        # Exclude foundation elements
         aaa build examples/incose-paper  # Build cache for example
     """
     repo_root = ctx.obj.get('repo_root', Path.cwd())
@@ -55,7 +60,8 @@ def build(ctx, path, output, verbose):
         output_path = build_root / output
 
         # build_cache already prints progress and writes the file
-        cache_data = do_build_cache(build_root, output_path)
+        include_foundation = not no_foundation
+        cache_data = do_build_cache(build_root, output_path, include_foundation=include_foundation)
 
         if not cache_data:
             click.echo("Error: Failed to build cache", err=True)
