@@ -1,0 +1,70 @@
+# PPP Domain Pack - Persona-Purpose-Protocol Framework
+# This pack provides document types for defining AI system configurations
+
+name: ppp
+version: 1.0.0
+description: |
+  Persona-Purpose-Protocol framework for AI system documentation.
+  Defines three coupled document types that together specify an AI assistant's
+  identity (persona), objectives (purpose), and operational procedures (protocol).
+
+dependencies:
+  - foundation  # requires base ontology and genesis elements
+
+# Ontology extensions (vertex types this pack introduces)
+ontology:
+  vertex_types:
+    persona:
+      extends: doc
+      description: Defines AI assistant identity, expertise, and communication style
+      coupled_with: [purpose, protocol]
+    purpose:
+      extends: doc
+      description: Defines objectives, deliverables, and success criteria
+      coupled_with: [persona, protocol]
+    protocol:
+      extends: doc
+      description: Defines operational procedures and workflows
+      coupled_with: [persona, purpose]
+    actor:
+      extends: doc
+      description: Named entity that can perform actions (broader than persona)
+    system-prompt:
+      extends: doc
+      description: Compiled system prompt combining persona + purpose + protocol
+
+  edge_types: []  # uses standard verification/validation/coupling
+
+  face_types: []  # uses standard assurance faces
+
+# Domain-specific rules
+rules:
+  # Rule: PPP documents should form complete triads
+  ppp_triad_completeness:
+    description: A persona should have corresponding purpose and protocol
+    severity: warning
+
+  # Rule: System prompts should reference their source PPP documents
+  system_prompt_sources:
+    description: System prompts should link to source persona, purpose, protocol
+    severity: warning
+
+# Demo charts that exercise this pack's rules
+demo_charts:
+  - charts/demo-ppp-triad.md
+
+# Paths within this pack
+paths:
+  vertices: content/ppp/00_vertices
+  edges: content/ppp/01_edges
+  faces: content/ppp/02_faces
+  charts: content/ppp/charts
+
+# Pack metadata
+metadata:
+  author: mzargham
+  created: 2026-01-13
+  topics:
+    - ai-configuration
+    - system-prompts
+    - persona-design

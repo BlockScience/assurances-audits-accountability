@@ -1,0 +1,151 @@
+# Content Registry
+# Defines directories that contain knowledge complex elements
+# Used by cache builder and other tools to locate content
+
+version: "1.0"
+
+# Domain packs - each domain has a pack.yaml with full metadata
+# This registry provides quick lookup; pack.yaml has authoritative details
+packs:
+  ppp:
+    manifest: content/ppp/pack.yaml
+    dependencies: [foundation]
+  meta:
+    manifest: content/meta/pack.yaml
+    dependencies: [foundation]
+  rbac:
+    manifest: content/rbac/pack.yaml
+    dependencies: [foundation]
+  architecture:
+    manifest: content/architecture/pack.yaml
+    dependencies: [foundation, ppp, meta]
+  planning:
+    manifest: content/planning/pack.yaml
+    dependencies: [foundation, ppp, meta, architecture]
+  learning:
+    manifest: content/learning/pack.yaml
+    dependencies: [foundation, ppp, meta, rbac, planning]
+  misc:
+    manifest: content/misc/pack.yaml
+    dependencies: [foundation]
+
+# Content domains and their directories
+domains:
+  # PPP Framework: Persona, Purpose, Protocol
+  ppp:
+    description: "Persona, Purpose, Protocol framework documents"
+    pack: content/ppp/pack.yaml
+    topics:
+      - persona
+      - purpose
+      - protocol
+      - actor
+      - system-prompt
+    paths:
+      vertices: content/ppp/00_vertices
+      edges: content/ppp/01_edges
+      faces: content/ppp/02_faces
+
+  # Architecture documentation
+  architecture:
+    description: "System architecture documents (conceptual, functional, logical, physical)"
+    topics:
+      - architecture
+      - conceptual-architecture
+      - functional-architecture
+      - logical-architecture
+      - physical-architecture
+      - field-survey
+      - novel-contributions
+      - requirements-trace
+    paths:
+      vertices: content/architecture/00_vertices
+      edges: content/architecture/01_edges
+      faces: content/architecture/02_faces
+      docs: content/architecture  # design documents live here
+
+  # Planning and lifecycle
+  planning:
+    description: "Program planning and lifecycle management"
+    topics:
+      - lifecycle
+      - program-plan
+      - program-memo
+      - implementation-plan
+    paths:
+      vertices: content/planning/00_vertices
+      edges: content/planning/01_edges
+      faces: content/planning/02_faces
+      impl-plans: content/planning/impl-plans
+
+  # Learning and education
+  learning:
+    description: "Educational content, syllabi, and skill tracking"
+    topics:
+      - student
+      - skill
+      - syllabus
+      - learning-module
+    paths:
+      vertices: content/learning/00_vertices
+      edges: content/learning/01_edges
+      faces: content/learning/02_faces
+
+  # Meta-level specifications
+  meta:
+    description: "Specifications and guidance for document types, charts, assurance"
+    topics:
+      - spec
+      - guidance
+      - charts
+      - assurance-audits
+      - assured-signed-chart
+      - runbook
+      - property
+      - organization
+      - repository-policy
+      - literature-review
+    paths:
+      vertices: content/meta/00_vertices
+      edges: content/meta/01_edges
+      faces: content/meta/02_faces
+
+  # RBAC and authorization
+  rbac:
+    description: "Role-based access control, signers, and authorization"
+    topics:
+      - signer
+      - signs
+      - qualifies
+      - signature
+      - inherits
+    paths:
+      vertices: content/rbac/00_vertices
+      edges: content/rbac/01_edges
+      faces: content/rbac/02_faces
+
+  # Miscellaneous / test content
+  misc:
+    description: "Test charts and miscellaneous content"
+    topics:
+      - test
+    paths:
+      vertices: content/misc/00_vertices
+      edges: content/misc/01_edges
+      faces: content/misc/02_faces
+
+# Root directories (boundary elements only after reorganization)
+root:
+  description: "Root boundary elements (b0, b1)"
+  paths:
+    vertices: 00_vertices
+    edges: 01_edges
+    faces: 02_faces
+
+# Foundation (bundled with package)
+foundation:
+  description: "Genesis bootstrap elements bundled with aaa package"
+  paths:
+    vertices: src/aaa/foundation/00_vertices
+    edges: src/aaa/foundation/01_edges
+    faces: src/aaa/foundation/02_faces

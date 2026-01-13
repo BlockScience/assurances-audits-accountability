@@ -21,6 +21,8 @@ coupling_edge: e:coupling:guidance
 target: v:guidance:ontology
 orientation: oriented
 status: ASSURED
+assurer: genesis
+assurance_method: manual
 tags:
   - face
   - assurance

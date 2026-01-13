@@ -1,0 +1,33 @@
+# Misc Domain Pack - Test and Miscellaneous Content
+# This pack holds test fixtures and content that doesn't fit elsewhere
+
+name: misc
+version: 1.0.0
+description: |
+  Test fixtures and miscellaneous content.
+  Contains test charts and elements that don't fit into other domain packs.
+
+dependencies:
+  - foundation
+
+ontology:
+  vertex_types: {}
+  edge_types: {}
+  face_types: {}
+
+rules: {}
+
+demo_charts:
+  - charts/test-tetrahedron/test-tetrahedron.md
+
+paths:
+  vertices: content/misc/00_vertices
+  edges: content/misc/01_edges
+  faces: content/misc/02_faces
+
+metadata:
+  author: mzargham
+  created: 2026-01-13
+  topics:
+    - testing
+    - fixtures

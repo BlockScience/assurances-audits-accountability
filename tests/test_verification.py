@@ -24,8 +24,11 @@ def test_validation_edges():
     templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
-    # Scan both root and foundation directories
+    # Scan all content directories for validation edges
     validation_edges = list((repo_root / '01_edges').glob('validation-*.md'))
+    for content_dir in (repo_root / 'content').glob('*/01_edges'):
+        validation_edges.extend(content_dir.glob('validation-*.md'))
+    # Also check foundation
     foundation_edges = list((repo_root / 'src' / 'aaa' / 'foundation' / '01_edges').glob('validation-*.md'))
     validation_edges.extend(foundation_edges)
 
@@ -45,8 +48,11 @@ def test_verification_edges():
     templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
-    # Scan both root and foundation directories
+    # Scan all content directories for verification edges
     verification_edges = list((repo_root / '01_edges').glob('verification-*.md'))
+    for content_dir in (repo_root / 'content').glob('*/01_edges'):
+        verification_edges.extend(content_dir.glob('verification-*.md'))
+    # Also check foundation
     foundation_edges = list((repo_root / 'src' / 'aaa' / 'foundation' / '01_edges').glob('verification-*.md'))
     verification_edges.extend(foundation_edges)
 
@@ -66,7 +72,14 @@ def test_coupling_edges():
     templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
+    # Scan all content directories for coupling edges
     coupling_edges = list((repo_root / '01_edges').glob('coupling-*.md'))
+    for content_dir in (repo_root / 'content').glob('*/01_edges'):
+        coupling_edges.extend(content_dir.glob('coupling-*.md'))
+    # Also check foundation
+    foundation_edges = list((repo_root / 'src' / 'aaa' / 'foundation' / '01_edges').glob('coupling-*.md'))
+    coupling_edges.extend(foundation_edges)
+
     assert len(coupling_edges) >= 2, f"Expected at least 2 coupling edges, found {len(coupling_edges)}"
 
     for edge_path in coupling_edges:
@@ -83,7 +96,14 @@ def test_assurance_faces():
     templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
+    # Scan all content directories for assurance faces
     assurance_faces = list((repo_root / '02_faces').glob('assurance-*.md'))
+    for content_dir in (repo_root / 'content').glob('*/02_faces'):
+        assurance_faces.extend(content_dir.glob('assurance-*.md'))
+    # Also check foundation
+    foundation_faces = list((repo_root / 'src' / 'aaa' / 'foundation' / '02_faces').glob('assurance-*.md'))
+    assurance_faces.extend(foundation_faces)
+
     assert len(assurance_faces) >= 4, f"Expected at least 4 assurance faces, found {len(assurance_faces)}"
 
     for face_path in assurance_faces:

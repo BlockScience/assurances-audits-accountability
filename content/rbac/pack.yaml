@@ -1,0 +1,72 @@
+# RBAC Domain Pack - Role-Based Access Control
+# This pack provides signer, role, and authorization infrastructure
+
+name: rbac
+version: 1.0.0
+description: |
+  Role-Based Access Control for knowledge complexes.
+  Provides signer and role types, authorization edges, and signature faces
+  for establishing human accountability in validation chains.
+
+dependencies:
+  - foundation
+
+ontology:
+  vertex_types:
+    signer:
+      extends: vertex
+      description: Named entity that can sign validations
+    role:
+      extends: vertex
+      description: Named role that conveys authority
+
+  edge_types:
+    signs:
+      source: [vertex/signer]
+      target: [vertex/*]  # any document vertex
+      description: Signer attests to validation
+    qualifies:
+      source: [vertex/signer]
+      target: [vertex/guidance]
+      description: Signer is qualified to sign against guidance
+    has-role:
+      source: [vertex/signer]
+      target: [vertex/role]
+      description: Signer holds a role
+    conveys:
+      source: [vertex/role]
+      target: [vertex/guidance]
+      description: Role conveys authority for guidance domain
+
+  face_types:
+    signature:
+      boundary: [validation, qualifies, signs]
+      description: Human accountability for validation
+    authorization:
+      boundary: [has-role, conveys, qualifies]
+      description: Proves why signer is qualified
+
+rules:
+  signer_must_qualify:
+    description: A signer must have a qualifies edge before signing
+    severity: error
+
+  qualification_requires_role:
+    description: Qualifies edges should trace to authorization via roles
+    severity: warning
+
+demo_charts:
+  - charts/demo-authorization-chain.md
+
+paths:
+  vertices: content/rbac/00_vertices
+  edges: content/rbac/01_edges
+  faces: content/rbac/02_faces
+
+metadata:
+  author: mzargham
+  created: 2026-01-13
+  topics:
+    - authorization
+    - accountability
+    - access-control

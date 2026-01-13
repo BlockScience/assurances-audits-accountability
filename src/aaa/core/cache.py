@@ -6,11 +6,28 @@ and generates a JSON cache file with all element metadata.
 """
 
 import json
+import yaml
 from pathlib import Path
 from datetime import datetime, date, timezone
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 from .parse import parse_directory, ParseError
+
+
+def load_registry(root_path: Path) -> Optional[Dict[str, Any]]:
+    """
+    Load content registry from content/registry.yaml if it exists.
+
+    Args:
+        root_path: Root directory of the repository
+
+    Returns:
+        Registry dictionary or None if not found
+    """
+    registry_path = root_path / 'content' / 'registry.yaml'
+    if registry_path.exists():
+        return yaml.safe_load(registry_path.read_text(encoding='utf-8'))
+    return None
 
 
 def sanitize_for_json(obj: Any) -> Any:
@@ -54,8 +71,9 @@ def build_cache(root_path: Path, output_path: Path = None, include_foundation: b
     """
     Build complex.json cache from directory structure.
 
-    Scans multiple source directories:
-    - Root directories: 00_vertices/, 01_edges/, 02_faces/, charts/, design/
+    Scans directories from registry.yaml if present, otherwise uses defaults:
+    - Root directories: 00_vertices/, 01_edges/, 02_faces/, charts/
+    - Content directories: content/*/00_vertices/, content/*/01_edges/, etc.
     - Foundation directory (if include_foundation=True): src/aaa/foundation/
 
     Args:
@@ -75,39 +93,84 @@ def build_cache(root_path: Path, output_path: Path = None, include_foundation: b
     # Parse all directories
     print(f"Building cache for: {root_path}")
 
-    # Root directories
-    vertices_dir = root_path / '00_vertices'
-    design_dir = root_path / 'design'
-    edges_dir = root_path / '01_edges'
-    faces_dir = root_path / '02_faces'
+    vertices = []
+    edges = []
+    faces = []
+
+    # Load registry if present
+    registry = load_registry(root_path)
+
+    if registry:
+        print("  Using content registry")
+
+        # Parse root directories (boundary elements)
+        if 'root' in registry:
+            root_paths = registry['root'].get('paths', {})
+            if 'vertices' in root_paths:
+                vertices.extend(parse_directory(root_path / root_paths['vertices'], 'vertex'))
+            if 'edges' in root_paths:
+                edges.extend(parse_directory(root_path / root_paths['edges'], 'edge'))
+            if 'faces' in root_paths:
+                faces.extend(parse_directory(root_path / root_paths['faces'], 'face'))
+
+        # Parse content domain directories
+        for domain_name, domain_config in registry.get('domains', {}).items():
+            paths = domain_config.get('paths', {})
+            if 'vertices' in paths:
+                domain_vertices = parse_directory(root_path / paths['vertices'], 'vertex')
+                vertices.extend(domain_vertices)
+            if 'edges' in paths:
+                domain_edges = parse_directory(root_path / paths['edges'], 'edge')
+                edges.extend(domain_edges)
+            if 'faces' in paths:
+                domain_faces = parse_directory(root_path / paths['faces'], 'face')
+                faces.extend(domain_faces)
+            # Also parse doc directories for design documents
+            if 'docs' in paths:
+                doc_vertices = parse_directory(root_path / paths['docs'], 'vertex')
+                vertices.extend(doc_vertices)
+
+        # Parse foundation if specified and requested
+        if include_foundation and 'foundation' in registry:
+            foundation_paths = registry['foundation'].get('paths', {})
+            if 'vertices' in foundation_paths:
+                vertices.extend(parse_directory(root_path / foundation_paths['vertices'], 'vertex'))
+            if 'edges' in foundation_paths:
+                edges.extend(parse_directory(root_path / foundation_paths['edges'], 'edge'))
+            if 'faces' in foundation_paths:
+                faces.extend(parse_directory(root_path / foundation_paths['faces'], 'face'))
+    else:
+        # Fallback to hardcoded directories for backwards compatibility
+        print("  No registry found, using default directories")
+
+        # Root directories
+        vertices_dir = root_path / '00_vertices'
+        edges_dir = root_path / '01_edges'
+        faces_dir = root_path / '02_faces'
+
+        # Foundation directories (bundled with package)
+        foundation_dir = root_path / 'src' / 'aaa' / 'foundation'
+        foundation_vertices_dir = foundation_dir / '00_vertices'
+        foundation_edges_dir = foundation_dir / '01_edges'
+        foundation_faces_dir = foundation_dir / '02_faces'
+
+        # Parse vertices from root and optionally foundation
+        vertices = parse_directory(vertices_dir, 'vertex')
+        if include_foundation and foundation_vertices_dir.exists():
+            vertices.extend(parse_directory(foundation_vertices_dir, 'vertex'))
+
+        # Parse edges from root and optionally foundation
+        edges = parse_directory(edges_dir, 'edge')
+        if include_foundation and foundation_edges_dir.exists():
+            edges.extend(parse_directory(foundation_edges_dir, 'edge'))
+
+        # Parse faces from root and optionally foundation
+        faces = parse_directory(faces_dir, 'face')
+        if include_foundation and foundation_faces_dir.exists():
+            faces.extend(parse_directory(foundation_faces_dir, 'face'))
+
+    # Always parse charts directory
     charts_dir = root_path / 'charts'
-
-    # Foundation directories (bundled with package)
-    foundation_dir = root_path / 'src' / 'aaa' / 'foundation'
-    foundation_vertices_dir = foundation_dir / '00_vertices'
-    foundation_edges_dir = foundation_dir / '01_edges'
-    foundation_faces_dir = foundation_dir / '02_faces'
-
-    # Parse vertices from root, design, and optionally foundation
-    vertices = parse_directory(vertices_dir, 'vertex')
-    design_vertices = parse_directory(design_dir, 'vertex')
-    vertices.extend(design_vertices)
-    if include_foundation and foundation_vertices_dir.exists():
-        foundation_vertices = parse_directory(foundation_vertices_dir, 'vertex')
-        vertices.extend(foundation_vertices)
-
-    # Parse edges from root and optionally foundation
-    edges = parse_directory(edges_dir, 'edge')
-    if include_foundation and foundation_edges_dir.exists():
-        foundation_edges = parse_directory(foundation_edges_dir, 'edge')
-        edges.extend(foundation_edges)
-
-    # Parse faces from root and optionally foundation
-    faces = parse_directory(faces_dir, 'face')
-    if include_foundation and foundation_faces_dir.exists():
-        foundation_faces = parse_directory(foundation_faces_dir, 'face')
-        faces.extend(foundation_faces)
-
     charts = parse_directory(charts_dir, 'chart')
 
     print(f"  Parsed {len(vertices)} vertices")
