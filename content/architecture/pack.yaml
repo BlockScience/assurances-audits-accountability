@@ -9,9 +9,9 @@ description: |
   field-survey → conceptual → functional → logical → physical.
 
 dependencies:
-  - foundation
-  - ppp   # for actor definitions
-  - meta  # for chart organization
+  - boundary    # genesis bootstrap
+  - foundation  # ontology layer
+  - meta        # infrastructure specs (charts)
 
 ontology:
   vertex_types:

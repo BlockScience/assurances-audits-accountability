@@ -28,93 +28,112 @@ content/<domain>/
 ## Dependency Graph
 
 ```
-foundation (Tier 0) - bundled bootstrap
-    │                 Genesis: b0, SS, SG, GS, GG
-    │                 Ontology: spec:ontology, guidance:ontology, ontology:base
-    │                 Bootstrap RBAC: signer:admin, role:admin
+boundary (Tier 0) - Genesis bootstrap
+    │               SS, SG, GS, GG (spec/guidance combinations)
     │
-    ├── ppp (Tier 1) ─────────── Persona, Purpose, Protocol, actor, system-prompt
-    │
-    ├── meta (Tier 1) ────────── chart, assurance-audit, runbook, organization,
-    │                            repository-policy, literature-review
-    │
-    ├── rbac (Tier 1) ────────── Extended signers, roles beyond admin
-    │
-    └── architecture (Tier 2) ← ppp, meta
-            │                   field-survey, conceptual, functional,
-            │                   logical, physical, requirements-trace
+    └── foundation (Tier 1) - Ontology layer
+            │                 spec:ontology, guidance:ontology, ontology:base
             │
-            └── planning (Tier 3) ← architecture
-                    │               lifecycle, program-plan, program-memo,
-                    │               implementation-plan
+            └── meta (Tier 2) - Infrastructure specs
+                    │           chart, assurance-audit, runbook, factory,
+                    │           organization, repository-policy
                     │
-                    └── learning (Tier 4) ← planning, rbac
-                                            student, skill, syllabus,
-                                            learning-module
+                    ├── ppp (Tier 3) ────────── Persona, Purpose, Protocol, system-prompt
+                    │
+                    ├── rbac (Tier 3) ───────── signers, signatures, roles, authorization
+                    │
+                    ├── learning (Tier 3) ───── student, skill, syllabus, learning-module
+                    │
+                    ├── architecture (Tier 3) ─ field-survey, conceptual, functional,
+                    │                           logical, physical, requirements-trace
+                    │
+                    └── planning (Tier 4) ← architecture
+                                            lifecycle, program-plan, program-memo,
+                                            implementation-plan
 ```
 
-**Key Design Decision:** Meta stays separate from foundation. Foundation = minimal genesis bootstrap. Meta = infrastructure specs that build on foundation.
+**Key Design Decisions:**
+- Boundary is truly primitive - just the four spec/guidance combinations
+- Foundation adds the ontology layer (how to define types)
+- Meta adds infrastructure for organizing content (charts, factories)
+- Domain packs (Tier 3) are peers - all require boundary + foundation + meta
+- Only planning has a cross-domain dependency (on architecture)
 
 ## Domain Packs
 
-### Tier 0: Foundation (bundled)
-- **Location:** `src/aaa/foundation/`
-- **Dependencies:** None (bootstrap)
-- **Provides:** b0, b1, b2, SS, SG, GS, GG, ontology layer, admin RBAC
+### Tier 0: Boundary (bundled)
 
-### Tier 1: Core Extensions
+- **Location:** `src/aaa/boundary/`
+- **Dependencies:** None (genesis bootstrap)
+- **Provides:** SS, SG, GS, GG (spec/guidance combinations)
+- **Rules:** Structural only (documents exist, have frontmatter)
+
+### Tier 1: Foundation (bundled)
+
+- **Location:** `src/aaa/foundation/`
+- **Dependencies:** boundary
+- **Provides:** spec:ontology, guidance:ontology, ontology:base
+- **Rules:** Ontology rules (types are valid, extend correctly)
+
+### Tier 2: Meta
+
+- **Dependencies:** boundary, foundation
+- **Provides:**
+  - Vertex types: chart, assurance-audit, runbook, factory, organization, repository-policy
+  - Edge types: (standard verification/validation/coupling)
+  - Face types: assurance (structural only, no signature requirement)
+- **Rules:** Chart rules (topology, completeness)
+- **Demo chart:** Assurance audit chart
+
+### Tier 3: Domain Packs (peers)
 
 #### ppp (Persona-Purpose-Protocol)
-- **Dependencies:** foundation
+
+- **Dependencies:** boundary, foundation, meta
 - **Provides:**
-  - Vertex types: persona, purpose, protocol, actor, system-prompt
-  - Edge types: (standard verification/validation/coupling)
+  - Vertex types: persona, purpose, protocol, system-prompt
+  - Edge types: (standard)
   - Face types: (standard assurance)
 - **Demo chart:** PPP triad showing persona + purpose + protocol assured together
 
-#### meta (Meta-level specifications)
-- **Dependencies:** foundation
-- **Provides:**
-  - Vertex types: chart, assurance-audit, runbook, organization, repository-policy, literature-review
-  - Edge types: (standard + audit-specific edges)
-  - Face types: (standard assurance + audit faces)
-- **Demo chart:** Assurance audit chart
-
 #### rbac (Role-Based Access Control)
-- **Dependencies:** foundation
+
+- **Dependencies:** boundary, foundation, meta
 - **Provides:**
-  - Vertex types: signer, role (extensions beyond admin)
+  - Vertex types: signer, role
   - Edge types: signs, qualifies, has-role, conveys
   - Face types: signature, authorization
+- **Rules:** Signature adjacency (assurance requires signature)
 - **Demo chart:** Multi-signer authorization chain
 
-### Tier 2: Domain Applications
+#### learning (Educational Content)
+
+- **Dependencies:** boundary, foundation, meta
+- **Provides:**
+  - Vertex types: student, skill, syllabus, learning-module
+  - Edge types: studies, has-skill, requires-skill, inherits
+  - Face types: prerequisite, skill-gain, completion
+- **Demo chart:** Course completion (student gains skills through modules)
 
 #### architecture
-- **Dependencies:** ppp, meta
+
+- **Dependencies:** boundary, foundation, meta
 - **Provides:**
   - Vertex types: architecture, conceptual-architecture, functional-architecture, logical-architecture, physical-architecture, field-survey, novel-contributions, requirements-trace
   - Edge types: dependency (between architecture docs)
   - Face types: (standard assurance)
 - **Demo chart:** Architecture stack (conceptual → functional → logical → physical)
 
+### Tier 4: Planning
+
 #### planning
-- **Dependencies:** ppp, meta
+
+- **Dependencies:** boundary, foundation, meta, architecture
 - **Provides:**
   - Vertex types: lifecycle, program-plan, program-memo, implementation-plan
   - Edge types: dependency (between planning docs)
   - Face types: (standard assurance)
 - **Demo chart:** Program lifecycle (lifecycle → plan → memo → impl-plan)
-
-### Tier 3: Specialized Applications
-
-#### learning
-- **Dependencies:** ppp, meta, rbac
-- **Provides:**
-  - Vertex types: student, skill, syllabus, learning-module
-  - Edge types: studies, has-skill, requires-skill, inherits
-  - Face types: prerequisite, skill-gain, completion
-- **Demo chart:** Course completion (student gains skills through modules)
 
 ## Implementation Plan
 

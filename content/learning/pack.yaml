@@ -9,11 +9,9 @@ description: |
   and student progress tracking with prerequisite enforcement.
 
 dependencies:
-  - foundation
-  - ppp      # for student personas
-  - meta     # for chart organization
-  - rbac     # for completion attestations
-  - planning # learning modules follow program lifecycle
+  - boundary    # genesis bootstrap
+  - foundation  # ontology layer
+  - meta        # infrastructure specs (charts)
 
 ontology:
   vertex_types:

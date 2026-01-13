@@ -6,7 +6,8 @@ The Meta pack provides infrastructure for documenting and organizing other docum
 
 ## Dependencies
 
-- **foundation**: Base ontology and genesis elements
+- **boundary**: Genesis bootstrap (SS, SG, GS, GG)
+- **foundation**: Ontology layer
 
 ## Vertex Types
 

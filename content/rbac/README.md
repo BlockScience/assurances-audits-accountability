@@ -6,7 +6,9 @@ The RBAC pack provides infrastructure for human accountability in knowledge comp
 
 ## Dependencies
 
-- **foundation**: Base ontology and genesis elements
+- **boundary**: Genesis bootstrap (SS, SG, GS, GG)
+- **foundation**: Ontology layer
+- **meta**: Infrastructure specs (charts, assurance faces)
 
 ## Vertex Types
 

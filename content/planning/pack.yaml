@@ -9,9 +9,9 @@ description: |
   program memos, and implementation plans.
 
 dependencies:
-  - foundation
-  - ppp          # for persona/purpose in plans
-  - meta         # for chart organization
+  - boundary     # genesis bootstrap
+  - foundation   # ontology layer
+  - meta         # infrastructure specs (charts)
   - architecture # planning docs depend on architecture docs
 
 ontology:

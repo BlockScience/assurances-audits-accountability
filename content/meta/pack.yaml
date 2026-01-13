@@ -9,7 +9,8 @@ description: |
   organizing content (charts), and auditing quality (assurance-audits).
 
 dependencies:
-  - foundation
+  - boundary    # genesis bootstrap (SS, SG, GS, GG)
+  - foundation  # ontology layer
 
 ontology:
   vertex_types:

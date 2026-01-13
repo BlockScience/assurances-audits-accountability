@@ -10,7 +10,9 @@ The PPP (Persona-Purpose-Protocol) framework provides a structured approach to d
 
 ## Dependencies
 
-- **foundation**: Base ontology and genesis elements
+- **boundary**: Genesis bootstrap (SS, SG, GS, GG)
+- **foundation**: Ontology layer
+- **meta**: Infrastructure specs (charts, factories)
 
 ## Vertex Types
 

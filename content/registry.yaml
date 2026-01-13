@@ -6,28 +6,35 @@ version: "1.0"
 
 # Domain packs - each domain has a pack.yaml with full metadata
 # This registry provides quick lookup; pack.yaml has authoritative details
+#
+# Tier hierarchy:
+#   Tier 0: boundary (genesis bootstrap - SS, SG, GS, GG)
+#   Tier 1: foundation (ontology layer)
+#   Tier 2: meta (infrastructure specs - charts, factories)
+#   Tier 3: domain packs (ppp, rbac, learning, architecture) - all peers
+#   Tier 4: planning (depends on architecture)
 packs:
-  ppp:
-    manifest: content/ppp/pack.yaml
-    dependencies: [foundation]
   meta:
     manifest: content/meta/pack.yaml
-    dependencies: [foundation]
+    dependencies: [boundary, foundation]
+  ppp:
+    manifest: content/ppp/pack.yaml
+    dependencies: [boundary, foundation, meta]
   rbac:
     manifest: content/rbac/pack.yaml
-    dependencies: [foundation]
-  architecture:
-    manifest: content/architecture/pack.yaml
-    dependencies: [foundation, ppp, meta]
-  planning:
-    manifest: content/planning/pack.yaml
-    dependencies: [foundation, ppp, meta, architecture]
+    dependencies: [boundary, foundation, meta]
   learning:
     manifest: content/learning/pack.yaml
-    dependencies: [foundation, ppp, meta, rbac, planning]
+    dependencies: [boundary, foundation, meta]
+  architecture:
+    manifest: content/architecture/pack.yaml
+    dependencies: [boundary, foundation, meta]
+  planning:
+    manifest: content/planning/pack.yaml
+    dependencies: [boundary, foundation, meta, architecture]
   misc:
     manifest: content/misc/pack.yaml
-    dependencies: [foundation]
+    dependencies: [boundary, foundation]
 
 # Content domains and their directories
 domains:
