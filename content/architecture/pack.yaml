@@ -1,0 +1,75 @@
+# Architecture Domain Pack - System Architecture Documentation
+# This pack provides document types for multi-level architecture documentation
+
+name: architecture
+version: 1.0.0
+description: |
+  System architecture documentation framework.
+  Provides document types for the standard architecture stack:
+  field-survey → conceptual → functional → logical → physical.
+
+dependencies:
+  - foundation
+  - ppp   # for actor definitions
+  - meta  # for chart organization
+
+ontology:
+  vertex_types:
+    architecture:
+      extends: doc
+      description: Top-level architecture overview
+    conceptual-architecture:
+      extends: doc
+      description: High-level concepts and stakeholder concerns
+    functional-architecture:
+      extends: doc
+      description: System functions and capabilities
+    logical-architecture:
+      extends: doc
+      description: Component structure and interfaces
+    physical-architecture:
+      extends: doc
+      description: Deployment and implementation details
+    field-survey:
+      extends: doc
+      description: Survey of existing solutions and prior art
+    novel-contributions:
+      extends: doc
+      description: What's new/different from prior art
+    requirements-trace:
+      extends: doc
+      description: Traceability from requirements to implementation
+
+  edge_types:
+    dependency:
+      source: [vertex/architecture, vertex/*-architecture]
+      target: [vertex/architecture, vertex/*-architecture, vertex/field-survey]
+      description: Architecture document depends on another
+
+  face_types: []
+
+rules:
+  architecture_stack_order:
+    description: Architecture docs should follow conceptual → functional → logical → physical
+    severity: warning
+
+  field_survey_first:
+    description: Architecture work should begin with field-survey
+    severity: info
+
+demo_charts:
+  - charts/demo-architecture-stack.md
+
+paths:
+  vertices: content/architecture/00_vertices
+  edges: content/architecture/01_edges
+  faces: content/architecture/02_faces
+  docs: content/architecture  # design documents
+
+metadata:
+  author: mzargham
+  created: 2026-01-13
+  topics:
+    - system-architecture
+    - design-documentation
+    - requirements-traceability

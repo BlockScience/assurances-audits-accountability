@@ -1,0 +1,64 @@
+# Planning Domain Pack - Program Planning and Lifecycle Management
+# This pack provides document types for program planning and execution
+
+name: planning
+version: 1.0.0
+description: |
+  Program planning and lifecycle management documentation.
+  Provides document types for lifecycle definitions, program plans,
+  program memos, and implementation plans.
+
+dependencies:
+  - foundation
+  - ppp          # for persona/purpose in plans
+  - meta         # for chart organization
+  - architecture # planning docs depend on architecture docs
+
+ontology:
+  vertex_types:
+    lifecycle:
+      extends: doc
+      description: Lifecycle stage definitions and transitions
+    program-plan:
+      extends: doc
+      description: High-level program objectives and milestones
+    program-memo:
+      extends: doc
+      description: Status updates and decision records
+    implementation-plan:
+      extends: doc
+      description: Detailed implementation steps and timelines
+
+  edge_types:
+    dependency:
+      source: [vertex/program-*, vertex/lifecycle, vertex/implementation-plan]
+      target: [vertex/program-*, vertex/lifecycle, vertex/implementation-plan]
+      description: Planning document depends on another
+
+  face_types: []
+
+rules:
+  lifecycle_precedes_plan:
+    description: Program plans should reference a lifecycle definition
+    severity: warning
+
+  memo_references_plan:
+    description: Program memos should reference their parent plan
+    severity: warning
+
+demo_charts:
+  - charts/demo-program-lifecycle.md
+
+paths:
+  vertices: content/planning/00_vertices
+  edges: content/planning/01_edges
+  faces: content/planning/02_faces
+  impl-plans: content/planning/impl-plans
+
+metadata:
+  author: mzargham
+  created: 2026-01-13
+  topics:
+    - program-management
+    - lifecycle-management
+    - implementation-planning

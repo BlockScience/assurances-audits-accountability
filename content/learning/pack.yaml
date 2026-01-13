@@ -1,0 +1,85 @@
+# Learning Domain Pack - Educational Content and Skill Tracking
+# This pack provides document types for courses, skills, and student progress
+
+name: learning
+version: 1.0.0
+description: |
+  Educational content and skill tracking framework.
+  Provides document types for syllabi, learning modules, skills,
+  and student progress tracking with prerequisite enforcement.
+
+dependencies:
+  - foundation
+  - ppp      # for student personas
+  - meta     # for chart organization
+  - rbac     # for completion attestations
+  - planning # learning modules follow program lifecycle
+
+ontology:
+  vertex_types:
+    student:
+      extends: doc
+      description: Student profile and progress tracking
+    skill:
+      extends: doc
+      description: Named skill that can be learned
+    syllabus:
+      extends: doc
+      description: Course structure and learning objectives
+    learning-module:
+      extends: doc
+      description: Individual learning unit within a syllabus
+
+  edge_types:
+    studies:
+      source: [vertex/student]
+      target: [vertex/syllabus, vertex/learning-module]
+      description: Student is studying content
+    has-skill:
+      source: [vertex/student]
+      target: [vertex/skill]
+      description: Student has acquired skill
+    requires-skill:
+      source: [vertex/learning-module]
+      target: [vertex/skill]
+      description: Module requires prerequisite skill
+    inherits:
+      source: [vertex/*]
+      target: [vertex/*]
+      description: Type inheritance relationship
+
+  face_types:
+    prerequisite:
+      boundary: [requires-skill, has-skill, studies]
+      description: Student meets prerequisites for module
+    skill-gain:
+      boundary: [studies, completion, has-skill]
+      description: Student gains skill through completion
+    completion:
+      boundary: [studies, validation, signature]
+      description: Student completes learning unit
+
+rules:
+  prerequisites_met:
+    description: Student must have required skills before starting module
+    severity: error
+
+  skill_gain_requires_completion:
+    description: Skills gained must trace to completed modules
+    severity: error
+
+demo_charts:
+  - charts/demo-course-completion.md
+
+paths:
+  vertices: content/learning/00_vertices
+  edges: content/learning/01_edges
+  faces: content/learning/02_faces
+
+metadata:
+  author: mzargham
+  created: 2026-01-13
+  topics:
+    - education
+    - skill-tracking
+    - course-management

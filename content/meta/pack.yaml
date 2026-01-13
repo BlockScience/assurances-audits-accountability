@@ -1,0 +1,60 @@
+# Meta Domain Pack - Meta-level specifications and audit infrastructure
+# This pack provides document types for specs, guidances, charts, and audits
+
+name: meta
+version: 1.0.0
+description: |
+  Meta-level specifications and audit infrastructure.
+  Provides document types for defining other document types (specs, guidances),
+  organizing content (charts), and auditing quality (assurance-audits).
+
+dependencies:
+  - foundation
+
+ontology:
+  vertex_types:
+    chart:
+      extends: doc
+      description: Organizes elements into a verifiable simplicial complex
+    assurance-audit:
+      extends: doc
+      description: Audit trail documenting assurance status of chart elements
+    runbook:
+      extends: doc
+      description: Step-by-step operational procedures
+    organization:
+      extends: doc
+      description: Organizational entity documentation
+    repository-policy:
+      extends: doc
+      description: Repository governance and contribution policies
+    literature-review:
+      extends: doc
+      description: Survey of related work and citations
+    property:
+      extends: doc
+      description: Named property that can be asserted about elements
+
+  edge_types: []
+  face_types: []
+
+rules:
+  chart_completeness:
+    description: Charts should have all referenced elements defined
+    severity: error
+
+demo_charts:
+  - charts/demo-assurance-audit.md
+
+paths:
+  vertices: content/meta/00_vertices
+  edges: content/meta/01_edges
+  faces: content/meta/02_faces
+
+metadata:
+  author: mzargham
+  created: 2026-01-13
+  topics:
+    - meta-specifications
+    - quality-assurance
+    - documentation-infrastructure
