@@ -19,7 +19,7 @@
     <h1>Ontology Rules Demonstration Summary</h1>
 
     <div class="card">
-        <h2>Overall Results: <span class="pass">24/24 passed</span></h2>
+        <h2>Overall Results: <span class="pass">29/29 passed</span></h2>
     </div>
 
     <div class="card">
@@ -60,6 +60,12 @@
                 <td>5</td>
                 <td class="pass">5/5</td>
                 <td><a href="rule_authorization_chain.html">View Details</a></td>
+            </tr>
+            <tr>
+                <td>Role Assignment Chain (ARBAC97: role-assignment → assignment-signature)</td>
+                <td>5</td>
+                <td class="pass">5/5</td>
+                <td><a href="rule_role_assignment.html">View Details</a></td>
             </tr>
         </table>
     </div>
@@ -109,6 +115,16 @@
             <li><strong>authorization-can-pre-exist:</strong> authorization faces CAN exist without signature faces (role assignments pre-exist signing)</li>
         </ul>
         <p><em>Key insight: The chain authorization → signature → assurance establishes complete accountability. A signer's authority comes from their role (authorization), which backs their signature, which backs the assurance.</em></p>
+
+        <h3>Role Assignment Chain Rules (ARBAC97: role-assignment → assignment-signature)</h3>
+        <p>These rules implement ARBAC97 administrative role-based access control for role assignment authority:</p>
+        <ul>
+            <li><strong>role-assignment:</strong> face with actor, admin-role, target-role connected by has-role, conveys, can-assign edges</li>
+            <li><strong>assignment-signature:</strong> face with admin-signer, target-actor, target-role connected by signs-assignment, has-role, can-assign edges</li>
+            <li><strong>assignment-signature-requires-role-assignment:</strong> assignment-signature face must have role-assignment face sharing the can-assign edge</li>
+            <li><strong>role-assignment-can-pre-exist:</strong> role-assignment faces CAN exist without assignment-signature faces (authority pre-exists assignments)</li>
+        </ul>
+        <p><em>Key insight: This implements ARBAC97's can_assign relation. An admin's role conveys authority to assign other roles. The chain role-assignment → assignment-signature establishes who has authority to assign roles and tracks role assignments with human sign-off.</em></p>
     </div>
 </body>
 </html>

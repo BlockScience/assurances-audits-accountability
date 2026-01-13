@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-01-12T21:37:45.594839+00:00",
+  "generated": "2026-01-13T00:19:57.359595+00:00",
   "root_path": ".",
   "elements": {
     "vertices": {
@@ -696,6 +696,24 @@
           "v:guidance:protocol"
         ]
       },
+      "v:role:admin": {
+        "file": "00_vertices/role-admin.md",
+        "type": "vertex/role",
+        "extends": "property",
+        "id": "v:role:admin",
+        "name": "Administrator",
+        "description": "Role with authority to assign other roles and manage the knowledge complex",
+        "tags": [
+          "vertex",
+          "property",
+          "role",
+          "admin"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:20:00+00:00",
+        "modified": "2026-01-13T00:20:00+00:00",
+        "dependencies": []
+      },
       "v:doc:runbook-assurance-audit-chart": {
         "file": "00_vertices/runbook-assurance-audit-chart.md",
         "type": "vertex/doc",
@@ -900,7 +918,8 @@
         "tags": [
           "vertex",
           "actor",
-          "signer"
+          "signer",
+          "admin"
         ],
         "version": "1.0.0",
         "created": "2025-12-30T23:00:00+00:00",
@@ -2305,6 +2324,51 @@
         "version": "1.0.0",
         "created": "2026-01-05T12:00:00+00:00",
         "modified": "2026-01-05T12:00:00+00:00"
+      },
+      "e:has-role:mzargham:admin": {
+        "file": "01_edges/has-role-mzargham-admin.md",
+        "type": "edge/has-role",
+        "extends": "edge",
+        "id": "e:has-role:mzargham:admin",
+        "name": "Has Role - mzargham has admin role",
+        "source": "v:signer:mzargham",
+        "target": "v:role:admin",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/role",
+        "orientation": "directed",
+        "granted_by": "system",
+        "granted_date": "2026-01-13T00:20:00+00:00",
+        "tags": [
+          "edge",
+          "has-role",
+          "bootstrap"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:20:00+00:00",
+        "modified": "2026-01-13T00:20:00+00:00"
+      },
+      "e:qualifies:mzargham:guidance": {
+        "file": "01_edges/qualifies-mzargham-guidance.md",
+        "type": "edge/qualifies",
+        "extends": "edge",
+        "id": "e:qualifies:mzargham:guidance",
+        "name": "Qualifies - mzargham qualified for guidance-for-guidance",
+        "source": "v:signer:mzargham",
+        "target": "v:guidance:guidance",
+        "source_type": "vertex/signer",
+        "target_type": "vertex/guidance",
+        "orientation": "directed",
+        "credential_type": "role",
+        "granted_by": "system",
+        "granted_date": "2026-01-13T00:20:00+00:00",
+        "tags": [
+          "edge",
+          "qualifies",
+          "bootstrap"
+        ],
+        "version": "1.0.0",
+        "created": "2026-01-13T00:20:00+00:00",
+        "modified": "2026-01-13T00:20:00+00:00"
       },
       "e:qualifies:mzargham:guidance-architecture": {
         "file": "01_edges/qualifies-mzargham_guidance-architecture.md",
@@ -6850,10 +6914,10 @@
     }
   },
   "statistics": {
-    "vertex_count": 73,
-    "edge_count": 147,
+    "vertex_count": 74,
+    "edge_count": 149,
     "face_count": 55,
     "chart_count": 2,
-    "euler_characteristic": -19
+    "euler_characteristic": -20
   }
 }

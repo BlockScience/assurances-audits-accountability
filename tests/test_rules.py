@@ -2780,3 +2780,465 @@ class TestSignatureRequiresAuthorization:
         auth_violations = [v for v in violations
                           if 'authorization' in v.rule_name.lower()]
         assert len(auth_violations) == 0
+
+
+# ============================================================
+# ARBAC97 ROLE ASSIGNMENT CHAIN TESTS
+# (role-assignment → assignment-signature)
+# ============================================================
+
+class TestRoleAssignmentBoundaryTypes:
+    """Test that role-assignment faces have correct edge types in their boundary.
+
+    Role-assignment face: (actor, admin-role, target-role)
+    Required edges: has-role, conveys, can-assign
+    """
+
+    @pytest.fixture
+    def valid_role_assignment_cache(self):
+        """Valid role-assignment face with correct boundary types."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:actor:admin': {'id': 'v:actor:admin', 'type': 'vertex/actor', 'name': 'Admin User'},
+                    'v:role:admin-role': {'id': 'v:role:admin-role', 'type': 'vertex/role', 'name': 'Admin Role'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                },
+                'edges': {
+                    'e:has-role:admin': {
+                        'id': 'e:has-role:admin',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:admin-role',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:admin-to-target': {
+                        'id': 'e:conveys:admin-to-target',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:admin-role',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:role-assignment:admin-target': {
+                        'id': 'f:role-assignment:admin-target',
+                        'type': 'face/role-assignment',
+                        'vertices': ['v:actor:admin', 'v:role:admin-role', 'v:role:target-role'],
+                        'edges': ['e:has-role:admin', 'e:conveys:admin-to-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    @pytest.fixture
+    def invalid_role_assignment_missing_conveys_cache(self):
+        """Invalid role-assignment face missing conveys edge."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:actor:admin': {'id': 'v:actor:admin', 'type': 'vertex/actor', 'name': 'Admin User'},
+                    'v:role:admin-role': {'id': 'v:role:admin-role', 'type': 'vertex/role', 'name': 'Admin Role'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                },
+                'edges': {
+                    'e:has-role:admin': {
+                        'id': 'e:has-role:admin',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:admin-role',
+                        'orientation': 'directed',
+                    },
+                    # Missing conveys, using 'other' instead
+                    'e:other:placeholder': {
+                        'id': 'e:other:placeholder',
+                        'type': 'edge/other',
+                        'source': 'v:role:admin-role',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:role-assignment:bad': {
+                        'id': 'f:role-assignment:bad',
+                        'type': 'face/role-assignment',
+                        'vertices': ['v:actor:admin', 'v:role:admin-role', 'v:role:target-role'],
+                        'edges': ['e:has-role:admin', 'e:other:placeholder', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    def test_valid_role_assignment_boundary(self, valid_role_assignment_cache):
+        """Valid role-assignment face should pass boundary type check."""
+        engine = OntologyRuleEngine.from_cache(valid_role_assignment_cache)
+        engine._check_role_assignment_boundary_types()
+
+        boundary_violations = [v for v in engine.violations
+                              if v.rule_name == 'role_assignment_boundary_types']
+        assert len(boundary_violations) == 0
+
+    def test_invalid_role_assignment_missing_conveys(self, invalid_role_assignment_missing_conveys_cache):
+        """Role-assignment face missing conveys edge should fail."""
+        engine = OntologyRuleEngine.from_cache(invalid_role_assignment_missing_conveys_cache)
+        engine._check_role_assignment_boundary_types()
+
+        boundary_violations = [v for v in engine.violations
+                              if v.rule_name == 'role_assignment_boundary_types']
+        assert len(boundary_violations) == 1
+        assert 'conveys' in boundary_violations[0].message
+
+
+class TestAssignmentSignatureBoundaryTypes:
+    """Test that assignment-signature faces have correct edge types in their boundary.
+
+    Assignment-signature face: (admin-signer, target-actor, target-role)
+    Required edges: signs-assignment, has-role, can-assign
+    """
+
+    @pytest.fixture
+    def valid_assignment_signature_cache(self):
+        """Valid assignment-signature face with correct boundary types."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:signer:admin': {'id': 'v:signer:admin', 'type': 'vertex/signer', 'name': 'Admin Signer'},
+                    'v:actor:bob': {'id': 'v:actor:bob', 'type': 'vertex/actor', 'name': 'Bob'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                },
+                'edges': {
+                    'e:signs-assignment:admin-bob': {
+                        'id': 'e:signs-assignment:admin-bob',
+                        'type': 'edge/signs-assignment',
+                        'source': 'v:signer:admin',
+                        'target': 'v:actor:bob',
+                        'orientation': 'directed',
+                    },
+                    'e:has-role:bob-target': {
+                        'id': 'e:has-role:bob-target',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:bob',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:signer:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:assignment-signature:bob': {
+                        'id': 'f:assignment-signature:bob',
+                        'type': 'face/assignment-signature',
+                        'vertices': ['v:signer:admin', 'v:actor:bob', 'v:role:target-role'],
+                        'edges': ['e:signs-assignment:admin-bob', 'e:has-role:bob-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    @pytest.fixture
+    def invalid_assignment_signature_missing_signs_assignment_cache(self):
+        """Invalid assignment-signature face missing signs-assignment edge."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:signer:admin': {'id': 'v:signer:admin', 'type': 'vertex/signer', 'name': 'Admin Signer'},
+                    'v:actor:bob': {'id': 'v:actor:bob', 'type': 'vertex/actor', 'name': 'Bob'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                },
+                'edges': {
+                    # Missing signs-assignment, using 'other' instead
+                    'e:other:placeholder': {
+                        'id': 'e:other:placeholder',
+                        'type': 'edge/other',
+                        'source': 'v:signer:admin',
+                        'target': 'v:actor:bob',
+                        'orientation': 'directed',
+                    },
+                    'e:has-role:bob-target': {
+                        'id': 'e:has-role:bob-target',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:bob',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:signer:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:assignment-signature:bad': {
+                        'id': 'f:assignment-signature:bad',
+                        'type': 'face/assignment-signature',
+                        'vertices': ['v:signer:admin', 'v:actor:bob', 'v:role:target-role'],
+                        'edges': ['e:other:placeholder', 'e:has-role:bob-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    def test_valid_assignment_signature_boundary(self, valid_assignment_signature_cache):
+        """Valid assignment-signature face should pass boundary type check."""
+        engine = OntologyRuleEngine.from_cache(valid_assignment_signature_cache)
+        engine._check_assignment_signature_boundary_types()
+
+        boundary_violations = [v for v in engine.violations
+                              if v.rule_name == 'assignment_signature_boundary_types']
+        assert len(boundary_violations) == 0
+
+    def test_invalid_assignment_signature_missing_signs_assignment(self, invalid_assignment_signature_missing_signs_assignment_cache):
+        """Assignment-signature face missing signs-assignment edge should fail."""
+        engine = OntologyRuleEngine.from_cache(invalid_assignment_signature_missing_signs_assignment_cache)
+        engine._check_assignment_signature_boundary_types()
+
+        boundary_violations = [v for v in engine.violations
+                              if v.rule_name == 'assignment_signature_boundary_types']
+        assert len(boundary_violations) == 1
+        assert 'signs-assignment' in boundary_violations[0].message
+
+
+class TestAssignmentSignatureRequiresRoleAssignment:
+    """Test that assignment-signature faces require role-assignment faces sharing can-assign edge.
+
+    This is the ARBAC97 pattern: role-assignment → assignment-signature
+    """
+
+    @pytest.fixture
+    def valid_assignment_signature_with_role_assignment_cache(self):
+        """Assignment-signature face with role-assignment face sharing can-assign edge."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:signer:admin': {'id': 'v:signer:admin', 'type': 'vertex/signer', 'name': 'Admin Signer'},
+                    'v:role:admin-role': {'id': 'v:role:admin-role', 'type': 'vertex/role', 'name': 'Admin Role'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                    'v:actor:bob': {'id': 'v:actor:bob', 'type': 'vertex/actor', 'name': 'Bob'},
+                },
+                'edges': {
+                    # Role-assignment edges
+                    'e:has-role:admin': {
+                        'id': 'e:has-role:admin',
+                        'type': 'edge/has-role',
+                        'source': 'v:signer:admin',
+                        'target': 'v:role:admin-role',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:admin-to-target': {
+                        'id': 'e:conveys:admin-to-target',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:admin-role',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    # SHARED can-assign edge
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:signer:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    # Assignment-signature edges
+                    'e:signs-assignment:admin-bob': {
+                        'id': 'e:signs-assignment:admin-bob',
+                        'type': 'edge/signs-assignment',
+                        'source': 'v:signer:admin',
+                        'target': 'v:actor:bob',
+                        'orientation': 'directed',
+                    },
+                    'e:has-role:bob-target': {
+                        'id': 'e:has-role:bob-target',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:bob',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    'f:role-assignment:admin-target': {
+                        'id': 'f:role-assignment:admin-target',
+                        'type': 'face/role-assignment',
+                        'vertices': ['v:signer:admin', 'v:role:admin-role', 'v:role:target-role'],
+                        'edges': ['e:has-role:admin', 'e:conveys:admin-to-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                    'f:assignment-signature:bob': {
+                        'id': 'f:assignment-signature:bob',
+                        'type': 'face/assignment-signature',
+                        'vertices': ['v:signer:admin', 'v:actor:bob', 'v:role:target-role'],
+                        # SHARES can-assign edge with role-assignment face
+                        'edges': ['e:signs-assignment:admin-bob', 'e:has-role:bob-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                },
+            },
+            'statistics': {'vertices': 4, 'edges': 5, 'faces': 2}
+        }
+
+    @pytest.fixture
+    def invalid_assignment_signature_no_role_assignment_cache(self):
+        """Assignment-signature face without role-assignment face - invalid."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:signer:admin': {'id': 'v:signer:admin', 'type': 'vertex/signer', 'name': 'Admin Signer'},
+                    'v:actor:bob': {'id': 'v:actor:bob', 'type': 'vertex/actor', 'name': 'Bob'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                },
+                'edges': {
+                    'e:signs-assignment:admin-bob': {
+                        'id': 'e:signs-assignment:admin-bob',
+                        'type': 'edge/signs-assignment',
+                        'source': 'v:signer:admin',
+                        'target': 'v:actor:bob',
+                        'orientation': 'directed',
+                    },
+                    'e:has-role:bob-target': {
+                        'id': 'e:has-role:bob-target',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:bob',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:signer:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    # Assignment-signature WITHOUT role-assignment
+                    'f:assignment-signature:orphan': {
+                        'id': 'f:assignment-signature:orphan',
+                        'type': 'face/assignment-signature',
+                        'vertices': ['v:signer:admin', 'v:actor:bob', 'v:role:target-role'],
+                        'edges': ['e:signs-assignment:admin-bob', 'e:has-role:bob-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    @pytest.fixture
+    def valid_role_assignment_without_assignment_signature_cache(self):
+        """Role-assignment face without assignment-signature - valid (authority pre-exists)."""
+        return {
+            'elements': {
+                'vertices': {
+                    'v:actor:admin': {'id': 'v:actor:admin', 'type': 'vertex/actor', 'name': 'Admin User'},
+                    'v:role:admin-role': {'id': 'v:role:admin-role', 'type': 'vertex/role', 'name': 'Admin Role'},
+                    'v:role:target-role': {'id': 'v:role:target-role', 'type': 'vertex/role', 'name': 'Target Role'},
+                },
+                'edges': {
+                    'e:has-role:admin': {
+                        'id': 'e:has-role:admin',
+                        'type': 'edge/has-role',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:admin-role',
+                        'orientation': 'directed',
+                    },
+                    'e:conveys:admin-to-target': {
+                        'id': 'e:conveys:admin-to-target',
+                        'type': 'edge/conveys',
+                        'source': 'v:role:admin-role',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                    'e:can-assign:admin-target': {
+                        'id': 'e:can-assign:admin-target',
+                        'type': 'edge/can-assign',
+                        'source': 'v:actor:admin',
+                        'target': 'v:role:target-role',
+                        'orientation': 'directed',
+                    },
+                },
+                'faces': {
+                    # Role-assignment alone - this is VALID
+                    'f:role-assignment:standalone': {
+                        'id': 'f:role-assignment:standalone',
+                        'type': 'face/role-assignment',
+                        'vertices': ['v:actor:admin', 'v:role:admin-role', 'v:role:target-role'],
+                        'edges': ['e:has-role:admin', 'e:conveys:admin-to-target', 'e:can-assign:admin-target'],
+                        'orientation': 'oriented',
+                        'can_assign_edge': 'e:can-assign:admin-target',
+                    },
+                },
+            },
+            'statistics': {'vertices': 3, 'edges': 3, 'faces': 1}
+        }
+
+    def test_valid_assignment_signature_with_role_assignment(self, valid_assignment_signature_with_role_assignment_cache):
+        """Assignment-signature with role-assignment sharing can-assign edge should pass."""
+        engine = OntologyRuleEngine.from_cache(valid_assignment_signature_with_role_assignment_cache)
+        engine._check_assignment_signature_requires_role_assignment()
+
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'assignment_signature_requires_role_assignment']
+        assert len(adjacency_violations) == 0
+
+    def test_invalid_assignment_signature_without_role_assignment(self, invalid_assignment_signature_no_role_assignment_cache):
+        """Assignment-signature without role-assignment should fail."""
+        engine = OntologyRuleEngine.from_cache(invalid_assignment_signature_no_role_assignment_cache)
+        engine._check_assignment_signature_requires_role_assignment()
+
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'assignment_signature_requires_role_assignment']
+        assert len(adjacency_violations) == 1
+        assert 'No role-assignment face shares can-assign edge' in adjacency_violations[0].message
+
+    def test_valid_role_assignment_without_assignment_signature(self, valid_role_assignment_without_assignment_signature_cache):
+        """Role-assignment without assignment-signature is VALID - authority can pre-exist assignments."""
+        engine = OntologyRuleEngine.from_cache(valid_role_assignment_without_assignment_signature_cache)
+        engine._check_assignment_signature_requires_role_assignment()
+
+        # No violations because there are no assignment-signature faces
+        adjacency_violations = [v for v in engine.violations
+                               if v.rule_name == 'assignment_signature_requires_role_assignment']
+        assert len(adjacency_violations) == 0
+
+    def test_full_ontology_check_includes_role_assignment_rules(self, valid_assignment_signature_with_role_assignment_cache):
+        """Full ontology check should include role assignment rule enforcement."""
+        violations = check_ontology_rules(valid_assignment_signature_with_role_assignment_cache)
+
+        # Should not have role-assignment or assignment-signature violations
+        role_assign_violations = [v for v in violations
+                                 if 'role_assignment' in v.rule_name.lower() or 'assignment_signature' in v.rule_name.lower()]
+        assert len(role_assign_violations) == 0

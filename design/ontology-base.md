@@ -59,7 +59,7 @@ This means the same boundary configuration can support multiple face types (e.g.
 Edges are classified by **materialization status**:
 
 - **Stored edges**: Explicitly persisted in the knowledge complex
-- **Derived edges**: Computable from face membership (e.g., the actor→authority edge in authorization faces)
+- **Derived edges**: Computable from face membership (e.g., the actor→permission edge in authorization faces)
 
 Derived edges are notated as `(derived)` in face boundary specifications. They need not be stored if they can be computed.
 
@@ -70,7 +70,7 @@ Constraints fall into two categories:
 - **Syntactic constraints**: Structure and type compliance (machine-checkable)
   - ID pattern matching, type field values, endpoint types
 - **Semantic constraints**: Meaning and dependency compliance (may require context)
-  - Qualification chains, temporal ordering, authority derivation
+  - Qualification chains, temporal ordering, permission derivation
 
 ### Version-Assurance Relationship
 
@@ -268,34 +268,34 @@ Document versions follow semantic versioning with assurance implications:
 
 **Constraints:**
 
-- Must have at least one conveys edge to an authority
-- Actors receive role via has-role edge
+- Must have at least one conveys edge to a permission (NIST RBAC: Permission Assignment)
+- Actors receive role via has-role edge (NIST RBAC: User Assignment)
 
 **Examples:** `v:role:approver`, `v:role:author`, `v:role:architect`
 
-#### authority
+#### permission
 
-**ID Pattern:** `v:authority:<name>`
+**ID Pattern:** `v:permission:<name>`
 **Extends:** vertex
-**Tags:** [vertex, authority]
+**Tags:** [vertex, permission]
 
-**Purpose:** Permission to perform specific actions. Authorities are the atomic units of access control - what a role allows an actor to do.
+**Purpose:** Permission to perform specific actions (NIST RBAC term). Permissions are the atomic units of access control - what a role allows an actor to do.
 
 **Required Fields:**
 
 | Field | Type | Description |
 |-------|------|-------------|
-| type | string | Must be `vertex/authority` |
+| type | string | Must be `vertex/permission` |
 | extends | string | Must be `vertex` |
-| action | string | What action this authority permits |
-| scope | string | What this authority applies to |
+| action | string | What action this permission permits |
+| scope | string | What this permission applies to |
 
 **Constraints:**
 
-- Conveyed by roles via conveys edge
-- Required by actions via requires-authority edge
+- Conveyed by roles via conveys edge (NIST RBAC: Permission Assignment)
+- Required by actions via requires-permission edge
 
-**Examples:** `v:authority:validate-against:guidance-X`, `v:authority:approve-module:M`
+**Examples:** `v:permission:validate-against:guidance-X`, `v:permission:approve-module:M`
 
 ### Module Type
 
@@ -536,7 +536,7 @@ Document versions follow semantic versioning with assurance implications:
 | Property | Constraint |
 |----------|------------|
 | source_type | role |
-| target_type | authority |
+| target_type | permission |
 | direction | directed |
 
 **Required Fields:**
@@ -544,22 +544,22 @@ Document versions follow semantic versioning with assurance implications:
 | Field | Type | Description |
 |-------|------|-------------|
 | source | string | Role vertex ID |
-| target | string | Authority vertex ID |
+| target | string | Permission vertex ID |
 
-#### requires-authority
+#### requires-permission
 
-**ID Pattern:** `e:requires-authority:<name>`
+**ID Pattern:** `e:requires-permission:<name>`
 **Extends:** edge
-**Tags:** [edge, requires-authority]
+**Tags:** [edge, requires-permission]
 
-**Purpose:** Action requires permission. Links an action or document to the authority needed to perform or approve it.
+**Purpose:** Action requires permission (NIST RBAC). Links an action or document to the permission needed to perform or approve it.
 
 **Endpoint Constraints:**
 
 | Property | Constraint |
 |----------|------------|
 | source_type | vertex (any action-representing vertex) |
-| target_type | authority |
+| target_type | permission |
 | direction | directed |
 
 **Required Fields:**
@@ -567,7 +567,7 @@ Document versions follow semantic versioning with assurance implications:
 | Field | Type | Description |
 |-------|------|-------------|
 | source | string | Action vertex ID |
-| target | string | Authority vertex ID |
+| target | string | Permission vertex ID |
 
 ### Module I/O Edges
 
@@ -906,7 +906,7 @@ Document versions follow semantic versioning with assurance implications:
 **Extends:** face
 **Tags:** [face, authorization]
 
-**Purpose:** Actor authority derivation. Proves that an actor has a specific authority through their role assignment.
+**Purpose:** Actor permission derivation (NIST RBAC). Proves that an actor has a specific permission through their role assignment.
 
 **Boundary Specification:**
 
@@ -914,25 +914,25 @@ Document versions follow semantic versioning with assurance implications:
 |--------|-----------------|
 | v1 | actor (or signer) |
 | v2 | role |
-| v3 | authority |
+| v3 | permission |
 
 | Edge | Type | Connects |
 |------|------|----------|
-| e1 | has-role | v1 → v2 |
-| e2 | conveys | v2 → v3 |
-| e3 | (derived) | v1 → v3 (actor has authority) |
+| e1 | has-role | v1 → v2 (NIST: User Assignment) |
+| e2 | conveys | v2 → v3 (NIST: Permission Assignment) |
+| e3 | (derived) | v1 → v3 (actor has permission) |
 
 **Local Rules:**
 
-- The authority must match action requirements for permissions to be valid
-- Actor-authority derivation is transitive through role
+- The permission must match action requirements for access to be valid
+- Actor-permission derivation is transitive through role
 
 **Required Fields:**
 
 | Field | Type | Description |
 |-------|------|-------------|
 | boundary_edges | array | IDs of [has-role, conveys, derived] edges |
-| boundary_vertices | array | IDs of [actor, role, authority] vertices |
+| boundary_vertices | array | IDs of [actor, role, permission] vertices |
 
 ### Module I/O Faces
 
@@ -1580,19 +1580,19 @@ Edge `e:verification:doc-X-to-spec-Y`:
 
 **Rule Type:** star
 **Scope:** authorization faces
-**Constraint:** For an actor to have an authority, there must exist a complete authorization face
+**Constraint:** For an actor to have a permission, there must exist a complete authorization face
 
 **Verification:**
 
-1. For permission check: find authorization face (actor, role, authority)
-2. Verify has-role edge from actor to role
-3. Verify conveys edge from role to authority
-4. Complete face proves actor has authority
+1. For permission check: find authorization face (actor, role, permission)
+2. Verify has-role edge from actor to role (NIST: User Assignment)
+3. Verify conveys edge from role to permission (NIST: Permission Assignment)
+4. Complete face proves actor has permission
 
 **Example:**
 
 Can signer S validate against guidance G?
-1. Need authority `v:authority:validate:G`
+1. Need permission `v:permission:validate:G`
 2. Find role R where `e:conveys:(R → validate:G)`
 3. Verify `e:has-role:(S → R)`
 4. If `f:authorization:(S, R, validate:G)` exists, S can validate against G
@@ -1713,10 +1713,10 @@ The following root-level namespaces are reserved by the base ontology:
 |-----------|-----------|--------------|
 | `spec`, `guidance`, `ontology`, `doc`, `module` | v | Document types |
 | `actor`, `signer` | v | Actor types |
-| `role`, `authority` | v | RBAC types |
+| `role`, `permission` | v | RBAC types |
 | `verification`, `validation`, `coupling` | e | Assurance edges |
 | `signs`, `qualifies` | e | Signature edges |
-| `has-role`, `conveys`, `requires-authority` | e | RBAC edges |
+| `has-role`, `conveys`, `requires-permission` | e | RBAC edges |
 | `precedes`, `feeds`, `yields` | e | Module I/O edges |
 | `inherits`, `instantiates` | e | Document relationship edges |
 | `assurance`, `signature`, `b2` | f | Assurance faces |

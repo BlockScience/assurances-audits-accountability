@@ -10,6 +10,7 @@ tags:
   - vertex
   - actor
   - signer
+  - admin
 version: 1.0.0
 created: 2025-12-30T23:00:00Z
 modified: 2025-12-30T23:00:00Z
