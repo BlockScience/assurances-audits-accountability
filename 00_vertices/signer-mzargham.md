@@ -1,6 +1,6 @@
 ---
 type: vertex/signer
-extends: vertex/actor
+extends: actor
 id: v:signer:mzargham
 name: Signer - mzargham
 description: Human signer with verified GitHub identity for accountability attestations

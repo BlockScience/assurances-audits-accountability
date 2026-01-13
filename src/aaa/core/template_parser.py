@@ -280,13 +280,13 @@ class TemplateParser:
           - edge         # base type
           - validation   # concrete type
         """
-        # Find tag requirements section
-        tag_pattern = r'```yaml\s*tags:\s*((?:\s*-\s*\w+(?:\s*#[^\n]*)?\s*\n?)+)\s*```'
+        # Find tag requirements section - allow hyphens in tag names
+        tag_pattern = r'```yaml\s*tags:\s*((?:\s*-\s*[\w-]+(?:\s*#[^\n]*)?\s*\n?)+)\s*```'
         matches = re.findall(tag_pattern, body)
 
         for match in matches:
-            # Extract tag names (ignore comments)
-            tags = re.findall(r'-\s*(\w+)', match)
+            # Extract tag names (ignore comments) - allow hyphens in tag names
+            tags = re.findall(r'-\s*([\w-]+)', match)
             for tag in tags:
                 if tag not in spec.tag_requirements:
                     spec.add_tag_requirement(tag)
