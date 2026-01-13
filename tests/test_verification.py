@@ -12,10 +12,16 @@ sys.path.insert(0, str(Path(__file__).parent.parent / 'scripts'))
 from verify_template_based import TemplateBasedVerifier
 
 
+def get_templates_dir():
+    """Get the templates directory - use bundled templates from src/aaa/templates."""
+    repo_root = Path(__file__).parent.parent
+    return repo_root / 'src' / 'aaa' / 'templates'
+
+
 def test_validation_edges():
     """Test that all boundary complex validation edges verify successfully."""
     repo_root = Path(__file__).parent.parent
-    templates_dir = repo_root / 'templates'
+    templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
     validation_edges = list((repo_root / '01_edges').glob('validation-*.md'))
@@ -32,7 +38,7 @@ def test_validation_edges():
 def test_verification_edges():
     """Test that all boundary complex verification edges verify successfully."""
     repo_root = Path(__file__).parent.parent
-    templates_dir = repo_root / 'templates'
+    templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
     verification_edges = list((repo_root / '01_edges').glob('verification-*.md'))
@@ -49,7 +55,7 @@ def test_verification_edges():
 def test_coupling_edges():
     """Test that all boundary complex coupling edges verify successfully."""
     repo_root = Path(__file__).parent.parent
-    templates_dir = repo_root / 'templates'
+    templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
     coupling_edges = list((repo_root / '01_edges').glob('coupling-*.md'))
@@ -66,7 +72,7 @@ def test_coupling_edges():
 def test_assurance_faces():
     """Test that all boundary complex assurance faces verify successfully."""
     repo_root = Path(__file__).parent.parent
-    templates_dir = repo_root / 'templates'
+    templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
     assurance_faces = list((repo_root / '02_faces').glob('assurance-*.md'))
@@ -83,7 +89,7 @@ def test_assurance_faces():
 def test_foundational_vertices():
     """Test that all foundational vertices verify successfully."""
     repo_root = Path(__file__).parent.parent
-    templates_dir = repo_root / 'templates'
+    templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
     # Test the 4 boundary complex vertices
@@ -110,7 +116,7 @@ def test_foundational_vertices():
 def test_conditional_requirements():
     """Test that conditional requirements work correctly."""
     repo_root = Path(__file__).parent.parent
-    templates_dir = repo_root / 'templates'
+    templates_dir = get_templates_dir()
     verifier = TemplateBasedVerifier(templates_dir, verbose=False)
 
     # Test llm-assisted validation edge (should require llm_model and human_approver)

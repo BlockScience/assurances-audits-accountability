@@ -7,6 +7,7 @@ target: v:doc:runbook-llm-specialization
 verification_edge: e:verification:runbook-llm-specialization:spec
 validation_edge: e:validation:runbook-llm-specialization:guidance
 coupling_edge: e:coupling:runbook
+orientation: oriented
 tags:
   - face
   - assurance
