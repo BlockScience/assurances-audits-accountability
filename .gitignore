@@ -100,3 +100,4 @@ build/
 # Environment files (secrets)
 .env
 .env.*
+templates/

@@ -12,9 +12,15 @@ sys.path.insert(0, str(Path(__file__).parent.parent / 'scripts'))
 from template_parser import TemplateParser, TemplateSpec
 
 
+def get_templates_dir():
+    """Get the templates directory - use bundled templates from src/aaa/templates."""
+    repo_root = Path(__file__).parent.parent
+    return repo_root / 'src' / 'aaa' / 'templates'
+
+
 def test_load_all_templates():
     """Test that all templates load successfully."""
-    templates_dir = Path(__file__).parent.parent / 'templates'
+    templates_dir = get_templates_dir()
     parser = TemplateParser(templates_dir)
     parser.load_all_templates()
 
@@ -24,7 +30,7 @@ def test_load_all_templates():
 
 def test_validation_edge_template():
     """Test validation edge template parsing."""
-    templates_dir = Path(__file__).parent.parent / 'templates'
+    templates_dir = get_templates_dir()
     parser = TemplateParser(templates_dir)
     parser.load_all_templates()
 
@@ -59,7 +65,7 @@ def test_validation_edge_template():
 
 def test_assurance_face_template():
     """Test assurance face template parsing."""
-    templates_dir = Path(__file__).parent.parent / 'templates'
+    templates_dir = get_templates_dir()
     parser = TemplateParser(templates_dir)
     parser.load_all_templates()
 
@@ -85,7 +91,7 @@ def test_assurance_face_template():
 
 def test_conditional_evaluation():
     """Test conditional requirement evaluation."""
-    templates_dir = Path(__file__).parent.parent / 'templates'
+    templates_dir = get_templates_dir()
     parser = TemplateParser(templates_dir)
     parser.load_all_templates()
 

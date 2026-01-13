@@ -23,28 +23,30 @@ def get_bundled_templates_path() -> Path:
     Raises:
         FileNotFoundError: If templates directory cannot be found
     """
-    # Try importlib.resources approach for installed packages
-    try:
-        templates_ref = files('aaa').joinpath('templates')
-        # Check if this path exists
-        with as_file(templates_ref) as templates_path:
-            if templates_path.exists():
-                return templates_path
-    except (TypeError, FileNotFoundError):
-        pass
-
-    # Fallback: look for templates relative to this file's location
-    # This works for editable installs and development
+    # First: look for templates relative to this file's location
+    # This works for editable installs, development, and standard pip installs
     package_root = Path(__file__).parent.parent
     templates_path = package_root / 'templates'
     if templates_path.exists():
         return templates_path
 
-    # Another fallback: look in repo root (for development without install)
-    repo_root = package_root.parent.parent
-    templates_path = repo_root / 'templates'
-    if templates_path.exists():
-        return templates_path
+    # Try importlib.resources approach for installed packages
+    # This handles cases where resources are in zip files or other non-filesystem locations
+    try:
+        templates_ref = files('aaa').joinpath('templates')
+        # For traversable resources, try to get the actual path
+        if hasattr(templates_ref, '_path'):
+            # This is a Path-like object from importlib.resources
+            path = Path(templates_ref._path)
+            if path.exists():
+                return path
+        # Try as_file as a fallback (creates temp copy if needed)
+        with as_file(templates_ref) as temp_path:
+            if temp_path.exists():
+                # Return the path - caller must use it within context
+                return Path(temp_path)
+    except (TypeError, FileNotFoundError, AttributeError):
+        pass
 
     raise FileNotFoundError(
         "Templates directory not found. If you installed the package, "
@@ -67,26 +69,25 @@ def get_bundled_foundation_path() -> Path:
     Raises:
         FileNotFoundError: If foundation directory cannot be found
     """
-    # Try importlib.resources approach for installed packages
-    try:
-        foundation_ref = files('aaa').joinpath('foundation')
-        with as_file(foundation_ref) as foundation_path:
-            if foundation_path.exists():
-                return foundation_path
-    except (TypeError, FileNotFoundError):
-        pass
-
-    # Fallback: look for foundation relative to this file's location
+    # First: look for foundation relative to this file's location
+    # This works for editable installs, development, and standard pip installs
     package_root = Path(__file__).parent.parent
     foundation_path = package_root / 'foundation'
     if foundation_path.exists():
         return foundation_path
 
-    # Another fallback: look in repo design/ (for development without install)
-    repo_root = package_root.parent.parent
-    design_path = repo_root / 'design'
-    if (design_path / 'ontology-base.md').exists():
-        return design_path
+    # Try importlib.resources approach for installed packages
+    try:
+        foundation_ref = files('aaa').joinpath('foundation')
+        if hasattr(foundation_ref, '_path'):
+            path = Path(foundation_ref._path)
+            if path.exists():
+                return path
+        with as_file(foundation_ref) as temp_path:
+            if temp_path.exists():
+                return Path(temp_path)
+    except (TypeError, FileNotFoundError, AttributeError):
+        pass
 
     raise FileNotFoundError(
         "Foundation directory not found. If you installed the package, "

@@ -31,7 +31,7 @@ class TestEdgeTemplateRequiredFields:
 
     def test_edge_template_has_source_type(self):
         """Edge templates must have source_type field."""
-        templates_dir = Path(__file__).parent.parent / 'templates' / '01_edges'
+        templates_dir = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '01_edges'
 
         edge_templates = list(templates_dir.glob('*.md'))
         assert len(edge_templates) > 0, "No edge templates found"
@@ -45,7 +45,7 @@ class TestEdgeTemplateRequiredFields:
 
     def test_edge_template_has_target_type(self):
         """Edge templates must have target_type field."""
-        templates_dir = Path(__file__).parent.parent / 'templates' / '01_edges'
+        templates_dir = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '01_edges'
 
         edge_templates = list(templates_dir.glob('*.md'))
         assert len(edge_templates) > 0, "No edge templates found"
@@ -59,7 +59,7 @@ class TestEdgeTemplateRequiredFields:
 
     def test_edge_template_has_orientation(self):
         """Edge templates must have orientation field."""
-        templates_dir = Path(__file__).parent.parent / 'templates' / '01_edges'
+        templates_dir = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '01_edges'
 
         edge_templates = list(templates_dir.glob('*.md'))
         assert len(edge_templates) > 0, "No edge templates found"
@@ -106,7 +106,7 @@ class TestFaceTemplateRequiredFields:
 
     def test_face_template_has_edges_list(self):
         """Face templates must have edges list field."""
-        templates_dir = Path(__file__).parent.parent / 'templates' / '02_faces'
+        templates_dir = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '02_faces'
 
         face_templates = list(templates_dir.glob('*.md'))
         assert len(face_templates) > 0, "No face templates found"
@@ -120,7 +120,7 @@ class TestFaceTemplateRequiredFields:
 
     def test_face_template_has_orientation(self):
         """Face templates must have orientation field."""
-        templates_dir = Path(__file__).parent.parent / 'templates' / '02_faces'
+        templates_dir = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '02_faces'
 
         face_templates = list(templates_dir.glob('*.md'))
         assert len(face_templates) > 0, "No face templates found"
@@ -264,7 +264,7 @@ class TestLearningJourneyEdgeTemplates:
 
     def test_has_skill_template(self):
         """has-skill template has all required fields."""
-        template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'has-skill.md'
+        template = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '01_edges' / 'has-skill.md'
         assert template.exists(), "has-skill template not found"
 
         content = template.read_text(encoding='utf-8')
@@ -274,7 +274,7 @@ class TestLearningJourneyEdgeTemplates:
 
     def test_requires_skill_template(self):
         """requires-skill template has all required fields."""
-        template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'requires-skill.md'
+        template = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '01_edges' / 'requires-skill.md'
         assert template.exists(), "requires-skill template not found"
 
         content = template.read_text(encoding='utf-8')
@@ -284,7 +284,7 @@ class TestLearningJourneyEdgeTemplates:
 
     def test_develops_skill_template(self):
         """develops-skill template has all required fields."""
-        template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'develops-skill.md'
+        template = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '01_edges' / 'develops-skill.md'
         assert template.exists(), "develops-skill template not found"
 
         content = template.read_text(encoding='utf-8')
@@ -294,7 +294,7 @@ class TestLearningJourneyEdgeTemplates:
 
     def test_studies_template(self):
         """studies template has all required fields."""
-        template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'studies.md'
+        template = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '01_edges' / 'studies.md'
         assert template.exists(), "studies template not found"
 
         content = template.read_text(encoding='utf-8')
@@ -304,7 +304,7 @@ class TestLearningJourneyEdgeTemplates:
 
     def test_transitions_to_template(self):
         """transitions-to template has all required fields."""
-        template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'transitions-to.md'
+        template = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '01_edges' / 'transitions-to.md'
         assert template.exists(), "transitions-to template not found"
 
         content = template.read_text(encoding='utf-8')
@@ -314,7 +314,7 @@ class TestLearningJourneyEdgeTemplates:
 
     def test_advances_template(self):
         """advances template has all required fields."""
-        template = Path(__file__).parent.parent / 'templates' / '01_edges' / 'advances.md'
+        template = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '01_edges' / 'advances.md'
         assert template.exists(), "advances template not found"
 
         content = template.read_text(encoding='utf-8')
@@ -328,7 +328,7 @@ class TestLearningJourneyFaceTemplates:
 
     def test_prerequisite_template(self):
         """prerequisite template has all required fields."""
-        template = Path(__file__).parent.parent / 'templates' / '02_faces' / 'prerequisite.md'
+        template = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '02_faces' / 'prerequisite.md'
         assert template.exists(), "prerequisite template not found"
 
         content = template.read_text(encoding='utf-8')
@@ -341,7 +341,7 @@ class TestLearningJourneyFaceTemplates:
 
     def test_completion_template(self):
         """completion template has all required fields."""
-        template = Path(__file__).parent.parent / 'templates' / '02_faces' / 'completion.md'
+        template = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '02_faces' / 'completion.md'
         assert template.exists(), "completion template not found"
 
         content = template.read_text(encoding='utf-8')
@@ -354,7 +354,7 @@ class TestLearningJourneyFaceTemplates:
 
     def test_skill_gain_template(self):
         """skill-gain template has all required fields."""
-        template = Path(__file__).parent.parent / 'templates' / '02_faces' / 'skill-gain.md'
+        template = Path(__file__).parent.parent / 'src' / 'aaa' / 'templates' / '02_faces' / 'skill-gain.md'
         assert template.exists(), "skill-gain template not found"
 
         content = template.read_text(encoding='utf-8')
