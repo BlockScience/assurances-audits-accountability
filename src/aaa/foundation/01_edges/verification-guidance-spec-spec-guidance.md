@@ -37,6 +37,38 @@ This verification edge is part of the genesis infrastructure:
 - Part of b2:guidance-spec boundary face
 - Enables GS to achieve genesis assurance status
 
+## Verification Output
+
+```text
+Verification Result: PASS
+
+Checked against: v:spec:guidance (Specification for Guidance Documents)
+Document: v:guidance:spec (Guidance for Specification Documents)
+
+Required Fields:
+✓ type: vertex/guidance
+✓ extends: doc
+✓ id: v:guidance:spec
+✓ name: present
+✓ tags: [vertex, doc, guidance]
+✓ version: present
+✓ created: present
+✓ modified: present
+
+Required Body Sections:
+✓ Purpose
+✓ Quality Criteria
+✓ Leveled Assessment
+
+All structural requirements satisfied.
+```
+
+## Verification Status
+
+- **Status:** Pass
+- **Date:** 2025-12-27T22:00:00Z
+- **Tool:** genesis-verification v1.0.0
+
 ## Verification Checks
 
 SG requires guidance documents to have:
