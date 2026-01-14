@@ -65,20 +65,20 @@ The Element-Component Matrix shows how 12 physical elements combine to implement
 
 ### Element Table
 
-| ID  | Name                 | Technology/Tool        | Version          | Purpose                                                        |
-| --- | -------------------- | ---------------------- | ---------------- | -------------------------------------------------------------- |
-| E1  | Ontology Files       | OFM + YAML             | OFM 2024         | Load-bearing type definitions; stored separately, change-resistant |
-| E2  | Document Files       | OFM + YAML             | OFM 2024         | All simplices (vertices, edges, faces) as markdown with frontmatter |
-| E3  | Template Files       | OFM + placeholders     | OFM 2024         | Simple `<placeholder>` syntax for document scaffolding         |
-| E4  | Git Repository       | Git                    | 2.40+            | Version control, branching, accountability via git blame       |
-| E5  | Python Package       | Python + uv            | 3.12+            | Core library, scripts, virtual environment management          |
-| E6  | YAML Parser          | PyYAML                 | 6.0+             | Frontmatter parsing (structural truth for simplicial complex)  |
-| E7  | Graph Library        | NetworkX               | 3.2+             | Graph layout computation for chart visualization               |
-| E8  | Chart Visualization  | matplotlib + plotly    | 3.8+ / 5.18+     | Visualize charts for validation (essential verification step)  |
-| E9  | Obsidian             | Obsidian               | 1.5+             | Navigation, search, review, wikilink rendering                 |
-| E10 | Claude Code          | Claude Code            | Latest           | LLM-assisted authoring via system prompt                       |
-| E11 | GPG Signatures       | GnuPG                  | 2.x              | Sign git commits and accountability edges                      |
-| E12 | GitHub Actions       | GitHub Actions         | Latest           | CI enforcement of ontology rules; prevent invalid merges       |
+| ID  | Name                | Technology/Tool     | Version      | Purpose                                                             |
+| --- | ------------------- | ------------------- | ------------ | ------------------------------------------------------------------- |
+| E1  | Ontology Files      | OFM + YAML          | OFM 2024     | Load-bearing type definitions; stored separately, change-resistant  |
+| E2  | Document Files      | OFM + YAML          | OFM 2024     | All simplices (vertices, edges, faces) as markdown with frontmatter |
+| E3  | Template Files      | OFM + placeholders  | OFM 2024     | Simple `<placeholder>` syntax for document scaffolding              |
+| E4  | Git Repository      | Git                 | 2.40+        | Version control, branching, accountability via git blame            |
+| E5  | Python Package      | Python + uv         | 3.12+        | Core library, scripts, virtual environment management               |
+| E6  | YAML Parser         | PyYAML              | 6.0+         | Frontmatter parsing (structural truth for simplicial complex)       |
+| E7  | Graph Library       | NetworkX            | 3.2+         | Graph layout computation for chart visualization                    |
+| E8  | Chart Visualization | matplotlib + plotly | 3.8+ / 5.18+ | Visualize charts for validation (essential verification step)       |
+| E9  | Obsidian            | Obsidian            | 1.5+         | Navigation, search, review, wikilink rendering                      |
+| E10 | Claude Code         | Claude Code         | Latest       | LLM-assisted authoring via system prompt                            |
+| E11 | GPG Signatures      | GnuPG               | 2.x          | Sign git commits and accountability edges                           |
+| E12 | GitHub Actions      | GitHub Actions      | Latest       | CI enforcement of ontology rules; prevent invalid merges            |
 
 ### Markdown Flavor Specification
 

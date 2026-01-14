@@ -63,39 +63,39 @@ Each function is specified with inputs, outputs, and behavior—without referenc
 
 ### Function Table
 
-| ID | Name | Area | Inputs | Outputs |
-|----|------|------|--------|---------|
-| F1 | Template Retrieval | Document Authoring | Document type identifier | Template, spec reference, guidance reference |
-| F2 | Prior Work Discovery | Document Authoring | Document type, keywords, scope | Ranked document list, relevance scores |
-| F3 | Draft Generation | Document Authoring | Template, parameters, prior work refs | Draft document with placeholders filled |
-| F4 | Context Parameter Injection | Document Authoring | Draft document, parameter values | Document with parameters resolved |
-| F5 | Frontmatter Verification | Quality Assurance | Document | Field presence/type results |
-| F6 | Section Structure Verification | Quality Assurance | Document, specification | Section check results |
-| F7 | Count Consistency Verification | Quality Assurance | Document | Count match results |
-| F8 | Reference Resolution Verification | Quality Assurance | Document, knowledge complex | Reference validity results |
-| F9 | Guidance-Based Evaluation | Quality Assurance | Document, guidance | Per-criterion scores, suggestions |
-| F10 | Full-Text Search | Knowledge Navigation | Query, scope constraints | Matching documents, snippets |
-| F11 | Graph Traversal | Knowledge Navigation | Starting vertex, relationship types, depth | Connected vertices, paths |
-| F12 | Backlink Discovery | Knowledge Navigation | Target document | Referencing documents, relationship types |
-| F13 | Approval Request Initiation | Approval & Accountability | Document, requestor, approver | Request record, notification |
-| F14 | Verification Status Presentation | Approval & Accountability | Document, verification results | Formatted summary for approver |
-| F15 | Evaluation Score Presentation | Approval & Accountability | Document, evaluation scores | Formatted summary highlighting gaps |
-| F16 | Validation Edge Creation | Approval & Accountability | Document, guidance, approver, assessment | Validation edge, accountability record |
-| F17 | Runbook Step Tracking | Approval & Accountability | Runbook, current step, context | Step status, I/O document refs |
-| F18 | Performance Metrics Collection | Approval & Accountability | Runbook execution, timing data | Metrics record, effectiveness indicators |
-| F19 | Specification Authoring | Configuration & Meta | Type definition, structural requirements | Spec document |
-| F20 | Guidance Authoring | Configuration & Meta | Type definition, quality criteria | Guidance document |
-| F21 | Template Authoring | Configuration & Meta | Spec, guidance, boilerplate | Template document |
-| F22 | Coupling Edge Creation | Configuration & Meta | Spec, guidance | Coupling edge document |
-| F23 | Verification Edge Creation | Configuration & Meta | Document, spec, verification results | Verification edge document |
-| F24 | Assurance Face Construction | Configuration & Meta | Target, verification edge, validation edge, coupling | Assurance face, audit record |
-| F25 | Runbook Retrieval | Runbook Management | Task type, keywords | Matching runbooks, applicability scores |
-| F26 | Runbook Module Authoring | Runbook Management | Module definition, input types, output types | Module document |
-| F27 | Runbook Assembly | Runbook Management | Module list, ordering, effectiveness metrics | Runbook document |
-| F28 | Runbook I/O Validation | Runbook Management | Runbook | Chaining validity results, type match results |
-| F29 | Runbook Execution Instantiation | Runbook Management | Runbook, operator, context | Execution record, initial step |
-| F30 | Runbook Step Context Presentation | Runbook Management | Execution, current step | Step requirements, I/O types, next steps |
-| F31 | Runbook Execution Completion | Runbook Management | Execution, final outputs | Completion record, deliverable references |
+| ID  | Name                              | Area                      | Inputs                                               | Outputs                                       |
+| --- | --------------------------------- | ------------------------- | ---------------------------------------------------- | --------------------------------------------- |
+| F1  | Template Retrieval                | Document Authoring        | Document type identifier                             | Template, spec reference, guidance reference  |
+| F2  | Prior Work Discovery              | Document Authoring        | Document type, keywords, scope                       | Ranked document list, relevance scores        |
+| F3  | Draft Generation                  | Document Authoring        | Template, parameters, prior work refs                | Draft document with placeholders filled       |
+| F4  | Context Parameter Injection       | Document Authoring        | Draft document, parameter values                     | Document with parameters resolved             |
+| F5  | Frontmatter Verification          | Quality Assurance         | Document                                             | Field presence/type results                   |
+| F6  | Section Structure Verification    | Quality Assurance         | Document, specification                              | Section check results                         |
+| F7  | Count Consistency Verification    | Quality Assurance         | Document                                             | Count match results                           |
+| F8  | Reference Resolution Verification | Quality Assurance         | Document, knowledge complex                          | Reference validity results                    |
+| F9  | Guidance-Based Evaluation         | Quality Assurance         | Document, guidance                                   | Per-criterion scores, suggestions             |
+| F10 | Full-Text Search                  | Knowledge Navigation      | Query, scope constraints                             | Matching documents, snippets                  |
+| F11 | Graph Traversal                   | Knowledge Navigation      | Starting vertex, relationship types, depth           | Connected vertices, paths                     |
+| F12 | Backlink Discovery                | Knowledge Navigation      | Target document                                      | Referencing documents, relationship types     |
+| F13 | Approval Request Initiation       | Approval & Accountability | Document, requestor, approver                        | Request record, notification                  |
+| F14 | Verification Status Presentation  | Approval & Accountability | Document, verification results                       | Formatted summary for approver                |
+| F15 | Evaluation Score Presentation     | Approval & Accountability | Document, evaluation scores                          | Formatted summary highlighting gaps           |
+| F16 | Validation Edge Creation          | Approval & Accountability | Document, guidance, approver, assessment             | Validation edge, accountability record        |
+| F17 | Runbook Step Tracking             | Approval & Accountability | Runbook, current step, context                       | Step status, I/O document refs                |
+| F18 | Performance Metrics Collection    | Approval & Accountability | Runbook execution, timing data                       | Metrics record, effectiveness indicators      |
+| F19 | Specification Authoring           | Configuration & Meta      | Type definition, structural requirements             | Spec document                                 |
+| F20 | Guidance Authoring                | Configuration & Meta      | Type definition, quality criteria                    | Guidance document                             |
+| F21 | Template Authoring                | Configuration & Meta      | Spec, guidance, boilerplate                          | Template document                             |
+| F22 | Coupling Edge Creation            | Configuration & Meta      | Spec, guidance                                       | Coupling edge document                        |
+| F23 | Verification Edge Creation        | Configuration & Meta      | Document, spec, verification results                 | Verification edge document                    |
+| F24 | Assurance Face Construction       | Configuration & Meta      | Target, verification edge, validation edge, coupling | Assurance face, audit record                  |
+| F25 | Runbook Retrieval                 | Runbook Management        | Task type, keywords                                  | Matching runbooks, applicability scores       |
+| F26 | Runbook Module Authoring          | Runbook Management        | Module definition, input types, output types         | Module document                               |
+| F27 | Runbook Assembly                  | Runbook Management        | Module list, ordering, effectiveness metrics         | Runbook document                              |
+| F28 | Runbook I/O Validation            | Runbook Management        | Runbook                                              | Chaining validity results, type match results |
+| F29 | Runbook Execution Instantiation   | Runbook Management        | Runbook, operator, context                           | Execution record, initial step                |
+| F30 | Runbook Step Context Presentation | Runbook Management        | Execution, current step                              | Step requirements, I/O types, next steps      |
+| F31 | Runbook Execution Completion      | Runbook Management        | Execution, final outputs                             | Completion record, deliverable references     |
 
 ### Functional Area 1: Document Authoring
 
