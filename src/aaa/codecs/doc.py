@@ -1,11 +1,13 @@
 """Codec for vertex/doc elements."""
 
 from __future__ import annotations
+
 from .base import AAABaseModel, parse_frontmatter, write_frontmatter
 
 
 class DocModel(AAABaseModel):
     """Pydantic model for vertex/doc (and all doc subtypes)."""
+
     extends: str | None = None
 
 

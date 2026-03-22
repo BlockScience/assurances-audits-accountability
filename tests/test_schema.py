@@ -5,13 +5,15 @@ Tests for build_aaa_schema(): OWL/SHACL output, type hierarchy, topological cons
 """
 
 import pytest
-from rdflib import Graph, Namespace, URIRef
+from rdflib import Graph, Namespace
 from rdflib.namespace import RDFS
 
 from aaa.schema import build_aaa_schema
 
 AAA = Namespace("https://example.org/aaa#")
-KC = Namespace("https://w3id.org/kc#")
+# KC namespace: knowledgecomplex currently uses example.org; will migrate to
+# https://w3id.org/kc# once the w3id.org redirect is approved.
+KC = Namespace("https://example.org/kc#")
 
 
 @pytest.fixture(scope="module")
@@ -20,6 +22,7 @@ def schema():
 
 
 # --- OWL output ---
+
 
 def test_dump_owl_is_valid_turtle(schema):
     g = Graph()
@@ -76,6 +79,7 @@ def test_doctype_edge_declared(schema):
 
 # --- SHACL output ---
 
+
 def test_dump_shacl_is_valid_turtle(schema):
     g = Graph()
     g.parse(data=schema.dump_shacl(), format="turtle")
@@ -122,8 +126,10 @@ def test_doctype_name_required_in_shacl(schema):
 
 # --- Round-trip: SchemaBuilder → KC constructor ---
 
+
 def test_schema_powers_knowledge_complex(schema):
     from knowledgecomplex import KnowledgeComplex
+
     kc = KnowledgeComplex(schema=schema)
     # Use deferred_verification so SHACL runs once after the full triangle is built,
     # not eagerly after each individual element insertion.
@@ -135,9 +141,12 @@ def test_schema_powers_knowledge_complex(schema):
         kc.add_edge("ver1", type="verification", vertices={"d1", "s1"}, status="passing")
         kc.add_edge("val1", type="validation", vertices={"d1", "g1"}, status="approved")
         kc.add_face(
-            "a1", type="assurance",
+            "a1",
+            type="assurance",
             boundary=["ver1", "val1", "dt1"],
-            doc_name="Doc One", signed_by="Alice", status="assured",
+            doc_name="Doc One",
+            signed_by="Alice",
+            status="assured",
         )
     # No ValidationError expected — all constraints satisfied at exit
     assert "s1" in kc.element_ids(type="spec")

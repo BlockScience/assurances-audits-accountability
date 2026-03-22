@@ -4,19 +4,24 @@ tests/test_codecs.py
 Tests for AAA Pydantic models and Codecs using fixture markdown files.
 """
 
-import pytest
 from pathlib import Path
+
+import pytest
 from pydantic import ValidationError
 
 from aaa.codecs import (
-    codec_for_type, dimension_for_type, short_type,
-    DocCodec, SpecCodec, GuidanceCodec, ChartCodec,
-    VerificationCodec, ValidationCodec, DocTypeCodec, AssuranceCodec,
+    AssuranceCodec,
+    ChartCodec,
+    DocCodec,
+    DocTypeCodec,
+    GuidanceCodec,
+    SpecCodec,
+    ValidationCodec,
+    VerificationCodec,
+    codec_for_type,
+    dimension_for_type,
+    short_type,
 )
-from aaa.codecs.spec import SpecModel
-from aaa.codecs.chart import ChartModel
-from aaa.codecs.verification import VerificationModel
-from aaa.codecs.assurance import AssuranceModel
 
 FIXTURES = Path(__file__).parent / "fixtures" / "aaa"
 
@@ -27,14 +32,18 @@ def uri(filename: str) -> str:
 
 # --- codec_for_type registry ---
 
+
 def test_codec_for_spec():
     assert isinstance(codec_for_type("vertex/spec"), SpecCodec)
+
 
 def test_codec_for_doctype():
     assert isinstance(codec_for_type("DocType"), DocTypeCodec)
 
+
 def test_codec_for_assurance():
     assert isinstance(codec_for_type("face/assurance"), AssuranceCodec)
+
 
 def test_codec_for_unknown_falls_back_to_doc():
     assert isinstance(codec_for_type("vertex/some_future_type"), DocCodec)
@@ -42,17 +51,22 @@ def test_codec_for_unknown_falls_back_to_doc():
 
 # --- dimension_for_type ---
 
+
 def test_dimension_vertex():
     assert dimension_for_type("vertex/spec") == "vertex"
+
 
 def test_dimension_edge():
     assert dimension_for_type("edge/verification") == "edge"
 
+
 def test_dimension_face():
     assert dimension_for_type("face/assurance") == "face"
 
+
 def test_dimension_short_name_vertex():
     assert dimension_for_type("doc") == "vertex"
+
 
 def test_dimension_short_name_edge():
     assert dimension_for_type("DocType") == "edge"
@@ -60,16 +74,19 @@ def test_dimension_short_name_edge():
 
 # --- short_type ---
 
+
 def test_short_type_strips_prefix():
     assert short_type("vertex/spec") == "spec"
     assert short_type("edge/verification") == "verification"
     assert short_type("face/assurance") == "assurance"
+
 
 def test_short_type_passthrough():
     assert short_type("spec") == "spec"
 
 
 # --- SpecCodec ---
+
 
 class TestSpecCodec:
     def test_decompile_valid(self):
@@ -90,6 +107,7 @@ class TestSpecCodec:
 
 # --- GuidanceCodec ---
 
+
 class TestGuidanceCodec:
     def test_decompile_valid(self):
         attrs = GuidanceCodec().decompile(uri("sample-guidance.md"))
@@ -98,6 +116,7 @@ class TestGuidanceCodec:
 
 # --- DocCodec ---
 
+
 class TestDocCodec:
     def test_decompile_valid(self):
         attrs = DocCodec().decompile(uri("sample-doc.md"))
@@ -105,6 +124,7 @@ class TestDocCodec:
 
 
 # --- ChartCodec ---
+
 
 class TestChartCodec:
     def test_decompile_valid(self):
@@ -122,6 +142,7 @@ class TestChartCodec:
 
 
 # --- VerificationCodec ---
+
 
 class TestVerificationCodec:
     def test_decompile_valid(self):
@@ -151,6 +172,7 @@ class TestVerificationCodec:
 
 # --- ValidationCodec ---
 
+
 class TestValidationCodec:
     def test_decompile_valid(self):
         attrs = ValidationCodec().decompile(uri("sample-validation.md"))
@@ -159,6 +181,7 @@ class TestValidationCodec:
 
 
 # --- DocTypeCodec ---
+
 
 class TestDocTypeCodec:
     def test_decompile_valid(self):
@@ -169,6 +192,7 @@ class TestDocTypeCodec:
 
 
 # --- AssuranceCodec ---
+
 
 class TestAssuranceCodec:
     def test_decompile_valid(self):
@@ -198,6 +222,7 @@ class TestAssuranceCodec:
 
 
 # --- compile round-trip ---
+
 
 class TestCompileRoundTrip:
     def test_roundtrip_spec(self, tmp_path):

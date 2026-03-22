@@ -14,15 +14,15 @@ Examples:
     aaa audit charts/my-chart/my-chart.md --graph graph.ttl
 """
 
-import click
 import sys
 from pathlib import Path
 
-from knowledgecomplex import KnowledgeComplex, load_graph
+import click
+from knowledgecomplex import KnowledgeComplex
 from knowledgecomplex.io import load_graph as _load_graph
 
-from aaa.schema import build_aaa_schema
 from aaa.codecs import codec_for_type
+from aaa.schema import build_aaa_schema
 
 
 def _load_kc(graph_path: Path) -> KnowledgeComplex:
@@ -71,11 +71,15 @@ def _check_tiling(kc: KnowledgeComplex, element_ids: set[str]) -> list[str]:
 
 @click.command()
 @click.argument("chart", type=click.Path(exists=True))
-@click.option("--graph", "-g", default="graph.ttl", show_default=True,
-              type=click.Path(),
-              help="Path to the RDF graph built by `aaa build`.")
-@click.option("--no-tiling", is_flag=True,
-              help="Skip the assurance tiling completeness check.")
+@click.option(
+    "--graph",
+    "-g",
+    default="graph.ttl",
+    show_default=True,
+    type=click.Path(),
+    help="Path to the RDF graph built by `aaa build`.",
+)
+@click.option("--no-tiling", is_flag=True, help="Skip the assurance tiling completeness check.")
 def audit(chart, graph, no_tiling):
     """Audit CHART for assurance completeness against the RDF graph."""
     chart_path = Path(chart)

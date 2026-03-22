@@ -1,12 +1,14 @@
 """Codec for vertex/spec elements."""
 
 from __future__ import annotations
+
 from .base import parse_frontmatter, write_frontmatter
 from .doc import DocModel
 
 
 class SpecModel(DocModel):
     """Pydantic model for vertex/spec."""
+
     # Specs may carry additional structured fields; extra fields allowed via base.
     pass
 

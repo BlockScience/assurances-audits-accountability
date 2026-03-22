@@ -5,8 +5,8 @@ Test runner for knowledge-complex-demo.
 Runs all test suites and reports results.
 """
 
-import sys
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -14,13 +14,9 @@ def run_test_suite(test_file: Path) -> bool:
     """Run a test suite and return success status."""
     print(f"\n{'=' * 70}")
     print(f"Running: {test_file.name}")
-    print('=' * 70)
+    print("=" * 70)
 
-    result = subprocess.run(
-        [sys.executable, str(test_file)],
-        capture_output=False,
-        text=True
-    )
+    result = subprocess.run([sys.executable, str(test_file)], capture_output=False, text=True)
 
     return result.returncode == 0
 
@@ -31,22 +27,19 @@ def main():
 
     test_suites = [
         # Core template and verification tests
-        tests_dir / 'test_template_parser.py',
-        tests_dir / 'test_verification.py',
-        tests_dir / 'test_accountability.py',
-
+        tests_dir / "test_template_parser.py",
+        tests_dir / "test_verification.py",
+        tests_dir / "test_accountability.py",
         # Template generation tests (Phase 2)
-        tests_dir / 'test_template_generation.py',
-
+        tests_dir / "test_template_generation.py",
         # Critical functionality tests
-        tests_dir / 'test_dependency_hierarchy.py',
-        tests_dir / 'test_compilation.py',
-
+        tests_dir / "test_dependency_hierarchy.py",
+        tests_dir / "test_compilation.py",
         # Infrastructure tests
-        tests_dir / 'test_cache.py',
-        tests_dir / 'test_topology.py',
-        tests_dir / 'test_verify_chart.py',
-        tests_dir / 'test_parse.py',
+        tests_dir / "test_cache.py",
+        tests_dir / "test_topology.py",
+        tests_dir / "test_verify_chart.py",
+        tests_dir / "test_parse.py",
     ]
 
     print("=" * 70)
@@ -80,5 +73,5 @@ def main():
     return 0 if failed == 0 else 1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

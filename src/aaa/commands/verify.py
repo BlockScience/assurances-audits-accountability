@@ -10,17 +10,20 @@ Examples:
     aaa verify 01_edges/e:verification:foo.md
 """
 
-import click
 import sys
 from pathlib import Path
 
+import click
 from pydantic import ValidationError
 
 from aaa.codecs import codec_for_type, dimension_for_type
 
 
 def _read_type(path: Path) -> str | None:
-    import yaml, re
+    import re
+
+    import yaml
+
     try:
         text = path.read_text(encoding="utf-8")
         m = re.match(r"^---\s*\n(.*?)\n---", text, re.DOTALL)

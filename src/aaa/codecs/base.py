@@ -9,12 +9,12 @@ AAABaseModel  — common Pydantic fields shared by all AAA element types
 from __future__ import annotations
 
 import re
-import yaml
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
-from pydantic import BaseModel, field_validator
 
+import yaml
+from pydantic import BaseModel, field_validator
 
 # ---------------------------------------------------------------------------
 # File I/O helpers
@@ -38,6 +38,7 @@ def _normalize(value: Any) -> Any:
     to ISO strings so all Pydantic models always receive plain strings.
     """
     import datetime as dt
+
     if isinstance(value, (dt.datetime, dt.date)):
         return value.isoformat()
     if isinstance(value, dict):
@@ -79,6 +80,7 @@ def write_frontmatter(uri: str, data: dict[str, Any], body: str = "") -> None:
 # Base Pydantic model
 # ---------------------------------------------------------------------------
 
+
 class AAABaseModel(BaseModel):
     """Fields common to all AAA markdown elements (vertices, edges, faces)."""
 
@@ -94,6 +96,7 @@ class AAABaseModel(BaseModel):
     created: str | None = None
     modified: str | None = None
     description: str | None = None
+    axiomatic: bool = False
 
     @field_validator("id")
     @classmethod

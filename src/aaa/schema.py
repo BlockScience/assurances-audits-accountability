@@ -8,7 +8,7 @@ Call build_aaa_schema() to obtain a fully configured SchemaBuilder ready for
 use as the backend of a KnowledgeComplex instance.
 """
 
-from knowledgecomplex import SchemaBuilder, vocab, text
+from knowledgecomplex import SchemaBuilder, text, vocab
 
 
 def build_aaa_schema() -> SchemaBuilder:

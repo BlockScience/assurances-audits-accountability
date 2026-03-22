@@ -2,51 +2,28 @@ name: Test Suite
 
 on:
   pull_request:
-    branches:
-      - main
-      - dev
+    branches: [main, dev]
   push:
-    branches:
-      - main
-      - dev
+    branches: [main, dev]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pyyaml>=6.0.1 pytest>=7.0.0
+      - name: Install package
+        run: pip install -e ".[dev]"
 
-      - name: Run test suite
-        run: |
-          python -m pytest tests/ -v --ignore=tests/archive/
+      - name: Run tests
+        run: pytest tests/ -v
 
-      - name: Build cache
-        run: |
-          python scripts/build_cache.py
-
-      - name: Verify dependency hierarchies
-        run: |
-          python scripts/verify_dependency_hierarchy.py
-
-      - name: Check template freshness
-        run: |
-          python scripts/generate_all_templates.py --check
-
-      - name: Check signature accountability consistency
-        run: |
-          python scripts/check_accountability.py --check-consistency
+      - name: Build RDF graph
+        run: aaa build --strict
 
       - name: Comment on PR (if failed)
         if: failure() && github.event_name == 'pull_request'
@@ -57,31 +34,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## ✗ Test Suite Failed
-
-              The regression test suite has failed. Please review the test output in the workflow logs.
-
-              **Test Suites (13 total):**
-              - Template parser (4 tests)
-              - Template-based verification (6 tests)
-              - Accountability enforcement (13 tests)
-              - Template generation (13 tests)
-              - Dependency hierarchy (20 tests)
-              - Document compilation (13 tests)
-              - Cache building (2 tests)
-              - Topology validation (4 tests)
-              - Chart verification (7 tests)
-              - Element parsing (7 tests)
-              - Citation verification (25 tests)
-              - Audit assurance chart (46 tests)
-              - Structure validation (3 tests)
-
-              **Additional Checks:**
-              - Dependency hierarchy verification (CI tool)
-              - Template freshness check (CI tool)
-              - Signature accountability consistency (CI tool)
-
-              **Total:** 148 tests covering 100% of critical functionality
-
-              Please ensure all tests pass before merging.`
+              body: `## Test Suite Failed\n\nPlease review the workflow logs and ensure all tests pass before merging.`
             })

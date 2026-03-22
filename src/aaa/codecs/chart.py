@@ -1,7 +1,9 @@
 """Codec for vertex/chart elements."""
 
 from __future__ import annotations
+
 from pydantic import field_validator
+
 from .base import parse_frontmatter, write_frontmatter
 from .doc import DocModel
 
@@ -14,6 +16,7 @@ def _is_valid_sparql(query: str) -> bool:
 
 class ChartModel(DocModel):
     """Pydantic model for vertex/chart."""
+
     query: str
 
     @field_validator("query")

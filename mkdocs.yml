@@ -1,0 +1,60 @@
+site_name: AAA Docware
+site_description: Typed simplicial complex framework for document verification, validation, and assurance
+site_url: https://blockscience.github.io/assurances-audits-accountability/
+repo_url: https://github.com/BlockScience/assurances-audits-accountability
+repo_name: BlockScience/assurances-audits-accountability
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+  - Concepts:
+      - Charts vs Documents: concepts/charts-vs-documents.md
+      - Specs vs Templates: concepts/specs-vs-templates.md
+      - Validation & Accountability: concepts/validation-accountability.md
+      - Audit Trails: concepts/audit-trails.md
+      - Engineering Lifecycle: concepts/engineering-lifecycle.md
+  - CLI Reference: cli-reference.md
+  - Development:
+      - Contributing: development/contributing.md
+      - Test Coverage: development/test-coverage.md
+      - Filename Conventions: development/filename-conventions.md
+      - Repository Policy: development/repository-policy.md
+      - Novel Contributions: development/NOVEL-CONTRIBUTIONS.md
+  - References:
+      - Literature Review: references/literature-review.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true

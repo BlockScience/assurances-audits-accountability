@@ -5,14 +5,15 @@ Tests for the `aaa audit` command: chart SPARQL materialisation,
 topological closure, SHACL compliance, and tiling completeness.
 """
 
-import pytest
 from pathlib import Path
-from click.testing import CliRunner
 
+import pytest
+from click.testing import CliRunner
 from knowledgecomplex import KnowledgeComplex
-from aaa.schema import build_aaa_schema
+
 from aaa.commands.audit import _check_tiling
 from aaa.commands.build import build
+from aaa.schema import build_aaa_schema
 
 FIXTURES = Path(__file__).parent / "fixtures" / "aaa"
 
@@ -43,22 +44,41 @@ def sample_kc():
         kc.add_vertex("v:spec:sample", type="spec", name="Sample Spec")
         kc.add_vertex("v:guidance:sample", type="guidance", name="Sample Guidance")
         kc.add_vertex("v:doc:sample", type="doc", name="Sample Document")
-        kc.add_edge("e:DocType:sample", type="DocType",
-                    vertices={"v:spec:sample", "v:guidance:sample"}, name="Sample DocType")
-        kc.add_edge("e:verification:sample", type="verification",
-                    vertices={"v:doc:sample", "v:spec:sample"},
-                    name="Sample Verification", status="passing")
-        kc.add_edge("e:validation:sample", type="validation",
-                    vertices={"v:doc:sample", "v:guidance:sample"},
-                    name="Sample Validation", status="approved", signed_by="Alice")
-        kc.add_face("f:assurance:sample", type="assurance",
-                    boundary=["e:verification:sample", "e:validation:sample", "e:DocType:sample"],
-                    name="Sample Assurance", doc_name="Sample Document",
-                    signed_by="Alice", status="assured")
+        kc.add_edge(
+            "e:DocType:sample",
+            type="DocType",
+            vertices={"v:spec:sample", "v:guidance:sample"},
+            name="Sample DocType",
+        )
+        kc.add_edge(
+            "e:verification:sample",
+            type="verification",
+            vertices={"v:doc:sample", "v:spec:sample"},
+            name="Sample Verification",
+            status="passing",
+        )
+        kc.add_edge(
+            "e:validation:sample",
+            type="validation",
+            vertices={"v:doc:sample", "v:guidance:sample"},
+            name="Sample Validation",
+            status="approved",
+            signed_by="Alice",
+        )
+        kc.add_face(
+            "f:assurance:sample",
+            type="assurance",
+            boundary=["e:verification:sample", "e:validation:sample", "e:DocType:sample"],
+            name="Sample Assurance",
+            doc_name="Sample Document",
+            signed_by="Alice",
+            status="assured",
+        )
     return kc
 
 
 # --- SHACL audit ---
+
 
 def test_audit_conforms_on_valid_kc(sample_kc):
     report = sample_kc.audit()
@@ -75,8 +95,12 @@ def test_audit_violation_missing_verification():
         with kc.deferred_verification():
             kc.add_vertex("v:spec:isolated", type="spec", name="Isolated Spec")
             kc.add_vertex("v:guidance:sample", type="guidance", name="Sample Guidance")
-            kc.add_edge("e:DocType:x", type="DocType",
-                        vertices={"v:spec:isolated", "v:guidance:sample"}, name="X")
+            kc.add_edge(
+                "e:DocType:x",
+                type="DocType",
+                vertices={"v:spec:isolated", "v:guidance:sample"},
+                name="X",
+            )
             # No verification edge for v:spec:isolated
     except KCValidationError:
         pass  # Expected — context manager verify() raises; KC is still queryable
@@ -96,11 +120,19 @@ def test_audit_violation_missing_validation():
             kc.add_vertex("v:spec:sample", type="spec", name="Sample Spec")
             kc.add_vertex("v:guidance:isolated", type="guidance", name="Isolated Guidance")
             kc.add_vertex("v:doc:sample", type="doc", name="Sample Document")
-            kc.add_edge("e:DocType:sample", type="DocType",
-                        vertices={"v:spec:sample", "v:guidance:isolated"}, name="DocType")
-            kc.add_edge("e:verification:sample", type="verification",
-                        vertices={"v:doc:sample", "v:spec:sample"}, name="Verification",
-                        status="passing")
+            kc.add_edge(
+                "e:DocType:sample",
+                type="DocType",
+                vertices={"v:spec:sample", "v:guidance:isolated"},
+                name="DocType",
+            )
+            kc.add_edge(
+                "e:verification:sample",
+                type="verification",
+                vertices={"v:doc:sample", "v:spec:sample"},
+                name="Verification",
+                status="passing",
+            )
             # No validation edge for v:guidance:isolated
     except KCValidationError:
         pass  # Expected
@@ -111,11 +143,16 @@ def test_audit_violation_missing_validation():
 
 # --- Tiling check ---
 
+
 def test_tiling_complete(sample_kc):
     """All doc elements are covered by an assurance face."""
     all_ids = {
-        "v:spec:sample", "v:guidance:sample", "v:doc:sample",
-        "e:DocType:sample", "e:verification:sample", "e:validation:sample",
+        "v:spec:sample",
+        "v:guidance:sample",
+        "v:doc:sample",
+        "e:DocType:sample",
+        "e:verification:sample",
+        "e:validation:sample",
         "f:assurance:sample",
     }
     uncovered = _check_tiling(sample_kc, all_ids)
@@ -130,16 +167,31 @@ def test_tiling_incomplete():
         kc.add_vertex("v:spec:s", type="spec", name="Spec")
         kc.add_vertex("v:guidance:g", type="guidance", name="Guidance")
         kc.add_vertex("v:doc:d", type="doc", name="Unassured Doc")
-        kc.add_edge("e:DocType:dt", type="DocType",
-                    vertices={"v:spec:s", "v:guidance:g"}, name="DocType")
-        kc.add_edge("e:verification:v", type="verification",
-                    vertices={"v:doc:d", "v:spec:s"}, name="Verification", status="passing")
-        kc.add_edge("e:validation:vl", type="validation",
-                    vertices={"v:doc:d", "v:guidance:g"}, name="Validation", status="approved")
+        kc.add_edge(
+            "e:DocType:dt", type="DocType", vertices={"v:spec:s", "v:guidance:g"}, name="DocType"
+        )
+        kc.add_edge(
+            "e:verification:v",
+            type="verification",
+            vertices={"v:doc:d", "v:spec:s"},
+            name="Verification",
+            status="passing",
+        )
+        kc.add_edge(
+            "e:validation:vl",
+            type="validation",
+            vertices={"v:doc:d", "v:guidance:g"},
+            name="Validation",
+            status="approved",
+        )
         # No face — v:doc:d has no assurance
     all_ids = {
-        "v:spec:s", "v:guidance:g", "v:doc:d",
-        "e:DocType:dt", "e:verification:v", "e:validation:vl",
+        "v:spec:s",
+        "v:guidance:g",
+        "v:doc:d",
+        "e:DocType:dt",
+        "e:verification:v",
+        "e:validation:vl",
     }
     uncovered = _check_tiling(kc, all_ids)
     assert "v:doc:d" in uncovered
@@ -154,6 +206,7 @@ def test_tiling_ignores_spec_and_guidance(sample_kc):
 
 
 # --- CLI audit command ---
+
 
 def test_audit_cli_succeeds(tmp_path, built_graph):
     runner = CliRunner()

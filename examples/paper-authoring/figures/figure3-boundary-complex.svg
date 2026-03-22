@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="350" height="300"
+     viewBox="0 0 350 300">
+  <title>Figure 3: Boundary Complex Structure</title>
+  <defs>
+    <style>
+      .label { font-family: Arial, Helvetica, sans-serif; }
+      .label-bold { font-family: Arial, Helvetica, sans-serif; font-weight: bold; }
+      .mono { font-family: 'Consolas', 'Monaco', monospace; }
+    </style>
+    <!-- Arrow marker for directed edges -->
+    <marker id="arrow-verification" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2ECC71" />
+    </marker>
+    <marker id="arrow-validation" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#E67E22" />
+    </marker>
+    <marker id="arrow-boundary" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#95A5A6" />
+    </marker>
+  </defs>
+  <!-- Faces -->
+  <polygon points="175,155 75,220 75,70" fill="#E0F0FF" fill-opacity="0.5" />
+  <polygon points="175,155 275,70 275,220" fill="#E0F0FF" fill-opacity="0.5" />
+  <polygon points="275,70 75,70 75,220" fill="#E8F8E8" fill-opacity="0.4" />
+  <polygon points="75,220 275,70 275,220" fill="#E8F8E8" fill-opacity="0.4" />
+  <!-- Edges -->
+  <line x1="73.0" y1="98.0" x2="73.0" y2="192.0" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="77.0" y1="98.0" x2="77.0" y2="192.0" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="273.0" y1="98.0" x2="273.0" y2="192.0" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="277.0" y1="98.0" x2="277.0" y2="192.0" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="251.4" y1="85.2" x2="96.2" y2="201.6" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="253.79999999999998" y1="88.39999999999999" x2="98.60000000000001" y2="204.79999999999998" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="247.0" y1="70.0" x2="103.0" y2="70.0" stroke="#2ECC71" stroke-width="2" marker-end="url(#arrow-verification)" />
+  <line x1="97.4" y1="203.2" x2="252.6" y2="86.8" stroke="#2ECC71" stroke-width="2" marker-end="url(#arrow-verification)" />
+  <line x1="275.0" y1="192.0" x2="275.0" y2="98.0" stroke="#2ECC71" stroke-width="2" marker-end="url(#arrow-verification)" />
+  <line x1="75.0" y1="98.0" x2="75.0" y2="192.0" stroke="#E67E22" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arrow-validation)" />
+  <line x1="252.6" y1="86.8" x2="97.4" y2="203.2" stroke="#E67E22" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arrow-validation)" />
+  <line x1="103.0" y1="220.0" x2="247.0" y2="220.0" stroke="#E67E22" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arrow-validation)" />
+  <line x1="96.33430089726485" y1="88.13415576267514" x2="153.66569910273515" y2="136.86584423732486" stroke="#95A5A6" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrow-boundary)" />
+  <line x1="251.52357874358216" y1="204.74032618332842" x2="198.47642125641784" y2="170.25967381667158" stroke="#95A5A6" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrow-boundary)" />
+  <line x1="156.55424044138599" y1="166.9897437130991" x2="93.44575955861401" y2="208.0102562869009" stroke="#95A5A6" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrow-boundary)" />
+  <line x1="191.76266499070812" y1="140.7517347578981" x2="258.2373350092919" y2="84.2482652421019" stroke="#95A5A6" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrow-boundary)" />
+  <!-- Vertices -->
+  <path d="M 175.0 131.0 L 179.6 143.9 L 192.0 138.0 L 186.1 150.4 L 199.0 155.0 L 186.1 159.6 L 192.0 172.0 L 179.6 166.1 L 175.0 179.0 L 170.4 166.1 L 158.0 172.0 L 163.9 159.6 L 151.0 155.0 L 163.9 150.4 L 158.0 138.0 L 170.4 143.9 Z" fill="#FFD700" stroke="#B8860B" stroke-width="2.5" />
+  <text x="175" y="160" text-anchor="middle" class="label" style="font-size: 9px; font-weight: bold;" fill="#2C3E50">ROOT</text>
+  <rect x="50" y="53" width="50" height="34" rx="0" ry="0" fill="#2ECC71" stroke="#1D8348" stroke-width="2" />
+  <text x="75" y="75" text-anchor="middle" class="label" style="font-size: 12px; font-weight: bold;" fill="#FFFFFF">SS</text>
+  <rect x="250" y="53" width="50" height="34" rx="0" ry="0" fill="#2ECC71" stroke="#1D8348" stroke-width="2" />
+  <text x="275" y="75" text-anchor="middle" class="label" style="font-size: 12px; font-weight: bold;" fill="#FFFFFF">SG</text>
+  <rect x="50" y="203" width="50" height="34" rx="8" ry="8" fill="#E67E22" stroke="#A04000" stroke-width="2" />
+  <text x="75" y="225" text-anchor="middle" class="label" style="font-size: 12px; font-weight: bold;" fill="#FFFFFF">GS</text>
+  <rect x="250" y="203" width="50" height="34" rx="8" ry="8" fill="#E67E22" stroke="#A04000" stroke-width="2" />
+  <text x="275" y="225" text-anchor="middle" class="label" style="font-size: 12px; font-weight: bold;" fill="#FFFFFF">GG</text>
+  <!-- Full labels -->
+  <text x="75" y="45" text-anchor="middle" class="label" style="font-size: 8px; font-weight: normal;" fill="#7F8C8D">Spec-for-Spec</text>
+  <text x="275" y="45" text-anchor="middle" class="label" style="font-size: 8px; font-weight: normal;" fill="#7F8C8D">Spec-for-Guidance</text>
+  <text x="75" y="248" text-anchor="middle" class="label" style="font-size: 8px; font-weight: normal;" fill="#7F8C8D">Guidance-for-Spec</text>
+  <text x="275" y="248" text-anchor="middle" class="label" style="font-size: 8px; font-weight: normal;" fill="#7F8C8D">Guidance-for-Guidance</text>
+  <!-- Face labels -->
+  <text x="110" y="140" text-anchor="middle" class="label" style="font-size: 10px; font-weight: bold;" fill="#3498DB">b2</text>
+  <text x="240" y="140" text-anchor="middle" class="label" style="font-size: 10px; font-weight: bold;" fill="#3498DB">b2</text>
+  <text x="155" y="100" text-anchor="middle" class="label" style="font-size: 10px; font-weight: bold;" fill="#27AE60">f</text>
+  <text x="195" y="180" text-anchor="middle" class="label" style="font-size: 10px; font-weight: bold;" fill="#27AE60">f</text>
+  <!-- Legend -->
+  <rect x="250" y="255" width="95" height="40" rx="4" ry="4" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" />
+  <text x="297" y="270" text-anchor="middle" class="label" style="font-size: 8px; font-weight: bold;" fill="#2C3E50">Face Types</text>
+  <rect x="258" y="277" width="10" height="10" rx="0" ry="0" fill="#E0F0FF" stroke="#3498DB" stroke-width="1" />
+  <text x="272" y="286" text-anchor="start" class="label" style="font-size: 7px; font-weight: normal;" fill="#2C3E50">b2: Boundary</text>
+  <rect x="258" y="290" width="10" height="10" rx="0" ry="0" fill="#E8F8E8" stroke="#27AE60" stroke-width="1" />
+  <text x="272" y="299" text-anchor="start" class="label" style="font-size: 7px; font-weight: normal;" fill="#2C3E50">f: Standard</text>
+  <!-- Statistics -->
+  <text x="55" y="280" text-anchor="middle" class="mono" style="font-size: 8px; font-weight: normal;" fill="#7F8C8D">V=5, E=12, F=4</text>
+  <text x="55" y="292" text-anchor="middle" class="mono" style="font-size: 8px; font-weight: normal;" fill="#7F8C8D">χ = -3</text>
+</svg>

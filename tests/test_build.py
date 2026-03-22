@@ -4,8 +4,9 @@ tests/test_build.py
 Integration tests for `aaa build`: builds RDF from fixture directory.
 """
 
-import pytest
 from pathlib import Path
+
+import pytest
 from click.testing import CliRunner
 from rdflib import Graph, Namespace
 
@@ -45,10 +46,9 @@ def test_output_is_valid_turtle(built_graph):
 def test_spec_has_correct_rdf_type(built_graph):
     _, g = built_graph
     from rdflib import URIRef
+
     spec = URIRef("https://example.org/aaa#v:spec:sample")
-    assert (spec, RDF.type, AAA.spec) in g or any(
-        True for _ in g.subjects(RDF.type, AAA.spec)
-    )
+    assert (spec, RDF.type, AAA.spec) in g or any(True for _ in g.subjects(RDF.type, AAA.spec))
 
 
 def test_assurance_face_in_graph(built_graph):
@@ -83,9 +83,7 @@ def test_build_strict_exits_on_pydantic_error(tmp_path):
 def test_build_json_ld_format(tmp_path):
     runner = CliRunner()
     out = tmp_path / "graph.jsonld"
-    result = runner.invoke(build, [
-        str(FIXTURES), "--output", str(out), "--format", "json-ld"
-    ])
+    result = runner.invoke(build, [str(FIXTURES), "--output", str(out), "--format", "json-ld"])
     assert result.exit_code == 0 or out.exists() or "SHACL" in result.output
 
 
@@ -96,7 +94,7 @@ class TestVerifyCLI:
         runner = CliRunner()
         result = runner.invoke(
             __import__("aaa.commands.verify", fromlist=["verify"]).verify,
-            [str(FIXTURES / "sample-spec.md")]
+            [str(FIXTURES / "sample-spec.md")],
         )
         assert result.exit_code == 0
         assert "[OK]" in result.output
@@ -105,7 +103,7 @@ class TestVerifyCLI:
         runner = CliRunner()
         result = runner.invoke(
             __import__("aaa.commands.verify", fromlist=["verify"]).verify,
-            [str(FIXTURES / "bad-spec.md")]
+            [str(FIXTURES / "bad-spec.md")],
         )
         assert result.exit_code != 0
         assert "[FAIL]" in result.output
@@ -114,7 +112,7 @@ class TestVerifyCLI:
         runner = CliRunner()
         result = runner.invoke(
             __import__("aaa.commands.verify", fromlist=["verify"]).verify,
-            [str(FIXTURES / "sample-spec.md"), "--verbose"]
+            [str(FIXTURES / "sample-spec.md"), "--verbose"],
         )
         assert result.exit_code == 0
         assert "id:" in result.output

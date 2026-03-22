@@ -9,11 +9,11 @@ Usage:
     aaa check topology          Check topological properties
 """
 
-import click
-import sys
 from pathlib import Path
 
-from aaa.commands import verify, build, audit, check
+import click
+
+from aaa.commands import audit, build, check, init, verify
 
 
 @click.group()
@@ -35,7 +35,7 @@ def main(ctx):
     ctx.ensure_object(dict)
 
     # Find repository root (look for pyproject.toml or .git)
-    ctx.obj['repo_root'] = find_repo_root()
+    ctx.obj["repo_root"] = find_repo_root()
 
 
 def find_repo_root() -> Path:
@@ -43,7 +43,7 @@ def find_repo_root() -> Path:
     current = Path.cwd()
 
     for parent in [current] + list(current.parents):
-        if (parent / 'pyproject.toml').exists() or (parent / '.git').exists():
+        if (parent / "pyproject.toml").exists() or (parent / ".git").exists():
             return parent
 
     # Fall back to current directory
@@ -55,7 +55,8 @@ main.add_command(verify.verify)
 main.add_command(build.build)
 main.add_command(audit.audit)
 main.add_command(check.check)
+main.add_command(init.init)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

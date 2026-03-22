@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="550" height="420"
+     viewBox="0 0 550 420">
+  <title>Figure 2: INCOSE Paper Audit Chart</title>
+  <defs>
+    <style>
+      .label { font-family: Arial, Helvetica, sans-serif; }
+      .label-bold { font-family: Arial, Helvetica, sans-serif; font-weight: bold; }
+      .mono { font-family: 'Consolas', 'Monaco', monospace; }
+    </style>
+    <!-- Arrow marker for directed edges -->
+    <marker id="arrow-verification" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2ECC71" />
+    </marker>
+    <marker id="arrow-validation" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#E67E22" />
+    </marker>
+    <marker id="arrow-boundary" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#95A5A6" />
+    </marker>
+  </defs>
+  <!-- Faces -->
+  <polygon points="275,55 175,135 375,135" fill="#FFF8E8" fill-opacity="0.7" stroke="#DAA520" stroke-width="2" />
+  <polygon points="175,135 95,245 295,245" fill="#E8F8E8" fill-opacity="0.5" />
+  <polygon points="375,135 195,245 395,245" fill="#E8F8E8" fill-opacity="0.5" />
+  <polygon points="195,245 95,245 295,245" fill="#E8F8E8" fill-opacity="0.4" />
+  <polygon points="295,245 195,245 395,245" fill="#E8F8E8" fill-opacity="0.4" />
+  <polygon points="245,335 295,245 95,245" fill="#E0F0FF" fill-opacity="0.5" />
+  <polygon points="245,335 195,245 395,245" fill="#E0F0FF" fill-opacity="0.5" />
+  <!-- Edges -->
+  <line x1="251.5739357167091" y1="73.74085142663273" x2="194.52172023607577" y2="119.3826238111394" stroke="#2ECC71" stroke-width="1.5" marker-end="url(#arrow-verification)" />
+  <line x1="298.4260642832909" y1="73.74085142663273" x2="355.47827976392426" y2="119.3826238111394" stroke="#E67E22" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-validation)" />
+  <line x1="203.0" y1="136.5" x2="347.0" y2="136.5" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="203.0" y1="133.5" x2="347.0" y2="133.5" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="160.29570755812384" y1="155.21840210757972" x2="107.93977734885101" y2="227.20780614532984" stroke="#2ECC71" stroke-width="1.5" marker-end="url(#arrow-verification)" />
+  <line x1="193.42885350501854" y1="151.89311571293365" x2="278.7826089155837" y2="230.13405817261838" stroke="#E67E22" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-validation)" />
+  <line x1="353.66795415870104" y1="148.03625023634936" x2="213.7722003403431" y2="233.52809979201254" stroke="#2ECC71" stroke-width="1.5" marker-end="url(#arrow-verification)" />
+  <line x1="379.4721359549996" y1="159.5967477524977" x2="391.06452035960035" y2="223.35486197780205" stroke="#E67E22" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-validation)" />
+  <line x1="120.0" y1="246.5" x2="270.0" y2="246.5" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="120.0" y1="243.5" x2="270.0" y2="243.5" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="220.0" y1="246.5" x2="370.0" y2="246.5" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="220.0" y1="243.5" x2="370.0" y2="243.5" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="220.0" y1="246.5" x2="270.0" y2="246.5" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="220.0" y1="243.5" x2="270.0" y2="243.5" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="170.0" y1="245.0" x2="120.0" y2="245.0" stroke="#2ECC71" stroke-width="1.5" marker-end="url(#arrow-verification)" />
+  <line x1="270.0" y1="245.0" x2="220.0" y2="245.0" stroke="#2ECC71" stroke-width="1.5" marker-end="url(#arrow-verification)" />
+  <line x1="370.0" y1="245.0" x2="220.0" y2="245.0" stroke="#2ECC71" stroke-width="1.5" marker-end="url(#arrow-verification)" />
+  <line x1="120.0" y1="245.0" x2="270.0" y2="245.0" stroke="#E67E22" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-validation)" />
+  <line x1="220.0" y1="245.0" x2="270.0" y2="245.0" stroke="#E67E22" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-validation)" />
+  <line x1="320.0" y1="245.0" x2="370.0" y2="245.0" stroke="#E67E22" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-validation)" />
+  <line x1="113.86484436567596" y1="256.3189066194056" x2="226.13515563432404" y2="323.6810933805944" stroke="#95A5A6" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrow-boundary)" />
+  <line x1="376.135155634324" y1="256.3189066194056" x2="263.864844365676" y2="323.6810933805944" stroke="#95A5A6" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrow-boundary)" />
+  <line x1="255.6841444859299" y1="315.7685399253262" x2="284.3158555140701" y2="264.2314600746738" stroke="#95A5A6" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrow-boundary)" />
+  <line x1="234.3158555140701" y1="315.7685399253262" x2="205.6841444859299" y2="264.2314600746738" stroke="#95A5A6" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrow-boundary)" />
+  <!-- Vertices -->
+  <circle cx="275" cy="55" r="32" fill="#3498DB" stroke="#2471A3" stroke-width="3" />
+  <text x="275" y="60" text-anchor="middle" class="label" style="font-size: 12px; font-weight: bold;" fill="#FFFFFF">PAPER</text>
+  <rect x="153" y="120" width="44" height="30" rx="0" ry="0" fill="#2ECC71" stroke="#1D8348" stroke-width="2" />
+  <text x="175" y="140" text-anchor="middle" class="label" style="font-size: 11px; font-weight: bold;" fill="#FFFFFF">I-S</text>
+  <rect x="353" y="120" width="44" height="30" rx="6" ry="6" fill="#E67E22" stroke="#A04000" stroke-width="2" />
+  <text x="375" y="140" text-anchor="middle" class="label" style="font-size: 11px; font-weight: bold;" fill="#FFFFFF">I-G</text>
+  <rect x="73" y="230" width="44" height="30" rx="0" ry="0" fill="#2ECC71" stroke="#1D8348" stroke-width="2" />
+  <text x="95" y="250" text-anchor="middle" class="label" style="font-size: 11px; font-weight: bold;" fill="#FFFFFF">SS</text>
+  <rect x="173" y="230" width="44" height="30" rx="0" ry="0" fill="#2ECC71" stroke="#1D8348" stroke-width="2" />
+  <text x="195" y="250" text-anchor="middle" class="label" style="font-size: 11px; font-weight: bold;" fill="#FFFFFF">SG</text>
+  <rect x="273" y="230" width="44" height="30" rx="6" ry="6" fill="#E67E22" stroke="#A04000" stroke-width="2" />
+  <text x="295" y="250" text-anchor="middle" class="label" style="font-size: 11px; font-weight: bold;" fill="#FFFFFF">GS</text>
+  <rect x="373" y="230" width="44" height="30" rx="6" ry="6" fill="#E67E22" stroke="#A04000" stroke-width="2" />
+  <text x="395" y="250" text-anchor="middle" class="label" style="font-size: 11px; font-weight: bold;" fill="#FFFFFF">GG</text>
+  <path d="M 245.0 315.0 L 250.0 326.3 L 262.3 325.0 L 255.0 335.0 L 262.3 345.0 L 250.0 343.7 L 245.0 355.0 L 240.0 343.7 L 227.7 345.0 L 235.0 335.0 L 227.7 325.0 L 240.0 326.3 Z" fill="#FFD700" stroke="#B8860B" stroke-width="2.5" />
+  <text x="245" y="340" text-anchor="middle" class="label" style="font-size: 14px; font-weight: bold;" fill="#2C3E50">★</text>
+  <!-- Assurance checkmarks -->
+  <g transform="translate(310, 40)">
+    <circle cx="0" cy="0" r="7.0" fill="#27AE60" />
+    <path d="M -3.3333333333333335 0 L -1.25 2.5 L 3.3333333333333335 -2.5"
+          stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <g transform="translate(203, 120)">
+    <circle cx="0" cy="0" r="7.0" fill="#27AE60" />
+    <path d="M -3.3333333333333335 0 L -1.25 2.5 L 3.3333333333333335 -2.5"
+          stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <g transform="translate(403, 120)">
+    <circle cx="0" cy="0" r="7.0" fill="#27AE60" />
+    <path d="M -3.3333333333333335 0 L -1.25 2.5 L 3.3333333333333335 -2.5"
+          stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <g transform="translate(123, 230)">
+    <circle cx="0" cy="0" r="7.0" fill="#27AE60" />
+    <path d="M -3.3333333333333335 0 L -1.25 2.5 L 3.3333333333333335 -2.5"
+          stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <g transform="translate(223, 230)">
+    <circle cx="0" cy="0" r="7.0" fill="#27AE60" />
+    <path d="M -3.3333333333333335 0 L -1.25 2.5 L 3.3333333333333335 -2.5"
+          stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <g transform="translate(323, 230)">
+    <circle cx="0" cy="0" r="7.0" fill="#27AE60" />
+    <path d="M -3.3333333333333335 0 L -1.25 2.5 L 3.3333333333333335 -2.5"
+          stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <g transform="translate(423, 230)">
+    <circle cx="0" cy="0" r="7.0" fill="#27AE60" />
+    <path d="M -3.3333333333333335 0 L -1.25 2.5 L 3.3333333333333335 -2.5"
+          stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <g transform="translate(273, 320)">
+    <circle cx="0" cy="0" r="7.0" fill="#27AE60" />
+    <path d="M -3.3333333333333335 0 L -1.25 2.5 L 3.3333333333333335 -2.5"
+          stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <!-- Layer labels -->
+  <text x="25" y="55" text-anchor="start" class="label" style="font-size: 10px; font-weight: bold;" fill="#2C3E50">Layer 2</text>
+  <text x="25" y="68" text-anchor="start" class="label" style="font-size: 9px; font-weight: normal;" fill="#7F8C8D">This Paper</text>
+  <text x="25" y="135" text-anchor="start" class="label" style="font-size: 10px; font-weight: bold;" fill="#2C3E50">Layer 1</text>
+  <text x="25" y="148" text-anchor="start" class="label" style="font-size: 9px; font-weight: normal;" fill="#7F8C8D">Paper Type</text>
+  <text x="25" y="245" text-anchor="start" class="label" style="font-size: 10px; font-weight: bold;" fill="#2C3E50">Layer 0</text>
+  <text x="25" y="258" text-anchor="start" class="label" style="font-size: 9px; font-weight: normal;" fill="#7F8C8D">Foundation</text>
+  <!-- Statistics box -->
+  <rect x="435" y="345" width="105" height="65" rx="4" ry="4" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" />
+  <text x="487" y="360" text-anchor="middle" class="label" style="font-size: 9px; font-weight: bold;" fill="#2C3E50">Topology</text>
+  <text x="445" y="378" text-anchor="start" class="mono" style="font-size: 9px; font-weight: normal;" fill="#2C3E50">V = 8, E = 20, F = 7</text>
+  <text x="445" y="393" text-anchor="start" class="mono" style="font-size: 9px; font-weight: normal;" fill="#2C3E50">χ = -5</text>
+  <!-- Coverage badge -->
+  <rect x="450" y="15" width="90" height="28" rx="14" ry="14" fill="#27AE60" stroke="#27AE60" stroke-width="0" />
+  <text x="495" y="34" text-anchor="middle" class="label" style="font-size: 10px; font-weight: bold;" fill="#FFFFFF">100% Coverage</text>
+  <!-- Legend -->
+  <rect x="10" y="345" width="120" height="65" rx="4" ry="4" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1" />
+  <text x="70" y="360" text-anchor="middle" class="label" style="font-size: 9px; font-weight: bold;" fill="#2C3E50">Legend</text>
+  <line x1="18" y1="375" x2="38" y2="375" stroke="#2ECC71" stroke-width="2" />
+  <text x="42" y="379" text-anchor="start" class="label" style="font-size: 8px; font-weight: normal;" fill="#2C3E50">Verification</text>
+  <line x1="18" y1="390" x2="38" y2="390" stroke="#E67E22" stroke-width="2" stroke-dasharray="4,2" />
+  <text x="42" y="394" text-anchor="start" class="label" style="font-size: 8px; font-weight: normal;" fill="#2C3E50">Validation</text>
+  <line x1="80.0" y1="376.0" x2="100.0" y2="376.0" stroke="#9B59B6" stroke-width="1.5" />
+  <line x1="80.0" y1="374.0" x2="100.0" y2="374.0" stroke="#9B59B6" stroke-width="1.5" />
+  <text x="104" y="379" text-anchor="start" class="label" style="font-size: 8px; font-weight: normal;" fill="#2C3E50">Coupling</text>
+  <line x1="80" y1="390" x2="100" y2="390" stroke="#95A5A6" stroke-width="2" stroke-dasharray="2,2" />
+  <text x="104" y="394" text-anchor="start" class="label" style="font-size: 8px; font-weight: normal;" fill="#2C3E50">Boundary</text>
+</svg>

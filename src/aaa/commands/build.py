@@ -15,19 +15,19 @@ Examples:
     aaa build tests/fixtures/   # build from a specific directory
 """
 
-import click
 import sys
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
+import click
 from knowledgecomplex import KnowledgeComplex
+from knowledgecomplex.exceptions import SchemaError
+from knowledgecomplex.exceptions import ValidationError as KCValidationError
 from knowledgecomplex.io import save_graph
-from knowledgecomplex.exceptions import ValidationError as KCValidationError, SchemaError
 from pydantic import ValidationError as PydanticValidationError
 
-from aaa.schema import build_aaa_schema
 from aaa.codecs import codec_for_type, dimension_for_type, short_type
-
+from aaa.schema import build_aaa_schema
 
 # Directories to scan for markdown files (relative to the repo root or given path)
 _SCAN_DIRS = [
@@ -57,7 +57,10 @@ def _read_type(path: Path) -> str | None:
         text = path.read_text(encoding="utf-8")
         if not text.startswith("---"):
             return None
-        import yaml, re
+        import re
+
+        import yaml
+
         m = re.match(r"^---\s*\n(.*?)\n---", text, re.DOTALL)
         if not m:
             return None
@@ -75,10 +78,7 @@ def _insert_element(kc: KnowledgeComplex, path: Path, attrs: dict, type_name: st
     elem_id = attrs.get("id", path.stem)
 
     if dim == "vertex":
-        vertex_attrs = {
-            k: v for k, v in attrs.items()
-            if k not in ("id", "type", "uri")
-        }
+        vertex_attrs = {k: v for k, v in attrs.items() if k not in ("id", "type", "uri")}
         kc.add_vertex(elem_id, type=kc_type, uri=uri, **vertex_attrs)
 
     elif dim == "edge":
@@ -87,8 +87,7 @@ def _insert_element(kc: KnowledgeComplex, path: Path, attrs: dict, type_name: st
         if not source or not target:
             raise ValueError(f"Edge {path} missing 'source' or 'target' field")
         edge_attrs = {
-            k: v for k, v in attrs.items()
-            if k not in ("id", "type", "uri", "source", "target")
+            k: v for k, v in attrs.items() if k not in ("id", "type", "uri", "source", "target")
         }
         kc.add_edge(elem_id, type=kc_type, vertices={source, target}, uri=uri, **edge_attrs)
 
@@ -96,22 +95,24 @@ def _insert_element(kc: KnowledgeComplex, path: Path, attrs: dict, type_name: st
         edges = attrs.get("edges", [])
         if not edges:
             raise ValueError(f"Face {path} missing 'edges' field")
-        face_attrs = {
-            k: v for k, v in attrs.items()
-            if k not in ("id", "type", "uri", "edges")
-        }
+        face_attrs = {k: v for k, v in attrs.items() if k not in ("id", "type", "uri", "edges")}
         kc.add_face(elem_id, type=kc_type, boundary=list(edges), uri=uri, **face_attrs)
 
 
 @click.command()
 @click.argument("path", required=False, type=click.Path(exists=True))
-@click.option("--output", "-o", default="graph.ttl", show_default=True,
-              help="Output RDF file path.")
-@click.option("--format", "fmt", default="turtle", show_default=True,
-              type=click.Choice(["turtle", "json-ld", "n-triples"]),
-              help="RDF serialisation format.")
-@click.option("--strict", is_flag=True,
-              help="Fail immediately on any Pydantic validation error.")
+@click.option(
+    "--output", "-o", default="graph.ttl", show_default=True, help="Output RDF file path."
+)
+@click.option(
+    "--format",
+    "fmt",
+    default="turtle",
+    show_default=True,
+    type=click.Choice(["turtle", "json-ld", "n-triples"]),
+    help="RDF serialisation format.",
+)
+@click.option("--strict", is_flag=True, help="Fail immediately on any Pydantic validation error.")
 def build(path, output, fmt, strict):
     """Build an RDF graph from markdown files in PATH (default: current directory)."""
     root = Path(path).resolve() if path else Path.cwd()

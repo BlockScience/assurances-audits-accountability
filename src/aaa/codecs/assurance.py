@@ -1,7 +1,9 @@
 """Codec for face/assurance elements."""
 
 from __future__ import annotations
+
 from typing import Literal
+
 from .base import AAABaseModel, parse_frontmatter, write_frontmatter
 
 
@@ -16,9 +18,10 @@ class AssuranceModel(AAABaseModel):
     SHACL (in the RDF graph) additionally validates that doc_name and
     signed_by are consistent with the actual boundary element attributes.
     """
-    edges: list[str]          # exactly 3 edge IDs forming the boundary
-    doc_name: str             # name of the document being assured
-    signed_by: str            # party who signed the validation
+
+    edges: list[str]  # exactly 3 edge IDs forming the boundary
+    doc_name: str  # name of the document being assured
+    signed_by: str  # party who signed the validation
     status: Literal["assured", "pending", "failed"]
     validation_date: str | None = None
     verification_date: str | None = None

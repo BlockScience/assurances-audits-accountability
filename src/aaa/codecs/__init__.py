@@ -8,14 +8,14 @@ Each AAA element type has a Pydantic-backed Codec that handles:
 Unknown types fall back to DocCodec (graceful degradation during migration).
 """
 
-from .doc import DocCodec, DocModel
-from .spec import SpecCodec, SpecModel
-from .guidance import GuidanceCodec, GuidanceModel
-from .chart import ChartCodec, ChartModel
-from .verification import VerificationCodec, VerificationModel
-from .validation import ValidationCodec, ValidationModel
-from .doctype import DocTypeCodec, DocTypeModel
 from .assurance import AssuranceCodec, AssuranceModel
+from .chart import ChartCodec, ChartModel
+from .doc import DocCodec, DocModel
+from .doctype import DocTypeCodec, DocTypeModel
+from .guidance import GuidanceCodec, GuidanceModel
+from .spec import SpecCodec, SpecModel
+from .validation import ValidationCodec, ValidationModel
+from .verification import VerificationCodec, VerificationModel
 
 # Map canonical type strings (as they appear in YAML frontmatter) to Codec instances.
 # Accepts both short names and full "vertex/<type>" / "edge/<type>" / "face/<type>" forms.
@@ -55,20 +55,30 @@ def codec_for_type(type_name: str):
 
 # Short type name → KC dimension, for routing to add_vertex/add_edge/add_face
 _VERTEX_TYPES = {
-    "doc", "vertex/doc",
-    "spec", "vertex/spec",
-    "guidance", "vertex/guidance",
-    "chart", "vertex/chart",
-    "assurance_audit", "vertex/assurance_audit",
+    "doc",
+    "vertex/doc",
+    "spec",
+    "vertex/spec",
+    "guidance",
+    "vertex/guidance",
+    "chart",
+    "vertex/chart",
+    "assurance_audit",
+    "vertex/assurance_audit",
 }
 _EDGE_TYPES = {
-    "verification", "edge/verification",
-    "validation", "edge/validation",
-    "doctype", "edge/doctype",
-    "DocType", "edge/DocType",
+    "verification",
+    "edge/verification",
+    "validation",
+    "edge/validation",
+    "doctype",
+    "edge/doctype",
+    "DocType",
+    "edge/DocType",
 }
 _FACE_TYPES = {
-    "assurance", "face/assurance",
+    "assurance",
+    "face/assurance",
 }
 
 
@@ -95,19 +105,27 @@ def short_type(type_name: str) -> str:
     """Strip 'vertex/', 'edge/', 'face/' prefix to get the KC type name."""
     for prefix in ("vertex/", "edge/", "face/"):
         if type_name.startswith(prefix):
-            return type_name[len(prefix):]
+            return type_name[len(prefix) :]
     return type_name
 
 
 __all__ = [
-    "DocCodec", "DocModel",
-    "SpecCodec", "SpecModel",
-    "GuidanceCodec", "GuidanceModel",
-    "ChartCodec", "ChartModel",
-    "VerificationCodec", "VerificationModel",
-    "ValidationCodec", "ValidationModel",
-    "DocTypeCodec", "DocTypeModel",
-    "AssuranceCodec", "AssuranceModel",
+    "DocCodec",
+    "DocModel",
+    "SpecCodec",
+    "SpecModel",
+    "GuidanceCodec",
+    "GuidanceModel",
+    "ChartCodec",
+    "ChartModel",
+    "VerificationCodec",
+    "VerificationModel",
+    "ValidationCodec",
+    "ValidationModel",
+    "DocTypeCodec",
+    "DocTypeModel",
+    "AssuranceCodec",
+    "AssuranceModel",
     "codec_for_type",
     "dimension_for_type",
     "short_type",

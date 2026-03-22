@@ -1,12 +1,14 @@
 """Codec for vertex/guidance elements."""
 
 from __future__ import annotations
+
 from .base import parse_frontmatter, write_frontmatter
 from .doc import DocModel
 
 
 class GuidanceModel(DocModel):
     """Pydantic model for vertex/guidance."""
+
     pass
 
 
