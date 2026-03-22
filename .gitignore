@@ -1,3 +1,6 @@
+# Generated demo outputs
+examples/*/output/
+
 # Submission materials (serialized final form)
 submission/*.pdf
 

@@ -31,13 +31,7 @@ nav:
       - Installation: getting-started/installation.md
       - Quick Start: getting-started/quickstart.md
   - CLI Reference: cli-reference.md
-  - Development:
-      - Contributing: development/contributing.md
-      - Test Coverage: development/test-coverage.md
-      - Filename Conventions: development/filename-conventions.md
-      - Repository Policy: development/repository-policy.md
-      - RBAC Reference: development/rbac-reference.md
-      - Novel Contributions: development/NOVEL-CONTRIBUTIONS.md
+  - Contributing: contributing.md
 
 plugins:
   - search

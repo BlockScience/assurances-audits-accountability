@@ -38,8 +38,7 @@ src/aaa/
 ├── schema.py        # RDF/OWL schema definition
 ├── codecs/          # Document type parsers (Pydantic models)
 ├── commands/        # CLI subcommands (verify, build, audit, check, init)
-├── foundation/      # Foundation layer documents (packaged as data)
-└── templates/       # Document templates (packaged as data)
+└── foundation/      # Foundation layer documents (packaged as data)
 
 tests/
 ├── test_*.py        # Test modules
@@ -60,8 +59,7 @@ CI will run tests, linting, document verification, and assurance audits on your 
 1. Create a Pydantic model in `src/aaa/codecs/`
 2. Register it in `src/aaa/codecs/__init__.py`
 3. Add the type to the schema in `src/aaa/schema.py`
-4. Create a template in `src/aaa/templates/`
-5. Write tests in `tests/`
+4. Write tests in `tests/`
 
 ## Building Documentation
 
