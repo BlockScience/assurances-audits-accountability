@@ -37,4 +37,4 @@ This structure ensures that no document can be "assured" without both automated 
 - [Installation](getting-started/installation.md) — install and set up
 - [Quick Start](getting-started/quickstart.md) — create your first knowledge complex
 - [CLI Reference](cli-reference.md) — all `aaa` commands
-- [Contributing](development/contributing.md) — development guide
+- [Contributing](https://github.com/BlockScience/assurances-audits-accountability/blob/main/CONTRIBUTING.md) — development guide

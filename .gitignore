@@ -91,6 +91,7 @@ $RECYCLE.BIN/
 dist/
 build/
 *.egg-info/
+site/
 
 # Jupyter
 .ipynb_checkpoints/

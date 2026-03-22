@@ -2,51 +2,30 @@
 
 This directory contains complete usage demonstrations of the AAA framework.
 
-## Directory Structure
+## paper-authoring
 
-```
-examples/
-├── incose-paper/    # INCOSE paper self-demonstration
-└── programs/        # Program development examples
-```
+A self-contained example showing the full AAA workflow applied to writing and assuring
+two conference papers on knowledge complexes.
 
-## INCOSE Paper Self-Demonstration
+**What it demonstrates:**
 
-The `incose-paper/` directory contains a complete knowledge complex demonstrating the framework applied to the INCOSE symposium paper "Test-Driven Document Development: Simplicial Complexes for Verification, Validation, and Assurance with Human Accountability".
+- Document types as KC elements (spec + guidance + DocType edge — not file templates)
+- Assurance triangles: verification + validation + DocType close a 2-simplex
+- Shared DocType edge reused across both papers
+- Chart-based composition: a SPARQL query materialises the paper series as a subcomplex
+- Tiling completeness audit: every doc in the subcomplex is covered by an assurance face
+- Algebraic topology: Betti numbers, Euler characteristic, edge influence
 
-This example demonstrates:
-- Self-referential assurance (the paper assures itself)
-- Complete V&V coverage with human accountability
-- Type inheritance from framework base types
+**Run the demo:**
 
 ```bash
-# Build the example cache
-uv run aaa build examples/incose-paper
-
-# Audit assurance coverage
-uv run aaa audit examples/incose-paper/charts/incose-paper-assurance
+cd examples/paper-authoring
+uv run python demo.py
 ```
 
-## Program Development Examples
+**Or build and audit directly with the CLI:**
 
-The `programs/` directory contains example program documentation:
-- Bus Electrification Program
-- Water Quality Monitoring Program
-- Digital Transformation Program
-
-These examples demonstrate how to apply the framework to real-world systems engineering programs, including program memos, plans, architecture documents, lifecycle models, and field surveys.
-
-## Using Examples as Templates
-
-Each example is self-contained with its own:
-- `00_vertices/` - Document vertices
-- `01_edges/` - Relationship edges
-- `02_faces/` - Assurance faces
-- `charts/` - Audit charts
-- `complex.json` - Built cache (generated)
-
-To create a new project based on an example:
-1. Copy the example directory
-2. Modify documents to match your domain
-3. Update edges and faces to reflect new relationships
-4. Run `uv run aaa build <your-project>` to validate
+```bash
+aaa build examples/paper-authoring/content/ --output /tmp/demo.ttl
+aaa verify examples/paper-authoring/content/00_vertices/spec-conference-paper.md
+```

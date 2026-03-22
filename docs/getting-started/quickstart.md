@@ -1,88 +1,91 @@
-# Quickstart: Exploring in Obsidian
+# Quick Start
 
-This guide gets you navigating the knowledge complex in Obsidian in under 5 minutes.
-
----
-
-## 1. Install Obsidian
-
-Download from [obsidian.md](https://obsidian.md/) if you haven't already.
+Get up and running with AAA Docware in 5 minutes.
 
 ---
 
-## 2. Open as Vault
+## 1. Install
 
-1. Launch Obsidian
-2. Click **Open folder as vault**
-3. Select this repository folder (`assurances-audits-accountability`)
-4. Click **Open**
+```bash
+pip install aaa-docware
+```
 
-Obsidian will index all markdown files and resolve wikilinks automatically.
+Or with uv:
 
----
-
-## 3. Start Navigating
-
-Open [[NAVIGATION]] as your central hub. From there you can explore:
-
-| Destination | What You'll Find |
-|-------------|------------------|
-| [[00_vertices/README]] | 56 document vertices (specs, guidance, content) |
-| [[01_edges/README]] | 148 relationship edges (verification, validation, coupling) |
-| [[02_faces/README]] | 65 triangular faces (assurance, signature, boundary) |
-| [[charts/README]] | Composed subcomplexes with visualizations |
+```bash
+uv add aaa-docware
+```
 
 ---
 
-## 4. Use the Graph View
+## 2. Create a Project
 
-Press `Ctrl/Cmd + G` to open the graph view. You'll see the entire knowledge complex as an interactive network.
+```bash
+aaa init my-project
+cd my-project
+```
 
-**Tips:**
-- Drag nodes to explore clusters
-- Click any node to open that document
-- Use filters to show only certain file types
+This scaffolds the standard directory structure and copies foundation documents:
 
----
-
-## 5. Follow Wikilinks
-
-Every `[[wikilink]]` is clickable. The structure is designed for exploration:
-
-- **From any document:** Click links to related specs, guidance, or edges
-- **Backlinks panel:** See what documents reference the current one (right sidebar)
-- **Hover preview:** Hold `Ctrl/Cmd` while hovering over a link to preview
+```text
+my-project/
+├── 00_vertices/    # Documents (doc, spec, guidance, chart)
+├── 01_edges/       # Relationships (verification, validation, DocType)
+├── 02_faces/       # Assurance triangles
+└── charts/         # SPARQL-defined subcomplexes for audit
+```
 
 ---
 
-## 6. Key Entry Points
+## 3. Add a Document
 
-| If you want to... | Start here |
-|-------------------|------------|
-| Understand the INCOSE paper | [[00_vertices/doc-incose-paper-2026]] |
-| See how assurance works | [[02_faces/README]] |
-| Explore the foundation | [[charts/boundary-complex/boundary-complex]] |
-| Learn the concepts | [[docs/concepts/README]] |
+Create `00_vertices/my-doc.md`:
+
+```yaml
+---
+type: vertex/doc
+id: v:doc:my-doc
+name: My Document
+description: A short description of this document.
+---
+
+Document body content here.
+```
+
+Verify it parses correctly:
+
+```bash
+aaa verify 00_vertices/my-doc.md
+```
 
 ---
 
-## 7. Optional: Enable Templater
+## 4. Build the RDF Graph
 
-If you want to create new documents using the templates:
+```bash
+aaa build
+```
 
-1. Go to **Settings → Community plugins**
-2. Disable **Restricted mode**
-3. Browse and install **Templater**
-4. Set template folder to `templates/`
-
-Now you can use `Alt + N` to create new documents from templates.
+This walks all files in `00_vertices/`, `01_edges/`, and `02_faces/`, parses them via
+their codec, and serialises the result to `graph.ttl`.
 
 ---
 
-## VS Code Users
+## 5. Check Topology and Accountability
 
-This repository also works in VS Code for construction and verification. See the [[README]] for CLI commands and verification workflows.
+```bash
+aaa check topology
+aaa check accountability
+```
 
 ---
 
-**Ready to explore:** [[NAVIGATION]]
+## Full Example
+
+See `examples/paper-authoring/` for a complete worked example — two conference papers with
+full verification, validation, assurance triangles, and a chart-based audit:
+
+```bash
+cd examples/paper-authoring
+uv run python demo.py
+```

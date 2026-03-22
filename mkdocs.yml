@@ -31,7 +31,6 @@ nav:
       - Installation: getting-started/installation.md
       - Quick Start: getting-started/quickstart.md
   - CLI Reference: cli-reference.md
-  - Contributing: contributing.md
 
 plugins:
   - search
