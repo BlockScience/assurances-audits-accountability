@@ -19,8 +19,9 @@ submission/*.pdf
 .obsidian/plugins/*/manifest.json
 .obsidian/plugins/*/styles.css
 
-# Claude Code - ignore local settings and chat history
+# Claude Code - ignore local settings, chat history, and local notes
 .claude/settings.local.json
+.claude/CLAUDE.local.md
 .claude/chats/
 .claude/.key
 
