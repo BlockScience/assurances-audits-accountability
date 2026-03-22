@@ -1,26 +1,19 @@
 ---
-type: face/b2
-extends: face
+type: face/assurance
 id: b2:spec-spec
 name: Boundary Face - Spec-for-Spec Self-Assurance
 description: Boundary assurance triangle for spec-for-spec using root vertex to resolve self-referential paradox
-vertices:
-  - b0:root
-  - v:guidance:spec
-  - v:spec:spec
 edges:
   - b1:couples-GS-root
   - b1:self-verification
   - e:validation:spec-spec:guidance-spec
-orientation: oriented
-target: v:spec:spec
-status: ASSURED
+doc_name: Spec-for-Spec
+signed_by: Michael Zargham
+status: assured
+axiomatic: true
 tags:
-  - face
   - boundary
-  - b2
   - assurance
-  - self-referential
 version: 1.0.0
 created: 2025-12-27T22:20:00Z
 modified: 2025-12-27T22:20:00Z

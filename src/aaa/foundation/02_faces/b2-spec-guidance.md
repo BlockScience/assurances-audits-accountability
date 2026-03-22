@@ -1,31 +1,19 @@
 ---
-type: face/b2
-extends: face
+type: face/assurance
 id: b2:spec-guidance
 name: Boundary Face - Spec-for-Guidance Genesis Assurance
 description: Genesis assurance for spec-for-guidance - foundational document exempt from signature requirements
-vertices:
-  - v:spec:guidance
-  - v:spec:spec
-  - v:guidance:spec
 edges:
   - e:coupling:spec
   - e:verification:spec-guidance:spec-spec
   - e:validation:spec-guidance:guidance-spec
-orientation: oriented
-target: v:spec:guidance
-spec: v:spec:spec
-guidance: v:guidance:spec
-coupling_edge: e:coupling:spec
-verification_edge: e:verification:spec-guidance:spec-spec
-validation_edge: e:validation:spec-guidance:guidance-spec
-status: ASSURED
+doc_name: Spec-for-Guidance
+signed_by: Michael Zargham
+status: assured
+axiomatic: true
 tags:
-  - face
   - boundary
-  - b2
   - assurance
-  - genesis
 version: 1.0.0
 created: 2025-12-27T22:00:00Z
 modified: 2026-01-13T00:00:00Z

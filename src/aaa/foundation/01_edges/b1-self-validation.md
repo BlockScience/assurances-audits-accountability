@@ -1,18 +1,15 @@
 ---
-type: edge/b1
-extends: edge
+type: edge/validation
 id: b1:self-validation
 name: Boundary Edge - Self-Validation of Guidance-for-Guidance
 description: Anchors self-validation of guidance-for-guidance through root vertex
 source: v:guidance:guidance
 target: b0:root
-source_type: vertex/doc/guidance
-target_type: vertex/b0
-orientation: directed
+status: approved
+signed_by: Michael Zargham
+axiomatic: true
 tags:
-  - edge
   - boundary
-  - b1
   - validation
 version: 1.0.0
 created: 2025-12-27T22:15:00Z

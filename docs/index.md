@@ -37,4 +37,4 @@ This structure ensures that no document can be "assured" without both automated 
 - [Installation](getting-started/installation.md) — install and set up
 - [Quick Start](getting-started/quickstart.md) — create your first knowledge complex
 - [CLI Reference](cli-reference.md) — all `aaa` commands
-- [Concepts](concepts/charts-vs-documents.md) — understand the framework
+- [Contributing](development/contributing.md) — development guide

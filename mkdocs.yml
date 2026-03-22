@@ -30,21 +30,14 @@ nav:
   - Getting Started:
       - Installation: getting-started/installation.md
       - Quick Start: getting-started/quickstart.md
-  - Concepts:
-      - Charts vs Documents: concepts/charts-vs-documents.md
-      - Specs vs Templates: concepts/specs-vs-templates.md
-      - Validation & Accountability: concepts/validation-accountability.md
-      - Audit Trails: concepts/audit-trails.md
-      - Engineering Lifecycle: concepts/engineering-lifecycle.md
   - CLI Reference: cli-reference.md
   - Development:
       - Contributing: development/contributing.md
       - Test Coverage: development/test-coverage.md
       - Filename Conventions: development/filename-conventions.md
       - Repository Policy: development/repository-policy.md
+      - RBAC Reference: development/rbac-reference.md
       - Novel Contributions: development/NOVEL-CONTRIBUTIONS.md
-  - References:
-      - Literature Review: references/literature-review.md
 
 plugins:
   - search

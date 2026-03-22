@@ -1,13 +1,12 @@
 ---
-type: vertex/b0
-extends: vertex
+type: vertex/doc
 id: b0:root
 name: Root - Boundary Anchor
 description: Unique boundary vertex serving as the foundational anchor for the entire assurance complex
+axiomatic: true
+signed_by: Michael Zargham
 tags:
-  - vertex
   - boundary
-  - b0
   - root
 version: 1.0.0
 created: 2025-12-27T22:00:00Z

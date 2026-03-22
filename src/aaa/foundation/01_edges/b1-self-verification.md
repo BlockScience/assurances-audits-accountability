@@ -1,18 +1,15 @@
 ---
-type: edge/b1
-extends: edge
+type: edge/verification
 id: b1:self-verification
 name: Boundary Edge - Self-Verification of Spec-for-Spec
 description: Anchors self-verification of spec-for-spec through root vertex
 source: v:spec:spec
 target: b0:root
-source_type: vertex/doc/spec
-target_type: vertex/b0
-orientation: directed
+status: passing
+axiomatic: true
+signed_by: Michael Zargham
 tags:
-  - edge
   - boundary
-  - b1
   - verification
 version: 1.0.0
 created: 2025-12-27T22:15:00Z

@@ -32,6 +32,8 @@ _CODEC_MAP: dict[str, object] = {
     "assurance_audit": ChartCodec(),
     "vertex/assurance_audit": ChartCodec(),
     # Edges
+    "coupling": DocCodec(),
+    "edge/coupling": DocCodec(),
     "verification": VerificationCodec(),
     "edge/verification": VerificationCodec(),
     "validation": ValidationCodec(),
@@ -67,6 +69,8 @@ _VERTEX_TYPES = {
     "vertex/assurance_audit",
 }
 _EDGE_TYPES = {
+    "coupling",
+    "edge/coupling",
     "verification",
     "edge/verification",
     "validation",

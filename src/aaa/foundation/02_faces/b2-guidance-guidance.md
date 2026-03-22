@@ -1,26 +1,19 @@
 ---
-type: face/b2
-extends: face
+type: face/assurance
 id: b2:guidance-guidance
 name: Boundary Face - Guidance-for-Guidance Self-Assurance
 description: Boundary assurance triangle for guidance-for-guidance using root vertex to resolve self-referential paradox
-vertices:
-  - b0:root
-  - v:spec:guidance
-  - v:guidance:guidance
 edges:
   - b1:couples-SG-root
   - b1:self-validation
   - e:verification:guidance-guidance:spec-guidance
-orientation: oriented
-target: v:guidance:guidance
-status: ASSURED
+doc_name: Guidance-for-Guidance
+signed_by: Michael Zargham
+status: assured
+axiomatic: true
 tags:
-  - face
   - boundary
-  - b2
   - assurance
-  - self-referential
 version: 1.0.0
 created: 2025-12-27T22:20:00Z
 modified: 2025-12-27T22:20:00Z

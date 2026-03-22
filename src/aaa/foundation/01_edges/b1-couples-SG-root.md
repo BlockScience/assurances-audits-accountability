@@ -1,18 +1,14 @@
 ---
-type: edge/b1
-extends: edge
+type: edge/coupling
 id: b1:couples-SG-root
 name: Boundary Edge - Couples Spec-for-Guidance to Root
 description: Boundary coupling edge connecting root to spec-for-guidance as proxy for coupling
 source: b0:root
 target: v:spec:guidance
-source_type: vertex/b0
-target_type: vertex/doc/spec
-orientation: directed
+axiomatic: true
+signed_by: Michael Zargham
 tags:
-  - edge
   - boundary
-  - b1
   - coupling
 version: 1.0.0
 created: 2025-12-27T22:15:00Z

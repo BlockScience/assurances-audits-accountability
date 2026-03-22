@@ -1,14 +1,11 @@
 ---
 type: edge/verification
-extends: edge
 id: e:verification:spec-guidance:spec-spec
 name: Verification - spec-for-guidance against spec-for-spec
 description: Spec-for-guidance verifies structural compliance against spec-for-spec
 source: v:spec:guidance
 target: v:spec:spec
-source_type: vertex/spec
-target_type: vertex/spec
-orientation: directed
+status: passing
 tags:
   - edge
   - verification

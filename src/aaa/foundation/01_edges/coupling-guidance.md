@@ -1,13 +1,9 @@
 ---
 type: edge/coupling
-extends: edge
 id: e:coupling:guidance
 name: Coupling - Spec-for-Guidance and Guidance-for-Guidance
 source: v:spec:guidance
 target: v:guidance:guidance
-source_type: vertex/spec
-target_type: vertex/guidance
-orientation: undirected
 tags:
   - edge
   - coupling

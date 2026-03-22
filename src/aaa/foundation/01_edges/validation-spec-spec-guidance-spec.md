@@ -1,14 +1,12 @@
 ---
 type: edge/validation
-extends: edge
 id: e:validation:spec-spec:guidance-spec
 name: Validation - spec-for-spec against guidance-for-spec
 description: Spec-for-spec validates quality against guidance-for-spec
 source: v:spec:spec
 target: v:guidance:spec
-source_type: vertex/spec
-target_type: vertex/guidance
-orientation: directed
+status: approved
+signed_by: Michael Zargham
 validator: genesis
 validation_method: manual
 tags:
