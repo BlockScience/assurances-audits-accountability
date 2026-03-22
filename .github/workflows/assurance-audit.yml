@@ -23,7 +23,7 @@ jobs:
         run: pytest tests/test_audit.py -v
 
       - name: Build graph
-        run: aaa build
+        run: aaa build examples/paper-authoring/content/ --output graph.ttl
 
       - name: Audit all assurance charts
         run: |

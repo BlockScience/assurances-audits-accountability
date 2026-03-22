@@ -64,7 +64,7 @@ jobs:
         run: pip install -e .
 
       - name: Build RDF graph
-        run: aaa build
+        run: aaa build examples/paper-authoring/content/ --output graph.ttl
 
       - name: Audit assurance charts
         run: |
@@ -93,7 +93,7 @@ jobs:
         run: pip install -e .
 
       - name: Build graph
-        run: aaa build
+        run: aaa build examples/paper-authoring/content/ --output graph.ttl
 
       - name: Check topology
         run: |

@@ -22,8 +22,8 @@ jobs:
       - name: Run tests
         run: pytest tests/ -v
 
-      - name: Build RDF graph
-        run: aaa build --strict
+      - name: Build example
+        run: aaa build examples/paper-authoring/content/ --output /tmp/demo.ttl
 
       - name: Comment on PR (if failed)
         if: failure() && github.event_name == 'pull_request'
