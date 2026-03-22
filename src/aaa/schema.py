@@ -86,10 +86,6 @@ def build_aaa_schema() -> SchemaBuilder:
         },
     )
 
-    # coupling — connects a spec to a guidance (or either to the root),
-    # representing the pairing that defines a document type context
-    sb.add_edge_type("coupling")
-
     # DocType — connects a spec to a guidance, defining a document type.
     # The spec+guidance pair is a first-class addressable element with data.
     # kc.element_ids(type="DocType") returns all defined document types.

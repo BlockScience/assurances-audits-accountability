@@ -1,8 +1,8 @@
 ---
-type: edge/coupling
+type: edge/DocType
 id: b1:couples-SG-root
 name: Boundary Edge - Couples Spec-for-Guidance to Root
-description: Boundary coupling edge connecting root to spec-for-guidance as proxy for coupling
+description: Boundary DocType edge connecting root to spec-for-guidance
 source: b0:root
 target: v:spec:guidance
 axiomatic: true

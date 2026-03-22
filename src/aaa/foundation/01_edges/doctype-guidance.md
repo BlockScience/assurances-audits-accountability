@@ -1,6 +1,6 @@
 ---
-type: edge/coupling
-id: e:coupling:guidance
+type: edge/DocType
+id: e:DocType:guidance
 name: Coupling - Spec-for-Guidance and Guidance-for-Guidance
 source: v:spec:guidance
 target: v:guidance:guidance

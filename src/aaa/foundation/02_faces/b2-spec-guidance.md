@@ -4,7 +4,7 @@ id: b2:spec-guidance
 name: Boundary Face - Spec-for-Guidance Genesis Assurance
 description: Genesis assurance for spec-for-guidance - foundational document exempt from signature requirements
 edges:
-  - e:coupling:spec
+  - e:DocType:spec
   - e:verification:spec-guidance:spec-spec
   - e:validation:spec-guidance:guidance-spec
 doc_name: Spec-for-Guidance
@@ -48,7 +48,7 @@ These four documents are treated as essentially fixed for a given knowledge comp
 
 **Edges:**
 
-1. `e:coupling:spec` - Couples SS↔GS (standard coupling for spec domain)
+1. `e:DocType:spec` - Couples SS↔GS (standard coupling for spec domain)
 2. `e:verification:spec-guidance:spec-spec` - SG verifies against SS
 3. `e:validation:spec-guidance:guidance-spec` - SG validates against GS
 
@@ -92,7 +92,7 @@ Despite having a standard triangle pattern, this face is designated b2 because:
   - b2:guidance-spec (GS) - standard pattern
   - b2:guidance-guidance (GG) - self-referential, uses root
 
-- **Coupling Edge:** e:coupling:spec (SS↔GS)
+- **Coupling Edge:** e:DocType:spec (SS↔GS)
 - **Verification Edge:** e:verification:spec-guidance:spec-spec
 - **Validation Edge:** e:validation:spec-guidance:guidance-spec
 
