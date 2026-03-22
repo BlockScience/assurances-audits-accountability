@@ -1,112 +1,70 @@
 """
-aaa verify - Verify documents against their templates.
+aaa verify - Validate a single markdown file via its Pydantic Codec.
+
+Performs single-document structural validation (required fields, field types,
+controlled vocabulary values). Does NOT run SHACL graph-level checks — use
+`aaa audit` for that.
 
 Examples:
-    aaa verify document.md
-    aaa verify 00_vertices/spec-for-spec.md
-    aaa verify --all
+    aaa verify docs/my-spec.md
+    aaa verify 01_edges/e:verification:foo.md
 """
 
 import click
 import sys
 from pathlib import Path
 
-from aaa.core import TemplateBasedVerifier, get_templates_path
+from pydantic import ValidationError
+
+from aaa.codecs import codec_for_type, dimension_for_type
+
+
+def _read_type(path: Path) -> str | None:
+    import yaml, re
+    try:
+        text = path.read_text(encoding="utf-8")
+        m = re.match(r"^---\s*\n(.*?)\n---", text, re.DOTALL)
+        if not m:
+            return None
+        fm = yaml.safe_load(m.group(1)) or {}
+        return fm.get("type")
+    except Exception:
+        return None
 
 
 @click.command()
-@click.argument('file', required=False, type=click.Path(exists=True))
-@click.option('--all', 'verify_all', is_flag=True, help='Verify all documents in the repository')
-@click.option('--templates', default=None, help='Path to templates directory (uses bundled if not specified)')
-@click.option('--verbose', '-v', is_flag=True, help='Show detailed output')
-@click.pass_context
-def verify(ctx, file, verify_all, templates, verbose):
-    """Verify a document against its template.
+@click.argument("file", type=click.Path(exists=True))
+@click.option("--verbose", "-v", is_flag=True, help="Show full validation details.")
+def verify(file, verbose):
+    """Verify FILE against its Pydantic model (single-document check)."""
+    path = Path(file)
+    type_name = _read_type(path)
 
-    \b
-    Examples:
-        aaa verify 00_vertices/spec-for-spec.md
-        aaa verify --all
-    """
-    repo_root = ctx.obj.get('repo_root', Path.cwd())
-
-    if TemplateBasedVerifier is None:
-        click.echo("Error: Could not import verification module.", err=True)
+    if type_name is None:
+        click.echo(f"[ERROR] {path}: no YAML frontmatter or missing 'type' field.", err=True)
         sys.exit(1)
 
-    # Resolve templates path: use custom, local, or bundled
-    if templates:
-        templates_path = Path(templates)
-        if not templates_path.is_absolute():
-            templates_path = repo_root / templates_path
-        if not templates_path.exists():
-            click.echo(f"Error: Templates directory not found: {templates_path}", err=True)
-            sys.exit(1)
-    else:
-        # Try local templates first, then fall back to bundled
-        local_templates = repo_root / 'templates'
-        if local_templates.exists():
-            templates_path = local_templates
-        else:
-            try:
-                templates_path = get_templates_path()
-            except FileNotFoundError as e:
-                click.echo(f"Error: {e}", err=True)
-                sys.exit(1)
+    codec = codec_for_type(type_name)
 
+    try:
+        attrs = codec.decompile(path.resolve().as_uri())
+    except ValidationError as exc:
+        click.echo(f"[FAIL]  {path}")
+        click.echo(f"        type: {type_name}")
+        for err in exc.errors():
+            loc = ".".join(str(x) for x in err["loc"])
+            click.echo(f"        {loc}: {err['msg']}")
+        sys.exit(1)
+    except (ValueError, FileNotFoundError) as exc:
+        click.echo(f"[ERROR] {path}: {exc}", err=True)
+        sys.exit(1)
+
+    dim = dimension_for_type(type_name)
+    elem_id = attrs.get("id", "?")
+    name = attrs.get("name", "?")
+
+    click.echo(f"[OK]    {path}")
     if verbose:
-        click.echo(f"Using templates from: {templates_path}")
-
-    verifier = TemplateBasedVerifier(templates_path)
-
-    if verify_all:
-        # Verify all documents
-        all_passed = True
-        failed_files = []
-        dirs_to_check = ['00_vertices', '01_edges', '02_faces']
-
-        for dir_name in dirs_to_check:
-            dir_path = repo_root / dir_name
-            if not dir_path.exists():
-                continue
-
-            for md_file in dir_path.glob('*.md'):
-                if md_file.name == 'README.md':
-                    continue
-
-                passed = verifier.verify_element(md_file)
-                if not passed:
-                    all_passed = False
-                    failed_files.append((md_file.relative_to(repo_root), verifier.errors.copy()))
-
-        if all_passed:
-            click.echo("\n✓ All documents passed verification")
-            sys.exit(0)
-        else:
-            click.echo("\n✗ Some documents failed verification", err=True)
-            click.echo("")
-            for file_path, errors in failed_files:
-                click.echo(f"FAILED: {file_path}", err=True)
-                for error in errors:
-                    click.echo(f"  - {error}", err=True)
-            click.echo("")
-            click.echo(f"Total: {len(failed_files)} file(s) failed", err=True)
-            sys.exit(1)
-
-    elif file:
-        # Verify single file
-        file_path = Path(file)
-        if not file_path.is_absolute():
-            file_path = repo_root / file_path
-
-        passed = verifier.verify_element(file_path)
-
-        if passed:
-            sys.exit(0)
-        else:
-            sys.exit(1)
-
-    else:
-        click.echo("Error: Specify a file to verify or use --all", err=True)
-        click.echo("Usage: aaa verify <file> or aaa verify --all", err=True)
-        sys.exit(1)
+        click.echo(f"        id:   {elem_id}")
+        click.echo(f"        type: {type_name} ({dim})")
+        click.echo(f"        name: {name}")
